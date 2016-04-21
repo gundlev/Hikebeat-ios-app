@@ -100,7 +100,6 @@
 		85F2B4241CC4DD33004704F3 = {
 			isa = PBXGroup;
 			children = (
-				E141F5BE1CC948CC004DA5D5 /* HEXColor.framework */,
 				85F2B46C1CC4E353004704F3 /* Frameworks and Libs */,
 				85F2B42F1CC4DD33004704F3 /* Hikebeat */,
 				85F2B4441CC4DD33004704F3 /* HikebeatTests */,
@@ -159,6 +158,7 @@
 				85F2B4601CC4DE96004704F3 /* Realm.framework */,
 				85F2B4611CC4DE96004704F3 /* RealmSwift.framework */,
 				85F2B4631CC4DE96004704F3 /* SwiftyJSON.framework */,
+				E141F5BE1CC948CC004DA5D5 /* HEXColor.framework */,
 			);
 			name = "Frameworks and Libs";
 			sourceTree = "<group>";
