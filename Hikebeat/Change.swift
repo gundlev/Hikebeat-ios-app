@@ -44,14 +44,42 @@ class Change: Object {
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        //fatalError("init(realm:schema:) has not been implemented")
+        self.instanceType = ""
+        self.timeCommitted = ""
+        self.stringValue = ""
+        self.boolValue = false
+        self.property = ""
+        self.instanceId = ""
+        self.changeAction = ""
+        self.timestamp = ""
+        super.init()
     }
     
     required init(value: AnyObject, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        //fatalError("init(value:schema:) has not been implemented")
+        self.instanceType = ""
+        self.timeCommitted = ""
+        self.stringValue = ""
+        self.boolValue = false
+        self.property = ""
+        self.instanceId = ""
+        self.changeAction = ""
+        self.timestamp = ""
+        super.init()
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        //fatalError("init() has not been implemented")
+        self.instanceType = ""
+        self.timeCommitted = ""
+        self.stringValue = ""
+        self.boolValue = false
+        self.property = ""
+        self.instanceId = ""
+        self.changeAction = ""
+        self.timestamp = ""
+        super.init()
     }
+
 }

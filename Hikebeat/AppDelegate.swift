@@ -11,7 +11,7 @@ import CoreLocation
 import RealmSwift
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
     var locManager: CLLocationManager = CLLocationManager()
@@ -23,7 +23,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+//        let beat = Beat(title: "First", journeyId: "dgihdla7wt3oæ", message: "This is the first", latitude: "12.5489264", longitude: "54.74893278", altitude: "12.5", timestamp: "6329861323", mediaType: nil, mediaData: "", mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: Journey())
+//        try! realm.write {
+//            realm.add(beat)
+//        }
+        
+        
         self.startReachability()
+        
+        // Setting op locationManager
+        locManager.delegate = self;
+        locManager.requestWhenInUseAuthorization()
+        self.locManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        self.locManager.distanceFilter = 1
+        self.locManager.startUpdatingLocation()
+        self.locManager.startUpdatingHeading()
+
         
         return true
     }
@@ -51,23 +66,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func synced() -> Bool {
+        let realmLocal = try! Realm()
         print("starting sync method")
-        let beatsQuery = NSCompoundPredicate(type: .OrPredicateType, subpredicates: [NSPredicate(format: "mediaUplaoded = %@", false), NSPredicate(format: "mediaData = %@", "")])
-        let beats = realm.objects(Beat).filter(beatsQuery)
-        let changes = realm.objects(Change)
+        let beatsQuery = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false), NSPredicate(format: "mediaData = %@", "")])
+        let beats = realmLocal.objects(Beat).filter(beatsQuery)
+        let changes = realmLocal.objects(Change)
         if beats.isEmpty && changes.isEmpty {
             print("all empty")
             return true
         } else {
-            print("Theres somthing")
+            print("There's somthing")
+            print(beats)
             return false
         }
     }
     
     func startReachability() {
-        
+        print("startReachability")
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
+            print("Success reachability")
         } catch {
             print("Unable to create Reachability")
             return
@@ -138,6 +156,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } else {
                     print("nothing to sync")
                 }
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
         }
     }
 }

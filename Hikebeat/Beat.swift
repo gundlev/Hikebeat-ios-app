@@ -61,15 +61,60 @@ class Beat: Object {
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        //fatalError("init(realm:schema:) has not been implemented")
+        self.title = ""
+        self.journeyId = ""
+        self.message = ""
+        self.latitude = ""
+        self.longitude = ""
+        self.altitude = ""
+        self.timestamp = ""
+        self.mediaType = ""
+        self.mediaData = ""
+        self.mediaDataId = ""
+        self.messageId = ""
+        self.mediaUploaded = false
+        self.messageUploaded = false
+        self.journey = Journey()
+        super.init()
     }
     
     required init(value: AnyObject, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        //fatalError("init(value:schema:) has not been implemented")
+        self.title = ""
+        self.journeyId = ""
+        self.message = ""
+        self.latitude = ""
+        self.longitude = ""
+        self.altitude = ""
+        self.timestamp = ""
+        self.mediaType = ""
+        self.mediaData = ""
+        self.mediaDataId = ""
+        self.messageId = ""
+        self.mediaUploaded = false
+        self.messageUploaded = false
+        self.journey = Journey()
+        super.init()
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        //fatalError("init() has not been implemented")
+        self.title = ""
+        self.journeyId = ""
+        self.message = ""
+        self.latitude = ""
+        self.longitude = ""
+        self.altitude = ""
+        self.timestamp = ""
+        self.mediaType = ""
+        self.mediaData = ""
+        self.mediaDataId = ""
+        self.messageId = ""
+        self.mediaUploaded = false
+        self.messageUploaded = false
+        self.journey = Journey()
+        super.init()
     }
 
 }

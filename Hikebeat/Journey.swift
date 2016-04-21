@@ -43,14 +43,41 @@ class Journey: Object {
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        //fatalError("init(realm:schema:) has not been implemented")
+        self.slug = ""
+        self.userId = ""
+        self.journeyId = ""
+        self.headline = ""
+        self.journeyDescription = ""
+        self.active = false
+        self.type = ""
+        
+        super.init()
     }
     
     required init(value: AnyObject, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        //fatalError("init(value:schema:) has not been implemented")
+        self.slug = ""
+        self.userId = ""
+        self.journeyId = ""
+        self.headline = ""
+        self.journeyDescription = ""
+        self.active = false
+        self.type = ""
+        
+        super.init()
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        //fatalError("init() has not been implemented")
+        self.slug = ""
+        self.userId = ""
+        self.journeyId = ""
+        self.headline = ""
+        self.journeyDescription = ""
+        self.active = false
+        self.type = ""
+        
+        super.init()
     }
 }
