@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
 //        let beat = Beat(title: "First", journeyId: "dgihdla7wt3oæ", message: "This is the first", latitude: "12.5489264", longitude: "54.74893278", altitude: "12.5", timestamp: "6329861323", mediaType: nil, mediaData: "", mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: Journey())
+//        print(beat)
 //        try! realm.write {
 //            realm.add(beat)
 //        }
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             print("all empty")
             return true
         } else {
-            print("There's somthing")
+            print("There's something")
             print(beats)
             return false
         }

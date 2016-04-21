@@ -12,16 +12,16 @@ import Realm
 
 class Change: Object {
     
-    dynamic var instanceType: String
-    dynamic var timeCommitted: String
+    dynamic var instanceType: String = ""
+    dynamic var timeCommitted: String = ""
     dynamic var stringValue: String?
-    dynamic var boolValue: Bool
+    dynamic var boolValue: Bool = false
     dynamic var property: String?
     dynamic var instanceId: String?
-    dynamic var changeAction: String
+    dynamic var changeAction: String = ""
     dynamic var timestamp: String?
     
-    required init(
+    func fill(
         instanceType: String,
         timeCommitted: String,
         stringValue: String?,
@@ -39,47 +39,19 @@ class Change: Object {
         self.instanceId = instanceId
         self.changeAction = changeAction
         self.timestamp = timestamp
-        
-        super.init()
+
     }
     
-    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        //fatalError("init(realm:schema:) has not been implemented")
-        self.instanceType = ""
-        self.timeCommitted = ""
-        self.stringValue = ""
-        self.boolValue = false
-        self.property = ""
-        self.instanceId = ""
-        self.changeAction = ""
-        self.timestamp = ""
-        super.init()
-    }
-    
-    required init(value: AnyObject, schema: RLMSchema) {
-        //fatalError("init(value:schema:) has not been implemented")
-        self.instanceType = ""
-        self.timeCommitted = ""
-        self.stringValue = ""
-        self.boolValue = false
-        self.property = ""
-        self.instanceId = ""
-        self.changeAction = ""
-        self.timestamp = ""
-        super.init()
-    }
-    
-    required init() {
-        //fatalError("init() has not been implemented")
-        self.instanceType = ""
-        self.timeCommitted = ""
-        self.stringValue = ""
-        self.boolValue = false
-        self.property = ""
-        self.instanceId = ""
-        self.changeAction = ""
-        self.timestamp = ""
-        super.init()
-    }
+//    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+//        super.init()
+//    }
+//    
+//    required init(value: AnyObject, schema: RLMSchema) {
+//        super.init()
+//    }
+//    
+//    required init() {
+//        super.init()
+//    }
 
 }
