@@ -13,21 +13,21 @@ import Realm
 class Beat: Object {
     
     dynamic var title: String?
-    dynamic var journeyId: String
+    dynamic var journeyId: String = ""
     dynamic var message: String?
-    dynamic var latitude: String
-    dynamic var longitude: String
-    dynamic var altitude: String
-    dynamic var timestamp: String
+    dynamic var latitude: String = ""
+    dynamic var longitude: String = ""
+    dynamic var altitude: String = ""
+    dynamic var timestamp: String = ""
     dynamic var mediaType: String?
     dynamic var mediaData: String?
     dynamic var mediaDataId: String?
     dynamic var messageId: String?
     dynamic var mediaUploaded: Bool = false
     dynamic var messageUploaded: Bool = false
-    dynamic var journey: Journey?
+    dynamic var journey:Journey?
     
-    required init(
+    func fill(
         title: String?,
         journeyId: String,
         message: String?,
@@ -57,64 +57,21 @@ class Beat: Object {
         self.mediaUploaded = mediaUploaded
         self.messageUploaded = messageUploaded
         self.journey = journey
-        super.init()
     }
     
-    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        //fatalError("init(realm:schema:) has not been implemented")
-        self.title = ""
-        self.journeyId = ""
-        self.message = ""
-        self.latitude = ""
-        self.longitude = ""
-        self.altitude = ""
-        self.timestamp = ""
-        self.mediaType = ""
-        self.mediaData = ""
-        self.mediaDataId = ""
-        self.messageId = ""
-        self.mediaUploaded = false
-        self.messageUploaded = false
-        self.journey = Journey()
-        super.init()
-    }
-    
-    required init(value: AnyObject, schema: RLMSchema) {
-        //fatalError("init(value:schema:) has not been implemented")
-        self.title = ""
-        self.journeyId = ""
-        self.message = ""
-        self.latitude = ""
-        self.longitude = ""
-        self.altitude = ""
-        self.timestamp = ""
-        self.mediaType = ""
-        self.mediaData = ""
-        self.mediaDataId = ""
-        self.messageId = ""
-        self.mediaUploaded = false
-        self.messageUploaded = false
-        self.journey = Journey()
-        super.init()
-    }
-    
-    required init() {
-        //fatalError("init() has not been implemented")
-        self.title = ""
-        self.journeyId = ""
-        self.message = ""
-        self.latitude = ""
-        self.longitude = ""
-        self.altitude = ""
-        self.timestamp = ""
-        self.mediaType = ""
-        self.mediaData = ""
-        self.mediaDataId = ""
-        self.messageId = ""
-        self.mediaUploaded = false
-        self.messageUploaded = false
-        self.journey = Journey()
-        super.init()
-    }
+//    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+//        print("1")
+//        super.init()
+//    }
+//    
+//    required init(value: AnyObject, schema: RLMSchema) {
+//        print("2")
+//        super.init()
+//    }
+//    
+//    required init() {
+//        print("init 3")
+//        super.init()
+//    }
 
 }
