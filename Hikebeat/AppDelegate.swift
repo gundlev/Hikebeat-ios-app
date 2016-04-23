@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var locManager: CLLocationManager = CLLocationManager()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var reachability: Reachability!
-//    let realm = try! Realm()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -28,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 //        try! realm.write {
 //            realm.add(beat)
 //        }
-        
+
         
         self.startReachability()
         
