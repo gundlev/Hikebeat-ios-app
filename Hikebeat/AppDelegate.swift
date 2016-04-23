@@ -165,5 +165,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             print("Unable to start notifier")
         }
     }
+    
+    /*
+    Utility functions
+*/
+    func getLocation() -> CLLocation? {
+        
+        var currentLocation: CLLocation?
+        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
+            currentLocation = locManager.location
+        }
+        return currentLocation
+    }
 }
 

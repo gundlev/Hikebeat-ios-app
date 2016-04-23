@@ -1,4 +1,3 @@
 github "realm/realm-cocoa"
 github "Alamofire/Alamofire"
 github "SwiftyJSON/SwiftyJSON"
-github "Thomvis/BrightFutures"
