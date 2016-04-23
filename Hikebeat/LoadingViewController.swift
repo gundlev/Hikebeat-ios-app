@@ -26,9 +26,9 @@ class LoadingViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-
+        
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(hexString: "#2FA0A5")!.CGColor, UIColor(hexString:"#4F9644")!.CGColor]
+        bgGradient.colors = [UIColor(red: 47, green: 160, blue: 165, alpha: 1).CGColor, UIColor(red: 79, green: 150, blue: 68, alpha: 1).CGColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -46,7 +46,7 @@ class LoadingViewController: UIViewController {
         
         
         bgGradient2.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: circleImageView.bounds.size)
-        bgGradient2.colors = [UIColor(hexString: "#389D8A")!.CGColor, UIColor(hexString:"#47995D")!.CGColor]
+        bgGradient2.colors = [UIColor(red: 56, green: 157, blue: 133, alpha: 1).CGColor, UIColor(red: 71, green: 153, blue: 93, alpha: 1).CGColor]
         bgGradient2.zPosition = -1
         circleImageView.layer.addSublayer(bgGradient2)
         

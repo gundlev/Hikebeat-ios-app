@@ -1,6 +1,5 @@
 github "Alamofire/Alamofire" "3.3.1"
 github "antitypical/Result" "1.0.2"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
-github "yeahdongcn/UIColor-Hex-Swift" "2.1"
-github "realm/realm-cocoa" "v0.98.8"
+github "realm/realm-cocoa" "v0.99.0"
 github "Thomvis/BrightFutures" "v3.3.0"
