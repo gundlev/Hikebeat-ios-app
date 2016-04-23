@@ -25,7 +25,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed to for the service to function.</string>
 	<key>UILaunchStoryboardName</key>
-	<string>Main</string>
+	<string>Loading</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -14,12 +14,12 @@ class Change: Object {
     
     dynamic var instanceType: String = ""
     dynamic var timeCommitted: String = ""
-    dynamic var stringValue: String?
+    dynamic var stringValue: String? = nil
     dynamic var boolValue: Bool = false
-    dynamic var property: String?
-    dynamic var instanceId: String?
+    dynamic var property: String? = nil
+    dynamic var instanceId: String? = nil
     dynamic var changeAction: String = ""
-    dynamic var timestamp: String?
+    dynamic var timestamp: String? = nil
     
     func fill(
         instanceType: String,
