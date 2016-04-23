@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import HEXColor
 
 class LoadingViewController: UIViewController {
 
@@ -29,7 +28,7 @@ class LoadingViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
 
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(rgba: "#2FA0A5").CGColor, UIColor(rgba:"#4F9644").CGColor]
+        bgGradient.colors = [UIColor(hexString: "#2FA0A5")!.CGColor, UIColor(hexString:"#4F9644")!.CGColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -47,7 +46,7 @@ class LoadingViewController: UIViewController {
         
         
         bgGradient2.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: circleImageView.bounds.size)
-        bgGradient2.colors = [UIColor(rgba: "#389D8A").CGColor, UIColor(rgba:"#47995D").CGColor]
+        bgGradient2.colors = [UIColor(hexString: "#389D8A")!.CGColor, UIColor(hexString:"#47995D")!.CGColor]
         bgGradient2.zPosition = -1
         circleImageView.layer.addSublayer(bgGradient2)
         
