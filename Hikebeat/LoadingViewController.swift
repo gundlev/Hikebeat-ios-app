@@ -26,9 +26,13 @@ class LoadingViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+//        
+//        let background = CAGradientLayer().turquoiseColor()
+//        background.frame = self.view.bounds
+//        self.view.layer.insertSublayer(background, atIndex: 0)
         
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: 47, green: 160, blue: 165, alpha: 1).CGColor, UIColor(red: 79, green: 150, blue: 68, alpha: 1).CGColor]
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -44,9 +48,8 @@ class LoadingViewController: UIViewController {
             self.patternImageView.center.x = 174
             },completion: nil)
         
-        
         bgGradient2.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: circleImageView.bounds.size)
-        bgGradient2.colors = [UIColor(red: 56, green: 157, blue: 133, alpha: 1).CGColor, UIColor(red: 71, green: 153, blue: 93, alpha: 1).CGColor]
+        bgGradient2.colors = [UIColor(red: (56/255.0), green: (157/255.0), blue: (133/255.0), alpha: 1).CGColor, UIColor(red: (71/255.0), green: (153/255.0), blue: (93/255.0), alpha: 1).CGColor]
         bgGradient2.zPosition = -1
         circleImageView.layer.addSublayer(bgGradient2)
         
