@@ -12,20 +12,20 @@ import Realm
 
 class Beat: Object {
     
-    dynamic var title: String?
+    dynamic var title: String? = nil
     dynamic var journeyId: String = ""
-    dynamic var message: String?
+    dynamic var message: String? = nil
     dynamic var latitude: String = ""
     dynamic var longitude: String = ""
     dynamic var altitude: String = ""
     dynamic var timestamp: String = ""
-    dynamic var mediaType: String?
-    dynamic var mediaData: String?
-    dynamic var mediaDataId: String?
-    dynamic var messageId: String?
+    dynamic var mediaType: String? = nil
+    dynamic var mediaData: String? = nil
+    dynamic var mediaDataId: String? = nil
+    dynamic var messageId: String? = nil
     dynamic var mediaUploaded: Bool = false
     dynamic var messageUploaded: Bool = false
-    dynamic var journey:Journey?
+    dynamic var journey:Journey? = nil
     
     func fill(
         title: String?,

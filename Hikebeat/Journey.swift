@@ -12,13 +12,13 @@ import Realm
 
 class Journey: Object {
     
-    dynamic var slug: String?
+    dynamic var slug: String? = nil
     dynamic var userId: String = ""
     dynamic var journeyId: String = ""
-    dynamic var headline: String?
+    dynamic var headline: String? = nil
     dynamic var journeyDescription: String?
     dynamic private var active: Bool = false
-    dynamic var type: String?
+    dynamic var type: String? = nil
     var beats = List<Beat>()
     
     

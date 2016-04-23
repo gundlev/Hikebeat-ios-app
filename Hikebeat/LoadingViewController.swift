@@ -56,7 +56,7 @@ class LoadingViewController: UIViewController {
         circleImageView.layer.borderWidth = 3.0
         circleImageView.layer.masksToBounds = false
         circleImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        circleImageView.layer.cornerRadius = 323/2
+        circleImageView.layer.cornerRadius = 313/2
         circleImageView.clipsToBounds = true
         
         
