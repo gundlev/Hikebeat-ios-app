@@ -75,6 +75,6 @@
     </scenes>
     <resources>
         <image name="outline" width="128" height="121"/>
-        <image name="trees" width="282" height="282"/>
+        <image name="trees" width="270" height="270"/>
     </resources>
 </document>
