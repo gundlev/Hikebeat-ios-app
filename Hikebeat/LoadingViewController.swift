@@ -16,21 +16,19 @@ class LoadingViewController: UIViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var treesImageView: UIImageView!
 
-    let bgGradient = CAGradientLayer()
+
     let bgGradient2 = CAGradientLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.setNeedsStatusBarAppearanceUpdate()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
-//        
-//        let background = CAGradientLayer().turquoiseColor()
-//        background.frame = self.view.bounds
-//        self.view.layer.insertSublayer(background, atIndex: 0)
-        
+        let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
         bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
         bgGradient.zPosition = -1
@@ -72,10 +70,22 @@ class LoadingViewController: UIViewController {
         
         treesImageView.rotate360Degrees(4, forever: true)
         
+        
+        //Jump to next in a sec
+        _ = NSTimer.scheduledTimerWithTimeInterval(8.0, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    
+    func timeToMoveOn() {
+        self.performSegueWithIdentifier("showMain", sender: self)
     }
 }

@@ -66,14 +66,86 @@
                         <outlet property="logoImageView" destination="DyZ-yJ-k2O" id="rkQ-ho-lJV"/>
                         <outlet property="patternImageView" destination="FlJ-UO-mEi" id="GIa-XU-Ut3"/>
                         <outlet property="treesImageView" destination="gF8-rA-VEV" id="Ufh-Ue-Qfd"/>
+                        <segue destination="jTg-CM-etK" kind="show" identifier="showMain" animates="NO" id="oql-dD-idx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="129" y="261"/>
         </scene>
+        <!--ComposeVC-->
+        <scene sceneID="Ljw-Ya-9kg">
+            <objects>
+                <viewController id="jTg-CM-etK" customClass="ComposeVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Egr-rU-Mdu"/>
+                        <viewControllerLayoutGuide type="bottom" id="hEu-cN-RCu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9hh-tn-4nz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-BD-ZAV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="VZy-c4-7Bm">
+                                        <rect key="frame" x="227" y="26" width="146" height="34"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.082352941176470587" green="0.40392156862745099" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="VZy-c4-7Bm" firstAttribute="centerX" secondItem="qXy-BD-ZAV" secondAttribute="centerX" id="Mo3-lU-xUd"/>
+                                    <constraint firstAttribute="height" constant="84" id="XJ7-bz-fYM"/>
+                                    <constraint firstItem="VZy-c4-7Bm" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="26" id="b6w-2E-cKq"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
+                                <rect key="frame" x="0.0" y="84" width="600" height="516"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
+                                        <rect key="frame" x="23" y="23" width="554" height="470"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ugQ-0V-XXL" firstAttribute="leading" secondItem="RCs-Fy-3rY" secondAttribute="leadingMargin" constant="15" id="DFj-ih-njL"/>
+                                    <constraint firstItem="ugQ-0V-XXL" firstAttribute="top" secondItem="RCs-Fy-3rY" secondAttribute="topMargin" constant="15" id="ZSN-Q6-KSt"/>
+                                    <constraint firstItem="ugQ-0V-XXL" firstAttribute="top" secondItem="RCs-Fy-3rY" secondAttribute="top" id="hen-Cy-Jto"/>
+                                    <constraint firstAttribute="bottom" secondItem="ugQ-0V-XXL" secondAttribute="bottom" id="mUo-Tt-nkR"/>
+                                    <constraint firstItem="ugQ-0V-XXL" firstAttribute="leading" secondItem="RCs-Fy-3rY" secondAttribute="leading" id="mX8-Af-CPe"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="ugQ-0V-XXL" secondAttribute="trailing" constant="15" id="mi5-te-cp7"/>
+                                    <constraint firstAttribute="trailing" secondItem="ugQ-0V-XXL" secondAttribute="trailing" id="pVT-ft-lie"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="ugQ-0V-XXL" secondAttribute="bottom" constant="15" id="pxO-is-68O"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hen-Cy-Jto"/>
+                                        <exclude reference="mUo-Tt-nkR"/>
+                                        <exclude reference="mX8-Af-CPe"/>
+                                        <exclude reference="pVT-ft-lie"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RCs-Fy-3rY" firstAttribute="bottom" secondItem="hEu-cN-RCu" secondAttribute="top" id="4zg-nm-VEH"/>
+                            <constraint firstItem="qXy-BD-ZAV" firstAttribute="top" secondItem="9hh-tn-4nz" secondAttribute="topMargin" id="DF1-sz-GBz"/>
+                            <constraint firstItem="RCs-Fy-3rY" firstAttribute="trailing" secondItem="qXy-BD-ZAV" secondAttribute="trailing" id="HXB-uL-voR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qXy-BD-ZAV" secondAttribute="trailing" constant="-20" id="Vrx-Em-J6Y"/>
+                            <constraint firstItem="RCs-Fy-3rY" firstAttribute="leading" secondItem="qXy-BD-ZAV" secondAttribute="leading" id="XBh-VI-TRv"/>
+                            <constraint firstItem="RCs-Fy-3rY" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="bottom" id="oPJ-iF-iJ4"/>
+                            <constraint firstItem="qXy-BD-ZAV" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="v8N-1k-9xf"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OIX-JQ-ZIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="883" y="277"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="ComposeBG" width="330" height="488"/>
+        <image name="HikebeatTypo" width="146" height="34"/>
         <image name="outline" width="128" height="121"/>
         <image name="trees" width="270" height="270"/>
     </resources>

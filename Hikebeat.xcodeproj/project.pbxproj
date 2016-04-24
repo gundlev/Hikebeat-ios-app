@@ -22,6 +22,7 @@
 		85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4721CC4E4E0004704F3 /* Beat.swift */; };
 		85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4741CC4EF6A004704F3 /* Change.swift */; };
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
+		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		85F2B4721CC4E4E0004704F3 /* Beat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
 		85F2B4741CC4EF6A004704F3 /* Change.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
+		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
+				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
+				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
