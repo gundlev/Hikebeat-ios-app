@@ -49,26 +49,41 @@ class ComposeVC: UIViewController {
         view.layer.addSublayer(bgGradient)
         
         
+        editTitleButton.userInteractionEnabled = true
+        editMemoButton.userInteractionEnabled = true
+        editImageButton.userInteractionEnabled = true
+        editVideoButton.userInteractionEnabled = true
+        editMessageButton.userInteractionEnabled = true
+        
+        editTitleButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(titleButtonTapped)))
+        editMemoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(memoButtonTapped)))
+        editImageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(imageButtonTapped)))
+        editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
+        editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func titleButtonTapped() {
+        
     }
-    */
 
+    func memoButtonTapped() {
+        
+    }
+    
+    func imageButtonTapped() {
+        
+    }
+    
+    func videoButtonTapped() {
+        
+    }
+    
+    func messageButtonTapped() {
+        
+    }
 }
