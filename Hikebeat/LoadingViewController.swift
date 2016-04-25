@@ -72,7 +72,7 @@ class LoadingViewController: UIViewController {
         
         
         //Jump to next in a sec
-        _ = NSTimer.scheduledTimerWithTimeInterval(8.0, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
+        _ = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
     }
 
     override func didReceiveMemoryWarning() {

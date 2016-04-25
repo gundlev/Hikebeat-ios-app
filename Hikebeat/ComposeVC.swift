@@ -10,11 +10,19 @@ import UIKit
 
 class ComposeVC: UIViewController {
 
+    @IBOutlet weak var editTitleButton: UIImageView!
+    @IBOutlet weak var editMessageButton: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
+        editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
+        editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
         
+        editTitleButton.layer.masksToBounds = true
+        editMessageButton.layer.masksToBounds = true
         self.setNeedsStatusBarAppearanceUpdate()
         
         let bgGradient = CAGradientLayer()
