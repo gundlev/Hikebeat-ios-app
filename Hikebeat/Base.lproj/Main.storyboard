@@ -264,7 +264,7 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                             <constraint firstItem="qXy-BD-ZAV" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="v8N-1k-9xf"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Hikebeat" id="1gg-GY-TSO"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Hikebeat" id="1gg-GY-TSO"/>
                     <connections>
                         <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
                         <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>

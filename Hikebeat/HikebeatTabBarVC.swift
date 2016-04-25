@@ -83,12 +83,12 @@ class HikebeatTabBarVC: UITabBarController {
     }
     
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
-        if item.tag != 1 {
-            // Reverse, the button is actually not pressed here.
-            centerButton.selected = true
-        } else {
+        if item.tag == 2 {
             // Reverse, the button is actually pressed here.
             centerButton.selected = false
+        } else {
+            // Reverse, the button is actually not pressed here.
+            centerButton.selected = true
         }
     }
 }
