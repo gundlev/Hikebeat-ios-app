@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -167,7 +168,9 @@
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" identifier="titleH" id="7sO-c7-bXR"/>
+
+                                            <constraint firstAttribute="width" secondItem="wbM-IN-8hJ" secondAttribute="height" multiplier="1:1" id="9St-7K-Pwu"/>
+
                                             <constraint firstAttribute="width" constant="66" id="oMQ-ma-YBG"/>
                                         </constraints>
                                     </imageView>
@@ -181,8 +184,8 @@
                                         <rect key="frame" x="267" y="163" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="CLL-Vz-bT5"/>
                                             <constraint firstAttribute="width" constant="66" id="RgB-0O-47l"/>
+                                            <constraint firstAttribute="width" secondItem="RlS-Ze-LDi" secondAttribute="height" multiplier="1:1" id="lnJ-Fg-IJb"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a message to your beat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shy-P5-5uK">
@@ -199,14 +202,14 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="66" id="HZD-c5-j4V"/>
-                                                    <constraint firstAttribute="height" constant="66" id="Pz3-JB-0Tj"/>
+                                                    <constraint firstAttribute="width" secondItem="d7h-Bj-nNP" secondAttribute="height" multiplier="1:1" id="QIH-Zl-JbU"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeMemo" translatesAutoresizingMaskIntoConstraints="NO" id="b48-cP-b37">
                                                 <rect key="frame" x="353" y="0.0" width="66" height="66"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="66" id="6M7-Ky-82y"/>
+                                                    <constraint firstAttribute="width" secondItem="b48-cP-b37" secondAttribute="height" multiplier="1:1" id="Yvs-tn-HAO"/>
                                                     <constraint firstAttribute="width" constant="66" id="xah-CF-ZuH"/>
                                                 </constraints>
                                             </imageView>
@@ -214,7 +217,7 @@
                                                 <rect key="frame" x="135" y="0.0" width="66" height="66"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="66" id="Ho5-7F-leu"/>
+                                                    <constraint firstAttribute="width" secondItem="CQp-Sb-IZE" secondAttribute="height" multiplier="1:1" id="4P5-R8-Hz4"/>
                                                     <constraint firstAttribute="width" constant="66" id="akp-xJ-Lqt"/>
                                                 </constraints>
                                             </imageView>
@@ -281,6 +284,7 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                                         </state>
                                         <connections>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="FAD-i2-ahx"/>
+                                            <segue destination="wvg-qm-eID" kind="presentation" modalPresentationStyle="overFullScreen" id="XuP-f7-P6L"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -342,6 +346,57 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIX-JQ-ZIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073" y="261"/>
+        </scene>
+        <!--ModalVC-->
+        <scene sceneID="VCe-90-Tj5">
+            <objects>
+                <viewController id="wvg-qm-eID" customClass="ModalVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wsp-BS-zEX"/>
+                        <viewControllerLayoutGuide type="bottom" id="2kV-2N-0df"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cIy-qo-bkY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VOr-ec-b9c">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="lu1-Eu-zfv">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="S6I-8M-NTv">
+                                            <rect key="frame" x="200" y="200" width="200" height="200"/>
+                                            <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="200" id="42M-bJ-W89"/>
+                                                <constraint firstAttribute="width" constant="200" id="bwg-5D-vFz"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="S6I-8M-NTv" firstAttribute="centerX" secondItem="lu1-Eu-zfv" secondAttribute="centerX" id="DgG-xL-hdh"/>
+                                        <constraint firstItem="S6I-8M-NTv" firstAttribute="centerY" secondItem="lu1-Eu-zfv" secondAttribute="centerY" id="y1b-dP-Fsh"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="VOr-ec-b9c" secondAttribute="trailing" id="YEz-Hr-CO6"/>
+                            <constraint firstItem="VOr-ec-b9c" firstAttribute="top" secondItem="cIy-qo-bkY" secondAttribute="top" id="bUK-Dd-0JV"/>
+                            <constraint firstItem="VOr-ec-b9c" firstAttribute="leading" secondItem="cIy-qo-bkY" secondAttribute="leading" id="ih2-uQ-Dxa"/>
+                            <constraint firstItem="VOr-ec-b9c" firstAttribute="bottom" secondItem="2kV-2N-0df" secondAttribute="top" id="udq-5c-qj2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="infoContainer" destination="S6I-8M-NTv" id="eKS-EN-Rle"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h9Q-tb-FsQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1896" y="269"/>
         </scene>
         <!--Profile-->
         <scene sceneID="yoW-hG-QgH">
