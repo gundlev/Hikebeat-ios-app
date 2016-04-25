@@ -5,6 +5,27 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Hikebeat Tab BarVC-->
+        <scene sceneID="VRi-Ni-lqf">
+            <objects>
+                <tabBarController id="nkA-us-yFp" customClass="HikebeatTabBarVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="vPe-m9-HxJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="irH-Nv-aW2" kind="relationship" relationship="viewControllers" id="ZrY-DI-sTk"/>
+                        <segue destination="0dK-cT-TKd" kind="relationship" relationship="viewControllers" id="26g-vY-ADJ"/>
+                        <segue destination="jTg-CM-etK" kind="relationship" relationship="viewControllers" id="yXv-Gg-MpA"/>
+                        <segue destination="Ce8-il-UYv" kind="relationship" relationship="viewControllers" id="s5g-B7-GVb"/>
+                        <segue destination="5TD-rD-hXk" kind="relationship" relationship="viewControllers" id="pnC-fX-vY8"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wm8-dL-nCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="377" y="261"/>
+        </scene>
         <!--Loading View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -65,14 +86,52 @@
                         <outlet property="logoImageView" destination="DyZ-yJ-k2O" id="rkQ-ho-lJV"/>
                         <outlet property="patternImageView" destination="FlJ-UO-mEi" id="GIa-XU-Ut3"/>
                         <outlet property="treesImageView" destination="gF8-rA-VEV" id="Ufh-Ue-Qfd"/>
-                        <segue destination="jTg-CM-etK" kind="show" identifier="showMain" animates="NO" id="oql-dD-idx"/>
+                        <segue destination="nkA-us-yFp" kind="show" identifier="showMain" id="5ke-jW-l81"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="261"/>
+            <point key="canvasLocation" x="-335" y="261"/>
         </scene>
-        <!--ComposeVC-->
+        <!--Journeys-->
+        <scene sceneID="9iH-TT-kaj">
+            <objects>
+                <viewController id="irH-Nv-aW2" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qg3-ih-eT9"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tsi-b8-qDY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wyu-lg-lkc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Journeys" id="RTY-4G-wUM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cgr-zW-uBQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1065" y="-1162"/>
+        </scene>
+        <!--Social-->
+        <scene sceneID="HIm-Y9-J8d">
+            <objects>
+                <viewController id="0dK-cT-TKd" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cXB-yg-Ilx"/>
+                        <viewControllerLayoutGuide type="bottom" id="gsu-6Y-U1W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uVe-3f-uGp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Social" id="b9X-ZG-6g4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aDu-nD-Ivy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1073" y="-469"/>
+        </scene>
+        <!--Hikebeat-->
         <scene sceneID="Ljw-Ya-9kg">
             <objects>
                 <viewController id="jTg-CM-etK" customClass="ComposeVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
@@ -98,10 +157,10 @@
                                     <constraint firstItem="VZy-c4-7Bm" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="26" id="b6w-2E-cKq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
                                 <rect key="frame" x="0.0" y="84" width="600" height="516"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
                                         <rect key="frame" x="23" y="23" width="554" height="470"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
@@ -205,6 +264,7 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                             <constraint firstItem="qXy-BD-ZAV" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="v8N-1k-9xf"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Hikebeat" id="1gg-GY-TSO"/>
                     <connections>
                         <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
                         <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>
@@ -212,7 +272,45 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIX-JQ-ZIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="261"/>
+            <point key="canvasLocation" x="1073" y="261"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="yoW-hG-QgH">
+            <objects>
+                <viewController id="Ce8-il-UYv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0bN-rx-l9L"/>
+                        <viewControllerLayoutGuide type="bottom" id="ia4-QG-iY2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cFW-y2-MvI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" id="NRN-J5-qFu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D4e-9o-jZa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1069" y="990"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="ErW-59-io9">
+            <objects>
+                <viewController id="5TD-rD-hXk" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="T3s-l4-WOE"/>
+                        <viewControllerLayoutGuide type="bottom" id="wde-JG-xcm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zeC-On-bTA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" id="N0b-GS-vGL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fou-vT-eas" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1069" y="1693"/>
         </scene>
     </scenes>
     <resources>
