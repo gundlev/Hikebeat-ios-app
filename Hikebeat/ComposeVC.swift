@@ -10,6 +10,12 @@ import UIKit
 
 class ComposeVC: UIViewController {
 
+    var titleText = ""
+    var messageText = ""
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    
     @IBOutlet weak var editTitleButton: UIImageView!
     @IBOutlet weak var editMessageButton: UIImageView!
     @IBOutlet weak var editImageButton: UIImageView!
@@ -19,11 +25,12 @@ class ComposeVC: UIViewController {
     
     @IBAction func sendBeat(sender: AnyObject) {
     
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
 
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
@@ -68,22 +75,76 @@ class ComposeVC: UIViewController {
     }
     
     func titleButtonTapped() {
-        
+        print("title")
+        editTitleButton.layer.borderWidth = 4
+        editTitleButton.layer.borderColor = greenColor.CGColor
     }
 
     func memoButtonTapped() {
-        
+        print("memo")
+        editMemoButton.layer.borderWidth = 4
+        editMemoButton.layer.borderColor = greenColor.CGColor
     }
     
     func imageButtonTapped() {
-        
+        print("image")
+        editImageButton.layer.borderWidth = 4
+        editImageButton.layer.borderColor = greenColor.CGColor
     }
     
     func videoButtonTapped() {
-        
+        print("video")
+        editVideoButton.layer.borderWidth = 4
+        editVideoButton.layer.borderColor = greenColor.CGColor
     }
     
     func messageButtonTapped() {
+        print("message")
+        editMessageButton.layer.borderWidth = 4
+        editMessageButton.layer.borderColor = greenColor.CGColor
+    }
+    
+    
+    /**
+     function to get the timestamp and location.
+     
+     - parameters:
+     - nil
+     
+     - returns: Bundle with 4 strings: timestamp, latitude, longitude, altitude.
+     */
+    func getTimeAndLocation() -> (timestamp: String, latitude: String, longitude: String, altitude: String)? {
+        let t = String(NSDate().timeIntervalSince1970)
+        let e = t.rangeOfString(".")
+        let timestamp = t.substringToIndex((e?.startIndex)!)
+        //        let timeStamp = NSDateFormatter()
+        //        timeStamp.dateFormat = "yyyyMMddHHmmss"
+        //        let timeCapture = timeStamp.stringFromDate(currentDate)
         
+        var longitude = ""
+        var latitude = ""
+        var altitude = ""
+        if let location = appDelegate.getLocation() {
+            let gpsCheck = userDefaults.boolForKey("GPS-check")
+            if gpsCheck {
+                // Now performing gps check
+                if location.verticalAccuracy > 150 || location.horizontalAccuracy > 150 {
+                    // TODO: modal to tell the user that the gps signal is too poor.
+                    return nil
+                } else {
+                    longitude = String(location.coordinate.longitude)
+                    latitude = String(location.coordinate.latitude)
+                    altitude = String(round(location.altitude))
+                    return (timestamp, latitude, longitude, altitude)
+                }
+            } else {
+                longitude = String(location.coordinate.longitude)
+                latitude = String(location.coordinate.latitude)
+                altitude = String(round(location.altitude))
+                return (timestamp, latitude, longitude, altitude)
+            }
+        } else {
+            return nil
+        }
     }
 }

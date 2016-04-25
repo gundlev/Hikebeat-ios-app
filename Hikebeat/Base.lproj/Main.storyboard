@@ -167,7 +167,7 @@
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="7sO-c7-bXR"/>
+                                            <constraint firstAttribute="height" constant="66" identifier="titleH" id="7sO-c7-bXR"/>
                                             <constraint firstAttribute="width" constant="66" id="oMQ-ma-YBG"/>
                                         </constraints>
                                     </imageView>

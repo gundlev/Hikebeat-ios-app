@@ -12,22 +12,21 @@ import UIKit
 class HikebeatTabBarVC: UITabBarController {
     
     let centerButton = UIButton(type: UIButtonType.Custom)
-    
+    let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     
     override func viewDidLoad() {
         addCenterButton()
         self.selectedIndex = 2
         self.tabBar.barTintColor = UIColor(red:0.082, green:0.404, blue:0.424, alpha:1.00)
-        self.tabBar.tintColor = UIColor(red:176/255.0, green:250/255.0, blue:0, alpha:1.00)
+        self.tabBar.tintColor = greenColor
         self.tabBar.translucent = false
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:176/255.0, green:250/255.0, blue:0, alpha:1.00)], forState: UIControlState.Selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: greenColor], forState: UIControlState.Selected)
        
         
         let items = self.tabBar.items
         
         for item in items! {
-            print(item.title)
             switch item.title! {
             case "Journeys":
                 item.selectedImage = UIImage(named:"JourneysSelected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
@@ -77,7 +76,6 @@ class HikebeatTabBarVC: UITabBarController {
     }
     
     func centerButtonPressed() {
-        print("button pressed")
         self.selectedIndex = 2
         // Reverse, the button is actually pressed here.
         centerButton.selected = false
