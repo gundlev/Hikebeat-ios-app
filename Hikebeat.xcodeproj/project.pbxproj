@@ -100,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		85CA7DBD1CCE7BEC00A4F249 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				8562639D1CC8E396008562FE /* Reachability.swift */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		85F2B4241CC4DD33004704F3 = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +164,7 @@
 		85F2B46C1CC4E353004704F3 /* Frameworks and Libs */ = {
 			isa = PBXGroup;
 			children = (
-				8562639D1CC8E396008562FE /* Reachability.swift */,
+				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
 				85F2B45E1CC4DE96004704F3 /* Alamofire.framework */,
 				85F2B4601CC4DE96004704F3 /* Realm.framework */,
 				85F2B4611CC4DE96004704F3 /* RealmSwift.framework */,

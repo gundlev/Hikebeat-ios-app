@@ -62,7 +62,7 @@ class HikebeatTabBarVC: UITabBarController {
         centerButton.setBackgroundImage(unselected, forState: UIControlState.Selected)
         centerButton.adjustsImageWhenHighlighted = false
         centerButton.selected = false
-        centerButton.addTarget(self, action: #selector(HikebeatTabBarVC.centerButtonPressed), forControlEvents: UIControlEvents.TouchDown)
+        centerButton.addTarget(self, action: #selector(centerButtonPressed), forControlEvents: UIControlEvents.TouchDown)
         
         let heightDifference = self.tabBar.frame.size.height/2;
         
