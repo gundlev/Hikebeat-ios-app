@@ -12,6 +12,7 @@ class ComposeVC: UIViewController {
 
     var titleText = ""
     var messageText = ""
+    var audioHasBeenRecordedForThisBeat = false
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
