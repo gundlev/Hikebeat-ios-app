@@ -157,11 +157,11 @@
                                     <constraint firstItem="VZy-c4-7Bm" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="26" id="b6w-2E-cKq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
-                                <rect key="frame" x="0.0" y="84" width="600" height="516"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
+                                <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
-                                        <rect key="frame" x="23" y="23" width="554" height="470"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
+                                        <rect key="frame" x="23" y="23" width="554" height="421"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
@@ -178,7 +178,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-Ze-LDi">
-                                        <rect key="frame" x="267" y="185" width="66" height="66"/>
+                                        <rect key="frame" x="267" y="163" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="CLL-Vz-bT5"/>
@@ -186,13 +186,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a message to your beat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shy-P5-5uK">
-                                        <rect key="frame" x="210" y="267" width="181" height="17"/>
+                                        <rect key="frame" x="210" y="245" width="181" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8E-Uu-eWH">
-                                        <rect key="frame" x="23" y="314" width="554" height="125"/>
+                                        <rect key="frame" x="23" y="292" width="554" height="125"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeVideo" translatesAutoresizingMaskIntoConstraints="NO" id="d7h-Bj-nNP">
                                                 <rect key="frame" x="244" y="0.0" width="66" height="66"/>
@@ -241,7 +241,7 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                                     <constraint firstAttribute="trailing" secondItem="ugQ-0V-XXL" secondAttribute="trailing" id="pVT-ft-lie"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="ugQ-0V-XXL" secondAttribute="bottom" constant="15" id="pxO-is-68O"/>
                                     <constraint firstItem="M8E-Uu-eWH" firstAttribute="centerX" secondItem="RCs-Fy-3rY" secondAttribute="centerX" id="vU4-Af-peR"/>
-                                    <constraint firstItem="RlS-Ze-LDi" firstAttribute="top" secondItem="8KH-cm-xuQ" secondAttribute="bottom" constant="60" id="wKY-hv-ruf"/>
+                                    <constraint firstItem="RlS-Ze-LDi" firstAttribute="top" secondItem="8KH-cm-xuQ" secondAttribute="bottom" constant="38" id="wKY-hv-ruf"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
