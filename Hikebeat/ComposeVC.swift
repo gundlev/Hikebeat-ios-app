@@ -17,6 +17,10 @@ class ComposeVC: UIViewController {
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
     
+    @IBAction func sendBeat(sender: AnyObject) {
+    
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,9 +28,18 @@ class ComposeVC: UIViewController {
 
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
+        editVideoButton.layer.cornerRadius = editVideoButton.bounds.width/2
+        editMemoButton.layer.cornerRadius = editMemoButton.bounds.width/2
+        editImageButton.layer.cornerRadius = editImageButton.bounds.width/2
+        sendBeatButton.layer.cornerRadius = sendBeatButton.bounds.height/2
         
         editTitleButton.layer.masksToBounds = true
         editMessageButton.layer.masksToBounds = true
+        editImageButton.layer.masksToBounds = true
+        editVideoButton.layer.masksToBounds = true
+        editMemoButton.layer.masksToBounds = true
+        sendBeatButton.layer.masksToBounds = true
+        
         self.setNeedsStatusBarAppearanceUpdate()
         
         let bgGradient = CAGradientLayer()
