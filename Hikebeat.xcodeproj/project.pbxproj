@@ -25,6 +25,7 @@
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
+		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
+				E1B413891CCE864F00B8768B /* ModalVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
+				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
