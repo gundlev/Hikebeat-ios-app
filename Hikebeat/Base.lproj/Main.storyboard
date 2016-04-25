@@ -168,9 +168,7 @@
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-
                                             <constraint firstAttribute="width" secondItem="wbM-IN-8hJ" secondAttribute="height" multiplier="1:1" id="9St-7K-Pwu"/>
-
                                             <constraint firstAttribute="width" constant="66" id="oMQ-ma-YBG"/>
                                         </constraints>
                                     </imageView>
