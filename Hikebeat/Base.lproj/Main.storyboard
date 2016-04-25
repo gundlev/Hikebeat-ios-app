@@ -140,14 +140,14 @@
                         <viewControllerLayoutGuide type="bottom" id="hEu-cN-RCu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9hh-tn-4nz">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-BD-ZAV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="VZy-c4-7Bm">
-                                        <rect key="frame" x="227" y="26" width="146" height="34"/>
+                                        <rect key="frame" x="134" y="26" width="146" height="34"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.082352941176470587" green="0.40392156862745099" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
@@ -158,13 +158,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
-                                <rect key="frame" x="0.0" y="84" width="600" height="467"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="603"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
-                                        <rect key="frame" x="23" y="23" width="554" height="421"/>
+                                        <rect key="frame" x="23" y="23" width="368" height="557"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
-                                        <rect key="frame" x="267" y="26" width="66" height="66"/>
+                                        <rect key="frame" x="174" y="26" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="7sO-c7-bXR"/>
@@ -172,13 +172,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a title to your beat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KH-cm-xuQ">
-                                        <rect key="frame" x="226" y="108" width="147.5" height="17"/>
+                                        <rect key="frame" x="133" y="108" width="147.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeMessage" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-Ze-LDi">
-                                        <rect key="frame" x="267" y="163" width="66" height="66"/>
+                                        <rect key="frame" x="174" y="163" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="CLL-Vz-bT5"/>
@@ -186,26 +186,60 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a message to your beat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shy-P5-5uK">
-                                        <rect key="frame" x="210" y="245" width="181" height="17"/>
+                                        <rect key="frame" x="117" y="245" width="181" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8E-Uu-eWH">
-                                        <rect key="frame" x="23" y="292" width="554" height="125"/>
+                                        <rect key="frame" x="23" y="292" width="368" height="125"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeVideo" translatesAutoresizingMaskIntoConstraints="NO" id="d7h-Bj-nNP">
-                                                <rect key="frame" x="244" y="0.0" width="66" height="66"/>
+                                                <rect key="frame" x="151" y="0.0" width="66" height="66"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="66" id="HZD-c5-j4V"/>
                                                     <constraint firstAttribute="height" constant="66" id="Pz3-JB-0Tj"/>
                                                 </constraints>
                                             </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeMemo" translatesAutoresizingMaskIntoConstraints="NO" id="b48-cP-b37">
+                                                <rect key="frame" x="260" y="0.0" width="66" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="66" id="6M7-Ky-82y"/>
+                                                    <constraint firstAttribute="width" constant="66" id="xah-CF-ZuH"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposePhoto" translatesAutoresizingMaskIntoConstraints="NO" id="CQp-Sb-IZE">
+                                                <rect key="frame" x="42" y="0.0" width="66" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="66" id="Ho5-7F-leu"/>
+                                                    <constraint firstAttribute="width" constant="66" id="akp-xJ-Lqt"/>
+                                                </constraints>
+                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOd-RM-SXz">
-                                                <rect key="frame" x="228" y="82" width="97" height="34"/>
+                                                <rect key="frame" x="135" y="82" width="97" height="34"/>
                                                 <string key="text" base64-UTF8="YES">
 QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
+</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IT0-dJ-chk">
+                                                <rect key="frame" x="242" y="82" width="102" height="34"/>
+                                                <string key="text" base64-UTF8="YES">
+QWRkIGEgbWVtbyB0byAREREREQ15b3VyIGJlYXQ
+</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DtK-Xh-IeB">
+                                                <rect key="frame" x="22" y="82" width="107" height="34"/>
+                                                <string key="text" base64-UTF8="YES">
+QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
 </string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -215,14 +249,41 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                                         <constraints>
                                             <constraint firstItem="kOd-RM-SXz" firstAttribute="centerX" secondItem="M8E-Uu-eWH" secondAttribute="centerX" constant="-1" id="1YC-u0-rvC"/>
                                             <constraint firstItem="d7h-Bj-nNP" firstAttribute="centerX" secondItem="M8E-Uu-eWH" secondAttribute="centerX" id="3eP-lx-rYq"/>
+                                            <constraint firstItem="IT0-dJ-chk" firstAttribute="top" secondItem="b48-cP-b37" secondAttribute="bottom" constant="16" id="45T-lO-2iD"/>
+                                            <constraint firstItem="b48-cP-b37" firstAttribute="top" secondItem="M8E-Uu-eWH" secondAttribute="top" id="8h1-u0-WAF"/>
                                             <constraint firstAttribute="height" constant="125" id="G0v-hD-dad"/>
+                                            <constraint firstItem="d7h-Bj-nNP" firstAttribute="leading" secondItem="CQp-Sb-IZE" secondAttribute="trailing" constant="43" id="H4S-xQ-LQs"/>
+                                            <constraint firstItem="b48-cP-b37" firstAttribute="centerX" secondItem="IT0-dJ-chk" secondAttribute="centerX" id="UWL-u1-XtR"/>
+                                            <constraint firstItem="DtK-Xh-IeB" firstAttribute="top" secondItem="CQp-Sb-IZE" secondAttribute="bottom" constant="16" id="XxX-Gg-ACc"/>
                                             <constraint firstItem="kOd-RM-SXz" firstAttribute="top" secondItem="d7h-Bj-nNP" secondAttribute="bottom" constant="16" id="Zy5-pc-6QE"/>
+                                            <constraint firstItem="CQp-Sb-IZE" firstAttribute="top" secondItem="M8E-Uu-eWH" secondAttribute="top" id="cLW-df-q14"/>
                                             <constraint firstItem="d7h-Bj-nNP" firstAttribute="top" secondItem="M8E-Uu-eWH" secondAttribute="top" id="cPE-cG-Iv8"/>
+                                            <constraint firstItem="DtK-Xh-IeB" firstAttribute="centerX" secondItem="CQp-Sb-IZE" secondAttribute="centerX" id="olp-DG-kLt"/>
+                                            <constraint firstItem="b48-cP-b37" firstAttribute="leading" secondItem="d7h-Bj-nNP" secondAttribute="trailing" constant="43" id="pKD-6E-IOC"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-bk-OOE">
+                                        <rect key="frame" x="65" y="453" width="283" height="39.5"/>
+                                        <color key="backgroundColor" red="0.74117647058823533" green="0.95686274509803915" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="283" id="Vhb-nJ-ThW"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Send">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="24" name="Helvetica-Bold"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="ahQ-bk-OOE" firstAttribute="centerX" secondItem="RCs-Fy-3rY" secondAttribute="centerX" id="2oM-ew-XIT"/>
                                     <constraint firstItem="ugQ-0V-XXL" firstAttribute="leading" secondItem="RCs-Fy-3rY" secondAttribute="leadingMargin" constant="15" id="DFj-ih-njL"/>
+                                    <constraint firstItem="ahQ-bk-OOE" firstAttribute="top" secondItem="M8E-Uu-eWH" secondAttribute="bottom" constant="36" id="DHz-Xz-Dns"/>
                                     <constraint firstItem="8KH-cm-xuQ" firstAttribute="centerX" secondItem="RCs-Fy-3rY" secondAttribute="centerX" id="EbC-ys-hYy"/>
                                     <constraint firstItem="wbM-IN-8hJ" firstAttribute="top" secondItem="RCs-Fy-3rY" secondAttribute="top" constant="26" id="HzX-KV-BYJ"/>
                                     <constraint firstItem="8KH-cm-xuQ" firstAttribute="top" secondItem="wbM-IN-8hJ" secondAttribute="bottom" constant="16" id="RJd-Sf-ngL"/>
@@ -265,9 +326,14 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" tag="2" title="Hikebeat" id="1gg-GY-TSO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="editImageButton" destination="CQp-Sb-IZE" id="Qzx-AJ-M9C"/>
+                        <outlet property="editMemoButton" destination="b48-cP-b37" id="nOs-s5-wM0"/>
                         <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
                         <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>
+                        <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
+                        <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIX-JQ-ZIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -315,7 +381,9 @@ QWRkIGEgdmlkZW8gdG8gERERERENeW91ciBiZWF0A
     </scenes>
     <resources>
         <image name="ComposeBG" width="330" height="488"/>
+        <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
+        <image name="ComposePhoto" width="40" height="31"/>
         <image name="ComposeTitle" width="41" height="38"/>
         <image name="ComposeVideo" width="39" height="31"/>
         <image name="HikebeatTypo" width="146" height="34"/>

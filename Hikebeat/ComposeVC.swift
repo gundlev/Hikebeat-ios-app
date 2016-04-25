@@ -12,6 +12,10 @@ class ComposeVC: UIViewController {
 
     @IBOutlet weak var editTitleButton: UIImageView!
     @IBOutlet weak var editMessageButton: UIImageView!
+    @IBOutlet weak var editImageButton: UIImageView!
+    @IBOutlet weak var sendBeatButton: UIButton!
+    @IBOutlet weak var editMemoButton: UIImageView!
+    @IBOutlet weak var editVideoButton: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
