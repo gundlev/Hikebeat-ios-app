@@ -62,6 +62,13 @@ class ComposeVC: UIViewController {
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
         
     }
+    
+    @IBAction func unwindToCompose(sender: UIStoryboardSegue)
+    {
+//        let sourceViewController = sender.sourceViewController
+        // Pull any data from the view controller which initiated the unwind segue.
+    }
+
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent

@@ -16,8 +16,11 @@ class ModalVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        infoContainer.layer.cornerRadius = infoContainer.bounds.height/4
+        infoContainer.layer.cornerRadius = infoContainer.bounds.height/6
         infoContainer.layer.masksToBounds = true
+        
+        _ = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
+        
         
     }
 
@@ -26,6 +29,9 @@ class ModalVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func backToCompose(){
+        performSegueWithIdentifier("goBackToCompose", sender: self)
+    }
 
     /*
     // MARK: - Navigation

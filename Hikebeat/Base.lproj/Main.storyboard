@@ -282,7 +282,7 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                                         </state>
                                         <connections>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="FAD-i2-ahx"/>
-                                            <segue destination="wvg-qm-eID" kind="presentation" modalPresentationStyle="overFullScreen" id="XuP-f7-P6L"/>
+                                            <segue destination="wvg-qm-eID" kind="presentation" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="XuP-f7-P6L"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -363,12 +363,12 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="S6I-8M-NTv">
-                                            <rect key="frame" x="200" y="200" width="200" height="200"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="S6I-8M-NTv">
+                                            <rect key="frame" x="185" y="185" width="230" height="230"/>
                                             <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="200" id="42M-bJ-W89"/>
-                                                <constraint firstAttribute="width" constant="200" id="bwg-5D-vFz"/>
+                                                <constraint firstAttribute="width" secondItem="S6I-8M-NTv" secondAttribute="height" multiplier="1:1" id="GF3-VG-R1V"/>
+                                                <constraint firstAttribute="width" constant="230" id="bwg-5D-vFz"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
@@ -390,9 +390,11 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                     </view>
                     <connections>
                         <outlet property="infoContainer" destination="S6I-8M-NTv" id="eKS-EN-Rle"/>
+                        <segue destination="THz-EQ-umx" kind="unwind" identifier="goBackToCompose" unwindAction="unwindToCompose:" id="Fvg-oV-JcM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9Q-tb-FsQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="THz-EQ-umx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1896" y="269"/>
         </scene>
