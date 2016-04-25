@@ -168,9 +168,7 @@
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-
                                             <constraint firstAttribute="width" secondItem="wbM-IN-8hJ" secondAttribute="height" multiplier="1:1" id="9St-7K-Pwu"/>
-
                                             <constraint firstAttribute="width" constant="66" id="oMQ-ma-YBG"/>
                                         </constraints>
                                     </imageView>
@@ -341,11 +339,102 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                         <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>
                         <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
+                        <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editTitleModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIX-JQ-ZIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073" y="261"/>
+        </scene>
+        <!--Edit TitleVC-->
+        <scene sceneID="sdX-Hq-OKK">
+            <objects>
+                <viewController id="5g0-Vz-4gM" customClass="EditTitleVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zyi-C6-Y5L"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yah-zf-976"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sdU-5g-MbH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8I4-4N-ZQL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Qwc-eQ-1K7">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="EditTitle" translatesAutoresizingMaskIntoConstraints="NO" id="r3M-bD-SN1">
+                                            <rect key="frame" x="251" y="41" width="99" height="99"/>
+                                            <color key="tintColor" red="0.92559773489932884" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="99" id="4aa-GO-eMK"/>
+                                                <constraint firstAttribute="width" constant="99" id="NTU-cp-eDF"/>
+                                            </constraints>
+                                        </imageView>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PY1-H3-BuX">
+                                            <rect key="frame" x="159" y="187" width="283" height="48"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="283" id="XyX-pN-SHr"/>
+                                                <constraint firstAttribute="height" constant="48" id="rps-p8-wjc"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.32941176470588235" green="0.7803921568627451" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ank-bs-PHJ">
+                                            <rect key="frame" x="159" y="257" width="283" height="46"/>
+                                            <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="283" id="T63-j0-tlp"/>
+                                                <constraint firstAttribute="height" constant="46" id="wsK-rg-Z0f"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment content="Save">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="24" name="Helvetica-Bold"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                            </state>
+                                            <connections>
+                                                <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="xoa-Ph-dgb"/>
+                                                <segue destination="rF9-PC-cE1" kind="unwind" unwindAction="unwindToCompose:" id="yUl-Mt-9Ze"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="r3M-bD-SN1" firstAttribute="top" secondItem="Qwc-eQ-1K7" secondAttribute="top" constant="36" id="5ye-AI-wWs"/>
+                                        <constraint firstItem="PY1-H3-BuX" firstAttribute="top" secondItem="r3M-bD-SN1" secondAttribute="bottom" constant="47" id="D79-Vr-c39"/>
+                                        <constraint firstItem="PY1-H3-BuX" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="JW9-22-ZXq"/>
+                                        <constraint firstItem="r3M-bD-SN1" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" constant="0.5" id="QBF-Wa-h14"/>
+                                        <constraint firstItem="ank-bs-PHJ" firstAttribute="top" secondItem="PY1-H3-BuX" secondAttribute="bottom" constant="27" id="uaI-Pt-2On"/>
+                                        <constraint firstItem="ank-bs-PHJ" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="zPq-es-mux"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8I4-4N-ZQL" secondAttribute="trailing" id="JJg-MC-rJi"/>
+                            <constraint firstItem="8I4-4N-ZQL" firstAttribute="leading" secondItem="sdU-5g-MbH" secondAttribute="leading" id="Ts0-NA-cXD"/>
+                            <constraint firstItem="8I4-4N-ZQL" firstAttribute="top" secondItem="sdU-5g-MbH" secondAttribute="top" id="afL-V7-bEA"/>
+                            <constraint firstItem="8I4-4N-ZQL" firstAttribute="bottom" secondItem="Yah-zf-976" secondAttribute="top" id="zEI-C5-hYR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="saveButton" destination="ank-bs-PHJ" id="MgN-iw-zGh"/>
+                        <outlet property="titleField" destination="PY1-H3-BuX" id="2Ef-Fh-RfI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CaP-a0-Jc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="rF9-PC-cE1" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1889" y="-463"/>
         </scene>
         <!--ModalVC-->
         <scene sceneID="VCe-90-Tj5">
@@ -387,7 +476,7 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
                             <constraint firstAttribute="trailing" secondItem="VOr-ec-b9c" secondAttribute="trailing" id="YEz-Hr-CO6"/>
                             <constraint firstItem="VOr-ec-b9c" firstAttribute="top" secondItem="cIy-qo-bkY" secondAttribute="top" id="bUK-Dd-0JV"/>
                             <constraint firstItem="VOr-ec-b9c" firstAttribute="leading" secondItem="cIy-qo-bkY" secondAttribute="leading" id="ih2-uQ-Dxa"/>
-                            <constraint firstItem="VOr-ec-b9c" firstAttribute="bottom" secondItem="2kV-2N-0df" secondAttribute="top" id="udq-5c-qj2"/>
+                            <constraint firstItem="VOr-ec-b9c" firstAttribute="bottom" secondItem="2kV-2N-0df" secondAttribute="top" id="kxp-zV-PD6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -446,6 +535,7 @@ QWRkIGEgcGljdHVyZSB0byAREREREQ15b3VyIGJlYXQ
         <image name="ComposePhoto" width="40" height="31"/>
         <image name="ComposeTitle" width="41" height="38"/>
         <image name="ComposeVideo" width="39" height="31"/>
+        <image name="EditTitle" width="113" height="107"/>
         <image name="HikebeatTypo" width="146" height="34"/>
         <image name="outline" width="128" height="121"/>
         <image name="trees" width="270" height="270"/>

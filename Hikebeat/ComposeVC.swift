@@ -83,6 +83,8 @@ class ComposeVC: UIViewController {
     
     func titleButtonTapped() {
         print("title")
+        
+        performSegueWithIdentifier("editTitleModal", sender: self)
         editTitleButton.layer.borderWidth = 4
         editTitleButton.layer.borderColor = greenColor.CGColor
     }
