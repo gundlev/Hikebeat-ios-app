@@ -22,6 +22,7 @@ class HikebeatTabBarVC: UITabBarController {
         self.tabBar.translucent = false
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red:176/255.0, green:250/255.0, blue:0, alpha:1.00)], forState: UIControlState.Selected)
+       
         
         let items = self.tabBar.items
         
@@ -63,7 +64,7 @@ class HikebeatTabBarVC: UITabBarController {
         centerButton.selected = false
         centerButton.addTarget(self, action: #selector(HikebeatTabBarVC.centerButtonPressed), forControlEvents: UIControlEvents.TouchDown)
         
-        let heightDifference = self.tabBar.frame.size.height/1.9;
+        let heightDifference = self.tabBar.frame.size.height/2;
         
         var center:CGPoint = self.tabBar.center;
         center.y = center.y - heightDifference;
@@ -90,5 +91,6 @@ class HikebeatTabBarVC: UITabBarController {
             // Reverse, the button is actually not pressed here.
             centerButton.selected = true
         }
+        
     }
 }
