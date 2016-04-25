@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
+		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
 		85F2B4361CC4DD33004704F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4341CC4DD33004704F3 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
+				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
 			);
 			name = Controller;
@@ -346,6 +349,7 @@
 			files = (
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
+				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
