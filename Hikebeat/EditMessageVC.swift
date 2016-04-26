@@ -1,41 +1,50 @@
 //
-//  EditTitleVC.swift
+//  EditMessageVC.swift
 //  Hikebeat
 //
-//  Created by Dimitar Gyurov on 4/25/16.
+//  Created by Dimitar Gyurov on 4/26/16.
 //  Copyright © 2016 Niklas Gundlev. All rights reserved.
 //
 
 import UIKit
 
-class EditTitleVC: UIViewController, UITextFieldDelegate {
+class EditMessageVC: UIViewController, UITextViewDelegate {
 
-    @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var messageField: UITextView!
+    var placeholderLabel : UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
 
-        
-        titleField.layer.cornerRadius = titleField.bounds.height/2
+        messageField.layer.cornerRadius = messageField.bounds.height/8
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
-
-        titleField.layer.masksToBounds = true
+        
+        messageField.layer.masksToBounds = true
         saveButton.layer.masksToBounds = true
         
-        let paddingView = UIView(frame: CGRectMake(0, 0, 15, self.titleField.frame.height))
-        titleField.leftView = paddingView
-        titleField.leftViewMode = UITextFieldViewMode.Always
+        messageField.textContainerInset = UIEdgeInsetsMake(12, 12, 12, 12)
         
-        titleField.rightView = paddingView
-        titleField.rightViewMode = UITextFieldViewMode.Always
-
-        // Do any additional setup after loading the view.
         
-        self.titleField.delegate = self;
-        titleField.becomeFirstResponder()
+        messageField.delegate = self
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "  Message"
+        placeholderLabel.font = UIFont.systemFontOfSize(messageField.font!.pointSize)
+        placeholderLabel.sizeToFit()
+        messageField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPointMake(5, messageField.font!.pointSize / 2)
+        placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
+        placeholderLabel.hidden = !messageField.text.isEmpty
+        
+        
+        messageField.becomeFirstResponder()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,20 +52,19 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
+    func textViewDidChange(textView: UITextView) {
+        placeholderLabel.hidden = !textView.text.isEmpty
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y = -130
+        self.view.frame.origin.y = -110
     }
     
     func keyboardWillHide(sender: NSNotification) {
         self.view.frame.origin.y = 0
     }
     
-    
+
     /*
     // MARK: - Navigation
 

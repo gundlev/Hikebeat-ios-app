@@ -27,6 +27,7 @@
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
 		E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */; };
+		E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
 		E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTitleVC.swift; sourceTree = "<group>"; };
+		E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMessageVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
 				E1B413891CCE864F00B8768B /* ModalVC.swift */,
 				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
+				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			files = (
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
+				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,

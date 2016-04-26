@@ -92,6 +92,8 @@ class ComposeVC: UIViewController {
 
     func memoButtonTapped() {
         print("memo")
+        
+       
         editMemoButton.layer.borderWidth = 4
         editMemoButton.layer.borderColor = greenColor.CGColor
     }
@@ -110,6 +112,8 @@ class ComposeVC: UIViewController {
     
     func messageButtonTapped() {
         print("message")
+        
+        performSegueWithIdentifier("editMessageModal", sender: self)
         editMessageButton.layer.borderWidth = 4
         editMessageButton.layer.borderColor = greenColor.CGColor
     }
