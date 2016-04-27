@@ -25,6 +25,12 @@ extension UIView {
         }
         self.layer.addAnimation(rotateAnimation, forKey: nil)
     }
+    
+    func animateConstraintWithDuration(duration: NSTimeInterval = 0.5, delay: NSTimeInterval = 0.0, options: UIViewAnimationOptions = [], completion: ((Bool) -> Void)? = nil) {
+        UIView.animateWithDuration(duration, delay:delay, options:options, animations: { [weak self] in
+            self?.layoutIfNeeded() ?? ()
+            }, completion: completion)
+    }
 }
 
 extension UIColor {

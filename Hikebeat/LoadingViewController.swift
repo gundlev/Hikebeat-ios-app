@@ -40,7 +40,7 @@ class LoadingViewController: UIViewController {
         let scaledimage = UIImage(CGImage: image!.CGImage!, scale: 4, orientation: image!.imageOrientation)
         patternImageView.backgroundColor = UIColor(patternImage: scaledimage)
         
-        self.patternImageView.center.x = 0
+        self.patternImageView.center.x = -70
         
         UIView.animateWithDuration(10, delay:0.15, options: [.Repeat, .CurveLinear], animations: {
             self.patternImageView.center.x = 174
@@ -86,6 +86,9 @@ class LoadingViewController: UIViewController {
     
     
     func timeToMoveOn() {
-        self.performSegueWithIdentifier("showMain", sender: self)
+            self.performSegueWithIdentifier("showLogin", sender: self)
+
+//        If already logged in:
+//        self.performSegueWithIdentifier("showMain", sender: self)
     }
 }

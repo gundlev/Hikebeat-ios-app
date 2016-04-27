@@ -22,9 +22,12 @@
 		85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4701CC4E3D2004704F3 /* Journey.swift */; };
 		85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4721CC4E4E0004704F3 /* Beat.swift */; };
 		85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4741CC4EF6A004704F3 /* Change.swift */; };
+		E111B0791CD0318800915401 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111B0781CD0318800915401 /* LoginVC.swift */; };
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
+		E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */; };
+		E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A301CD173A200C79B91 /* SettingsVC.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
 		E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */; };
 		E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */; };
@@ -69,9 +72,12 @@
 		85F2B4701CC4E3D2004704F3 /* Journey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
 		85F2B4721CC4E4E0004704F3 /* Beat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
 		85F2B4741CC4EF6A004704F3 /* Change.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
+		E111B0781CD0318800915401 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		E1AA1A301CD173A200C79B91 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
 		E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTitleVC.swift; sourceTree = "<group>"; };
 		E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMessageVC.swift; sourceTree = "<group>"; };
@@ -205,8 +211,11 @@
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
 				E1B413891CCE864F00B8768B /* ModalVC.swift */,
+				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
 				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
+				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
+				E1AA1A301CD173A200C79B91 /* SettingsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -364,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
@@ -373,9 +383,11 @@
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
+				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
+				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

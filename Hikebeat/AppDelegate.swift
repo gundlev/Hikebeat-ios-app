@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var locManager: CLLocationManager = CLLocationManager()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var reachability: Reachability!
-
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 //            realm.add(beat)
 //        }
 
-        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.startReachability()
         
         // Setting op locationManager
@@ -80,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             return false
         }
     }
+    
+    
     
     func startReachability() {
         print("startReachability")
