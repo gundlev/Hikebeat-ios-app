@@ -57,7 +57,7 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y = -110
+        self.view.frame.origin.y = -170
     }
     
     func keyboardWillHide(sender: NSNotification) {
