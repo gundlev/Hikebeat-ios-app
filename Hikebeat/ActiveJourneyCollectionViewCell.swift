@@ -12,6 +12,5 @@ class ActiveJourneyCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var previewJourneyImage: UIImageView!
     @IBOutlet weak var journeyTitleLabel: UILabel!
-    
-    
+    @IBOutlet weak var badgeImage: UIImageView!
 }
