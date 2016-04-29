@@ -27,6 +27,8 @@
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
+		E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */; };
+		E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */; };
 		E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */; };
 		E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A301CD173A200C79B91 /* SettingsVC.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
@@ -81,6 +83,8 @@
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E18991611CD380E400EC46B2 /* JourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewCell.swift; sourceTree = "<group>"; };
+		E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveJourneyCollectionViewCell.swift; sourceTree = "<group>"; };
+		E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		E1AA1A301CD173A200C79B91 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
@@ -228,6 +232,8 @@
 				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
 				E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */,
 				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
+				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
+				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -388,9 +394,11 @@
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
+				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
+				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,

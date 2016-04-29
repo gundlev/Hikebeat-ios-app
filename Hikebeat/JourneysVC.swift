@@ -11,6 +11,7 @@ import UIKit
 class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
+    @IBOutlet weak var activeJourneysCollectionView: UICollectionView!
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
 
@@ -19,6 +20,16 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
     
     let darkGreen = UIColor(hexString: "#15676C")
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        var insets = self.activeJourneysCollectionView.contentInset
+        let value = (self.view.frame.size.width - (self.activeJourneysCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
+        insets.left = value
+        insets.right = value
+        self.activeJourneysCollectionView.contentInset = insets
+        self.activeJourneysCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +74,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
 
     /*
     // MARK: - Navigation
@@ -74,4 +86,26 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     */
 
+}
+
+extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return jTitles.count
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ActiveJourneyCell", forIndexPath: indexPath) as! ActiveJourneyCollectionViewCell
+        
+        cell.journeyTitleLabel.text = jTitles[indexPath.row]
+        
+        cell.backgroundColor = UIColor.clearColor()
+        
+        return cell
+    }
+    
 }
