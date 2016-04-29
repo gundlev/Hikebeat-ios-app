@@ -34,31 +34,63 @@ extension UIView {
 }
 
 extension UIColor {
-    public convenience init?(hexString: String) {
+    public convenience init?(hexStringWithAlpha: String) {
         let r, g, b, a: CGFloat
         
-        if hexString.hasPrefix("#") {
-            let start = hexString.startIndex.advancedBy(1)
-            let hexColor = hexString.substringFromIndex(start)
+        var start = hexStringWithAlpha.startIndex
+        
+        if hexStringWithAlpha.hasPrefix("#") {
+            start = hexStringWithAlpha.startIndex.advancedBy(1)
+        }
+        
+        let hexColor = hexStringWithAlpha.substringFromIndex(start)
+        
+        if hexColor.characters.count == 8 {
+            let scanner = NSScanner(string: hexColor)
+            var hexNumber: UInt64 = 0
             
-            if hexColor.characters.count == 8 {
-                let scanner = NSScanner(string: hexColor)
-                var hexNumber: UInt64 = 0
+            if scanner.scanHexLongLong(&hexNumber) {
+                r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                a = CGFloat(hexNumber & 0x000000ff) / 255
                 
-                if scanner.scanHexLongLong(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
-                    
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
+                self.init(red: r, green: g, blue: b, alpha: a)
+                return
             }
         }
         
         return nil
     }
+
+    public convenience init?(hexString: String) {
+        let r, g, b: CGFloat
+        
+        var start = hexString.startIndex
+        
+        if hexString.hasPrefix("#") {
+            start = hexString.startIndex.advancedBy(1)
+        }
+        
+        let hexColor = hexString.substringFromIndex(start)
+        
+        if hexColor.characters.count == 6 {
+            let scanner = NSScanner(string: hexColor)
+            var hexNumber: UInt64 = 0
+            
+            if scanner.scanHexLongLong(&hexNumber) {
+                r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
+                g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
+                b = CGFloat(hexNumber & 0x0000ff) / 255
+                
+                self.init(red: r, green: g, blue: b, alpha: 1.0)
+                return
+            }
+        }
+        
+        return nil
+    }
+
 }
 
 

@@ -8,9 +8,18 @@
 
 import UIKit
 
-class JourneysVC: UIViewController {
+class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
+
+    var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
+    var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
+    var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
+    
+    let darkGreen = UIColor(hexString: "#15676C")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,6 +38,29 @@ class JourneysVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return jTitles.count
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = self.journeysTableView.dequeueReusableCellWithIdentifier("JourneyCell",forIndexPath: indexPath) as! JourneyViewCell
+        
+        cell.journeyDateLabel.text = jDates[indexPath.row]
+        cell.journeyStatusLabel.text = jStatuses[indexPath.row]
+        cell.journeyTitleLabel.text = jTitles[indexPath.row]
+        
+        cell.backgroundColor = UIColor.clearColor()
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = darkGreen
+        cell.selectedBackgroundView = bgColorView
+        
+        return cell
+        
     }
     
 

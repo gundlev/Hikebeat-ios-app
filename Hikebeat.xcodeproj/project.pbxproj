@@ -26,6 +26,7 @@
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
+		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
 		E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */; };
 		E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A301CD173A200C79B91 /* SettingsVC.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
@@ -79,6 +80,7 @@
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E18991611CD380E400EC46B2 /* JourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewCell.swift; sourceTree = "<group>"; };
 		E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		E1AA1A301CD173A200C79B91 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				E1B84AB91CD246080047BD5A /* ProfileVC.swift */,
 				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
 				E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */,
+				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
+				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
