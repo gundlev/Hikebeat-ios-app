@@ -42,7 +42,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ON-jq-UZg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PhotoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="erl-O3-vng">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="PhotoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="erl-O3-vng">
                                         <rect key="frame" x="-243" y="0.0" width="877" height="701"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="877" id="AqH-G2-KQi"/>
@@ -1993,7 +1993,8 @@ sync</string>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMy-wX-z1V">
                                                 <rect key="frame" x="379" y="82" width="60" height="50.5"/>
                                                 <string key="text">4 Memos
-awaiting sync</string>
+awaiting
+sync</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

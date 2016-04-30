@@ -19,7 +19,6 @@
 		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
-		85F2B4361CC4DD33004704F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4341CC4DD33004704F3 /* Main.storyboard */; };
 		85F2B4381CC4DD33004704F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4371CC4DD33004704F3 /* Assets.xcassets */; };
 		85F2B4461CC4DD33004704F3 /* HikebeatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4451CC4DD33004704F3 /* HikebeatTests.swift */; };
 		85F2B4511CC4DD33004704F3 /* HikebeatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4501CC4DD33004704F3 /* HikebeatUITests.swift */; };
@@ -35,11 +34,12 @@
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
-		E15A4CF91CD4E6970053496A /* BeatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF81CD4E6970053496A /* BeatsVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
 		E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */; };
 		E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */; };
+		E1A3F6A11CD570B2005D9775 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4341CC4DD33004704F3 /* Main.storyboard */; };
+		E1A3F6A21CD570DD005D9775 /* BeatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF81CD4E6970053496A /* BeatsVC.swift */; };
 		E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */; };
 		E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A301CD173A200C79B91 /* SettingsVC.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
@@ -386,9 +386,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1A3F6A11CD570B2005D9775 /* Main.storyboard in Resources */,
 				E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */,
 				85F2B4381CC4DD33004704F3 /* Assets.xcassets in Resources */,
-				85F2B4361CC4DD33004704F3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +448,7 @@
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,
 				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
+				E1A3F6A21CD570DD005D9775 /* BeatsVC.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8512E0F51CD4E7520085CE2B /* Config.swift in Sources */,

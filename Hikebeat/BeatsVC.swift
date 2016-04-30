@@ -114,6 +114,8 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
     }
     
     func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath)
+        
+        
+        
     }
 }
