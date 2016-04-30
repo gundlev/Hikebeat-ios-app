@@ -57,8 +57,9 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! ComposeVC
-        if self.titleField.text! != "" {
-            vc.titleText = self.titleField.text!
+        let titleString = self.titleField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if titleString != "" {
+            vc.titleText = titleString
             vc.applyGreenBorder(vc.editTitleButton)
         }
 

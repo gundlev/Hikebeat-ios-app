@@ -9,6 +9,8 @@
 import UIKit
 
 class SettingsVC: UIViewController {
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet weak var gpsSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
@@ -54,6 +56,8 @@ class SettingsVC: UIViewController {
         syncVideos.layer.borderColor = yellowColor.CGColor
         
         syncButton.backgroundColor = yellowColor
+        
+        //gpsSwitch.on = userDefaults.boolForKey("GPS-check")
     }
 
     override func didReceiveMemoryWarning() {

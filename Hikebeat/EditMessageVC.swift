@@ -67,8 +67,9 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! ComposeVC
-        if self.messageField.text! != "" {
-            vc.messageText = self.messageField.text!
+        let messageString = self.messageField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if messageString != "" {
+            vc.messageText = messageString
             vc.applyGreenBorder(vc.editMessageButton)
         }
 

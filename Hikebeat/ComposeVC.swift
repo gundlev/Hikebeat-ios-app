@@ -7,18 +7,33 @@
 //
 
 import UIKit
+import RealmSwift
+import AVKit
+import AVFoundation
+import Alamofire
+import SwiftyJSON
+import MessageUI
 
-class ComposeVC: UIViewController {
+class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
-    var titleText = ""
-    var messageText = ""
+    var activeJourney: Journey?
+    var realm = try! Realm()
+    var titleText: String?
+    var messageText: String?
     var audioHasBeenRecordedForThisBeat = false
     var imagePicker = UIImagePickerController()
-    var currentMediaURL = NSURL()
-    var currentImage = UIImage()
+    var currentMediaURL:NSURL?
+    var currentImage:UIImage?
+    var currentBeat: Beat?
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    
+    // Audio variables
+    var recorder: AVAudioRecorder!
+    var player:AVAudioPlayer!
+    var meterTimer:NSTimer!
+    var soundFileURL:NSURL!
     
     
     @IBOutlet weak var clearButton: UIButton!
@@ -72,6 +87,8 @@ class ComposeVC: UIViewController {
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
         
+        let isActiveJourney = findActiveJourney()
+        
     }
     
     @IBAction func unwindToCompose(sender: UIStoryboardSegue)
@@ -98,8 +115,6 @@ class ComposeVC: UIViewController {
     
     
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        
-        
         
     }
     
@@ -149,6 +164,294 @@ class ComposeVC: UIViewController {
         }
     }
     
+/*
+     Realm calls
+*/
+    
+    func findActiveJourney() -> Bool {
+        let journeys = realm.objects(Journey).filter("active = %@", true)
+        if journeys.isEmpty {
+            return false
+        } else {
+            self.activeJourney = journeys[0]
+            return true
+        }
+
+    }
+    
+    
+/*
+     Sending beat functions
+*/
+    
+    func checkForCorrectInput() {
+        let locationTuple = self.getTimeAndLocation()
+        if locationTuple != nil {
+            if ((titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
+                print(0.3)
+                // Give a warning that there is not text or no active journey.
+                print("Something is missing")
+                print("Text: ", titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil)
+                print("Journey: ", self.activeJourney == nil)
+                print("Lat: ", locationTuple!.latitude)
+                print("Lng: ", locationTuple!.longitude)
+                
+            } else {
+                
+                print(0.4)
+                var mediaData: String? = nil
+                var mediaType: String? = nil
+                print(0.7)
+                if currentImage != nil {
+                    //print(1)
+                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.5)
+                    mediaType = MediaType.image
+                    //print(2)
+                    mediaData = saveMediaToDocs(imageData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
+
+                } else if currentMediaURL != nil {
+                    mediaType = MediaType.video
+                    let newPath = getPathToFileFromName("vid-temp.mp4")
+                    let success = covertToMedia(currentMediaURL!, pathToOuputFile: newPath!, fileType: AVFileTypeMPEG4)
+                    if success {
+                        let videoData = NSData(contentsOfURL: currentMediaURL!)
+                        mediaData = saveMediaToDocs(videoData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".mp4")
+                        if mediaData != nil {
+                            self.removeMediaWithURL(currentMediaURL!)
+                        }
+                        print("mediaData: ", mediaData)
+                    }
+                    
+                } else if audioHasBeenRecordedForThisBeat {
+                    mediaType = MediaType.audio
+                    let pathToAudio = getPathToFileFromName("audio-temp.acc")
+                    let newPath = getPathToFileFromName("audio-temp.m4a")
+                    covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
+                    let audioData = NSData(contentsOfURL: newPath!)
+                    mediaData = saveMediaToDocs(audioData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: "m4a")
+                    self.recorder.deleteRecording()
+                }
+                
+                
+                
+                
+                //            let locationTuple = self.getTimeAndLocation()
+                print("Just Before Crash!")
+                self.currentBeat = Beat()
+                self.currentBeat!.fill( titleText, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
+                realm.add(self.currentBeat!)
+                print("Just After Crash!")
+                self.sendBeat()
+            }
+        } else {
+            
+        }
+    }
+    
+    func sendBeat() {
+        
+
+            
+            // Check if there is any network connection and send via the appropriate means.
+            if SimpleReachability.isConnectedToNetwork() {
+                // TODO: send via alamofire
+                let url = IPAddress + "journeys/" + (activeJourney?.journeyId)! + "/messages"
+                print("url: ", url)
+
+                // "headline": localTitle, "text": localMessage,
+                var parameters = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
+                if currentBeat!.title != nil {
+                    parameters["headline"] = currentBeat?.title
+                }
+                if currentBeat!.message != nil {
+                    parameters["text"] = currentBeat?.message
+                }
+                // Sending the beat message
+                Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                    print("The Response")
+                    print(response.response?.statusCode)
+                    print(response)
+                    
+                    // if response is 200 OK from server go on.
+                    if response.response?.statusCode == 200 {
+                        print("The text was send")
+                        self.currentBeat?.messageUploaded = true
+                        
+                        // Save the messageId to the currentBeat
+                        let rawMessageJson = JSON(response.result.value!)
+                        let messageJson = rawMessageJson["data"][0]
+                        self.currentBeat?.messageId = messageJson["_id"].stringValue
+                        
+                        // If the is an image in the currentBeat, send the image.
+                        if self.currentBeat?.mediaData != nil {
+                            print("There is an image or video")
+                            // Send Image
+                            
+                            let filePath = self.getPathToFileFromName((self.currentBeat?.mediaData)!)
+                            if filePath != nil {
+                                let urlMedia = IPAddress + "journeys/" + (self.activeJourney?.journeyId)! + "/media"
+                                print(urlMedia)
+                                
+                                var customHeader = Headers
+                                
+                                customHeader["x-hikebeat-timecapture"] = self.currentBeat?.timestamp
+                                customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
+                                
+                                Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).responseJSON { mediaResponse in
+                                    print("This is the media response: ", mediaResponse)
+                                    
+                                    // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
+                                    if mediaResponse.response?.statusCode == 200 {
+                                        let rawImageJson = JSON(mediaResponse.result.value!)
+                                        let mediaJson = rawImageJson["data"][0]
+                                        print(mediaResponse)
+                                        print("The image has been posted")
+                                        
+                                        // Set the imageId in currentBeat
+                                        print("messageId: ", mediaJson["_id"].stringValue)
+                                        self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
+                                        
+                                        // Set the uploaded variable to true as the image has been uplaoded.
+                                        self.currentBeat?.mediaUploaded = true
+                                        try! self.realm.write {
+                                            self.activeJourney?.beats.append(self.currentBeat!)
+                                        }
+                                    } else {
+                                        print("Error posting the image")
+                                        self.currentBeat?.mediaUploaded = false
+                                        try! self.realm.write {
+                                            self.activeJourney?.beats.append(self.currentBeat!)
+                                        }
+                                    }
+
+                                    
+                                }
+                            }
+                        } else {
+                            print("There's no image")
+                            self.currentBeat?.mediaUploaded = true
+                            try! self.realm.write {
+                                self.activeJourney?.beats.append(self.currentBeat!)
+                            }
+
+                        }
+                        
+                        //Likely not usefull call to saveContext -> Test it!!
+                    } else {
+                        // Response is not 200
+                        print("Error posting the message")
+                        alert("Problem sending", alertMessage: "Some error has occured when trying to send, it will be saved and syncronized later", vc: self, actions:
+                            (title: "Ok",
+                                style: UIAlertActionStyle.Cancel,
+                                function: {}))
+                        
+                        
+                        // Is set to true now but should be changed to false
+                        self.currentBeat?.mediaUploaded = false
+                        self.currentBeat?.messageUploaded = false
+                        try! self.realm.write {
+                            self.activeJourney?.beats.append(self.currentBeat!)
+                        }
+                    }
+                    
+                    // print(response)
+                    // if the response is okay run:
+
+                    //                    self.saveCurrentBeat(uploaded)
+                    //self.setInitial(true)
+                }
+                //                self.setInitial(true)
+                //                self.swipeView.setBack(true)
+            } else {
+                
+                // This will send it via SMS.
+                print("Not reachable, should send sms")
+                var titleString = ""
+                var messageString = ""
+                if self.titleText != nil {
+                    titleString = self.titleText!
+                }
+                if self.messageText != nil {
+                    messageString = self.messageText!
+                }
+                
+                let messageText = self.genSMSMessageString(titleString, message: messageString, journeyId: self.activeJourney!.journeyId)
+                self.sendSMS(messageText)
+                // The save and setInitial is done in the message methods as it knows whether it fails.
+            }
+            
+            // TODO: save
+            
+
+    }
+    
+/*
+     SMS functions
+*/
+    
+    func genSMSMessageString(title: String, message: String, journeyId: String) -> String {
+        
+        print("timestamp deci: ", self.currentBeat?.timestamp)
+        print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
+        let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + title + "##" + message
+        
+        return smsMessageText
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        
+        
+        switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message Cancelled")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message Failed")
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message Sent")
+            
+            /* Save the Beat and setInitial*/
+            if currentBeat?.mediaData != nil {
+                print("SMS function: There is an image")
+                self.currentBeat?.mediaUploaded = false
+            } else {
+                print("SMS function: There is no image")
+                self.currentBeat?.mediaUploaded = true
+            }
+            self.currentBeat?.messageUploaded = true
+            try! self.realm.write {
+                self.activeJourney?.beats.append(self.currentBeat!)
+            }
+
+            self.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
+    }
+    
+    /**
+     This method starts a text message view controller with the settings specified.
+     
+     - parameters:
+     - String: The text body composed of title, text, lattitude, longitude, timestamp and journeyId.
+     - returns: Nothing as we have a seperate method to handle the result:
+     `messageComposeViewController(controller:, didFinishWithResult result:)`.
+     
+     */
+    func sendSMS(smsBody: String) {
+        
+        print("In sms function")
+        let messageVC = MFMessageComposeViewController()
+        if MFMessageComposeViewController.canSendText() {
+            messageVC.body = smsBody
+            messageVC.recipients = [phoneNumber]
+            messageVC.messageComposeDelegate = self;
+            
+            self.presentViewController(messageVC, animated: false, completion: nil)
+        }
+    }
 
     
 /*

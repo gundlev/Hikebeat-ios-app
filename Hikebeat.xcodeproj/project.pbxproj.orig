@@ -450,7 +450,11 @@
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
+<<<<<<< HEAD
+				E15A4CF91CD4E6970053496A /* BeatsVC.swift in Sources */,
+=======
 				8512E0F51CD4E7520085CE2B /* Config.swift in Sources */,
+>>>>>>> 949f765736959c396269ca089ecb9aa4290ca325
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
