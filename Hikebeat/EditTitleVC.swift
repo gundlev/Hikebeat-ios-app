@@ -10,6 +10,8 @@ import UIKit
 
 class EditTitleVC: UIViewController, UITextFieldDelegate {
 
+    var titleText: String!
+    
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     override func viewDidLoad() {

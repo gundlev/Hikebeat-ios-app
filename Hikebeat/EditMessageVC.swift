@@ -10,6 +10,8 @@ import UIKit
 
 class EditMessageVC: UIViewController, UITextViewDelegate {
 
+    var messageText: String!
+    
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var messageField: UITextView!
     var placeholderLabel : UILabel!

@@ -159,4 +159,17 @@ class ComposeVC: UIViewController {
             return nil
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier! {
+            case "editTitleModal":
+                let vc = segue.destinationViewController as! EditTitleVC
+                vc.titleText = self.titleText
+            case "editMessageModal":
+                let vc = segue.destinationViewController as! EditMessageVC
+                vc.messageText = self.messageText
+        default:
+            print("default segue")
+        }
+    }
 }
