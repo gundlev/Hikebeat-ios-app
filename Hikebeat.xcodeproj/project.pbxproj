@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */; };
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
+		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
 		85F2B4361CC4DD33004704F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4341CC4DD33004704F3 /* Main.storyboard */; };
@@ -58,8 +60,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationExtension.swift; sourceTree = "<group>"; };
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
+		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +130,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8512E0EF1CD4DC8B0085CE2B /* Config and Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */,
+			);
+			name = "Config and Utils";
+			sourceTree = "<group>";
+		};
 		85CA7DBD1CCE7BEC00A4F249 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +170,7 @@
 		85F2B42F1CC4DD33004704F3 /* Hikebeat */ = {
 			isa = PBXGroup;
 			children = (
+				8512E0EF1CD4DC8B0085CE2B /* Config and Utils */,
 				85F2B46F1CC4E384004704F3 /* Controller */,
 				85F2B46E1CC4E379004704F3 /* View */,
 				85F2B46D1CC4E372004704F3 /* Model */,
@@ -237,6 +250,7 @@
 				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
 				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
+				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -403,11 +417,13 @@
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,
 				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
+				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,

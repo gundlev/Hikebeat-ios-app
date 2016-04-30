@@ -9,8 +9,6 @@
 import UIKit
 
 class EditTitleVC: UIViewController, UITextFieldDelegate {
-
-    var titleText: String!
     
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
@@ -19,7 +17,6 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
-
         
         titleField.layer.cornerRadius = titleField.bounds.height/2
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
@@ -56,6 +53,15 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         self.view.frame.origin.y = 0
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let vc = segue.destinationViewController as! ComposeVC
+        if self.titleField.text! != "" {
+            vc.titleText = self.titleField.text!
+            vc.applyGreenBorder(vc.editTitleButton)
+        }
+
     }
     
     

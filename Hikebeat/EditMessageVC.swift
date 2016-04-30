@@ -10,7 +10,6 @@ import UIKit
 
 class EditMessageVC: UIViewController, UITextViewDelegate {
 
-    var messageText: String!
     
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var messageField: UITextView!
@@ -66,15 +65,14 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         self.view.frame.origin.y = 0
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let vc = segue.destinationViewController as! ComposeVC
+        if self.messageField.text! != "" {
+            vc.messageText = self.messageField.text!
+            vc.applyGreenBorder(vc.editMessageButton)
+        }
+
     }
-    */
+    
 
 }

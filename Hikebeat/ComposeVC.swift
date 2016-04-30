@@ -13,9 +13,13 @@ class ComposeVC: UIViewController {
     var titleText = ""
     var messageText = ""
     var audioHasBeenRecordedForThisBeat = false
+    var imagePicker = UIImagePickerController()
+    var currentMediaURL = NSURL()
+    var currentImage = UIImage()
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    
     
     @IBOutlet weak var editTitleButton: UIImageView!
     @IBOutlet weak var editMessageButton: UIImageView!
@@ -84,38 +88,64 @@ class ComposeVC: UIViewController {
         print("title")
         
         performSegueWithIdentifier("editTitleModal", sender: self)
-        editTitleButton.layer.borderWidth = 4
-        editTitleButton.layer.borderColor = greenColor.CGColor
     }
 
     func memoButtonTapped() {
         print("memo")
-        
-       
-        editMemoButton.layer.borderWidth = 4
-        editMemoButton.layer.borderColor = greenColor.CGColor
+
     }
     
     func imageButtonTapped() {
         print("image")
-        editImageButton.layer.borderWidth = 4
-        editImageButton.layer.borderColor = greenColor.CGColor
+        self.chooseImage()
+
     }
     
     func videoButtonTapped() {
         print("video")
-        editVideoButton.layer.borderWidth = 4
-        editVideoButton.layer.borderColor = greenColor.CGColor
+        self.chooseVideo()
+
     }
     
     func messageButtonTapped() {
         print("message")
         
         performSegueWithIdentifier("editMessageModal", sender: self)
-        editMessageButton.layer.borderWidth = 4
-        editMessageButton.layer.borderColor = greenColor.CGColor
     }
     
+    func applyGreenBorder(view :UIImageView) {
+        view.layer.borderWidth = 4
+        view.layer.borderColor = greenColor.CGColor
+    }
+    
+    func disableMediaView(view :UIImageView) {
+        view.userInteractionEnabled = false
+        view.alpha = 0.4
+    }
+
+    func mediaChosen(type: String) {
+        switch type {
+            case "video":
+                applyGreenBorder(editVideoButton)
+                disableMediaView(editMemoButton)
+                disableMediaView(editImageButton)
+            case "image":
+                applyGreenBorder(editImageButton)
+                disableMediaView(editMemoButton)
+                disableMediaView(editVideoButton)
+            case "audio":
+                applyGreenBorder(editMemoButton)
+                disableMediaView(editVideoButton)
+                disableMediaView(editImageButton)
+        default: print("Type not matching: ", type)
+        }
+    }
+    
+
+    
+/*
+     Utility Functions
+*/
     
     /**
      function to get the timestamp and location.
@@ -161,15 +191,5 @@ class ComposeVC: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch segue.identifier! {
-            case "editTitleModal":
-                let vc = segue.destinationViewController as! EditTitleVC
-                vc.titleText = self.titleText
-            case "editMessageModal":
-                let vc = segue.destinationViewController as! EditMessageVC
-                vc.messageText = self.messageText
-        default:
-            print("default segue")
-        }
     }
 }
