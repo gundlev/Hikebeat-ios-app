@@ -10,6 +10,8 @@ import UIKit
 
 class LoadingViewController: UIViewController {
 
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    var segueIdentifyer = ""
     
     @IBOutlet weak var circleImageView: UIImageView!
     @IBOutlet weak var patternImageView: UIImageView!
@@ -24,7 +26,15 @@ class LoadingViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setNeedsStatusBarAppearanceUpdate()
+
         
+        let loggedIn = userDefaults.boolForKey("loggedIn")
+        if loggedIn {
+            segueIdentifyer = "showMain"
+        } else {
+            segueIdentifyer = "showMain"
+            //segueIdentifyer = "showLogin"
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -72,7 +82,7 @@ class LoadingViewController: UIViewController {
         
         
         //Jump to next in a sec
-        _ = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
+        _ = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,7 +96,7 @@ class LoadingViewController: UIViewController {
     
     
     func timeToMoveOn() {
-            self.performSegueWithIdentifier("showLogin", sender: self)
+            self.performSegueWithIdentifier(segueIdentifyer, sender: self)
 
 //        If already logged in:
 //        self.performSegueWithIdentifier("showMain", sender: self)

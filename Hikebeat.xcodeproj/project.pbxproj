@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */; };
+		8512E0F51CD4E7520085CE2B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F21CD4E7520085CE2B /* Config.swift */; };
+		8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F31CD4E7520085CE2B /* Structs.swift */; };
+		8512E0F71CD4E7520085CE2B /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F41CD4E7520085CE2B /* utils.swift */; };
+		8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */; };
+		8512E0FC1CD4FF880085CE2B /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */; };
+		8512E0FD1CD4FF880085CE2B /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512E0FB1CD4FF880085CE2B /* Result.framework */; };
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
 		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
@@ -61,6 +67,12 @@
 
 /* Begin PBXFileReference section */
 		8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationExtension.swift; sourceTree = "<group>"; };
+		8512E0F21CD4E7520085CE2B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		8512E0F31CD4E7520085CE2B /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
+		8512E0F41CD4E7520085CE2B /* utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
+		8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleReachability.swift; sourceTree = "<group>"; };
+		8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
+		8512E0FB1CD4FF880085CE2B /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
 		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
@@ -109,6 +121,8 @@
 				85F2B4641CC4DE96004704F3 /* Alamofire.framework in Frameworks */,
 				85F2B4661CC4DE96004704F3 /* Realm.framework in Frameworks */,
 				85F2B4671CC4DE96004704F3 /* RealmSwift.framework in Frameworks */,
+				8512E0FC1CD4FF880085CE2B /* BrightFutures.framework in Frameworks */,
+				8512E0FD1CD4FF880085CE2B /* Result.framework in Frameworks */,
 				85F2B4691CC4DE96004704F3 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +148,9 @@
 			isa = PBXGroup;
 			children = (
 				8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */,
+				8512E0F21CD4E7520085CE2B /* Config.swift */,
+				8512E0F31CD4E7520085CE2B /* Structs.swift */,
+				8512E0F41CD4E7520085CE2B /* utils.swift */,
 			);
 			name = "Config and Utils";
 			sourceTree = "<group>";
@@ -141,6 +158,7 @@
 		85CA7DBD1CCE7BEC00A4F249 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
+				8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */,
 				8562639D1CC8E396008562FE /* Reachability.swift */,
 			);
 			name = Reachability;
@@ -204,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
+				8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */,
+				8512E0FB1CD4FF880085CE2B /* Result.framework */,
 				85F2B45E1CC4DE96004704F3 /* Alamofire.framework */,
 				85F2B4601CC4DE96004704F3 /* Realm.framework */,
 				85F2B4611CC4DE96004704F3 /* RealmSwift.framework */,
@@ -393,6 +413,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BrightFutures.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 			);
 			name = "Run Script";
 			outputPaths = (
@@ -410,6 +432,7 @@
 			files = (
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
+				8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
@@ -420,13 +443,16 @@
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
+				8512E0F51CD4E7520085CE2B /* Config.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
 				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
+				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
+				8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
 				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,

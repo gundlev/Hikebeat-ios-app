@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var logoTypeface: UIImageView!
@@ -17,6 +21,77 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var rePasswordField: UITextField!
+    
+    @IBAction func signUp(sender: AnyObject) {
+        if passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
+            
+            let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
+            print(parameters)
+            
+            Alamofire.request(.POST, IPAddress + "users", parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                if response.response?.statusCode == 200 {
+                    print("user has been created")
+                    let rawUser = JSON(response.result.value!)
+                    let user = rawUser["data"][0]
+                    print("This is the user: ",user)
+                    
+                    print("setting user")
+                    self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
+                    
+                    var optionsDictionary = [String:String]()
+                    for (key, value) in user["options"].dictionaryValue {
+                        optionsDictionary[key] = value.stringValue
+                    }
+                    
+                    var journeyIdsArray = [String]()
+                    for (value) in user["journeyIds"].arrayValue {
+                        journeyIdsArray.append(value.stringValue)
+                    }
+                    
+                    var followingArray = [String]()
+                    for (value) in user["following"].arrayValue {
+                        followingArray.append(value.stringValue)
+                    }
+                    
+                    var deviceTokensArray = [String]()
+                    for (value) in user["deviceTokens"].arrayValue {
+                        deviceTokensArray.append(value.stringValue)
+                    }
+                    
+                    var permittedPhoneNumbersArray = [String]()
+                    for (value) in user["permittedPhoneNumbers"].arrayValue {
+                        permittedPhoneNumbersArray.append(value.stringValue)
+                    }
+                    
+                    self.userDefaults.setObject(optionsDictionary, forKey: "options")
+                    self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
+                    self.userDefaults.setObject((user["options"]["name"].stringValue), forKey: "name")
+                    self.userDefaults.setObject((user["options"]["gender"].stringValue), forKey: "gender")
+                    self.userDefaults.setObject((user["options"]["nationality"].stringValue), forKey: "nationality")
+                    self.userDefaults.setObject(journeyIdsArray, forKey: "journeyIds")
+                    self.userDefaults.setObject(followingArray, forKey: "following")
+                    self.userDefaults.setObject(deviceTokensArray, forKey: "deviceTokens")
+                    self.userDefaults.setObject(user["_id"].stringValue, forKey: "_id")
+                    self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
+                    self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
+                    self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
+                    self.userDefaults.setBool(true, forKey: "loggedIn")
+                    self.userDefaults.setObject(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
+                    
+                    self.performSegueWithIdentifier("showMainAfterRegister", sender: self)
+                    
+                } else if response.response?.statusCode == 400 {
+                    // email or username has been uses
+                    print("email or username has been used")
+                    print(response.result.value)
+                    
+                }
+            }
+        } else {
+            // The password an repeatPassword is not the same.
+        }
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +149,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
 
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name:UIKeyboardWillHideNotification, object: nil);
         
     }
 

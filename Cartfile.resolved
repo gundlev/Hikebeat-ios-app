@@ -1,3 +1,5 @@
 github "Alamofire/Alamofire" "3.3.1"
+github "antitypical/Result" "2.0.0"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
-github "realm/realm-cocoa" "v0.99.0"
+github "realm/realm-cocoa" "v0.100.0"
+github "Thomvis/BrightFutures" "v4.0.1"

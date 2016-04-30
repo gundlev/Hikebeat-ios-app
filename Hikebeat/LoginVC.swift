@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import RealmSwift
 
 class LoginVC: UIViewController, UITextFieldDelegate {
+
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let realm = try! Realm()
 
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var backgroundPicture: UIImageView!
@@ -56,6 +62,132 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
     }
 
+    @IBAction func login(sender: AnyObject) {
+        
+        /** Parameters to send to the API.*/
+        let parameters = ["username": usernameField.text!, "password": passwordField.text!]
+        
+        
+        /* Sending POST to API to check if the user exists. Will return a json with the user.*/
+        Alamofire.request(.POST, IPAddress + "auth", parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+            
+            print("Response: ",response)
+            print(response.response?.statusCode)
+            
+            if response.response?.statusCode == 200 {
+                print("value: ", response.result.value)
+                let firstJson = JSON(response.result.value!)
+                let user = firstJson["data"][0]
+                
+                print("setting user")
+                self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
+                print(1)
+                var optionsDictionary = [String:String]()
+                for (key, value) in user["options"].dictionaryValue {
+                    optionsDictionary[key] = value.stringValue
+                }
+                print(2)
+                //                let options = user["options"].dictionaryValue
+                //                print("Options: ", options)
+                print(3)
+                var journeyIdsArray = [String]()
+                for (value) in user["journeyIds"].arrayValue {
+                    journeyIdsArray.append(value.stringValue)
+                }
+                print(4)
+                var followingArray = [String]()
+                for (value) in user["following"].arrayValue {
+                    followingArray.append(value.stringValue)
+                }
+                
+                var deviceTokensArray = [String]()
+                for (value) in user["deviceTokens"].arrayValue {
+                    deviceTokensArray.append(value.stringValue)
+                }
+                print(5)
+                var permittedPhoneNumbersArray = [String]()
+                for (value) in user["permittedPhoneNumbers"].arrayValue {
+                    permittedPhoneNumbersArray.append(value.stringValue)
+                }
+                print(6)
+                self.userDefaults.setObject(optionsDictionary, forKey: "options")
+                self.userDefaults.setObject(journeyIdsArray, forKey: "journeyIds")
+                self.userDefaults.setObject(followingArray, forKey: "following")
+                self.userDefaults.setObject(deviceTokensArray, forKey: "deviceTokens")
+                self.userDefaults.setObject(user["_id"].stringValue, forKey: "_id")
+                self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
+                self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
+                self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
+                self.userDefaults.setBool(true, forKey: "loggedIn")
+                self.userDefaults.setObject(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
+                self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
+                self.userDefaults.setObject((user["options"]["name"].stringValue), forKey: "name")
+                self.userDefaults.setObject((user["options"]["gender"].stringValue), forKey: "gender")
+                self.userDefaults.setObject((user["options"]["nationality"].stringValue), forKey: "nationality")
+                self.userDefaults.setObject(true, forKey: "GPS-check")
+                
+                /* Get all the journeys*/
+                print("Getting the journeys")
+                let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
+                print(urlJourney)
+                Alamofire.request(.GET, urlJourney, encoding: .JSON, headers: Headers).responseJSON { response in
+                    print(response.response?.statusCode)
+                    //print(response)
+                    if response.response?.statusCode == 200 {
+                        if response.result.value != nil {
+                            print(response.result.value!)
+                            let rawJson = JSON(response.result.value!)
+                            let json = rawJson["data"]
+                            print(json)
+                            print(8)
+                            for (_, journey) in json {
+                                let headline = journey["options"]["headline"].stringValue
+                                print(headline)
+                                let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
+                                
+                                let dataJourney = Journey()
+                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: active, type: journey["options"]["type"].stringValue)
+                                self.realm.add(dataJourney)
+                                
+                                for (_, message) in journey["messages"]  {
+                                    print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
+                                    //print(message)
+                                    let dataBeat = Beat()
+                                    dataBeat.fill(message["headline"].stringValue, journeyId: journey["_id"].stringValue, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: MediaType.none, mediaData: "", mediaDataId: "", messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: dataJourney)
+                                    self.realm.add(dataBeat)
+                                    try! self.realm.write {
+                                        dataJourney.beats.append(dataBeat)
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                    } else {
+                        // something is wrong
+                    }
+                }
+                print("This is what is saved: \n\n\n\n")
+                let journeys = self.realm.objects(Journey).filter("active = %@", true)
+                if journeys.isEmpty {
+                    print("There is nothing")
+                } else {
+                    print(journeys.description)
+                }
+                /* Enter the app when logged in*/
+                //self.performSegueWithIdentifier("justLoggedIn", sender: self)
+            } else if response.response?.statusCode == 401 {
+                // User not authorized
+                print("Not Auth!!")
+            } else if response.response?.statusCode == 400 {
+                // Wrong username or password
+                print("Wrong username or password")
+            }
+            
+            
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

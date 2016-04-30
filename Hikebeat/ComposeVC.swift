@@ -7,18 +7,33 @@
 //
 
 import UIKit
+import RealmSwift
+import AVKit
+import AVFoundation
+import Alamofire
+import SwiftyJSON
+import MessageUI
 
-class ComposeVC: UIViewController {
+class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
-    var titleText = ""
-    var messageText = ""
+    var activeJourney: Journey?
+    var realm = try! Realm()
+    var titleText: String?
+    var messageText: String?
     var audioHasBeenRecordedForThisBeat = false
     var imagePicker = UIImagePickerController()
-    var currentMediaURL = NSURL()
-    var currentImage = UIImage()
+    var currentMediaURL:NSURL?
+    var currentImage:UIImage?
+    var currentBeat: Beat?
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    
+    // Audio variables
+    var recorder: AVAudioRecorder!
+    var player:AVAudioPlayer!
+    var meterTimer:NSTimer!
+    var soundFileURL:NSURL!
     
     
     @IBOutlet weak var clearButton: UIButton!
@@ -72,6 +87,8 @@ class ComposeVC: UIViewController {
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
         
+        let isActiveJourney = findActiveJourney()
+        
     }
     
     @IBAction func unwindToCompose(sender: UIStoryboardSegue)
@@ -98,8 +115,6 @@ class ComposeVC: UIViewController {
     
     
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        
-        
         
     }
     
@@ -149,20 +164,34 @@ class ComposeVC: UIViewController {
         }
     }
     
-    /*
+/*
+     Realm calls
+*/
+    
+    func findActiveJourney() -> Bool {
+        let journeys = realm.objects(Journey).filter("active = %@", true)
+        if journeys.isEmpty {
+            return false
+        } else {
+            self.activeJourney = journeys[0]
+            return true
+        }
+
+    }
+    
+    
+/*
      Sending beat functions
-     */
+*/
     
     func checkForCorrectInput() {
         let locationTuple = self.getTimeAndLocation()
-        print(0.1)
         if locationTuple != nil {
-            print(0.2)
-            if ((titleTextField.text == "" && messageTextView.text == "" && currentImage == nil && currentVideo == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
+            if ((titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
                 print(0.3)
                 // Give a warning that there is not text or no active journey.
                 print("Something is missing")
-                print("Text: ", titleTextField.text == "" && messageTextView.text == "" && currentImage == nil && currentVideo == nil)
+                print("Text: ", titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil)
                 print("Journey: ", self.activeJourney == nil)
                 print("Lat: ", locationTuple!.latitude)
                 print("Lng: ", locationTuple!.longitude)
@@ -170,19 +199,8 @@ class ComposeVC: UIViewController {
             } else {
                 
                 print(0.4)
-                var title: String? = nil
-                var message: String? = nil
                 var mediaData: String? = nil
-                var orientation: String? = nil
                 var mediaType: String? = nil
-                print(0.5)
-                if titleTextField.text != "" || titleTextField.text != " " || titleTextField.text != "  " || titleText != "   " {
-                    title = self.titleTextField.text
-                }
-                print(0.6)
-                if messageTextView.text != "" || titleTextField.text != " " || titleTextField.text != "  " || titleTextField.text != "   "{
-                    message = self.messageTextView.text
-                }
                 print(0.7)
                 if currentImage != nil {
                     //print(1)
@@ -219,7 +237,9 @@ class ComposeVC: UIViewController {
                 
                 //            let locationTuple = self.getTimeAndLocation()
                 print("Just Before Crash!")
-                self.currentBeat = DataBeat(context: (self.stack?.mainContext)!, title: title, journeyId: activeJourney!.journeyId, message: message, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, orientation:  orientation, journey: activeJourney!)
+                self.currentBeat = Beat()
+                self.currentBeat!.fill( titleText, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
+                realm.add(self.currentBeat!)
                 print("Just After Crash!")
                 self.sendBeat()
             }
@@ -230,29 +250,21 @@ class ComposeVC: UIViewController {
     
     func sendBeat() {
         
-        if ((titleTextField.text!.characters.count + messageTextView.text.characters.count) > 0) {
+
             
             // Check if there is any network connection and send via the appropriate means.
             if SimpleReachability.isConnectedToNetwork() {
                 // TODO: send via alamofire
                 let url = IPAddress + "journeys/" + (activeJourney?.journeyId)! + "/messages"
                 print("url: ", url)
-                
-                var localTitle = ""
-                var localMessage = ""
-                if currentBeat!.message != nil {
-                    localMessage = currentBeat!.message!
-                }
-                if currentBeat!.title != nil {
-                    localTitle = currentBeat!.title!
-                }
+
                 // "headline": localTitle, "text": localMessage,
                 var parameters = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
-                if localTitle != "" {
-                    parameters["headline"] = localTitle
+                if currentBeat!.title != nil {
+                    parameters["headline"] = currentBeat?.title
                 }
-                if localMessage != "" {
-                    parameters["text"] = localMessage
+                if currentBeat!.message != nil {
+                    parameters["text"] = currentBeat?.message
                 }
                 // Sending the beat message
                 Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
@@ -301,30 +313,32 @@ class ComposeVC: UIViewController {
                                         
                                         // Set the uploaded variable to true as the image has been uplaoded.
                                         self.currentBeat?.mediaUploaded = true
-                                        saveContext(self.stack.mainContext)
+                                        try! self.realm.write {
+                                            self.activeJourney?.beats.append(self.currentBeat!)
+                                        }
                                     } else {
                                         print("Error posting the image")
                                         self.currentBeat?.mediaUploaded = false
-                                        saveContext(self.stack.mainContext)
+                                        try! self.realm.write {
+                                            self.activeJourney?.beats.append(self.currentBeat!)
+                                        }
                                     }
-                                    
-                                    self.setInitial(true)
-                                    self.swipeView.setBack(true)
+
                                     
                                 }
                             }
                         } else {
                             print("There's no image")
                             self.currentBeat?.mediaUploaded = true
-                            saveContext(self.stack.mainContext)
-                            self.setInitial(true)
-                            self.swipeView.setBack(true)
+                            try! self.realm.write {
+                                self.activeJourney?.beats.append(self.currentBeat!)
+                            }
+
                         }
                         
                         //Likely not usefull call to saveContext -> Test it!!
-                        saveContext(self.stack.mainContext)
                     } else {
-                        // Error occured
+                        // Response is not 200
                         print("Error posting the message")
                         alert("Problem sending", alertMessage: "Some error has occured when trying to send, it will be saved and syncronized later", vc: self, actions:
                             (title: "Ok",
@@ -335,13 +349,14 @@ class ComposeVC: UIViewController {
                         // Is set to true now but should be changed to false
                         self.currentBeat?.mediaUploaded = false
                         self.currentBeat?.messageUploaded = false
-                        saveContext(self.stack.mainContext)
+                        try! self.realm.write {
+                            self.activeJourney?.beats.append(self.currentBeat!)
+                        }
                     }
                     
                     // print(response)
                     // if the response is okay run:
-                    // TODO: save the Beat
-                    saveContext(self.stack.mainContext)
+
                     //                    self.saveCurrentBeat(uploaded)
                     //self.setInitial(true)
                 }
@@ -351,15 +366,90 @@ class ComposeVC: UIViewController {
                 
                 // This will send it via SMS.
                 print("Not reachable, should send sms")
-                let messageText = self.genSMSMessageString(titleTextField.text!, message: messageTextView.text, journeyId: self.activeJourney!.journeyId)
+                var titleString = ""
+                var messageString = ""
+                if self.titleText != nil {
+                    titleString = self.titleText!
+                }
+                if self.messageText != nil {
+                    messageString = self.messageText!
+                }
+                
+                let messageText = self.genSMSMessageString(titleString, message: messageString, journeyId: self.activeJourney!.journeyId)
                 self.sendSMS(messageText)
                 // The save and setInitial is done in the message methods as it knows whether it fails.
             }
             
             // TODO: save
             
-        } else {
-            //TODO: Set alert to tell user that there's no text.
+
+    }
+    
+/*
+     SMS functions
+*/
+    
+    func genSMSMessageString(title: String, message: String, journeyId: String) -> String {
+        
+        print("timestamp deci: ", self.currentBeat?.timestamp)
+        print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
+        let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + title + "##" + message
+        
+        return smsMessageText
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        
+        
+        switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message Cancelled")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message Failed")
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message Sent")
+            
+            /* Save the Beat and setInitial*/
+            if currentBeat?.mediaData != nil {
+                print("SMS function: There is an image")
+                self.currentBeat?.mediaUploaded = false
+            } else {
+                print("SMS function: There is no image")
+                self.currentBeat?.mediaUploaded = true
+            }
+            self.currentBeat?.messageUploaded = true
+            try! self.realm.write {
+                self.activeJourney?.beats.append(self.currentBeat!)
+            }
+
+            self.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
+    }
+    
+    /**
+     This method starts a text message view controller with the settings specified.
+     
+     - parameters:
+     - String: The text body composed of title, text, lattitude, longitude, timestamp and journeyId.
+     - returns: Nothing as we have a seperate method to handle the result:
+     `messageComposeViewController(controller:, didFinishWithResult result:)`.
+     
+     */
+    func sendSMS(smsBody: String) {
+        
+        print("In sms function")
+        let messageVC = MFMessageComposeViewController()
+        if MFMessageComposeViewController.canSendText() {
+            messageVC.body = smsBody
+            messageVC.recipients = [phoneNumber]
+            messageVC.messageComposeDelegate = self;
+            
+            self.presentViewController(messageVC, animated: false, completion: nil)
         }
     }
 

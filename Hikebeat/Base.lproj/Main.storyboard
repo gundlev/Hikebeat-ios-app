@@ -129,7 +129,7 @@
                                         </state>
                                         <connections>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="hmT-cZ-QY5"/>
-                                            <segue destination="nkA-us-yFp" kind="show" identifier="showMainAfterRegister" id="O0T-vf-9y9"/>
+                                            <action selector="signUp:" destination="QNq-c2-xNk" eventType="touchUpInside" id="Kqq-jf-ggN"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -182,6 +182,7 @@
                         <outlet property="rePasswordField" destination="9cJ-D5-0LB" id="Uon-8R-Bgv"/>
                         <outlet property="signUpButton" destination="y1B-s4-q8w" id="6Iy-WQ-loW"/>
                         <outlet property="usernameField" destination="8lC-K3-VLT" id="vk4-gq-hEN"/>
+                        <segue destination="nkA-us-yFp" kind="show" identifier="showMainAfterRegister" id="9pW-Na-dpl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v9B-gW-ify" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -333,8 +334,8 @@
                                     </attributedString>
                                 </state>
                                 <connections>
+                                    <action selector="login:" destination="bD8-Mi-Qht" eventType="touchUpInside" id="QLt-Rd-wmu"/>
                                     <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="uIh-pE-1XE"/>
-                                    <segue destination="nkA-us-yFp" kind="show" id="z65-pq-L2h"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
@@ -382,6 +383,7 @@
                         <outlet property="passwordField" destination="uUm-fe-SyH" id="yCc-fe-Dqo"/>
                         <outlet property="registerButton" destination="qun-Cl-gzP" id="AGX-Pv-nh5"/>
                         <outlet property="usernameField" destination="mm1-tZ-mo5" id="Vif-77-mOK"/>
+                        <segue destination="nkA-us-yFp" kind="show" identifier="justLoggedIn" id="Ry1-QN-lGj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z99-6d-B44" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1951,6 +1953,6 @@ sync</string>
         <image name="trees" width="270" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="z65-pq-L2h"/>
+        <segue reference="9pW-Na-dpl"/>
     </inferredMetricsTieBreakers>
 </document>
