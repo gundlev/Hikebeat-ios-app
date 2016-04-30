@@ -29,6 +29,8 @@
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
+		E15A4CF91CD4E6970053496A /* BeatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF81CD4E6970053496A /* BeatsVC.swift */; };
+		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
 		E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */; };
 		E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */; };
@@ -88,6 +90,8 @@
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
+		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
+		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
 		E18991611CD380E400EC46B2 /* JourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewCell.swift; sourceTree = "<group>"; };
 		E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveJourneyCollectionViewCell.swift; sourceTree = "<group>"; };
 		E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
 				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
 				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
+				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
+				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -412,6 +418,7 @@
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
+				E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
@@ -420,6 +427,7 @@
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */,
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
+				E15A4CF91CD4E6970053496A /* BeatsVC.swift in Sources */,
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,

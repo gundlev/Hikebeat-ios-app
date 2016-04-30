@@ -51,7 +51,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func unwindToJourney(unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToJourneys(unwindSegue: UIStoryboardSegue) {
 
     }
     

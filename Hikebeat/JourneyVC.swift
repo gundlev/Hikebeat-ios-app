@@ -54,7 +54,15 @@ class JourneyVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToJourney(unwindSegue: UIStoryboardSegue) {
+        
+    }
 
+    @IBAction func showFirstBeat(sender: AnyObject) {
+        
+        performSegueWithIdentifier("showBeat", sender: self)
+        
+    }
     /*
     // MARK: - Navigation
 
