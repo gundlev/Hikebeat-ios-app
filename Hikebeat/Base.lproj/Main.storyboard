@@ -836,12 +836,21 @@
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="VZy-c4-7Bm">
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aB9-x0-cPI">
+                                        <rect key="frame" x="557" y="31" width="23" height="29"/>
+                                        <state key="normal" image="TrashIcon"/>
+                                        <connections>
+                                            <action selector="clearButtonTapped:" destination="jTg-CM-etK" eventType="touchUpInside" id="Kyo-5W-eu3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.082352941176470587" green="0.40392156862745099" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="aB9-x0-cPI" firstAttribute="bottom" secondItem="VZy-c4-7Bm" secondAttribute="bottom" id="5BM-6M-EEu"/>
                                     <constraint firstItem="VZy-c4-7Bm" firstAttribute="centerX" secondItem="qXy-BD-ZAV" secondAttribute="centerX" id="Mo3-lU-xUd"/>
                                     <constraint firstAttribute="height" constant="82" id="XJ7-bz-fYM"/>
                                     <constraint firstItem="VZy-c4-7Bm" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="26" id="b6w-2E-cKq"/>
+                                    <constraint firstAttribute="trailing" secondItem="aB9-x0-cPI" secondAttribute="trailing" constant="20" id="pyX-Hb-pmI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
@@ -1010,6 +1019,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="2" title="Hikebeat" id="1gg-GY-TSO"/>
                     <connections>
+                        <outlet property="clearButton" destination="aB9-x0-cPI" id="awJ-0l-DHW"/>
                         <outlet property="editImageButton" destination="CQp-Sb-IZE" id="Qzx-AJ-M9C"/>
                         <outlet property="editMemoButton" destination="b48-cP-b37" id="nOs-s5-wM0"/>
                         <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
@@ -1040,7 +1050,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kG-UG-YMx">
-                                        <rect key="frame" x="21" y="38" width="16" height="22"/>
+                                        <rect key="frame" x="20" y="38" width="16" height="22"/>
                                         <state key="normal" image="BackArrow"/>
                                         <connections>
                                             <segue destination="yzP-KZ-ekm" kind="unwind" unwindAction="unwindToJourney:" id="lgz-6c-QdF"/>
@@ -1053,7 +1063,7 @@
                                 <color key="backgroundColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="mPZ-br-8MP" firstAttribute="top" secondItem="KoA-M5-6Ls" secondAttribute="top" constant="26" id="3uk-dO-RKs"/>
-                                    <constraint firstItem="8kG-UG-YMx" firstAttribute="leading" secondItem="KoA-M5-6Ls" secondAttribute="leading" constant="21" id="87z-iL-v8B"/>
+                                    <constraint firstItem="8kG-UG-YMx" firstAttribute="leading" secondItem="KoA-M5-6Ls" secondAttribute="leading" constant="20" id="87z-iL-v8B"/>
                                     <constraint firstAttribute="height" constant="82" id="NRl-6u-iQ7"/>
                                     <constraint firstItem="mPZ-br-8MP" firstAttribute="centerX" secondItem="KoA-M5-6Ls" secondAttribute="centerX" id="NhG-iX-bc7"/>
                                     <constraint firstItem="mPZ-br-8MP" firstAttribute="bottom" secondItem="8kG-UG-YMx" secondAttribute="bottom" id="Xl4-ze-Dmd"/>
@@ -1936,6 +1946,7 @@ sync</string>
         <image name="SexProfileIcon" width="30" height="27"/>
         <image name="ShareIcon" width="30" height="19"/>
         <image name="SyncIcon" width="36" height="24"/>
+        <image name="TrashIcon" width="23" height="29"/>
         <image name="outline" width="128" height="121"/>
         <image name="trees" width="270" height="270"/>
     </resources>

@@ -21,6 +21,7 @@ class ComposeVC: UIViewController {
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     
     
+    @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var editTitleButton: UIImageView!
     @IBOutlet weak var editMessageButton: UIImageView!
     @IBOutlet weak var editImageButton: UIImageView!
@@ -93,6 +94,13 @@ class ComposeVC: UIViewController {
     func memoButtonTapped() {
         print("memo")
 
+    }
+    
+    
+    @IBAction func clearButtonTapped(sender: AnyObject) {
+        
+        
+        
     }
     
     func imageButtonTapped() {
