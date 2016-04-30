@@ -63,6 +63,10 @@ class SocialVC: UIViewController, UITextFieldDelegate {
         searchField.rightViewMode = UITextFieldViewMode.Always
         
         
+         self.searchField.delegate = self;
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

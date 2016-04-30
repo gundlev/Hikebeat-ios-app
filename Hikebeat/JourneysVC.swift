@@ -51,6 +51,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToJourney(unwindSegue: UIStoryboardSegue) {
+
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jTitles.count
     }
@@ -75,7 +79,11 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     
-
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("showJourney", sender: self)
+        self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
