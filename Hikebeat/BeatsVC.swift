@@ -33,6 +33,8 @@ class BeatsVC: UIViewController {
         // Do any additional setup after loading the view.
         self.pageControl.numberOfPages = beatsCollectionView.numberOfItemsInSection(0)
         self.pageControl.transform = CGAffineTransformMakeScale(1.7, 1.7)
+        
+        beatsCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
     }
 
     
@@ -117,6 +119,14 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         return cell
     }
     
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    
+        // 292 is the width of the cell in the collection
+        let currentPage = beatsCollectionView.contentOffset.x / 292
+        self.pageControl.currentPage = Int(ceil(currentPage))
+   
+    }
+    
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
@@ -125,4 +135,5 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         self.pageControl.currentPage = Int(ceil(currentPage))
 
     }
+
 }
