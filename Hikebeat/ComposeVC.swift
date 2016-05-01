@@ -89,6 +89,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         let isActiveJourney = findActiveJourney()
         
+        if isActiveJourney{
+            print("There is an active journey!")
+        }
+        
     }
     
     @IBAction func unwindToCompose(sender: UIStoryboardSegue)

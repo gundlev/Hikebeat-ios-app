@@ -32,19 +32,18 @@ class BeatsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        
-        self.pageControl.numberOfPages = Int(beatsCollectionView.contentSize.width / beatsCollectionView.frame.size.width)
-        
-        self.pageControl.numberOfPages = 10
+        self.pageControl.numberOfPages = beatsCollectionView.numberOfItemsInSection(0)
+        self.pageControl.transform = CGAffineTransformMakeScale(1.7, 1.7)
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     override func viewDidDisappear(animated: Bool) {
+        // Close the modal before you leave
         self.dismissViewControllerAnimated(false, completion: nil)
     }
 
@@ -116,9 +115,12 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
-        
-        
+        // 292 is the width of the cell in the collection
+        let currentPage = beatsCollectionView.contentOffset.x / 292
+        self.pageControl.currentPage = Int(ceil(currentPage))
+
     }
 }

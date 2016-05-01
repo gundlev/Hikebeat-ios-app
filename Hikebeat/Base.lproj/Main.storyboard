@@ -42,7 +42,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ON-jq-UZg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="PhotoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="erl-O3-vng">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PhotoBackground" translatesAutoresizingMaskIntoConstraints="NO" id="erl-O3-vng">
                                         <rect key="frame" x="-243" y="0.0" width="877" height="701"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="877" id="AqH-G2-KQi"/>
@@ -1375,15 +1375,17 @@
                                                 <outlet property="delegate" destination="XLv-Pj-6mX" id="cRT-47-IWI"/>
                                             </connections>
                                         </collectionView>
-                                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
-                                            <rect key="frame" x="297" y="446" width="7" height="37"/>
+                                        <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
+                                            <rect key="frame" x="297" y="398" width="7" height="37"/>
+                                            <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="currentPageIndicatorTintColor" red="0.73602133989334106" green="0.96545141935348511" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </pageControl>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="il6-8V-iJa" firstAttribute="leading" secondItem="a77-j8-CwZ" secondAttribute="leading" id="9DB-fa-HKy"/>
                                         <constraint firstAttribute="bottom" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="80" id="Asv-h1-yvX"/>
-                                        <constraint firstItem="IP1-Ki-95A" firstAttribute="top" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="8" id="Kyb-fS-CKH"/>
+                                        <constraint firstItem="IP1-Ki-95A" firstAttribute="top" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="-40" id="Kyb-fS-CKH"/>
                                         <constraint firstItem="IP1-Ki-95A" firstAttribute="centerX" secondItem="a77-j8-CwZ" secondAttribute="centerX" id="TDz-tQ-O2T"/>
                                         <constraint firstAttribute="trailing" secondItem="il6-8V-iJa" secondAttribute="trailing" id="kLL-ed-fFN"/>
                                         <constraint firstItem="il6-8V-iJa" firstAttribute="top" secondItem="a77-j8-CwZ" secondAttribute="top" id="rpr-6M-y4M"/>
