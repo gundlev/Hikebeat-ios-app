@@ -104,12 +104,12 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         cell.journeyTitle.text = "A Weekend in London"
         cell.beatTitle.text = "A Sunset From London Eye"
-        cell.beatMessage.text = "We were extremely lucky to experience this wonderful sunset from the London Eye. The most beautiful afternoon ever!!! 😍"
+        cell.beatMessage.text = "We were extremely lucky to experience this wonderful sunset from the London Eye. The most beautiful afternoon ever!!! There's nothing quite like the energy you feel at sunset in Kruger National Park 🐘 thanks to #RhinoTears wine 🍷. Can't wait to see even more of this precious view! See you soon guys!"
         
-        //TODO ScrollView not working
         
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.bounds.height/2
         cell.profilePicture.layer.masksToBounds = true
+        
         
         cell.scrollView.scrollEnabled = true
         cell.scrollView.contentSize = CGSizeMake(230, 2300)
