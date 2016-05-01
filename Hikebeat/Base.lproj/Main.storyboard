@@ -1268,6 +1268,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="518"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
+                                            <rect key="frame" x="297" y="398" width="7" height="37"/>
+                                            <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="currentPageIndicatorTintColor" red="0.73602133989334106" green="0.96545141935348511" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </pageControl>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="il6-8V-iJa">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="438"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1288,40 +1293,49 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHU-tH-hDs">
                                                                 <rect key="frame" x="11" y="33" width="270" height="360"/>
                                                                 <subviews>
-                                                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8t-9X-ieY">
+                                                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8t-9X-ieY">
                                                                         <rect key="frame" x="20" y="20" width="230" height="320"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMY-zu-C9m">
-                                                                                <rect key="frame" x="19" y="12" width="192" height="24"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{{Hike title holder}}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMY-zu-C9m">
+                                                                                <rect key="frame" x="32" y="12" width="165" height="24"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                                                 <color key="textColor" red="0.2274419367313385" green="0.86620205640792847" blue="0.34066462516784668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Sunset From London Eye" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqz-BS-Eh6">
-                                                                                <rect key="frame" x="12" y="41" width="206" height="21"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{{Beat title holder}}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqz-BS-Eh6">
+                                                                                <rect key="frame" x="41" y="41" width="147" height="21"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <color key="textColor" red="0.051157362759113312" green="0.40429922938346863" blue="0.42625641822814941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="We were extremely lucky to experience this wonderful sunset from the London Eye. The most beautiful afternoon ever!!! 😍" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INt-Dc-Bfd">
-                                                                                <rect key="frame" x="0.0" y="77" width="230" height="106"/>
+                                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" text="{{Message holder}}" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="INt-Dc-Bfd">
+                                                                                <rect key="frame" x="0.0" y="76" width="230" height="34"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="230" id="5k4-kZ-KGp"/>
                                                                                 </constraints>
                                                                                 <color key="textColor" red="0.051157362759113312" green="0.40429922938346863" blue="0.42625641822814941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                             </textView>
+                                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurryBG" translatesAutoresizingMaskIntoConstraints="NO" id="iYF-Ju-S89">
+                                                                                <rect key="frame" x="1" y="125" width="229" height="123"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="229" id="CG0-Yv-am8"/>
+                                                                                    <constraint firstAttribute="height" constant="123" id="mwl-KY-esU"/>
+                                                                                </constraints>
+                                                                            </imageView>
                                                                         </subviews>
                                                                         <constraints>
                                                                             <constraint firstAttribute="trailing" secondItem="eqz-BS-Eh6" secondAttribute="trailing" constant="12" id="6XW-jI-kR2"/>
+                                                                            <constraint firstItem="iYF-Ju-S89" firstAttribute="top" secondItem="INt-Dc-Bfd" secondAttribute="bottom" constant="15" id="6ga-FP-vCc"/>
                                                                             <constraint firstItem="MMY-zu-C9m" firstAttribute="top" secondItem="l8t-9X-ieY" secondAttribute="top" constant="12" id="MlD-ZJ-voE"/>
                                                                             <constraint firstAttribute="bottom" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="236" id="Q8C-Ii-LRX"/>
-                                                                            <constraint firstItem="INt-Dc-Bfd" firstAttribute="top" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="15" id="Vpm-KC-Cka"/>
+                                                                            <constraint firstItem="INt-Dc-Bfd" firstAttribute="top" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="14" id="Vpm-KC-Cka"/>
                                                                             <constraint firstItem="eqz-BS-Eh6" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="Wqp-1V-4FN"/>
                                                                             <constraint firstItem="MMY-zu-C9m" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="aFn-mK-vn2"/>
                                                                             <constraint firstItem="INt-Dc-Bfd" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="ay7-TL-leQ"/>
+                                                                            <constraint firstItem="iYF-Ju-S89" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="e2w-8i-Wjq"/>
                                                                             <constraint firstItem="eqz-BS-Eh6" firstAttribute="top" secondItem="MMY-zu-C9m" secondAttribute="bottom" constant="5" id="jAD-fT-HmR"/>
                                                                         </constraints>
                                                                     </scrollView>
@@ -1363,10 +1377,12 @@
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="beatContainer" destination="HHU-tH-hDs" id="h6y-y3-9ee"/>
+                                                        <outlet property="beatImage" destination="iYF-Ju-S89" id="coi-Bh-iJb"/>
                                                         <outlet property="beatMessage" destination="INt-Dc-Bfd" id="Qca-2d-CcG"/>
                                                         <outlet property="beatTitle" destination="eqz-BS-Eh6" id="XB6-Zv-Vop"/>
                                                         <outlet property="journeyTitle" destination="MMY-zu-C9m" id="CBH-w1-O3c"/>
                                                         <outlet property="profilePicture" destination="ybq-Kq-TSU" id="WIJ-BP-oUk"/>
+                                                        <outlet property="scrollView" destination="l8t-9X-ieY" id="QIe-aE-Qyg"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -1375,11 +1391,6 @@
                                                 <outlet property="delegate" destination="XLv-Pj-6mX" id="cRT-47-IWI"/>
                                             </connections>
                                         </collectionView>
-                                        <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
-                                            <rect key="frame" x="297" y="398" width="7" height="37"/>
-                                            <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="currentPageIndicatorTintColor" red="0.73602133989334106" green="0.96545141935348511" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </pageControl>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>

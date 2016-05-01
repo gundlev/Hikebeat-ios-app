@@ -12,8 +12,7 @@ class BeatsVC: UIViewController {
 
     @IBOutlet weak var beatsCollectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
-    
-    
+        
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
     var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
@@ -30,7 +29,7 @@ class BeatsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.pageControl.numberOfPages = beatsCollectionView.numberOfItemsInSection(0)
         self.pageControl.transform = CGAffineTransformMakeScale(1.7, 1.7)
@@ -73,10 +72,11 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BeatCell", forIndexPath: indexPath) as! BeatCollectionViewCell
         
        
-        cell.beatContainer.layer.cornerRadius = 25
+        cell.beatContainer.layer.cornerRadius = 30
         cell.beatContainer.layer.masksToBounds = true
         
-        
+        cell.beatImage.layer.cornerRadius = 25
+        cell.beatImage.layer.masksToBounds = true
 
         // create path
         
@@ -106,11 +106,13 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.beatTitle.text = "A Sunset From London Eye"
         cell.beatMessage.text = "We were extremely lucky to experience this wonderful sunset from the London Eye. The most beautiful afternoon ever!!! 😍"
         
+        //TODO ScrollView not working
         
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.bounds.height/2
         cell.profilePicture.layer.masksToBounds = true
         
-        
+        cell.scrollView.scrollEnabled = true
+        cell.scrollView.contentSize = CGSizeMake(230, 2300)
         
         return cell
     }
