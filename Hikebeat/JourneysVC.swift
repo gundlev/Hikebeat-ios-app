@@ -78,6 +78,11 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    @IBAction func showNewJourneyVC(sender: AnyObject) {
+        
+        performSegueWithIdentifier("showNewJourney", sender: self)
+        
+    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         performSegueWithIdentifier("showJourney", sender: self)
