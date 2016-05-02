@@ -45,7 +45,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var editVideoButton: UIImageView!
     
     @IBAction func sendBeat(sender: AnyObject) {
-    
+        checkForCorrectInput()
         
     }
     
@@ -87,12 +87,15 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
         
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         let isActiveJourney = findActiveJourney()
         
         if isActiveJourney{
             print("There is an active journey!")
         }
-        
     }
     
     @IBAction func unwindToCompose(sender: UIStoryboardSegue)
@@ -119,7 +122,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        
+        clearAllForNewBeat()
     }
     
     func imageButtonTapped() {
@@ -143,6 +146,23 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     func applyGreenBorder(view :UIImageView) {
         view.layer.borderWidth = 4
         view.layer.borderColor = greenColor.CGColor
+    }
+    
+    func removeGreenBorder(view: UIImageView) {
+        view.layer.borderWidth = 0
+    }
+    
+    func clearAllForNewBeat() {
+        removeGreenBorder(self.editTitleButton)
+        removeGreenBorder(self.editMessageButton)
+        removeGreenBorder(self.editMemoButton)
+        removeGreenBorder(self.editImageButton)
+        removeGreenBorder(self.editVideoButton)
+        self.titleText = ""
+        self.messageText = ""
+        self.currentBeat = nil
+        self.currentImage = nil
+        self.currentMediaURL = nil
     }
     
     func disableMediaView(view :UIImageView) {
@@ -189,6 +209,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 */
     
     func checkForCorrectInput() {
+        print("Now checking")
         let locationTuple = self.getTimeAndLocation()
         if locationTuple != nil {
             if ((titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
@@ -243,19 +264,20 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 print("Just Before Crash!")
                 self.currentBeat = Beat()
                 self.currentBeat!.fill( titleText, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
-                realm.add(self.currentBeat!)
+                try! realm.write() {
+                    realm.add(self.currentBeat!)
+                }
+                
                 print("Just After Crash!")
                 self.sendBeat()
             }
         } else {
-            
+            print("location tuple is nil")
         }
     }
     
     func sendBeat() {
-        
-
-            
+            print("sending beat start")
             // Check if there is any network connection and send via the appropriate means.
             if SimpleReachability.isConnectedToNetwork() {
                 // TODO: send via alamofire
@@ -279,12 +301,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     // if response is 200 OK from server go on.
                     if response.response?.statusCode == 200 {
                         print("The text was send")
-                        self.currentBeat?.messageUploaded = true
+                        
                         
                         // Save the messageId to the currentBeat
                         let rawMessageJson = JSON(response.result.value!)
                         let messageJson = rawMessageJson["data"][0]
-                        self.currentBeat?.messageId = messageJson["_id"].stringValue
+                        try! self.realm.write() {
+                            self.currentBeat?.messageUploaded = true
+                            self.currentBeat?.messageId = messageJson["_id"].stringValue
+                        }
+ 
                         
                         // If the is an image in the currentBeat, send the image.
                         if self.currentBeat?.mediaData != nil {
@@ -298,7 +324,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                 
                                 var customHeader = Headers
                                 
-                                customHeader["x-hikebeat-timecapture"] = self.currentBeat?.timestamp
+                                customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
                                 customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
                                 
                                 Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).responseJSON { mediaResponse in
@@ -313,17 +339,22 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                         
                                         // Set the imageId in currentBeat
                                         print("messageId: ", mediaJson["_id"].stringValue)
-                                        self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
+                                        
                                         
                                         // Set the uploaded variable to true as the image has been uplaoded.
-                                        self.currentBeat?.mediaUploaded = true
+                                        
                                         try! self.realm.write {
+                                            self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
+                                            self.currentBeat?.mediaUploaded = true
                                             self.activeJourney?.beats.append(self.currentBeat!)
                                         }
+                                        
+                                        self.clearAllForNewBeat()
                                     } else {
                                         print("Error posting the image")
-                                        self.currentBeat?.mediaUploaded = false
+                                        
                                         try! self.realm.write {
+                                            self.currentBeat?.mediaUploaded = false
                                             self.activeJourney?.beats.append(self.currentBeat!)
                                         }
                                     }
@@ -333,11 +364,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                             }
                         } else {
                             print("There's no image")
-                            self.currentBeat?.mediaUploaded = true
+                            
                             try! self.realm.write {
+                                self.currentBeat?.mediaUploaded = true
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
-
+                            
+                            self.clearAllForNewBeat()
                         }
                         
                         //Likely not usefull call to saveContext -> Test it!!
@@ -351,21 +384,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                         
                         
                         // Is set to true now but should be changed to false
-                        self.currentBeat?.mediaUploaded = false
-                        self.currentBeat?.messageUploaded = false
+
                         try! self.realm.write {
+                            self.currentBeat?.mediaUploaded = false
+                            self.currentBeat?.messageUploaded = false
                             self.activeJourney?.beats.append(self.currentBeat!)
                         }
                     }
                     
-                    // print(response)
-                    // if the response is okay run:
-
-                    //                    self.saveCurrentBeat(uploaded)
-                    //self.setInitial(true)
                 }
-                //                self.setInitial(true)
-                //                self.swipeView.setBack(true)
+
             } else {
                 
                 // This will send it via SMS.
@@ -419,16 +447,21 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             /* Save the Beat and setInitial*/
             if currentBeat?.mediaData != nil {
                 print("SMS function: There is an image")
-                self.currentBeat?.mediaUploaded = false
+                try! realm.write() {
+                    self.currentBeat?.mediaUploaded = false
+                }
             } else {
                 print("SMS function: There is no image")
-                self.currentBeat?.mediaUploaded = true
+                try! realm.write() {
+                    self.currentBeat?.mediaUploaded = true
+                }
             }
-            self.currentBeat?.messageUploaded = true
+            
             try! self.realm.write {
+                self.currentBeat?.messageUploaded = true
                 self.activeJourney?.beats.append(self.currentBeat!)
             }
-
+            self.clearAllForNewBeat()
             self.dismissViewControllerAnimated(true, completion: nil)
         default:
             break;
@@ -485,7 +518,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let gpsCheck = userDefaults.boolForKey("GPS-check")
             if gpsCheck {
                 // Now performing gps check
-                if location.verticalAccuracy > 150 || location.horizontalAccuracy > 150 {
+                if location.verticalAccuracy > 1500 || location.horizontalAccuracy > 1500 {
                     // TODO: modal to tell the user that the gps signal is too poor.
                     return nil
                 } else {

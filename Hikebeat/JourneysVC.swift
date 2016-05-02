@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,6 +16,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var journeys: Results<Journey>!
+    let realm = try! Realm()
 
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
@@ -36,6 +39,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.journeys = self.realm.objects(Journey)
+        print(journeys)
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
@@ -57,7 +62,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jTitles.count
+        return journeys.count //jTitles.count
     }
     
     
@@ -65,9 +70,18 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let cell = self.journeysTableView.dequeueReusableCellWithIdentifier("JourneyCell",forIndexPath: indexPath) as! JourneyViewCell
         
+        let journey = journeys[indexPath.row]
+        
         cell.journeyDateLabel.text = jDates[indexPath.row]
-        cell.journeyStatusLabel.text = jStatuses[indexPath.row]
-        cell.journeyTitleLabel.text = jTitles[indexPath.row]
+        var statusLabel = ""
+        if journey.active {
+            statusLabel = "Active journey"
+        } else {
+            statusLabel = "Inactive journey"
+        }
+        
+        cell.journeyStatusLabel.text = statusLabel
+        cell.journeyTitleLabel.text = journey.headline!
         
         cell.backgroundColor = UIColor.clearColor()
         
@@ -87,8 +101,27 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         appDelegate.fastSegueHack = "journeys"
-        performSegueWithIdentifier("showJourney", sender: self)
+        //performSegueWithIdentifier("showJourney", sender: self)
         self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let journey = self.journeys[indexPath.row]
+        try! realm.write() {
+            journey.active = !journey.active
+        }
+        
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
+        var statusLabel = ""
+        if journey.active {
+            statusLabel = "Active journey"
+        } else {
+            statusLabel = "Inactive journey"
+        }
+        
+        cell.journeyStatusLabel.text = statusLabel
+    }
+    
+    func getAllJourneys() {
+        
     }
     
     /*

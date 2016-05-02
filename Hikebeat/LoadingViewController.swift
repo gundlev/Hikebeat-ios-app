@@ -27,12 +27,11 @@ class LoadingViewController: UIViewController {
         
         self.setNeedsStatusBarAppearanceUpdate()
 
-        
         let loggedIn = userDefaults.boolForKey("loggedIn")
         if loggedIn {
             segueIdentifyer = "showMain"
         } else {
-            segueIdentifyer = "showMain"
+            segueIdentifyer = "showLogin"
             //segueIdentifyer = "showLogin"
         }
     }

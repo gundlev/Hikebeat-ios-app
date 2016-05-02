@@ -16,8 +16,8 @@ class Journey: Object {
     dynamic var userId: String = ""
     dynamic var journeyId: String = ""
     dynamic var headline: String? = nil
-    dynamic var journeyDescription: String?
-    dynamic private var active: Bool = false
+    dynamic var journeyDescription: String? = nil
+    dynamic var active: Bool = false
     dynamic var type: String? = nil
     var beats = List<Beat>()
     
@@ -29,7 +29,7 @@ class Journey: Object {
     headline: String?,
     journeyDescription: String?,
     active: Bool,
-    type: String) {
+    type: String?) {
     
         self.slug = slug
         self.userId = userId

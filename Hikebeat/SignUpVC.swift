@@ -23,7 +23,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var rePasswordField: UITextField!
     
     @IBAction func signUp(sender: AnyObject) {
-        if passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
+        if true {//passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
             
             let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
             print(parameters)
@@ -89,6 +89,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             }
         } else {
             // The password an repeatPassword is not the same.
+            print("not filled out correct")
         }
 
     }

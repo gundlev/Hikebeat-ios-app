@@ -117,7 +117,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.setObject(user["_id"].stringValue, forKey: "_id")
                 self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
                 self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
-                self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
+                //self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
                 self.userDefaults.setBool(true, forKey: "loggedIn")
                 self.userDefaults.setObject(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
                 self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
@@ -135,27 +135,29 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     //print(response)
                     if response.response?.statusCode == 200 {
                         if response.result.value != nil {
-                            print(response.result.value!)
+                            //print(response.result.value!)
                             let rawJson = JSON(response.result.value!)
                             let json = rawJson["data"]
-                            print(json)
+                            //print(json)
                             print(8)
                             for (_, journey) in json {
                                 let headline = journey["options"]["headline"].stringValue
                                 print(headline)
-                                let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
+                                //let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
                                 
                                 let dataJourney = Journey()
-                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: active, type: journey["options"]["type"].stringValue)
-                                self.realm.add(dataJourney)
-                                
+                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue)
+                                try! self.realm.write() {
+                                    self.realm.add(dataJourney)
+                                }
                                 for (_, message) in journey["messages"]  {
                                     print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
                                     //print(message)
                                     let dataBeat = Beat()
                                     dataBeat.fill(message["headline"].stringValue, journeyId: journey["_id"].stringValue, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: MediaType.none, mediaData: "", mediaDataId: "", messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: dataJourney)
-                                    self.realm.add(dataBeat)
+                                    
                                     try! self.realm.write {
+                                        self.realm.add(dataBeat)
                                         dataJourney.beats.append(dataBeat)
                                     }
                                     
@@ -168,14 +170,14 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     }
                 }
                 print("This is what is saved: \n\n\n\n")
-                let journeys = self.realm.objects(Journey).filter("active = %@", true)
+                let journeys = self.realm.objects(Journey)
                 if journeys.isEmpty {
                     print("There is nothing")
                 } else {
                     print(journeys.description)
                 }
                 /* Enter the app when logged in*/
-                //self.performSegueWithIdentifier("justLoggedIn", sender: self)
+                self.performSegueWithIdentifier("justLoggedIn", sender: self)
             } else if response.response?.statusCode == 401 {
                 // User not authorized
                 print("Not Auth!!")
