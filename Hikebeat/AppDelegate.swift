@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var reachability: Reachability!
     
+    //a fast hack for displaying which VC initated a segue transition Social vs Journeys
+    var fastSegueHack = ""
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         

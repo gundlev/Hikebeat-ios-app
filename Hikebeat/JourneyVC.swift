@@ -19,6 +19,8 @@ class JourneyVC: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,6 +54,15 @@ class JourneyVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func goBack(sender: AnyObject) {
+        
+        if appDelegate.fastSegueHack=="social"{
+            performSegueWithIdentifier("unwindSocialHack", sender: self)
+        }else{
+            performSegueWithIdentifier("unwindJourneysHack", sender: self)
+        }
+        
     }
     
     @IBAction func unwindToJourney(unwindSegue: UIStoryboardSegue) {

@@ -14,6 +14,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var activeJourneysCollectionView: UICollectionView!
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
@@ -85,6 +86,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        appDelegate.fastSegueHack = "journeys"
         performSegueWithIdentifier("showJourney", sender: self)
         self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
