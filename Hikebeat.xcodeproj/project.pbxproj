@@ -35,6 +35,7 @@
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
+		E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */; };
 		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
 		E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */; };
 		E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */; };
@@ -105,6 +106,7 @@
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
 		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
+		E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalListOfJourneysVC.swift; sourceTree = "<group>"; };
 		E18991611CD380E400EC46B2 /* JourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewCell.swift; sourceTree = "<group>"; };
 		E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveJourneyCollectionViewCell.swift; sourceTree = "<group>"; };
 		E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
 				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
 				E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */,
+				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
 				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
+				E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
