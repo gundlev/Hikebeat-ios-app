@@ -10,6 +10,7 @@ import UIKit
 
 class EditMessageVC: UIViewController, UITextViewDelegate {
 
+    var text = ""
     
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var messageField: UITextView!
@@ -20,7 +21,7 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.messageField.text = self.text
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
 
@@ -71,6 +72,9 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         if messageString != "" {
             vc.messageText = messageString
             vc.applyGreenBorder(vc.editMessageButton)
+        } else {
+            vc.messageText = nil
+            vc.removeGreenBorder(vc.editMessageButton)
         }
 
     }

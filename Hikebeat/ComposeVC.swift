@@ -539,5 +539,22 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier! {
+        case "editTitleModal":
+            if self.titleText != nil {
+                print(1)
+                let vc = segue.destinationViewController as! EditTitleVC
+                vc.text = self.titleText!
+                print(1.1)
+            }
+        case "editMessageModal":
+            if self.messageText != nil {
+                print(2)
+                let vc = segue.destinationViewController as! EditMessageVC
+                vc.messageField.text = self.messageText
+            }
+        default:
+            break
+        }
     }
 }

@@ -10,11 +10,13 @@ import UIKit
 
 class EditTitleVC: UIViewController, UITextFieldDelegate {
     
+    var text = ""
+    
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.titleField.text = self.text
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
         
@@ -61,8 +63,10 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
         if titleString != "" {
             vc.titleText = titleString
             vc.applyGreenBorder(vc.editTitleButton)
+        } else {
+            vc.titleText = nil
+            vc.removeGreenBorder(vc.editTitleButton)
         }
-
     }
     
     
