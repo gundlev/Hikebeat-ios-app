@@ -448,7 +448,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="600" height="120"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IZW-ES-bk8" id="4Tf-8a-RhR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-dN-UqD">
@@ -517,7 +517,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActiveJourneyCell" id="OGX-wt-dJD" customClass="ActiveJourneyCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="4" width="187" height="130"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="187" height="130"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="130"/>
@@ -699,6 +699,19 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8Z-qm-uD0">
+                                            <rect key="frame" x="500" y="20" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="UZK-Z6-0T1"/>
+                                                <constraint firstAttribute="height" constant="80" id="aSN-ip-d62"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="hPK-V2-WDy"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="tbr-TN-E14"/>
+                                            </constraints>
+                                            <state key="normal" image="CloseIcon"/>
+                                            <connections>
+                                                <segue destination="h0M-Zb-w4w" kind="unwind" unwindAction="unwindToJourneys:" id="Nsb-fl-18d"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -707,12 +720,14 @@
                                         <constraint firstItem="2qN-HA-0Jc" firstAttribute="leading" secondItem="6hz-Zd-9AL" secondAttribute="leading" id="BAy-uz-uQT"/>
                                         <constraint firstItem="6hz-Zd-9AL" firstAttribute="top" secondItem="rLQ-TI-VZq" secondAttribute="bottom" constant="23" id="DpZ-CO-lmi"/>
                                         <constraint firstItem="mJa-iK-TS6" firstAttribute="centerY" secondItem="rux-Ov-3Pc" secondAttribute="centerY" id="Jkv-O5-5Ed"/>
+                                        <constraint firstAttribute="trailing" secondItem="A8Z-qm-uD0" secondAttribute="trailing" constant="20" id="KhO-FY-m3N"/>
                                         <constraint firstItem="fqU-dl-W3L" firstAttribute="centerX" secondItem="ySd-oO-fZI" secondAttribute="centerX" id="LXr-QQ-SHl"/>
                                         <constraint firstItem="fqU-dl-W3L" firstAttribute="centerX" secondItem="ySd-oO-fZI" secondAttribute="centerX" id="O5n-48-VT3"/>
                                         <constraint firstItem="rLQ-TI-VZq" firstAttribute="centerX" secondItem="ySd-oO-fZI" secondAttribute="centerX" id="PnI-jt-UhW"/>
                                         <constraint firstItem="rux-Ov-3Pc" firstAttribute="centerY" secondItem="2qN-HA-0Jc" secondAttribute="centerY" id="UsZ-HM-eQ8"/>
                                         <constraint firstItem="rux-Ov-3Pc" firstAttribute="leading" secondItem="2qN-HA-0Jc" secondAttribute="trailing" constant="12" id="WTj-rS-gV0"/>
                                         <constraint firstItem="6hz-Zd-9AL" firstAttribute="centerY" secondItem="ySd-oO-fZI" secondAttribute="centerY" id="byA-0J-DB9"/>
+                                        <constraint firstItem="A8Z-qm-uD0" firstAttribute="top" secondItem="ySd-oO-fZI" secondAttribute="top" constant="20" id="e16-kX-asf"/>
                                         <constraint firstItem="mJa-iK-TS6" firstAttribute="trailing" secondItem="6hz-Zd-9AL" secondAttribute="trailing" id="fFQ-ju-pL4"/>
                                         <constraint firstItem="6hz-Zd-9AL" firstAttribute="centerX" secondItem="ySd-oO-fZI" secondAttribute="centerX" id="gD5-NO-rl2"/>
                                         <constraint firstItem="rLQ-TI-VZq" firstAttribute="centerX" secondItem="ySd-oO-fZI" secondAttribute="centerX" constant="0.5" id="i9r-g9-LK4"/>
@@ -890,7 +905,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActiveJourneyCell" id="gAw-y6-adH" customClass="ActiveJourneyCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="4" width="187" height="130"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="187" height="130"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="130"/>
@@ -1443,7 +1458,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="600" height="120"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h40-2U-0WV" id="2yI-yd-ir0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-YG-eKg">
@@ -1813,6 +1828,17 @@
                                                 <constraint firstAttribute="width" constant="99" id="NTU-cp-eDF"/>
                                             </constraints>
                                         </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zT7-HO-MlB">
+                                            <rect key="frame" x="500" y="20" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="0kM-co-Hmq"/>
+                                                <constraint firstAttribute="width" constant="80" id="a1y-Ww-t8l"/>
+                                            </constraints>
+                                            <state key="normal" image="CloseIcon"/>
+                                            <connections>
+                                                <segue destination="rF9-PC-cE1" kind="unwind" unwindAction="unwindToCompose:" id="muU-i4-BxA"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -1821,6 +1847,8 @@
                                         <constraint firstItem="r3M-bD-SN1" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" constant="0.5" id="QBF-Wa-h14"/>
                                         <constraint firstItem="ank-bs-PHJ" firstAttribute="top" secondItem="PY1-H3-BuX" secondAttribute="bottom" constant="18" id="S5V-7L-sa2"/>
                                         <constraint firstItem="PY1-H3-BuX" firstAttribute="top" secondItem="r3M-bD-SN1" secondAttribute="bottom" constant="23" id="TdI-9l-2bM"/>
+                                        <constraint firstItem="zT7-HO-MlB" firstAttribute="top" secondItem="Qwc-eQ-1K7" secondAttribute="top" constant="20" id="fmF-bS-Wrz"/>
+                                        <constraint firstAttribute="trailing" secondItem="zT7-HO-MlB" secondAttribute="trailing" constant="20" id="mdX-0F-Ywt"/>
                                         <constraint firstItem="ank-bs-PHJ" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="zPq-es-mux"/>
                                     </constraints>
                                 </view>
@@ -1902,10 +1930,23 @@
                                                 <segue destination="qXv-e9-goR" kind="unwind" unwindAction="unwindToCompose:" id="v1r-gc-2rA"/>
                                             </connections>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5p-8h-lia">
+                                            <rect key="frame" x="500" y="20" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="KJf-P9-CUU"/>
+                                                <constraint firstAttribute="width" constant="80" id="fjx-kj-B1n"/>
+                                            </constraints>
+                                            <state key="normal" image="CloseIcon"/>
+                                            <connections>
+                                                <segue destination="qXv-e9-goR" kind="unwind" unwindAction="unwindToCompose:" id="mUU-rQ-BdE"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="GuS-Lr-l1u" firstAttribute="top" secondItem="i1B-Sr-6TH" secondAttribute="bottom" constant="18" id="C62-G5-NzX"/>
+                                        <constraint firstAttribute="trailing" secondItem="X5p-8h-lia" secondAttribute="trailing" constant="20" id="CEt-0V-TpQ"/>
+                                        <constraint firstItem="X5p-8h-lia" firstAttribute="top" secondItem="bLj-aL-sTa" secondAttribute="top" constant="20" id="I79-X0-awM"/>
                                         <constraint firstItem="i1B-Sr-6TH" firstAttribute="centerY" secondItem="bLj-aL-sTa" secondAttribute="centerY" constant="67" id="OMB-4D-ed0"/>
                                         <constraint firstItem="Jie-dO-Nhi" firstAttribute="centerX" secondItem="bLj-aL-sTa" secondAttribute="centerX" constant="0.5" id="VMv-yE-cLd"/>
                                         <constraint firstItem="GuS-Lr-l1u" firstAttribute="centerX" secondItem="bLj-aL-sTa" secondAttribute="centerX" id="bpW-qb-VcP"/>
@@ -2529,6 +2570,7 @@ sync</string>
         <image name="ActivedIcon" width="32" height="32"/>
         <image name="BackArrow" width="16" height="22"/>
         <image name="BlurryBG" width="375" height="190"/>
+        <image name="CloseIcon" width="23" height="23"/>
         <image name="ComposeBG" width="330" height="488"/>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
