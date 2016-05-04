@@ -34,14 +34,39 @@ func hex(number: Double) -> String {
     let e = d.rangeOfString(".")
     let s1 = d.substringToIndex((e?.startIndex)!)
     let s2 = d.substringFromIndex((e?.endIndex)!)
+    
+    // Check for leading zeroes in s2 and creating string
+    var countZeroes = 0
+    for char in s2.characters {
+        if char == "0" {
+            countZeroes += 1
+        }
+    }
+    var zeroString = ""
+    if countZeroes > 0 {
+        for _ in 1...countZeroes {
+            zeroString += "0"
+        }
+    }
+    // Cast to Int
     let n1 = Int(s1)
     let n2 = Int(s2)
-    if n2 == 0 {
-        let st = String(n1!, radix: 36)
+    
+    // Create hex
+    if s1 == "-0" {
+        let st = "-0." + zeroString + String(n2!, radix: 36)
+        return st
+    } else {
+        if n2 == 0 {
+            let st = String(n1!, radix: 36)
+            return st
+        }
+        let st = String(n1!, radix: 36) + "." + zeroString + String(n2!, radix: 36)
         return st
     }
-    let st = String(n1!, radix: 36) + "." + String(n2!, radix: 36)
-    return st
+    
+    
+    
 }
 
 //func getNewJourney(context: NSManagedObjectContext, active: Bool) -> DataJourney {

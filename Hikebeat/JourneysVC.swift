@@ -18,6 +18,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var journeys: Results<Journey>!
     let realm = try! Realm()
+    var activeJourney: Journey?
+    var activeIndexpath:NSIndexPath?
 
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
@@ -58,7 +60,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func unwindToJourneys(unwindSegue: UIStoryboardSegue) {
-
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,38 +103,27 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         appDelegate.fastSegueHack = "journeys"
-        //performSegueWithIdentifier("showJourney", sender: self)
+        performSegueWithIdentifier("showJourney", sender: self)
         self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let journey = self.journeys[indexPath.row]
-        try! realm.write() {
-            journey.active = !journey.active
-        }
-        
-        
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
-        var statusLabel = ""
-        if journey.active {
-            statusLabel = "Active journey"
-        } else {
-            statusLabel = "Inactive journey"
-        }
-        
-        cell.journeyStatusLabel.text = statusLabel
+//        let journey = self.journeys[indexPath.row]
+//        try! realm.write() {
+//            journey.active = !journey.active
+//        }
+//        
+//        let cell = tableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
+//        var statusLabel = ""
+//        if journey.active {
+//            statusLabel = "Active journey"
+//        } else {
+//            statusLabel = "Inactive journey"
+//        }
+//        cell.journeyStatusLabel.text = statusLabel
     }
     
     func getAllJourneys() {
         
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -145,15 +136,52 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
         return 1
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        // Realm actions
+        let journey = self.journeys[indexPath.row]
+        try! realm.write() {
+            journey.active = true
+        }
+        
+        // Tableview Actions
+        let tableCell = self.journeysTableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
+        tableCell.journeyStatusLabel.text = "Active journey"
+        
+        // Collectionview actions
+        let collectionCell = collectionView.cellForItemAtIndexPath(indexPath) as! ActiveJourneyCollectionViewCell
+        collectionCell.badgeImage.image = UIImage(named: "ActivatedBadge")
+        
+        if self.activeJourney != nil && self.activeIndexpath != nil {
+            let tableCellToInactivate = self.journeysTableView.cellForRowAtIndexPath(self.activeIndexpath!) as! JourneyViewCell
+            let collectionCellToInactivate = collectionView.cellForItemAtIndexPath(self.activeIndexpath!) as! ActiveJourneyCollectionViewCell
+            tableCellToInactivate.journeyStatusLabel.text = "Finished journey"
+            collectionCellToInactivate.badgeImage.image = UIImage(named: "NotActivatedBadge")
+            self.activeIndexpath = indexPath
+            try! realm.write() {
+                self.activeJourney!.active = false
+                self.activeJourney = journey
+            }
+            
+        }
+        
+    }
+    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ActiveJourneyCell", forIndexPath: indexPath) as! ActiveJourneyCollectionViewCell
         
-        let journey = 
-        cell.journeyTitleLabel.text = jTitles[indexPath.row]
-        
+        let journey = self.journeys[indexPath.item]
+        print(1)
+        cell.journeyTitleLabel.text = journey.headline
         cell.backgroundColor = UIColor.clearColor()
-        
+        if journey.active {
+            self.activeJourney = journey
+            self.activeIndexpath = indexPath
+            cell.badgeImage.image = UIImage(named: "ActivatedBadge")
+        } else {
+            cell.badgeImage.image = UIImage(named: "NotActivatedBadge")
+        }
         return cell
     }
     

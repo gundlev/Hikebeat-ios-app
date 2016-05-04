@@ -153,6 +153,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     func clearAllForNewBeat() {
+        print("Clearing for new beat")
         removeGreenBorder(self.editTitleButton)
         removeGreenBorder(self.editMessageButton)
         removeGreenBorder(self.editMemoButton)
@@ -549,9 +550,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             }
         case "editMessageModal":
             if self.messageText != nil {
-                print(2)
                 let vc = segue.destinationViewController as! EditMessageVC
-                vc.messageField.text = self.messageText
+                vc.text = self.messageText!
             }
         default:
             break
