@@ -187,7 +187,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v9B-gW-ify" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="377" y="1124"/>
+            <point key="canvasLocation" x="377" y="990"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -388,7 +388,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z99-6d-B44" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-313" y="1124"/>
+            <point key="canvasLocation" x="-313" y="990"/>
         </scene>
         <!--JourneysVC-->
         <scene sceneID="9iH-TT-kaj">
@@ -2250,8 +2250,15 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="NRN-J5-qFu"/>
                     <connections>
+                        <outlet property="emailLabel" destination="m9c-Uo-IpZ" id="jt2-Cg-9Tq"/>
                         <outlet property="followersButton" destination="vrp-bZ-jbs" id="MJI-Bu-FnH"/>
+                        <outlet property="genderLabel" destination="bfl-Ac-aCM" id="hJf-RA-XY9"/>
+                        <outlet property="nameLabel" destination="2t9-hU-8Ft" id="Osi-JP-eaV"/>
+                        <outlet property="nationalityLabel" destination="2Gt-tl-Lco" id="Z0f-3T-lRa"/>
+                        <outlet property="numberOfJourneys" destination="MUd-rl-teb" id="ZtL-Bc-dEB"/>
+                        <outlet property="phoneNoLabel" destination="nvs-F1-dqq" id="dMp-Li-N62"/>
                         <outlet property="profilePicture" destination="xSl-76-hiD" id="0t2-OB-EqL"/>
+                        <outlet property="usernameLabel" destination="lxc-vr-59h" id="akK-NV-kA7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D4e-9o-jZa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2608,7 +2615,7 @@ sync</string>
         <image name="trees" width="270" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9pW-Na-dpl"/>
+        <segue reference="Ry1-QN-lGj"/>
         <segue reference="Ttn-Zq-yK6"/>
     </inferredMetricsTieBreakers>
 </document>

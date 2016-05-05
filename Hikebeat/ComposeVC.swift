@@ -245,7 +245,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                         if mediaData != nil {
                             self.removeMediaWithURL(currentMediaURL!)
                         }
-                        print("mediaData: ", mediaData)
+                        //print("mediaData: ", mediaData)
                     }
                     
                 } else if audioHasBeenRecordedForThisBeat {

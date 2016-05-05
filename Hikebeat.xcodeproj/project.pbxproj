@@ -16,6 +16,8 @@
 		8512E0FD1CD4FF880085CE2B /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512E0FB1CD4FF880085CE2B /* Result.framework */; };
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
+		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
+		859EB30D1CDB73E4005353C0 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */; };
 		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
@@ -79,6 +81,8 @@
 		8512E0FB1CD4FF880085CE2B /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
+		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
+		859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
 		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				85F2B4661CC4DE96004704F3 /* Realm.framework in Frameworks */,
 				85F2B4671CC4DE96004704F3 /* RealmSwift.framework in Frameworks */,
 				8512E0FC1CD4FF880085CE2B /* BrightFutures.framework in Frameworks */,
+				859EB30D1CDB73E4005353C0 /* AlamofireImage.framework in Frameworks */,
 				8512E0FD1CD4FF880085CE2B /* Result.framework in Frameworks */,
 				85F2B4691CC4DE96004704F3 /* SwiftyJSON.framework in Frameworks */,
 			);
@@ -229,6 +234,7 @@
 		85F2B46C1CC4E353004704F3 /* Frameworks and Libs */ = {
 			isa = PBXGroup;
 			children = (
+				859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */,
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
 				8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */,
 				8512E0FB1CD4FF880085CE2B /* Result.framework */,
@@ -246,6 +252,7 @@
 				85F2B4701CC4E3D2004704F3 /* Journey.swift */,
 				85F2B4721CC4E4E0004704F3 /* Beat.swift */,
 				85F2B4741CC4EF6A004704F3 /* Change.swift */,
+				859EB30A1CDB6A88005353C0 /* Follower.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -427,6 +434,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/BrightFutures.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
 			);
 			name = "Run Script";
 			outputPaths = (
@@ -461,6 +469,7 @@
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
+				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
 				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,

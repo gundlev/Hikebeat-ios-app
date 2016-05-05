@@ -7,17 +7,26 @@
 //
 
 import UIKit
+import RealmSwift
+import Alamofire
 
 class ProfileVC: UIViewController {
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let realm = try! Realm()
 
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var profilePicture: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var phoneNoLabel: UILabel!
+    @IBOutlet weak var numberOfJourneys: UILabel!
+    @IBOutlet weak var nationalityLabel: UILabel!
+    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
@@ -31,7 +40,28 @@ class ProfileVC: UIViewController {
         
         profilePicture.layer.cornerRadius = profilePicture.bounds.height/2
         profilePicture.layer.masksToBounds = true
-
+        
+        // Setting labels to values
+        self.usernameLabel.text = "@" + userDefaults.stringForKey("username")!
+        self.nameLabel.text = userDefaults.stringForKey("name")!
+        self.emailLabel.text = userDefaults.stringForKey("email")!
+        //        self.phoneNoLabel.text = userDefaults.stringForKey("")!
+        self.nationalityLabel.text = userDefaults.stringForKey("nationality")!
+        self.genderLabel.text = userDefaults.stringForKey("gender")!
+        
+        // Settings number of journeys
+        let journeys = realm.objects(Journey)
+        self.numberOfJourneys.text = String(journeys.count)
+        
+        // Setting profileImage if there is one
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let fileName = "profileImage.png"
+        let imagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let image = UIImage(contentsOfFile: imagePath)
+        if image != nil {
+            profilePicture.image = image
+        }
     }
 
     override func didReceiveMemoryWarning() {

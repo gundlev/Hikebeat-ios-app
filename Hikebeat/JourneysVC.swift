@@ -138,34 +138,45 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        // Realm actions
-        let journey = self.journeys[indexPath.row]
-        try! realm.write() {
-            journey.active = true
-        }
+        let journey = self.journeys[indexPath.item]
         
-        // Tableview Actions
-        let tableCell = self.journeysTableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
-        tableCell.journeyStatusLabel.text = "Active journey"
-        
-        // Collectionview actions
-        let collectionCell = collectionView.cellForItemAtIndexPath(indexPath) as! ActiveJourneyCollectionViewCell
-        collectionCell.badgeImage.image = UIImage(named: "ActivatedBadge")
-        
-        if self.activeJourney != nil && self.activeIndexpath != nil {
-            let tableCellToInactivate = self.journeysTableView.cellForRowAtIndexPath(self.activeIndexpath!) as! JourneyViewCell
-            let collectionCellToInactivate = collectionView.cellForItemAtIndexPath(self.activeIndexpath!) as! ActiveJourneyCollectionViewCell
-            tableCellToInactivate.journeyStatusLabel.text = "Finished journey"
-            collectionCellToInactivate.badgeImage.image = UIImage(named: "NotActivatedBadge")
-            self.activeIndexpath = indexPath
+        if journey.active {
+            changeSetOfCells(indexPath, active: false)
             try! realm.write() {
-                self.activeJourney!.active = false
+                journey.active = false
+                self.activeJourney = nil
+                self.activeIndexpath = nil
+            }
+        } else {
+            if self.activeJourney != nil && self.activeIndexpath != nil {
+                changeSetOfCells(self.activeIndexpath!, active: false)
+                try! realm.write() {
+                    self.activeJourney!.active = false
+                }
+            }
+            changeSetOfCells(indexPath, active: true)
+            try! realm.write() {
+                journey.active = true
+                self.activeIndexpath = indexPath
                 self.activeJourney = journey
             }
-            
         }
-        
     }
+    
+    func changeSetOfCells(indexPath: NSIndexPath, active: Bool) {
+        var labelText = "Finished journey"
+        var imageName = "NotActivatedBadge"
+        if active {
+            labelText = "Active journey"
+            imageName = "ActivatedBadge"
+        }
+        let tableCell = self.journeysTableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
+        tableCell.journeyStatusLabel.text = labelText
+        let collectionCell = self.activeJourneysCollectionView.cellForItemAtIndexPath(indexPath) as! ActiveJourneyCollectionViewCell
+        collectionCell.badgeImage.image = UIImage(named: imageName)
+    }
+    
+    
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

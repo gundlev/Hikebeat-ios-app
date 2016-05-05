@@ -19,6 +19,7 @@ class Journey: Object {
     dynamic var journeyDescription: String? = nil
     dynamic var active: Bool = false
     dynamic var type: String? = nil
+    var followers = List<Follower>()
     var beats = List<Beat>()
     
     

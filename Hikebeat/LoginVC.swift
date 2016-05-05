@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 import RealmSwift
 
@@ -126,13 +127,32 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.setObject((user["options"]["nationality"].stringValue), forKey: "nationality")
                 self.userDefaults.setObject(true, forKey: "GPS-check")
                 
+                // handling profileImage
+                let profilePhotoUrl = user["options"]["profilePhoto"].stringValue
+                self.userDefaults.setObject(profilePhotoUrl, forKey: "profilePhotoUrl")
+                
+                if profilePhotoUrl != "" {
+                    Alamofire.request(.GET, profilePhotoUrl).responseImage {
+                        response in
+                        if let image = response.result.value {
+                            let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                            let documentsDirectory: AnyObject = paths[0]
+                            let fileName = "profileImage.png"
+                            let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+                            let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
+                            print("The image download and save was: ", success)
+                        }
+                    }
+                }
+                
+                
                 /* Get all the journeys*/
                 print("Getting the journeys")
                 let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
                 print(urlJourney)
                 Alamofire.request(.GET, urlJourney, encoding: .JSON, headers: Headers).responseJSON { response in
                     print(response.response?.statusCode)
-                    //print(response)
+                    print(response)
                     if response.response?.statusCode == 200 {
                         if response.result.value != nil {
                             //print(response.result.value!)
@@ -150,6 +170,14 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                 try! self.realm.write() {
                                     self.realm.add(dataJourney)
                                 }
+                                
+                                for (_,followerId) in journey["followers"] {
+                                    try! self.realm.write() {
+                                        let follower = Follower()
+                                        follower.userId = followerId.stringValue
+                                    }
+                                }
+                                
                                 for (_, message) in journey["messages"]  {
                                     print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
                                     //print(message)
