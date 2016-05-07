@@ -40,6 +40,8 @@ func hex(number: Double) -> String {
     for char in s2.characters {
         if char == "0" {
             countZeroes += 1
+        } else {
+            break
         }
     }
     var zeroString = ""
