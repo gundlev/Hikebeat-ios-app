@@ -164,11 +164,19 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
+        enableMediaView(self.editMemoButton)
+        enableMediaView(self.editImageButton)
+        enableMediaView(self.editVideoButton)
     }
     
     func disableMediaView(view :UIImageView) {
         view.userInteractionEnabled = false
         view.alpha = 0.4
+    }
+    
+    func enableMediaView(view :UIImageView) {
+        view.userInteractionEnabled = true
+        view.alpha = 1
     }
 
     func mediaChosen(type: String) {
