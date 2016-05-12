@@ -18,6 +18,10 @@
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		859EB30D1CDB73E4005353C0 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */; };
+		85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */; };
+		85AC90731CE487AF007BE5C2 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90701CE487AF007BE5C2 /* Async.swift */; };
+		85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */; };
+		85AC90761CE4887C007BE5C2 /* BeatPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90751CE4887C007BE5C2 /* BeatPin.swift */; };
 		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
@@ -31,6 +35,8 @@
 		85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4701CC4E3D2004704F3 /* Journey.swift */; };
 		85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4721CC4E4E0004704F3 /* Beat.swift */; };
 		85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4741CC4EF6A004704F3 /* Change.swift */; };
+		85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAEB7E1CE48D1A00887039 /* BeatPolyline.swift */; };
+		85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */; };
 		E111B0791CD0318800915401 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111B0781CD0318800915401 /* LoginVC.swift */; };
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
@@ -83,6 +89,12 @@
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hikebeat-Bridging-Header.h"; sourceTree = "<group>"; };
+		85AC906E1CE487AF007BE5C2 /* SVPulsingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPulsingAnnotationView.h; sourceTree = "<group>"; };
+		85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPulsingAnnotationView.m; sourceTree = "<group>"; };
+		85AC90701CE487AF007BE5C2 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LFTPulseAnimation.swift; sourceTree = "<group>"; };
+		85AC90751CE4887C007BE5C2 /* BeatPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatPin.swift; sourceTree = "<group>"; };
 		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +115,8 @@
 		85F2B4701CC4E3D2004704F3 /* Journey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
 		85F2B4721CC4E4E0004704F3 /* Beat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
 		85F2B4741CC4EF6A004704F3 /* Change.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
+		85FAEB7E1CE48D1A00887039 /* BeatPolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatPolyline.swift; sourceTree = "<group>"; };
+		85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyContainerVC.swift; sourceTree = "<group>"; };
 		E111B0781CD0318800915401 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
@@ -166,6 +180,18 @@
 				8512E0F41CD4E7520085CE2B /* utils.swift */,
 			);
 			name = "Config and Utils";
+			sourceTree = "<group>";
+		};
+		85AC906C1CE4877F007BE5C2 /* MapFiles */ = {
+			isa = PBXGroup;
+			children = (
+				85AC906E1CE487AF007BE5C2 /* SVPulsingAnnotationView.h */,
+				85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */,
+				85AC90701CE487AF007BE5C2 /* Async.swift */,
+				85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */,
+				85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */,
+			);
+			name = MapFiles;
 			sourceTree = "<group>";
 		};
 		85CA7DBD1CCE7BEC00A4F249 /* Reachability */ = {
@@ -234,6 +260,7 @@
 		85F2B46C1CC4E353004704F3 /* Frameworks and Libs */ = {
 			isa = PBXGroup;
 			children = (
+				85AC906C1CE4877F007BE5C2 /* MapFiles */,
 				859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */,
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
 				8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */,
@@ -249,6 +276,8 @@
 		85F2B46D1CC4E372004704F3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				85FAEB7E1CE48D1A00887039 /* BeatPolyline.swift */,
+				85AC90751CE4887C007BE5C2 /* BeatPin.swift */,
 				85F2B4701CC4E3D2004704F3 /* Journey.swift */,
 				85F2B4721CC4E4E0004704F3 /* Beat.swift */,
 				85F2B4741CC4EF6A004704F3 /* Change.swift */,
@@ -272,6 +301,7 @@
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
+				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
 				E1B413891CCE864F00B8768B /* ModalVC.swift */,
 				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
@@ -280,16 +310,16 @@
 				E1AA1A301CD173A200C79B91 /* SettingsVC.swift */,
 				E1B84AB91CD246080047BD5A /* ProfileVC.swift */,
 				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
+				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
 				E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */,
 				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
 				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
-				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
-				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
 				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
 				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
 				E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */,
 				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
+				85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -363,6 +393,7 @@
 				TargetAttributes = {
 					85F2B42C1CC4DD33004704F3 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 62PHHA9WNZ;
 					};
 					85F2B4401CC4DD33004704F3 = {
 						CreatedOnToolsVersion = 7.3;
@@ -452,7 +483,9 @@
 			files = (
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
+				85AC90761CE4887C007BE5C2 /* BeatPin.swift in Sources */,
 				8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */,
+				85AC90731CE487AF007BE5C2 /* Async.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
 				E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */,
@@ -469,10 +502,13 @@
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
+				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
 				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
+				85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */,
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
+				85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */,
@@ -481,6 +517,7 @@
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
 				E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
+				85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */,
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
 			);
@@ -616,6 +653,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -625,6 +665,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.hikebeat.Hikebeat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hikebeat-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -632,6 +675,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -641,6 +687,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.hikebeat.Hikebeat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hikebeat-Bridging-Header.h";
 			};
 			name = Release;
 		};

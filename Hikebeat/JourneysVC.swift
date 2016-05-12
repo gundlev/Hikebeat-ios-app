@@ -19,7 +19,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var journeys: Results<Journey>!
     let realm = try! Realm()
     var activeJourney: Journey?
-    var activeIndexpath:NSIndexPath?
+    var activeIndexpath:NSIndexPath? // selected in the collectionview
+    var selectedIndexPath: NSIndexPath? // selected in the tableview
 
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
@@ -103,21 +104,9 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         appDelegate.fastSegueHack = "journeys"
+        self.selectedIndexPath = indexPath
         performSegueWithIdentifier("showJourney", sender: self)
         self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        let journey = self.journeys[indexPath.row]
-//        try! realm.write() {
-//            journey.active = !journey.active
-//        }
-//        
-//        let cell = tableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
-//        var statusLabel = ""
-//        if journey.active {
-//            statusLabel = "Active journey"
-//        } else {
-//            statusLabel = "Inactive journey"
-//        }
-//        cell.journeyStatusLabel.text = statusLabel
     }
     
     func getAllJourneys() {
@@ -194,6 +183,13 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
             cell.badgeImage.image = UIImage(named: "NotActivatedBadge")
         }
         return cell
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showJourney" {
+            let vc = segue.destinationViewController as! JourneyContainerVC
+            vc.journey = self.journeys[(selectedIndexPath?.row)!]
+        }
     }
     
 }

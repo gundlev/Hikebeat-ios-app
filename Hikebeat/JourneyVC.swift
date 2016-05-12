@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class JourneyVC: UIViewController {
+class JourneyVC: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var titleButton: UIButton!
     @IBOutlet weak var socialContainerView: UIView!
@@ -20,6 +20,9 @@ class JourneyVC: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    var journey: Journey?
+    var pins = [BeatPin]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,162 @@ class JourneyVC: UIViewController {
         
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
+        
+        setUpPins()
+        
     }
+    
+    func setUpPins() {
+
+        var pinArr = [BeatPin]()
+        
+        print("There are saved parkings")
+        for beat in (self.journey?.beats)! {
+            var title = ""
+            var subtitle = ""
+            
+            if beat.title != nil {
+                title = beat.title!
+            }
+            
+            if beat.message != nil {
+                subtitle = beat.message!
+            }
+            
+            // Getting the image
+            let image = getImageWithName(beat.mediaData!)
+            
+            let beatPin = BeatPin(title: title, timestamp: beat.timestamp, subtitle: subtitle, locationName: "Somewhere", discipline: beat.journeyId, coordinate: CLLocationCoordinate2D(latitude: Double(beat.latitude)!, longitude: Double(beat.longitude)!), lastPin: false, image: image)
+            self.journeyMap.addAnnotation(beatPin)
+            pinArr.append(beatPin)
+        }
+        self.pins = pinArr
+        pinArr.sortInPlace()
+        let lastElement = pinArr.last
+        lastElement?.lastPin = true
+        self.zoomToFitMapAnnotations(self.journeyMap)
+        self.createPolyline(self.journeyMap)
+    }
+    
+    func zoomToFitMapAnnotations(aMapView: MKMapView) {
+        if aMapView.annotations.count == 0 {
+            return
+        }
+        var topLeftCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        topLeftCoord.latitude = -90
+        topLeftCoord.longitude = 180
+        var bottomRightCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        bottomRightCoord.latitude = 90
+        bottomRightCoord.longitude = -180
+        for annotation: MKAnnotation in aMapView.annotations {
+            topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude)
+            topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude)
+            bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude)
+            bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude)
+        }
+        
+        var region: MKCoordinateRegion = MKCoordinateRegion()
+        region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5
+        region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5
+        region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.8
+        region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.8
+        region = aMapView.regionThatFits(region)
+        aMapView.setRegion(region, animated: true)
+    }
+    
+    func getImageWithName(name: String) -> UIImage? {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let dataPath = documentsDirectory.stringByAppendingPathComponent(name)
+        return UIImage(contentsOfFile: dataPath)
+    }
+
+func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? BeatPin {
+            let identifier = "pin"
+            var view: MKAnnotationView
+            if let dequeuedView = localMapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+                as? MKPinAnnotationView { // 2
+                    dequeuedView.annotation = annotation
+                    view = dequeuedView
+            } else {
+                // 3
+                view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: 0, y: 0)
+                
+                let button = UIButton(type: .DetailDisclosure)
+                button.addTarget(self, action: #selector(showBeat), forControlEvents: UIControlEvents.TouchUpInside)
+
+                view.rightCalloutAccessoryView = button as UIView
+                
+                if annotation.image != nil  {
+                    let imgView = UIImageView()
+                    let image = annotation.image!
+                    if image.size.height > image.size.width {
+                        let ratio = image.size.width/image.size.height
+                        let newWidth = 40 * ratio
+                        imgView.frame = CGRect(x: 0, y: 0, width: newWidth, height: 40)
+                    } else {
+                        let ratio = image.size.height/image.size.width
+                        let newHeight = 40 * ratio
+                        imgView.frame = CGRect(x: 0, y: 0, width: 40, height: newHeight)
+                    }
+                    
+                    imgView.image = annotation.image!
+                    view.leftCalloutAccessoryView = imgView
+                }
+               
+                let pinImage = UIImage(named: "HikebeatPin")
+                view.image = pinImage
+                view.centerOffset.y = -((pinImage?.size.height)!/2)
+                let point = CGPoint(x: view.center.x + view.frame.width/2, y: (view.center.y + (view.frame.height)))
+                
+                if annotation.lastPin == true {
+                    let pulseEffect = LFTPulseAnimation(repeatCount: Float.infinity, radius:40, position:point)
+                    pulseEffect.pulseInterval = 0
+                    view.layer.insertSublayer(pulseEffect, below: view.layer)
+                }
+
+            }
+            return view
+        }
+        return nil
+    }
+    
+    func showBeat() {
+        
+    }
+    
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        print("this is run")
+        let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+        let polyline = overlay as! BeatPolyline
+        polylineRenderer.strokeColor = polyline.color
+        polylineRenderer.lineWidth = 3
+        return polylineRenderer
+    }
+
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("Pin button tapped")
+    }
+    
+    func createPolyline(mapView: MKMapView) {
+        
+        let beats = journey?.beats
+        var points: [CLLocationCoordinate2D] = [CLLocationCoordinate2D]()
+        for beat in beats! {
+            let point = CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(beat.latitude)!), longitude: CLLocationDegrees(Double(beat.longitude)!))
+            points.append(point)
+        }
+        
+        let polyline = BeatPolyline(coordinates: &points, count: points.count)
+        polyline.color = UIColor.blueColor()
+        mapView.addOverlay(polyline)
+        
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
