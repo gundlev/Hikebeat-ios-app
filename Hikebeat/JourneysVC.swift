@@ -12,6 +12,7 @@ import RealmSwift
 class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
+    @IBOutlet weak var collectionBG: UIImageView!
     @IBOutlet weak var activeJourneysCollectionView: UICollectionView!
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
@@ -40,6 +41,15 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (UIDevice.isIphone5){
+            
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+            self.activeJourneyButton.transform = CGAffineTransformTranslate( activeJourneyButton.transform, 0.0, 10.0  )
+            
+            // Magic line of code setting the constraints back correctly.
+            journeysTableView.transform = CGAffineTransformTranslate(activeJourneyButton.transform, 0.0, 0.0 )
+        }
 
         // Do any additional setup after loading the view.
         self.journeys = self.realm.objects(Journey)
@@ -53,6 +63,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         activeJourneyButton.layer.cornerRadius = activeJourneyButton.bounds.height/2
         activeJourneyButton.layer.masksToBounds = true
+        
+        let footer = self.journeysTableView.footerViewForSection(0)
+        footer?.backgroundColor = UIColor.clearColor()
+        footer?.contentView.backgroundColor = UIColor.clearColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,6 +82,11 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return journeys.count //jTitles.count
     }
     
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 30))
+        footerView.backgroundColor = UIColor.clearColor()
+        return footerView
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         

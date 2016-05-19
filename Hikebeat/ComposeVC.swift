@@ -43,9 +43,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var sendBeatButton: UIButton!
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
-    
-    
+        
     @IBOutlet weak var composeContainer: UIView!
+    @IBOutlet weak var imageBG: UIImageView!
     
     @IBAction func sendBeat(sender: AnyObject) {
         checkForCorrectInput()
@@ -55,10 +55,18 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-
-        composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.8, 0.8);
-        composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -50.0  )
+        // Scaling the view for the screensize.
+        if (UIDevice.isIphone5){
+            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
+            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -50.0  )
+            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
+            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +40.0  )
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, 40.0  )
+            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
+        }
         
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2

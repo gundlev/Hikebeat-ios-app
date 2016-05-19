@@ -182,6 +182,77 @@
 			name = "Config and Utils";
 			sourceTree = "<group>";
 		};
+		85A7D0D61CEDDBD400EC9578 /* Journey */ = {
+			isa = PBXGroup;
+			children = (
+				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
+				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
+				E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */,
+				85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */,
+				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
+				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
+			);
+			name = Journey;
+			sourceTree = "<group>";
+		};
+		85A7D0D71CEDDBE500EC9578 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
+		85A7D0D81CEDDBEB00EC9578 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
+				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
+				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
+				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
+			);
+			name = Compose;
+			sourceTree = "<group>";
+		};
+		85A7D0D91CEDDBFA00EC9578 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E1B84AB91CD246080047BD5A /* ProfileVC.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		85A7D0DA1CEDDC0400EC9578 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E1AA1A301CD173A200C79B91 /* SettingsVC.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		85A7D0DC1CEDDC2100EC9578 /* Starting */ = {
+			isa = PBXGroup;
+			children = (
+				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
+				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
+				E111B0781CD0318800915401 /* LoginVC.swift */,
+				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
+			);
+			name = Starting;
+			sourceTree = "<group>";
+		};
+		85A7D0DD1CEDDCCD00EC9578 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				E1B413891CCE864F00B8768B /* ModalVC.swift */,
+				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
+				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
+				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
+				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
+			);
+			name = Universal;
+			sourceTree = "<group>";
+		};
 		85AC906C1CE4877F007BE5C2 /* MapFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,28 +369,13 @@
 		85F2B46F1CC4E384004704F3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
-				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
-				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
-				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
-				E1B413891CCE864F00B8768B /* ModalVC.swift */,
-				E111B0781CD0318800915401 /* LoginVC.swift */,
-				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
-				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
-				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
-				E1AA1A301CD173A200C79B91 /* SettingsVC.swift */,
-				E1B84AB91CD246080047BD5A /* ProfileVC.swift */,
-				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
-				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
-				E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */,
-				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
-				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
-				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
-				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
-				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
-				E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */,
-				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
-				85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */,
+				85A7D0DD1CEDDCCD00EC9578 /* Universal */,
+				85A7D0DC1CEDDC2100EC9578 /* Starting */,
+				85A7D0DA1CEDDC0400EC9578 /* Settings */,
+				85A7D0D91CEDDBFA00EC9578 /* Profile */,
+				85A7D0D81CEDDBEB00EC9578 /* Compose */,
+				85A7D0D71CEDDBE500EC9578 /* Social */,
+				85A7D0D61CEDDBD400EC9578 /* Journey */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
