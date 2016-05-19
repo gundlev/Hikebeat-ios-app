@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -316,6 +316,16 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
+                                <rect key="frame" x="213" y="602" width="174" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Not an user? Sign up!">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="QNq-c2-xNk" kind="show" identifier="showRegister" id="AWI-Td-awN"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rV-69-k3s">
                                 <rect key="frame" x="158" y="546" width="283" height="46"/>
                                 <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -336,16 +346,6 @@
                                 <connections>
                                     <action selector="login:" destination="bD8-Mi-Qht" eventType="touchUpInside" id="QLt-Rd-wmu"/>
                                     <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="uIh-pE-1XE"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
-                                <rect key="frame" x="213" y="602" width="174" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Not an user? Sign up!">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="QNq-c2-xNk" kind="show" identifier="showRegister" id="AWI-Td-awN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1039,7 +1039,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
                                 <rect key="frame" x="0.0" y="82" width="600" height="469"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
                                         <rect key="frame" x="23" y="23" width="554" height="423"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
@@ -1229,6 +1229,7 @@
                     <tabBarItem key="tabBarItem" tag="2" title="Hikebeat" id="1gg-GY-TSO"/>
                     <connections>
                         <outlet property="clearButton" destination="aB9-x0-cPI" id="awJ-0l-DHW"/>
+                        <outlet property="composeContainer" destination="RCs-Fy-3rY" id="pYO-tu-kyB"/>
                         <outlet property="editImageButton" destination="CQp-Sb-IZE" id="Qzx-AJ-M9C"/>
                         <outlet property="editMemoButton" destination="b48-cP-b37" id="nOs-s5-wM0"/>
                         <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
@@ -2512,6 +2513,7 @@ sync</string>
                     <connections>
                         <outlet property="gpsSwitch" destination="dZa-wt-ulW" id="JDj-Qj-jAk"/>
                         <outlet property="notificationSwitch" destination="MWS-Yz-f6I" id="GyZ-iH-24U"/>
+                        <outlet property="settingsContainer" destination="jd0-Xj-PFb" id="Xd5-TA-8TL"/>
                         <outlet property="syncButton" destination="N1X-DI-dLk" id="sN3-GM-rbB"/>
                         <outlet property="syncMemos" destination="UA0-Mz-FIn" id="vGi-Ku-dX2"/>
                         <outlet property="syncPictures" destination="dPT-oj-DrD" id="1EV-jK-6fS"/>
@@ -2560,23 +2562,6 @@ sync</string>
             </objects>
             <point key="canvasLocation" x="1073" y="-469"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="h7R-Jc-MWb">
-            <objects>
-                <viewController id="BwC-Ky-mkf" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rZa-n9-SJs"/>
-                        <viewControllerLayoutGuide type="bottom" id="yD2-2X-lxr"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="txn-dp-BHI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G1B-7Y-sZN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="ActivedIcon" width="32" height="32"/>
@@ -2619,7 +2604,7 @@ sync</string>
         <image name="trees" width="270" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9pW-Na-dpl"/>
+        <segue reference="Ry1-QN-lGj"/>
         <segue reference="Ttn-Zq-yK6"/>
     </inferredMetricsTieBreakers>
 </document>

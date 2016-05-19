@@ -44,6 +44,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
     
+    
+    @IBOutlet weak var composeContainer: UIView!
+    
     @IBAction func sendBeat(sender: AnyObject) {
         checkForCorrectInput()
         
@@ -54,6 +57,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         // Do any additional setup after loading the view.
 
+        composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.8, 0.8);
+        composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -50.0  )
+        
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
         editVideoButton.layer.cornerRadius = editVideoButton.bounds.width/2

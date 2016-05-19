@@ -20,6 +20,9 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var syncMemos: UIImageView!
     @IBOutlet weak var syncVideos: UIImageView!
     
+    
+    @IBOutlet weak var settingsContainer: UIView!
+    
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     let yellowColor = UIColor(red:248/255.0, green:231/255.0, blue:28/255.0, alpha:1.00)
     
@@ -27,6 +30,9 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+        settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -50.0  )
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
