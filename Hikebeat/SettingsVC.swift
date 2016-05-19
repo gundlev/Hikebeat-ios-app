@@ -30,9 +30,13 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
-        settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -50.0  )
+        if (UIDevice.isIphone5){
+            settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -50.0  )
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+                settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+                settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, 40.0  )
+        }
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
