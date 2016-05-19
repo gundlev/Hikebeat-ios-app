@@ -13,6 +13,7 @@ class SocialVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var popularJourneysButton: UIButton!
     @IBOutlet weak var popularJourneysCollectionView: UICollectionView!
     
+    @IBOutlet weak var searchFieldLabelView: UIView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     
@@ -34,6 +35,15 @@ class SocialVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // Scaling the view for the screensize.
+        if (UIDevice.isIphone5){
+            searchFieldLabelView.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, -40.0  )
+            searchField.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
+            searchButton.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+            self.popularJourneysButton.transform = CGAffineTransformTranslate( popularJourneysButton.transform, 0.0, 10.0  )
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
