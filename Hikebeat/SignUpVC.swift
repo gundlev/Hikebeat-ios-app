@@ -22,6 +22,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var rePasswordField: UITextField!
     
+    
+    @IBOutlet weak var signupContainer: UIView!
+    
     @IBAction func signUp(sender: AnyObject) {
         if true {//passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
             
@@ -89,7 +92,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             }
         } else {
             // The password an repeatPassword is not the same.
-            print("not filled out correct")
+            //print("not filled out correct")
         }
 
     }
@@ -98,6 +101,14 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if (UIDevice.isIphone5){
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -50.0  )
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, 40.0  )
+        }
         
         
         usernameField.layer.cornerRadius = usernameField.bounds.height/2
