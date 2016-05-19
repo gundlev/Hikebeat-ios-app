@@ -27,10 +27,21 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var bgPosition: NSLayoutConstraint!
     
+    @IBOutlet weak var loginContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if (UIDevice.isIphone5){
+            loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, -50.0  )
+        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
+            loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, 40.0  )
+        }
+
         
         usernameField.layer.cornerRadius = usernameField.bounds.height/2
         passwordField.layer.cornerRadius = passwordField.bounds.height/2
@@ -63,6 +74,13 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
     }
 
+    
+    @IBAction func showRegister(sender: AnyObject) {
+        
+        performSegueWithIdentifier("showRegister", sender: self)
+        
+    }
+    
     @IBAction func login(sender: AnyObject) {
         
         /** Parameters to send to the API.*/
