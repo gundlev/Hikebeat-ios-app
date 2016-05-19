@@ -24,10 +24,15 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
+    @IBOutlet weak var newSignupButton: UIButton!
     
     @IBOutlet weak var bgPosition: NSLayoutConstraint!
     
     @IBOutlet weak var loginContainer: UIView!
+    
+    @IBAction func signup(sender: AnyObject) {
+        performSegueWithIdentifier("showRegister", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

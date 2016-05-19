@@ -371,11 +371,11 @@
 			children = (
 				85A7D0DD1CEDDCCD00EC9578 /* Universal */,
 				85A7D0DC1CEDDC2100EC9578 /* Starting */,
-				85A7D0DA1CEDDC0400EC9578 /* Settings */,
-				85A7D0D91CEDDBFA00EC9578 /* Profile */,
-				85A7D0D81CEDDBEB00EC9578 /* Compose */,
-				85A7D0D71CEDDBE500EC9578 /* Social */,
 				85A7D0D61CEDDBD400EC9578 /* Journey */,
+				85A7D0D71CEDDBE500EC9578 /* Social */,
+				85A7D0D81CEDDBEB00EC9578 /* Compose */,
+				85A7D0D91CEDDBFA00EC9578 /* Profile */,
+				85A7D0DA1CEDDC0400EC9578 /* Settings */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
