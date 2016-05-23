@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Realm
 import RealmSwift
+import Result
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -67,19 +68,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func synced() -> Bool {
+    internal func synced() -> (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?) {
         let realmLocal = try! Realm()
         print("starting sync method")
-        let beatsQuery = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false), NSPredicate(format: "mediaData = %@", "")])
+        let beatsQuery = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false), NSPredicate(format: "mediaData != %@", "")])
         let beats = realmLocal.objects(Beat).filter(beatsQuery)
         let changes = realmLocal.objects(Change)
         if beats.isEmpty && changes.isEmpty {
             print("all empty")
-            return true
+            return (true, nil, nil)
         } else {
             print("There's something")
             print(beats)
-            return false
+            
+            return (false, changes, beats)
         }
     }
     
@@ -107,7 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             // this is called on a background thread, but UI updates must
             // be on the main thread, like this:
             let sync = self.synced()
-                if !sync {
+                if !sync.synced {
                     print("There are things to be uploaded")
 //                    if !self.currentlyShowingNotie {
 //                        print("There are no current Notie showing")

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class Change: Object {
+class Change: Object, Comparable {
     
     dynamic var instanceType: String = ""
     dynamic var timeCommitted: String = ""
@@ -55,3 +55,12 @@ class Change: Object {
 //    }
 
 }
+
+func <(lhs: Change, rhs: Change) -> Bool {
+    return lhs.timestamp < rhs.timestamp
+}
+
+func ==(lhs: Change, rhs: Change) -> Bool {
+    return lhs.timestamp == rhs.timestamp
+}
+

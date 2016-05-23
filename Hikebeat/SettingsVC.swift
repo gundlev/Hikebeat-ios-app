@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import RealmSwift
+import Result
+import BrightFutures
 
 class SettingsVC: UIViewController {
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var toUpload: (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?)? = nil
+    var numbers = (image: 0, video: 0, audio: 0)
 
     @IBOutlet weak var gpsSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
@@ -20,8 +26,20 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var syncMemos: UIImageView!
     @IBOutlet weak var syncVideos: UIImageView!
     
+    @IBOutlet weak var imageLabel: UILabel!
+    @IBOutlet weak var videoLabel: UILabel!
+    @IBOutlet weak var memoLabel: UILabel!
     
     @IBOutlet weak var settingsContainer: UIView!
+    
+    @IBAction func startSync(sender: AnyObject) {
+        if toUpload != nil {
+            let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
+            promise.onSuccess(callback: { (Bool) in
+                self.checkSync()
+            })
+        }
+    }
     
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     let yellowColor = UIColor(red:248/255.0, green:231/255.0, blue:28/255.0, alpha:1.00)
@@ -55,19 +73,60 @@ class SettingsVC: UIViewController {
         syncVideos.layer.masksToBounds = true
         syncButton.layer.masksToBounds = true
         
-        
-        syncPictures.layer.borderWidth = 4
-        syncPictures.layer.borderColor = yellowColor.CGColor
-        
-        syncMemos.layer.borderWidth = 4
-        syncMemos.layer.borderColor = yellowColor.CGColor
-        
-        syncVideos.layer.borderWidth = 4
-        syncVideos.layer.borderColor = yellowColor.CGColor
-        
         syncButton.backgroundColor = yellowColor
         
-        //gpsSwitch.on = userDefaults.boolForKey("GPS-check")
+        gpsSwitch.on = userDefaults.boolForKey("GPS-check")
+        
+        checkSync()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        checkSync()
+    }
+    
+    func checkSync() {
+        let synced = appDelegate.synced()
+        if !synced.synced {
+            if !(synced.beats?.isEmpty)! {
+                self.toUpload = synced
+                self.numbers = (image: 0, video: 0, audio: 0)
+                for beat in self.toUpload!.beats! {
+                    switch beat.mediaType! {
+                    case MediaType.image: self.numbers.image += 1
+                    case MediaType.video: self.numbers.video += 1
+                    case MediaType.audio: self.numbers.audio += 1
+                    default: print("wrong")
+                    }
+                }
+            }
+        }
+        self.imageLabel.text = String(numbers.image) + " pictures\nawaiting\nsync"
+        self.videoLabel.text = String(numbers.video) + " videos\nawaiting\nsync"
+        self.memoLabel.text = String(numbers.audio) + " memos\nawaiting\nsync"
+        setBorderAccordingToStatus(self.syncPictures, mediaType: MediaType.image)
+        setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
+        setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)
+    }
+    
+    func setBorderAccordingToStatus(view: UIImageView, mediaType: String) {
+        view.layer.borderWidth = 4
+        var color:UIColor = greenColor
+        switch mediaType {
+            case MediaType.image:
+                if self.numbers.image > 0 {
+                    color = yellowColor
+                }
+            case MediaType.video:
+                if self.numbers.video > 0 {
+                    color = yellowColor
+            }
+            case MediaType.audio:
+                if self.numbers.audio > 0 {
+                    color = yellowColor
+            }
+            default: print("wrong")
+        }
+        view.layer.borderColor = color.CGColor
     }
 
     override func didReceiveMemoryWarning() {

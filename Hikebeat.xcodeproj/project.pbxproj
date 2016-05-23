@@ -14,6 +14,11 @@
 		8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */; };
 		8512E0FC1CD4FF880085CE2B /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */; };
 		8512E0FD1CD4FF880085CE2B /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512E0FB1CD4FF880085CE2B /* Result.framework */; };
+		8525E7D31CF2F92600D87BB5 /* SyncWithAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */; };
+		8525E7D41CF2F92600D87BB5 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CF1CF2F92600D87BB5 /* Upload.swift */; };
+		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
+		8525E7D61CF2F92600D87BB5 /* SendBeats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D11CF2F92600D87BB5 /* SendBeats.swift */; };
+		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
@@ -85,6 +90,11 @@
 		8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleReachability.swift; sourceTree = "<group>"; };
 		8512E0FA1CD4FF880085CE2B /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
 		8512E0FB1CD4FF880085CE2B /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncWithAPI.swift; sourceTree = "<group>"; };
+		8525E7CF1CF2F92600D87BB5 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
+		8525E7D11CF2F92600D87BB5 /* SendBeats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBeats.swift; sourceTree = "<group>"; };
+		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
@@ -180,6 +190,18 @@
 				8512E0F41CD4E7520085CE2B /* utils.swift */,
 			);
 			name = "Config and Utils";
+			sourceTree = "<group>";
+		};
+		8525E7CC1CF2F8D500D87BB5 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */,
+				8525E7CF1CF2F92600D87BB5 /* Upload.swift */,
+				8525E7D01CF2F92600D87BB5 /* SendChanges.swift */,
+				8525E7D11CF2F92600D87BB5 /* SendBeats.swift */,
+				8525E7D21CF2F92600D87BB5 /* SyncAll.swift */,
+			);
+			name = Sync;
 			sourceTree = "<group>";
 		};
 		85A7D0D61CEDDBD400EC9578 /* Journey */ = {
@@ -298,6 +320,7 @@
 		85F2B42F1CC4DD33004704F3 /* Hikebeat */ = {
 			isa = PBXGroup;
 			children = (
+				8525E7CC1CF2F8D500D87BB5 /* Sync */,
 				8512E0EF1CD4DC8B0085CE2B /* Config and Utils */,
 				85F2B46F1CC4E384004704F3 /* Controller */,
 				85F2B46E1CC4E379004704F3 /* View */,
@@ -549,6 +572,7 @@
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,
+				8525E7D61CF2F92600D87BB5 /* SendBeats.swift in Sources */,
 				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				E1A3F6A21CD570DD005D9775 /* BeatsVC.swift in Sources */,
@@ -560,6 +584,7 @@
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
 				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
+				8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */,
 				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
 				85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */,
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
@@ -568,13 +593,16 @@
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */,
+				8525E7D31CF2F92600D87BB5 /* SyncWithAPI.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
 				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
 				E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */,
+				8525E7D41CF2F92600D87BB5 /* Upload.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
 				85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */,
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
+				8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
