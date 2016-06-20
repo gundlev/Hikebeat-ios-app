@@ -143,7 +143,12 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
                 //self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
                 self.userDefaults.setBool(true, forKey: "loggedIn")
-                self.userDefaults.setObject(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
+                let numbers = user["permittedPhoneNumbers"].arrayValue
+                var number = ""
+                if !numbers.isEmpty {
+                    number = numbers[0].stringValue
+                }
+                self.userDefaults.setObject(number, forKey: "permittedPhoneNumbers")
                 self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
                 self.userDefaults.setObject((user["options"]["name"].stringValue), forKey: "name")
                 self.userDefaults.setObject((user["options"]["gender"].stringValue), forKey: "gender")
@@ -155,15 +160,22 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.setObject(profilePhotoUrl, forKey: "profilePhotoUrl")
                 
                 if profilePhotoUrl != "" {
+                    print("There's a profile image!")
+                    Request.addAcceptableImageContentTypes(["image/jpg"])
                     Alamofire.request(.GET, profilePhotoUrl).responseImage {
                         response in
+                        print("Statuscoode: ", response.response?.statusCode)
                         if let image = response.result.value {
+                            
                             let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                             let documentsDirectory: AnyObject = paths[0]
-                            let fileName = "profileImage.png"
+                            let fileName = "profile_image.jpg"
                             let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
                             let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
                             print("The image download and save was: ", success)
+                        } else {
+                            print("could not resolve to image")
+                            print(response)
                         }
                     }
                 }

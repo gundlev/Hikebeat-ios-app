@@ -172,7 +172,7 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func changeSetOfCells(indexPath: NSIndexPath, active: Bool) {
-        var labelText = "Finished journey"
+        var labelText = "Inactive journey"
         var imageName = "NotActivatedBadge"
         if active {
             labelText = "Active journey"

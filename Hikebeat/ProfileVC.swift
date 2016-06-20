@@ -9,24 +9,107 @@
 import UIKit
 import RealmSwift
 import Alamofire
+import SwiftyJSON
 
-class ProfileVC: UIViewController {
+class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let realm = try! Realm()
+    var currentlyEdditing = false
+    let yellowColor = UIColor(colorLiteralRed: 255/255, green: 238/255, blue: 0, alpha: 1)
+    let greenColor = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
+    var imagePicker = UIImagePickerController()
+    var newImage: Bool = false
+    
+    public let Countries = [
+        "Denmark",
+        "Norway",
+        "Finland"
+    ]
+    
 
+    @IBOutlet weak var editProfileImageButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var phoneNoLabel: UILabel!
-    @IBOutlet weak var numberOfJourneys: UILabel!
-    @IBOutlet weak var nationalityLabel: UILabel!
-    @IBOutlet weak var genderLabel: UILabel!
+//    @IBOutlet weak var nameLabel: UILabel!
+//    @IBOutlet weak var emailLabel: UILabel!
+//    @IBOutlet weak var phoneNoLabel: UILabel!
+//    @IBOutlet weak var numberOfJourneys: UILabel!
+//    @IBOutlet weak var nationalityLabel: UILabel!
+//    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UITextField!
+    @IBOutlet weak var emailLabel: UITextField!
+    @IBOutlet weak var phoneNoLabel: UITextField!
+    @IBOutlet weak var numberOfJourneys: UITextField!
+    @IBOutlet weak var nationalityLabel: UITextField!
+    @IBOutlet weak var profileContentView: UIView!
+    
+    @IBAction func editProfileImageTapped(sender: AnyObject) {
+        chooseImage()
+    }
+    
+    @IBAction func seeFollowingJourneys(sender: AnyObject) {
+        performSegueWithIdentifier("showFollowing", sender: self)
+    }
+    
+    @IBAction func editButtonTapped(sender: AnyObject) {
+        currentlyEdditing = !currentlyEdditing
+        nameLabel.enabled = currentlyEdditing
+        phoneNoLabel.enabled = currentlyEdditing
+        nationalityLabel.enabled = currentlyEdditing
+        if currentlyEdditing {
+            editButton.setImage(UIImage(named: "ActivatedIcon"), forState: UIControlState.Normal)
+            //followersButton.titleLabel!.text = "Edit Profile"
+            followersButton.highlighted = true
+            followersButton.backgroundColor = yellowColor
+            editProfileImageButton.enabled = true
+            editProfileImageButton.hidden = false
+            followersButton.userInteractionEnabled = false
+        } else {
+            editButton.setImage(UIImage(named: "EditTitle"), forState: UIControlState.Normal)
+            //followersButton.titleLabel!.text = "0 followers | 0 following "
+            followersButton.highlighted = false
+            followersButton.backgroundColor = greenColor
+            editProfileImageButton.enabled = false
+            editProfileImageButton.hidden = true
+            followersButton.userInteractionEnabled = true
+            
+            checkForChanges()
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // setting notification
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        
+        followersButton.userInteractionEnabled = true
+        editProfileImageButton.enabled = false
+        editProfileImageButton.hidden = true
+        
+        self.setProfileImage()
+        
+        let pickerView = UIPickerView()
+        pickerView.backgroundColor = greenColor
+        pickerView.tintColor = UIColor.whiteColor()
+        pickerView.delegate = self
+        self.nationalityLabel.inputView = pickerView
+
+//        followersButton.setTitle("0 followers | 0 following ", forState: UIControlState.Normal)
+//        followersButton.setTitle("Edit Profile", forState: UIControlState.Selected)
+        
+        nameLabel.enabled = currentlyEdditing
+        emailLabel.enabled = currentlyEdditing
+        phoneNoLabel.enabled = currentlyEdditing
+        numberOfJourneys.enabled = currentlyEdditing
+        nationalityLabel.enabled = currentlyEdditing
+        
+        phoneNoLabel.tag = 1
         
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
@@ -54,23 +137,283 @@ class ProfileVC: UIViewController {
         self.usernameLabel.text = "@" + userDefaults.stringForKey("username")!
         self.nameLabel.text = userDefaults.stringForKey("name")!
         self.emailLabel.text = userDefaults.stringForKey("email")!
-        //        self.phoneNoLabel.text = userDefaults.stringForKey("")!
         self.nationalityLabel.text = userDefaults.stringForKey("nationality")!
-        self.genderLabel.text = userDefaults.stringForKey("gender")!
+        self.phoneNoLabel.text = userDefaults.stringForKey("permittedPhoneNumbers")!
         
         // Settings number of journeys
         let journeys = realm.objects(Journey)
-        self.numberOfJourneys.text = String(journeys.count)
+        self.numberOfJourneys.text = String(journeys.count) + " journeys created"
         
         // Setting profileImage if there is one
+        setProfileImage()
+//        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+//        let documentsDirectory: AnyObject = paths[0]
+//        let fileName = "profilemage.png"
+//        let imagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
+//        let image = UIImage(contentsOfFile: imagePath)
+//        if image != nil {
+//            profilePicture.image = image
+//        }
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Countries.count
+    }
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Countries[row]
+    }
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.nationalityLabel.text = Countries[row]
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        let rightImage = image.correctlyOrientedImage()
+        let imageData = UIImageJPEGRepresentation(rightImage, 0.5)
+
+        if picker.sourceType == .Camera {
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+        }
+        
+        saveProfileImageToDocs(imageData!)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func saveProfileImageToDocs(mediaData: NSData) -> Bool {
+        let dataPath = getProfileImagePath()
+        let success = mediaData.writeToFile(dataPath, atomically: false)
+        if success {
+            print("Saved profile_image to Docs")
+            setProfileImage()
+            self.newImage = true
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func setProfileImage() {
+        let dataPath = getProfileImagePath()
+        let image = UIImage(contentsOfFile: dataPath)
+        if image != nil {
+            self.profilePicture.image = image
+            print("setting profile image")
+        } else {
+            self.profilePicture.image = UIImage(named: "DefaultProfile")
+        }
+        
+    }
+    
+    func getProfileImagePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let fileName = "profileImage.png"
-        let imagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
-        let image = UIImage(contentsOfFile: imagePath)
-        if image != nil {
-            profilePicture.image = image
+        let fileName = "profile_image.jpg"
+        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        return dataPath
+    }
+    
+    func chooseImage() {
+        let optionsMenu = UIAlertController(title: "Choose resource", message: nil, preferredStyle: .ActionSheet)
+        let cameraRoll = UIAlertAction(title: "Photo library", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Photo Library")
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+                print("Library is available")
+                
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = .PhotoLibrary;
+                self.imagePicker.allowsEditing = true
+                
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            }
+        })
+        let takePhoto = UIAlertAction(title: "Camera", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Take Photo")
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+                print("Button capture")
+                
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = .Camera
+                self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo
+                self.imagePicker.allowsEditing = true
+                
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Take Photo")
+        })
+        
+        optionsMenu.addAction(cameraRoll)
+        optionsMenu.addAction(takePhoto)
+        optionsMenu.addAction(cancel)
+        
+        self.presentViewController(optionsMenu, animated: true, completion: nil)
+    }
+    
+    
+/*
+
+     Commit changes
+     
+*/
+    
+    func checkForChanges() {
+        var changesArr = [(property: String,value: String)]()
+        
+        if self.nameLabel.text != userDefaults.stringForKey("name")! {
+            changesArr.append((UserProperty.name, self.nameLabel.text!))
+            userDefaults.setObject(self.nameLabel.text, forKey: "name")
         }
+        if self.phoneNoLabel.text != userDefaults.stringForKey("permittedPhoneNumbers")! {
+            if SimpleReachability.isConnectedToNetwork() {
+                if self.phoneNoLabel.text?.characters.count >= 2 {
+                    if wrongCountryCode(self.phoneNoLabel.text!) {
+                        SCLAlertView().showWarning("Missing country code!", subTitle: "Your phone number was not changed as you didn't add a country code.")
+                        self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+                    } else {
+                        changesArr.append((UserProperty.permittedPhoneNumbers, self.phoneNoLabel.text!))
+                    }
+                }
+                
+            } else {
+                SCLAlertView().showWarning("Missing connection!", subTitle: "You need to have network connection to change or set your phone number")
+                self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+            }
+        }
+        if self.nationalityLabel.text != userDefaults.stringForKey("nationality")! {
+            changesArr.append((UserProperty.nationality, self.nationalityLabel.text!))
+            userDefaults.setObject(self.nationalityLabel.text, forKey: "nationality")
+        }
+        
+        if !changesArr.isEmpty {
+            print("There are changes")
+            print(changesArr)
+            sendTextChanges(changesArr)
+        }
+        
+        if self.newImage {
+            print("New image to send")
+            sendProfileImage()
+        }
+    }
+    
+    func sendProfileImage() {
+        var customHeader = Headers
+        
+        customHeader["x-hikebeat-format"] = "jpg"
+        
+        let url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/profilePhoto"
+        print("imageURL: ", url)
+        print("path: ", self.getProfileImagePath())
+        Alamofire.upload(.POST, url,headers: customHeader, file: NSURL(fileURLWithPath: getProfileImagePath())).responseJSON { mediaResponse in
+            if mediaResponse.response?.statusCode == 200 {
+                let rawImageJson = JSON(mediaResponse.result.value!)
+                let mediaJson = rawImageJson["data"][0]
+                print(mediaResponse)
+                self.newImage = false
+                print("The image has been posted")
+            } else {
+                print("Error posting the image, saving in changes")
+                print(mediaResponse)
+                let localRealm = try! Realm()
+                try! localRealm.write() {
+                    let change = Change()
+                    change.fill(InstanceType.profileImage, timeCommitted: self.getTimeCommitted(), stringValue: "profile_image.jpg", boolValue: false, property: nil, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                    localRealm.add(change)
+                }
+            }
+
+        }
+
+    }
+    
+    func sendTextChanges(arr: [(property: String,value: String)]) {
+        
+        for tuple in arr {
+            var parameters = [String:AnyObject]()
+            if tuple.property == UserProperty.permittedPhoneNumbers {
+                parameters["options"] = [tuple.property : [tuple.value]]
+            } else {
+                parameters["options"] = [tuple.property : tuple.value]
+            }
+
+            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+            print(url)
+            print(parameters)
+            Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                
+                if response.response?.statusCode == 200 {
+                    print("It has been changed in the db")
+                    if tuple.property == UserProperty.permittedPhoneNumbers {
+                        self.userDefaults.setObject(self.phoneNoLabel.text!, forKey: "permittedPhoneNumbers")
+                    }
+                } else {
+                    if tuple.property == UserProperty.permittedPhoneNumbers {
+                        self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+                    }
+                    print("No connection or fail, saving change")
+                    print(response)
+                    let localRealm = try! Realm()
+                    try! localRealm.write() {
+                        let change = Change()
+                        change.fill(InstanceType.user, timeCommitted: self.getTimeCommitted(), stringValue: tuple.value, boolValue: false, property: tuple.property, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                        localRealm.add(change)
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
+    func getTimeCommitted() -> String {
+        let t = String(NSDate().timeIntervalSince1970)
+        let e = t.rangeOfString(".")
+        let timestamp = t.substringToIndex((e?.startIndex)!)
+        return timestamp
+    }
+    
+    func wrongCountryCode(number: String) -> Bool {
+        let plus = number.substringWithRange(Range<String.Index>(start: number.startIndex, end: number.startIndex.advancedBy(1)))
+        let zerozero = number.substringWithRange(Range<String.Index>(start: number.startIndex, end: number.startIndex.advancedBy(2)))
+        if plus == "+" || zerozero == "00" {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.tag == 1 && textField.text?.characters.count >= 2 {
+            if wrongCountryCode(textField.text!) {
+                SCLAlertView().showWarning("Missing country code!", subTitle: "Please remember to add country code to your phone number.")
+            }
+        }
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        self.view.frame.origin.y = -130
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,15 +421,5 @@ class ProfileVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

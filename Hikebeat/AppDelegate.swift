@@ -72,15 +72,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         let realmLocal = try! Realm()
         print("starting sync method")
         let beatsQuery = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false), NSPredicate(format: "mediaData != %@", "")])
+        let changeQuery = NSPredicate(format: "uploaded = %@", false)
         let beats = realmLocal.objects(Beat).filter(beatsQuery)
-        let changes = realmLocal.objects(Change)
+        let changes = realmLocal.objects(Change).filter(changeQuery)
         if beats.isEmpty && changes.isEmpty {
             print("all empty")
             return (true, nil, nil)
         } else {
             print("There's something")
+            print("Are there changes? ", !changes.isEmpty)
+            print("Are there beats? ", !beats.isEmpty)
             print(beats)
-            
+            print(changes)
             return (false, changes, beats)
         }
     }

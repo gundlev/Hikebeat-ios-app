@@ -26,7 +26,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         let bgGradient = CAGradientLayer()
@@ -46,15 +46,16 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(initialLocation.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         
         journeyMap.setRegion(coordinateRegion, animated: true)
+        journeyMap.showsUserLocation = false
         
         titleButton.layer.cornerRadius = titleButton.bounds.height/2
         titleButton.layer.masksToBounds = true
         
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
-        
+        print(1)
         setUpPins()
-        
+        print(2)
     }
     
     func setUpPins() {
@@ -75,7 +76,11 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             }
             
             // Getting the image
-            let image = getImageWithName(beat.mediaData!)
+            var image: UIImage? = nil
+            if beat.mediaData != nil {
+                image = getImageWithName(beat.mediaData!)
+            }
+            
             
             let beatPin = BeatPin(title: title, timestamp: beat.timestamp, subtitle: subtitle, locationName: "Somewhere", discipline: beat.journeyId, coordinate: CLLocationCoordinate2D(latitude: Double(beat.latitude)!, longitude: Double(beat.longitude)!), lastPin: false, image: image)
             self.journeyMap.addAnnotation(beatPin)

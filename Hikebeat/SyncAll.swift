@@ -28,10 +28,11 @@ func syncAll(progressView: UIProgressView, changes: Results<(Change)>, beats: Re
         
         beatFuture.onSuccess{ (successBeats) in
             if changes.count > 0 {
+                print("SyncAll: syncronizing changes")
                 let changeFuture = sendChanges(progressView, increase: increase, changes: changes)
                 
                 changeFuture.onSuccess{ successChanges in
-                    print("q")
+                    print("SyncAll: Success on changes and beats")
                     promise.success(successChanges && successBeats)
                 }
             } else {
@@ -42,9 +43,9 @@ func syncAll(progressView: UIProgressView, changes: Results<(Change)>, beats: Re
     } else if beats.count == 0 && changes.count > 0 {
         if changes.count > 0 {
             let changeFuture = sendChanges(progressView, increase: increase, changes: changes)
-            
+            print("SyncAll: syncronizing changes")
             changeFuture.onSuccess{ success in
-                print("e")
+                print("SyncAll: Success on changes")
                 promise.success(success)
             }
         }

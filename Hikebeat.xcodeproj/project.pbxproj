@@ -21,6 +21,8 @@
 		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
 		8562639E1CC8E396008562FE /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562639D1CC8E396008562FE /* Reachability.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
+		858EFEF91D186C9900C50771 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858EFEF71D186C9900C50771 /* SCLAlertView.swift */; };
+		858EFEFA1D186C9900C50771 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858EFEF81D186C9900C50771 /* SCLExtensions.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		859EB30D1CDB73E4005353C0 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */; };
 		85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */; };
@@ -97,6 +99,8 @@
 		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
 		8562639D1CC8E396008562FE /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
+		858EFEF71D186C9900C50771 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
+		858EFEF81D186C9900C50771 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
 		85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hikebeat-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -202,6 +206,15 @@
 				8525E7D21CF2F92600D87BB5 /* SyncAll.swift */,
 			);
 			name = Sync;
+			sourceTree = "<group>";
+		};
+		858EFEF61D186C8B00C50771 /* SCLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				858EFEF71D186C9900C50771 /* SCLAlertView.swift */,
+				858EFEF81D186C9900C50771 /* SCLExtensions.swift */,
+			);
+			name = SCLAlertView;
 			sourceTree = "<group>";
 		};
 		85A7D0D61CEDDBD400EC9578 /* Journey */ = {
@@ -354,6 +367,7 @@
 		85F2B46C1CC4E353004704F3 /* Frameworks and Libs */ = {
 			isa = PBXGroup;
 			children = (
+				858EFEF61D186C8B00C50771 /* SCLAlertView */,
 				85AC906C1CE4877F007BE5C2 /* MapFiles */,
 				859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */,
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
@@ -560,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				858EFEFA1D186C9900C50771 /* SCLExtensions.swift in Sources */,
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
 				85AC90761CE4887C007BE5C2 /* BeatPin.swift in Sources */,
@@ -582,6 +597,7 @@
 				8562639E1CC8E396008562FE /* Reachability.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
+				858EFEF91D186C9900C50771 /* SCLAlertView.swift in Sources */,
 				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
 				8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */,

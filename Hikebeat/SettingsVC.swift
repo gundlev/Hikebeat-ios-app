@@ -33,11 +33,15 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var settingsContainer: UIView!
     
     @IBAction func startSync(sender: AnyObject) {
+        print("Syncbutton pressed")
         if toUpload != nil {
+            print("toUpload is not nil")
             let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
             promise.onSuccess(callback: { (Bool) in
                 self.checkSync()
             })
+        } else {
+            print("toUpload is nil")
         }
     }
     
@@ -85,18 +89,23 @@ class SettingsVC: UIViewController {
     }
     
     func checkSync() {
+        print(1)
         let synced = appDelegate.synced()
         if !synced.synced {
+            print(2)
+            self.toUpload = synced
             if !(synced.beats?.isEmpty)! {
-                self.toUpload = synced
+                print(3)
                 self.numbers = (image: 0, video: 0, audio: 0)
                 for beat in self.toUpload!.beats! {
+                    print(4)
                     switch beat.mediaType! {
                     case MediaType.image: self.numbers.image += 1
                     case MediaType.video: self.numbers.video += 1
                     case MediaType.audio: self.numbers.audio += 1
                     default: print("wrong")
                     }
+                    print(4.5)
                 }
             }
         }
@@ -106,6 +115,7 @@ class SettingsVC: UIViewController {
         setBorderAccordingToStatus(self.syncPictures, mediaType: MediaType.image)
         setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
         setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)
+        print(5)
     }
     
     func setBorderAccordingToStatus(view: UIImageView, mediaType: String) {

@@ -30,6 +30,7 @@ public struct InstanceType {
     public static let journey = "journey"
     public static let beat = "beat"
     public static let user = "user"
+    public static let profileImage = "profilePhoto"
 }
 
 public struct Property {
@@ -57,11 +58,11 @@ public struct UserProperty{
     public static let password = "password"
     public static let activeJourneyId = "activeJourneyId"
     public static let deviceToken = "deviceToken"
-    public static let name = "options.name"
-    public static let gender = "options.gender"
-    public static let nationality = "options.nationality"
-    public static let notifications = "options.notifications"
-    public static let permittedPhoneNumbers = "options.permittedPhoneNumbers"
+    public static let name = "name"
+    public static let gender = "gender"
+    public static let nationality = "nationality"
+    public static let notifications = "notifications"
+    public static let permittedPhoneNumbers = "permittedPhoneNumbers"
 }
 
 public struct JourneyProperty {
@@ -72,3 +73,4 @@ public struct JourneyProperty {
     public static let active = "options.active"
     public static let type = "options.type"
 }
+

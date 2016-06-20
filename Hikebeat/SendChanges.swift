@@ -12,6 +12,7 @@ import UIKit
 import BrightFutures
 import RealmSwift
 import Result
+import SwiftyJSON
 
 //TODO: Implement onError and completeWithFail
 
@@ -49,27 +50,56 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     
     // Creating json changes object
     var jsonChanges = [String: AnyObject]()
+    var parameters:[String: AnyObject]?
     
-    if change?.changeAction != ChangeAction.delete {
-        // Creating the array of changes even though there will only be one.
-        var changesArray = [[String: AnyObject]]()
-        // Printing the timeCommitted to see sequence
-        print(change!.timeCommitted)
-        // Creating the change dictionary object
-        var changeObject = [String : AnyObject]()
-        // Setting property
-        changeObject["property"] = change!.property
+    if change?.changeAction != ChangeAction.delete && change?.instanceType != InstanceType.profileImage {
+        
+        let property = change?.property!
         if change!.stringValue == nil {
-            // The change is a bool value
-            changeObject["value"] = change!.boolValue
+            let boolValue = change!.boolValue
+            jsonChanges["options"] = [property! : boolValue]
         } else {
-            // The change is a stringvalue
-            changeObject["value"] = change!.stringValue
+            let stringValue = change!.stringValue
+            jsonChanges["options"] = [property! : stringValue!]
         }
-        // Adding change object to changes array
-        changesArray.append(changeObject)
-        // Adding changes array to json changes object
-        jsonChanges["changes"] = changesArray
+        
+//        
+//        
+//        // Creating the array of changes even though there will only be one.
+//        var changesArray = [[String: AnyObject]]()
+//        // Printing the timeCommitted to see sequence
+//        print(change!.timeCommitted)
+//        // Creating the change dictionary object
+//        var changeObject = [String : AnyObject]()
+//        // Setting property
+//        if change!.stringValue == nil {
+//            // The change is a bool value
+//            changeObject[(change?.property!)!] = change!.boolValue
+//            
+//            
+////            parameters = ["options": [
+////                change!.property  :   change!.value
+////            ]]
+////            
+////            jsonChanges = ["options": [
+////                change.property  :   change.value
+////            ]]
+//        } else {
+//            // The change is a stringvalue
+//            changeObject[(change?.property)!] = change!.stringValue
+//        }
+//        // Adding change object to changes array
+//        changesArray.append(changeObject)
+//        // Adding changes array to json changes object
+//        jsonChanges["changes"] = changesArray
+    }
+    
+    func getProfileImagePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let fileName = "profile_image.jpg"
+        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        return dataPath
     }
 
     
@@ -82,6 +112,8 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
         url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/journeys/" + change!.instanceId!
     case InstanceType.user:
         url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+    case InstanceType.profileImage:
+        url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/profilePhoto"
     default: print("Creating the url failed.")
     }
     print("Now sending to url: ", url)
@@ -101,27 +133,67 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     }
     
     // Sending change
-    Alamofire.request(method, url, parameters: jsonChanges, encoding: .JSON, headers: Headers).responseJSON { response in
-        if response.response?.statusCode == 200 {
-            print(response.result.value)
-            let removed = changes.removeFirst()
-            let realm = try! Realm()
-            realm.delete(change!)
-            progressView.progress = progressView.progress + increase
-            print("Uplaoded and removed change with value: ", removed.stringValue)
-            if changes.isEmpty {
-                p.success(true)
-            } else {
-                let future = asyncFunc(changes, progressView: progressView, increase: increase)
-                future.onSuccess { success in
-                    p.success(success)
+    
+    if change?.instanceType == InstanceType.profileImage {
+        var customHeader = Headers
+        customHeader["x-hikebeat-format"] = "jpg"
+        print("imagePath")
+        print((change?.stringValue!)!)
+        var path = getProfileImagePath()
+        Alamofire.upload(.POST, url,headers: customHeader, file: NSURL(fileURLWithPath: path)).responseJSON { mediaResponse in
+            if mediaResponse.response?.statusCode == 200 {
+                let rawImageJson = JSON(mediaResponse.result.value!)
+                let mediaJson = rawImageJson["data"][0]
+                print(mediaResponse)
+                print("The image has been posted")
+                let removed = changes.removeFirst()
+                let realm = try! Realm()
+                try! realm.write() {
+                    change?.uploaded = true
                 }
+                progressView.progress = progressView.progress + increase
+                if changes.isEmpty {
+                    p.success(true)
+                } else {
+                    let future = asyncFunc(changes, progressView: progressView, increase: increase)
+                    future.onSuccess { success in
+                        p.success(success)
+                    }
+                }
+            } else {
+                print("Error posting the image")
+                p.success(false)
+                print(mediaResponse)
             }
-        } else {
-            print("Something went wrong")
-            p.success(false)
+            
+        }
+    } else {
+        Alamofire.request(method, url, parameters: jsonChanges, encoding: .JSON, headers: Headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                print(response.result.value)
+                let removed = changes.removeFirst()
+                let realm = try! Realm()
+                try! realm.write() {
+                    change?.uploaded = true
+                }
+                progressView.progress = progressView.progress + increase
+                print("Uplaoded and removed change with value: ", removed.stringValue)
+                if changes.isEmpty {
+                    p.success(true)
+                } else {
+                    let future = asyncFunc(changes, progressView: progressView, increase: increase)
+                    future.onSuccess { success in
+                        p.success(success)
+                    }
+                }
+            } else {
+                print("Something went wrong")
+                p.success(false)
+            }
         }
     }
+    
+
 
     return p.future
 }

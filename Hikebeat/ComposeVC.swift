@@ -418,20 +418,35 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 }
 
             } else {
-                
-                // This will send it via SMS.
-                print("Not reachable, should send sms")
-                var titleString = ""
-                var messageString = ""
-                if self.titleText != nil {
-                    titleString = self.titleText!
+                // check for permitted phoneNumber
+                let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers")!
+                if phoneNumbers == "" {
+                    
+                    let alertView = SCLAlertView()
+                    alertView.addButton("Go to profile") {
+                        print("Second button tapped")
+                        self.tabBarController?.selectedIndex = 3
+                    }
+                    alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
+                    try! realm.write() {
+                        realm.delete(self.currentBeat!)
+                    }
+                } else {
+                    // This will send it via SMS.
+                    print("Not reachable, should send sms")
+                    var titleString = ""
+                    var messageString = ""
+                    if self.titleText != nil {
+                        titleString = self.titleText!
+                    }
+                    if self.messageText != nil {
+                        messageString = self.messageText!
+                    }
+                    
+                    let messageText = self.genSMSMessageString(titleString, message: messageString, journeyId: self.activeJourney!.journeyId)
+                    self.sendSMS(messageText)
                 }
-                if self.messageText != nil {
-                    messageString = self.messageText!
-                }
-                
-                let messageText = self.genSMSMessageString(titleString, message: messageString, journeyId: self.activeJourney!.journeyId)
-                self.sendSMS(messageText)
+
                 // The save and setInitial is done in the message methods as it knows whether it fails.
             }
             

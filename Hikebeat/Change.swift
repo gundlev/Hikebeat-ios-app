@@ -20,6 +20,7 @@ class Change: Object, Comparable {
     dynamic var instanceId: String? = nil
     dynamic var changeAction: String = ""
     dynamic var timestamp: String? = nil
+    dynamic var uploaded: Bool = false
     
     func fill(
         instanceType: String,
@@ -57,10 +58,10 @@ class Change: Object, Comparable {
 }
 
 func <(lhs: Change, rhs: Change) -> Bool {
-    return lhs.timestamp < rhs.timestamp
+    return lhs.timeCommitted < rhs.timeCommitted
 }
 
 func ==(lhs: Change, rhs: Change) -> Bool {
-    return lhs.timestamp == rhs.timestamp
+    return lhs.timeCommitted == rhs.timeCommitted
 }
 
