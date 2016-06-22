@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Result
 import BrightFutures
+import Alamofire
 
 class SettingsVC: UIViewController {
     
@@ -30,7 +31,52 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var videoLabel: UILabel!
     @IBOutlet weak var memoLabel: UILabel!
     
+    @IBOutlet weak var lastSyncLabel: UILabel!
     @IBOutlet weak var settingsContainer: UIView!
+    
+    @IBAction func notificationChange(sender: UISwitch) {
+        if SimpleReachability.isConnectedToNetwork() {
+            let parameters:[String: AnyObject] = ["options" : [
+                "notifications"  :  sender.on
+                ]]
+            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+            print(url)
+            Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                
+                if response.response?.statusCode == 200 {
+                    print("It has been changes in the db")
+                    ChangeAction.update
+                } else {
+                    print("No connection or fail, saving change")
+                    let realm = try! Realm()
+                    try! realm.write() {
+                        let change = Change()
+                        let t = String(NSDate().timeIntervalSince1970)
+                        let e = t.rangeOfString(".")
+                        let timestamp = t.substringToIndex((e?.startIndex)!)
+                        change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.on, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                        realm.add(change)
+                    }
+                }
+            }
+        } else {
+            // Save to changes data structure when created.
+            let realm = try! Realm()
+            try! realm.write() {
+                let change = Change()
+                let t = String(NSDate().timeIntervalSince1970)
+                let e = t.rangeOfString(".")
+                let timestamp = t.substringToIndex((e?.startIndex)!)
+                change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.on, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                realm.add(change)
+            }
+        }
+
+    }
+    
+    @IBAction func GPSCheckChange(sender: UISwitch) {
+        self.userDefaults.setBool(sender.on, forKey: "GPS-check")
+    }
     
     @IBAction func startSync(sender: AnyObject) {
         print("Syncbutton pressed")
@@ -39,6 +85,11 @@ class SettingsVC: UIViewController {
             let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
             promise.onSuccess(callback: { (Bool) in
                 self.checkSync()
+                let t = String(NSDate().timeIntervalSince1970)
+                let e = t.rangeOfString(".")
+                let timestamp = t.substringToIndex((e?.startIndex)!)
+                self.userDefaults.setObject(timestamp, forKey: "lastSync")
+                self.lastSyncLabel.text = "Last synchronize: 0 days ago"
             })
         } else {
             print("toUpload is nil")
@@ -80,6 +131,19 @@ class SettingsVC: UIViewController {
         syncButton.backgroundColor = yellowColor
         
         gpsSwitch.on = userDefaults.boolForKey("GPS-check")
+        gpsSwitch.on = userDefaults.boolForKey("notifications")
+        let timestamp = userDefaults.stringForKey("lastSync")
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let firstDate = NSDate(timeIntervalSince1970: NSTimeInterval(Int(timestamp!)!))
+        let secondDate = NSDate()
+        let date1 = calendar.startOfDayForDate(firstDate)
+        let date2 = calendar.startOfDayForDate(secondDate)
+        
+        let flags = NSCalendarUnit.Day
+        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
+        
+        let numberOfDays = components.day
+        lastSyncLabel.text = "Last synchronize: " + String(numberOfDays) + " days ago"
         
         checkSync()
     }

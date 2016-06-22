@@ -23,6 +23,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     var journey: Journey?
     var pins = [BeatPin]()
+    var indexOfChosenPin: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +54,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
-        print(1)
         setUpPins()
-        print(2)
     }
     
     func setUpPins() {
@@ -181,9 +180,8 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
     }
     
     func showBeat() {
-        
+        print("yeah")
     }
-    
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         print("this is run")
@@ -196,6 +194,8 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
 
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print("Pin button tapped")
+        self.indexOfChosenPin = pins.indexOf(view.annotation as! BeatPin)
+        performSegueWithIdentifier("showBeat", sender: self)
     }
     
     func createPolyline(mapView: MKMapView) {
@@ -234,17 +234,16 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
 
     @IBAction func showFirstBeat(sender: AnyObject) {
         
-        performSegueWithIdentifier("showBeat", sender: self)
+        //performSegueWithIdentifier("showBeat", sender: self)
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showBeat" {
+            let vc = segue.destinationViewController as! BeatsVC
+            vc.startingIndex = self.indexOfChosenPin!
+            vc.journey = self.journey
+        }
     }
-    */
 
 }

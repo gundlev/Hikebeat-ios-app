@@ -48,6 +48,15 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         messageField.becomeFirstResponder()
         
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if self.messageField.isFirstResponder() {
+            view.endEditing(true)
+            
+        } else {
+            performSegueWithIdentifier("backToCompose", sender: self)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

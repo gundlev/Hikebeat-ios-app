@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class Beat: Object {
+class Beat: Object, Comparable {
     
     dynamic var title: String? = nil
     dynamic var journeyId: String = ""
@@ -26,6 +26,7 @@ class Beat: Object {
     dynamic var mediaUploaded: Bool = false
     dynamic var messageUploaded: Bool = false
     dynamic var journey:Journey? = nil
+    dynamic var isTextMessage: Bool = false
     
     func fill(
         title: String?,
@@ -74,4 +75,12 @@ class Beat: Object {
 //        super.init()
 //    }
 
+}
+
+func <(lhs: Beat, rhs: Beat) -> Bool {
+    return lhs.timestamp < rhs.timestamp
+}
+
+func ==(lhs: Beat, rhs: Beat) -> Bool {
+    return lhs.timestamp == rhs.timestamp
 }

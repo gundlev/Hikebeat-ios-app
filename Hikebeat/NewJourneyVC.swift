@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import RealmSwift
 
 class NewJourneyVC: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var active: UISwitch!
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var createButton: UIButton!
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +43,35 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         titleField.becomeFirstResponder()
     }
     
+    @IBAction func createNewJourney(sender: AnyObject) {
+        if titleField.text?.characters.count > 1 {
+            let parameters: [String: AnyObject] = ["options": ["headline": titleField.text!]]
+            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/journeys"
+            print(url)
+            
+            Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                print(response.result.value)
+                print(response.response?.statusCode)
+                if response.response?.statusCode == 200 {
+                    let rawJson = JSON(response.result.value!)
+                    let json = rawJson["data"][0]
+                    print(json)
+                    print("Journey Created!")
+                    let realm = try! Realm()
+                    try! realm.write() {
+                        let journey = Journey()
+                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.on, type: nil)
+                        realm.add(journey)
+                    }
+                    self.performSegueWithIdentifier("backWhenCreated", sender: self)
+                } else {
+                    print(response)
+                }
+            }
+        }
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,15 +90,13 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         self.view.frame.origin.y = 0
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "backWhenCreated" {
+            let vc = segue.destinationViewController as! JourneysVC
+            if self.active.on {
+                vc.removeOldActiveJourney()
+            }
+        }
+    }
     
 }

@@ -10,6 +10,8 @@ import UIKit
 import RealmSwift
 import Alamofire
 import SwiftyJSON
+import ContactsUI
+
 
 class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -20,6 +22,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     let greenColor = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
     var imagePicker = UIImagePickerController()
     var newImage: Bool = false
+    var store = CNContactStore()
     
     public let Countries = [
         "Denmark",
@@ -204,7 +207,6 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         } else {
             self.profilePicture.image = UIImage(named: "DefaultProfile")
         }
-        
     }
     
     func getProfileImagePath() -> String {
@@ -354,6 +356,33 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                     print("It has been changed in the db")
                     if tuple.property == UserProperty.permittedPhoneNumbers {
                         self.userDefaults.setObject(self.phoneNoLabel.text!, forKey: "permittedPhoneNumbers")
+                        
+                        switch CNContactStore.authorizationStatusForEntityType(.Contacts){
+                        case .Authorized:
+                            print("should check for hikebeat contact")
+                            self.checkIfHikbeatContactExist()
+                            //TODO: check if hikebeat contact is created.
+                        case .NotDetermined:
+                            let appearance = SCLAlertView.SCLAppearance(
+                                showCloseButton: false
+                            )
+                            let alertView = SCLAlertView(appearance: appearance)
+                            alertView.addButton("Yes") {
+                                print("Yes")
+                                self.store.requestAccessForEntityType(.Contacts){succeeded, err in
+                                    guard err == nil && succeeded else{
+                                        return
+                                    }
+                                    self.addHikebeatContact()
+                                }
+                            }
+                            alertView.addButton("No") {
+                                print("No")
+                            }
+                            alertView.showWarning("Add hikebeat contact?", subTitle: "In order to create a Hikebeat contact on you phone and make it easier for you to know what you have send to Hikebeat, we need permission to access your contacts, would you like to grant permission?")
+                        default:
+                            print("Haven't got permission to access contacts")
+                        }
                     }
                 } else {
                     if tuple.property == UserProperty.permittedPhoneNumbers {
@@ -370,8 +399,48 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                 }
             }
         }
+    }
+    
+    func checkIfHikbeatContactExist() {
+        let predicate = CNContact.predicateForContactsMatchingName("Hikebeat")
+        let keys = [CNContactGivenNameKey]
+        var contacts = [CNContact]()
+        do {
+            contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keys)
+            if contacts.count == 0 {
+                print("contacts: ", contacts.count)
+
+                addHikebeatContact()
+            } else {
+                print("contacts: ", contacts.count)
+            }
+        }
+        catch {
+            
+        }
+    }
+    
+    func addHikebeatContact() {
+        let contactData = CNMutableContact()
+        contactData.givenName = "Hikebeat"
+        contactData.organizationName = "Hikebeat"
+        let img = UIImage(named: "ContactImage")
+        contactData.imageData = UIImagePNGRepresentation(img!)
+        contactData.phoneNumbers = [CNLabeledValue(label: CNLabelWork, value: CNPhoneNumber(stringValue: phoneNumber))]
+        contactData.emailAddresses = [CNLabeledValue(label: CNLabelWork,value: "contact@hikebeat.com")]
+        let facebookProfile = CNLabeledValue(label: "FaceBook", value:
+            CNSocialProfile(urlString: nil, username: "Hikebeat",
+                userIdentifier: nil, service: CNSocialProfileServiceFacebook))
+        contactData.socialProfiles = [facebookProfile]
         
-        
+        let request = CNSaveRequest()
+        request.addContact(contactData, toContainerWithIdentifier: nil)
+        do{
+            try store.executeSaveRequest(request)
+            print("Successfully added the contact")
+        } catch let err{
+            print("Failed to save the contact. \(err)")
+        }
     }
     
     func getTimeCommitted() -> String {
@@ -408,6 +477,10 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         }
     }
     
+    @IBAction func unwindToProfile(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
     func keyboardWillShow(sender: NSNotification) {
         self.view.frame.origin.y = -130
     }
@@ -422,4 +495,10 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showFollowing" {
+            let vc = segue.destinationViewController as! UniversalListOfJourneysVC
+            vc.fromVC = "profile"
+        }
+    }
 }

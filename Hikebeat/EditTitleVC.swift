@@ -38,6 +38,15 @@ class EditTitleVC: UIViewController, UITextFieldDelegate {
         self.titleField.delegate = self;
         titleField.becomeFirstResponder()
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if self.titleField.isFirstResponder() {
+            view.endEditing(true)
+            
+        } else {
+            performSegueWithIdentifier("backToCompose", sender: self)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -105,20 +105,16 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 
                 print("setting user")
                 self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
-                print(1)
                 var optionsDictionary = [String:String]()
                 for (key, value) in user["options"].dictionaryValue {
                     optionsDictionary[key] = value.stringValue
                 }
-                print(2)
                 //                let options = user["options"].dictionaryValue
                 //                print("Options: ", options)
-                print(3)
                 var journeyIdsArray = [String]()
                 for (value) in user["journeyIds"].arrayValue {
                     journeyIdsArray.append(value.stringValue)
                 }
-                print(4)
                 var followingArray = [String]()
                 for (value) in user["following"].arrayValue {
                     followingArray.append(value.stringValue)
@@ -128,12 +124,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 for (value) in user["deviceTokens"].arrayValue {
                     deviceTokensArray.append(value.stringValue)
                 }
-                print(5)
                 var permittedPhoneNumbersArray = [String]()
                 for (value) in user["permittedPhoneNumbers"].arrayValue {
                     permittedPhoneNumbersArray.append(value.stringValue)
                 }
-                print(6)
                 self.userDefaults.setObject(optionsDictionary, forKey: "options")
                 self.userDefaults.setObject(journeyIdsArray, forKey: "journeyIds")
                 self.userDefaults.setObject(followingArray, forKey: "following")
@@ -143,6 +137,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
                 //self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
                 self.userDefaults.setBool(true, forKey: "loggedIn")
+                let t = String(NSDate().timeIntervalSince1970)
+                let e = t.rangeOfString(".")
+                let timestamp = t.substringToIndex((e?.startIndex)!)
+                self.userDefaults.setObject(timestamp, forKey: "lastSync")
                 let numbers = user["permittedPhoneNumbers"].arrayValue
                 var number = ""
                 if !numbers.isEmpty {
@@ -194,7 +192,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                             let rawJson = JSON(response.result.value!)
                             let json = rawJson["data"]
                             //print(json)
-                            print(8)
                             for (_, journey) in json {
                                 let headline = journey["options"]["headline"].stringValue
                                 print(headline)
@@ -202,27 +199,82 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                 
                                 let dataJourney = Journey()
                                 dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue)
-                                try! self.realm.write() {
-                                    self.realm.add(dataJourney)
+                                print(1)
+                                let localRealm = try! Realm()
+                                try! localRealm.write() {
+                                    localRealm.add(dataJourney)
                                 }
+                                print(2)
                                 
                                 for (_,followerId) in journey["followers"] {
-                                    try! self.realm.write() {
+                                    print(3)
+                                    try! localRealm.write() {
                                         let follower = Follower()
                                         follower.userId = followerId.stringValue
                                     }
+                                    print(4)
                                 }
                                 
                                 for (_, message) in journey["messages"]  {
                                     print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
                                     //print(message)
-                                    let dataBeat = Beat()
-                                    dataBeat.fill(message["headline"].stringValue, journeyId: journey["_id"].stringValue, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: MediaType.none, mediaData: "", mediaDataId: "", messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: dataJourney)
+                                    let mediaType = message["media"]["type"].stringValue
+                                    let mediaData = message["media"]["path"].stringValue
+                                    let mediaDataId = message["media"]["_id"].stringValue
+
                                     
-                                    try! self.realm.write {
-                                        self.realm.add(dataBeat)
-                                        dataJourney.beats.append(dataBeat)
+                                    if mediaData != "" && mediaType != "" {
+                                        switch mediaType {
+                                        case MediaType.image:
+                                            Request.addAcceptableImageContentTypes(["image/jpg"])
+                                            Alamofire.request(.GET, mediaData).responseImage {
+                                                response in
+                                                print("Statuscoode: ", response.response?.statusCode)
+                                                if let image = response.result.value {
+                                                    
+                                                    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                                                    let documentsDirectory: AnyObject = paths[0]
+                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+".jpg"
+                                                    let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+                                                    let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
+                                                    print("The image downloaded: ", success, " moving on to save")
+                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId)
+                                                } else {
+                                                    print("could not resolve to image")
+                                                    print(response)
+                                                }
+                                            }
+                                        case MediaType.video, MediaType.audio:
+                                            var fileType = ".mp4"
+                                            if mediaType == MediaType.audio {
+                                                fileType = ".m4a"
+                                            }
+                                            
+                                            Alamofire.download(.GET, mediaData, destination: { (temporaryURL, response) in
+                                                let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                                                let documentsDirectory: AnyObject = paths[0]
+                                                let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+                                                let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+
+                                                return NSURL(fileURLWithPath: dataPath)
+                                            }).response { _, _, _, error in
+                                                if let error = error {
+                                                    print("Failed with error: \(error)")
+                                                } else {
+                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId)
+                                                    print("Downloaded file successfully")
+                                                }
+                                            }
+                                            
+                                        default:
+                                            print("unknown type of media")
+                                        }
+                                    } else {
+                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil)
                                     }
+                                    
+                                //hjkfhdsjfhjdksf
                                     
                                 }
                             }
@@ -233,12 +285,15 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     }
                 }
                 print("This is what is saved: \n\n\n\n")
-                let journeys = self.realm.objects(Journey)
+                print(5)
+                let localRealm = try! Realm()
+                let journeys = localRealm.objects(Journey)
                 if journeys.isEmpty {
                     print("There is nothing")
                 } else {
                     print(journeys.description)
                 }
+                print(6)
                 /* Enter the app when logged in*/
                 self.performSegueWithIdentifier("justLoggedIn", sender: self)
             } else if response.response?.statusCode == 401 {
@@ -250,6 +305,32 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             }
             
             
+        }
+    }
+    
+    func saveMediaToDocs(mediaData: NSData, journeyId: String, timestamp: String, fileType: String) -> String? {
+        
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        
+        let documentsDirectory: AnyObject = paths[0]
+        let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
+        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let success = mediaData.writeToFile(dataPath, atomically: false)
+        if success {
+            print("Saved to Docs with name: ", fileName)
+            return fileName
+        } else {
+            return nil
+        }
+    }
+    
+    func saveBeatAndAddToJourney(message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?) {
+        let dataBeat = Beat()
+        dataBeat.fill(message["headline"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
+        let localRealm = try! Realm()
+        try! localRealm.write {
+            localRealm.add(dataBeat)
+            journey.beats.append(dataBeat)
         }
     }
     

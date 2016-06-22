@@ -20,12 +20,11 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var journeys: Results<Journey>!
     let realm = try! Realm()
     var activeJourney: Journey?
-    var activeIndexpath:NSIndexPath? // selected in the collectionview
+    var activeIndexpath: Int?
+    //var activeIndexpath:NSIndexPath? // selected in the collectionview
     var selectedIndexPath: NSIndexPath? // selected in the tableview
-
-    var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
-    var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
-    var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
+    let greenColor = UIColor(colorLiteralRed: 198/255, green: 255/255, blue: 0, alpha: 1)
+    let yellowColor = UIColor.yellowColor()//UIColor(colorLiteralRed: 254/255, green: 237/255, blue: 9, alpha: 1)
     
     let darkGreen = UIColor(hexString: "#15676C")
     
@@ -37,6 +36,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         insets.right = value
         self.activeJourneysCollectionView.contentInset = insets
         self.activeJourneysCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.journeysTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -53,6 +56,11 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         // Do any additional setup after loading the view.
         self.journeys = self.realm.objects(Journey)
+        for journey in self.journeys {
+            if journey.active {
+                self.activeIndexpath = self.journeys.indexOf(journey)
+            }
+        }
         print(journeys)
         
         let bgGradient = CAGradientLayer()
@@ -68,6 +76,13 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         footer?.backgroundColor = UIColor.clearColor()
         footer?.contentView.backgroundColor = UIColor.clearColor()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        if self.activeIndexpath != nil {
+            let indexpath = NSIndexPath(forItem: self.activeIndexpath!, inSection: 0)
+            self.activeJourneysCollectionView.scrollToItemAtIndexPath(indexpath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -76,6 +91,12 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func unwindToJourneys(unwindSegue: UIStoryboardSegue) {
         
+    }
+    
+    @IBAction func unwindWhenCreatedJourney(unwindSegue: UIStoryboardSegue) {
+        self.journeys = self.realm.objects(Journey)
+        self.activeJourneysCollectionView.reloadData()
+        self.journeysTableView.reloadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,7 +115,18 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let journey = journeys[indexPath.row]
         
-        cell.journeyDateLabel.text = jDates[indexPath.row]
+        let beats = journey.beats.sorted("timestamp")
+        if beats.isEmpty {
+            cell.journeyDateLabel.text = "No beats"
+        } else {
+//            let beat = beats.first
+//            let formatter = NSDateFormatter()
+//            let date = NSDate(timeIntervalSince1970: NSTimeInterval(Int(beat!.timestamp)!))
+//            formatter.dateFormat = "d/M/YY"
+//            let timeString = formatter.stringFromDate(date)
+            cell.journeyDateLabel.text = String(beats.count) + " beats"
+        }
+        
         var statusLabel = ""
         if journey.active {
             statusLabel = "Active journey"
@@ -145,59 +177,90 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
         let journey = self.journeys[indexPath.item]
-        
+        print(1)
         if journey.active {
-            changeSetOfCells(indexPath, active: false)
+            print(1.1)
+            changeSetOfCells(indexPath.item, active: false)
+            activeJourneyButton.highlighted = false
+            activeJourneyButton.backgroundColor = yellowColor
             try! realm.write() {
                 journey.active = false
                 self.activeJourney = nil
                 self.activeIndexpath = nil
             }
         } else {
+            print(1.2)
             if self.activeJourney != nil && self.activeIndexpath != nil {
+                print(1.3)
+                print("IndexPath :", self.activeIndexpath)
+                let indexP = NSIndexPath(forItem: self.activeIndexpath!, inSection: 0)
                 changeSetOfCells(self.activeIndexpath!, active: false)
                 try! realm.write() {
                     self.activeJourney!.active = false
                 }
             }
-            changeSetOfCells(indexPath, active: true)
+            activeJourneyButton.highlighted = true
+            activeJourneyButton.backgroundColor = greenColor
+            changeSetOfCells(indexPath.item, active: true)
             try! realm.write() {
                 journey.active = true
-                self.activeIndexpath = indexPath
+                self.activeIndexpath = indexPath.item
                 self.activeJourney = journey
             }
         }
+        print(2)
     }
     
-    func changeSetOfCells(indexPath: NSIndexPath, active: Bool) {
+    func removeOldActiveJourney() {
+        try! realm.write() {
+            self.activeJourney?.active = false
+        }
+        self.activeJourney = nil
+        self.activeIndexpath = nil
+        
+//        if self.activeIndexpath != nil {
+//            changeSetOfCells(NSIndexPath(forItem: self.activeIndexpath!, inSection: 0), active: false)
+//            let journey = self.journeys[self.activeIndexpath!]
+//            try! realm.write() {
+//                journey.active = false
+//            }
+//        }
+    }
+    
+    func changeSetOfCells(item: Int, active: Bool) {
+        print("item: ", item)
+        let indexPath = NSIndexPath(forItem: item, inSection: 0)
         var labelText = "Inactive journey"
         var imageName = "NotActivatedBadge"
         if active {
             labelText = "Active journey"
             imageName = "ActivatedBadge"
         }
-        let tableCell = self.journeysTableView.cellForRowAtIndexPath(indexPath) as! JourneyViewCell
-        tableCell.journeyStatusLabel.text = labelText
-        let collectionCell = self.activeJourneysCollectionView.cellForItemAtIndexPath(indexPath) as! ActiveJourneyCollectionViewCell
-        collectionCell.badgeImage.image = UIImage(named: imageName)
+        print(3)
+        if let tableCell = self.journeysTableView.cellForRowAtIndexPath(indexPath) as? JourneyViewCell {
+            tableCell.journeyStatusLabel.text = labelText
+        }
+        print(4)
+        if let collectionCell = self.activeJourneysCollectionView.cellForItemAtIndexPath(indexPath) as? ActiveJourneyCollectionViewCell {
+            collectionCell.badgeImage.image = UIImage(named: imageName)
+        }
+        print(6)
+
     }
-    
-    
-    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ActiveJourneyCell", forIndexPath: indexPath) as! ActiveJourneyCollectionViewCell
         
         let journey = self.journeys[indexPath.item]
-        print(1)
         cell.journeyTitleLabel.text = journey.headline
         cell.backgroundColor = UIColor.clearColor()
         if journey.active {
             self.activeJourney = journey
-            self.activeIndexpath = indexPath
+            self.activeIndexpath = indexPath.item
             cell.badgeImage.image = UIImage(named: "ActivatedBadge")
+            activeJourneyButton.highlighted = true
+            activeJourneyButton.backgroundColor = greenColor
         } else {
             cell.badgeImage.image = UIImage(named: "NotActivatedBadge")
         }

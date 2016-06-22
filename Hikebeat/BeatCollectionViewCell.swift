@@ -17,5 +17,9 @@ class BeatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var journeyTitle: UILabel!
     @IBOutlet weak var beatImage: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var beatTime: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var mediaType: UILabel!
+    @IBOutlet weak var mediaLength: UILabel!
     
 }

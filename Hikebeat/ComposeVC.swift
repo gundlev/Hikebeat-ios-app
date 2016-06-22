@@ -131,7 +131,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     func memoButtonTapped() {
         print("memo")
-
+        performSegueWithIdentifier("recordAudio", sender: self)
     }
     
     
@@ -276,8 +276,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     let newPath = getPathToFileFromName("audio-temp.m4a")
                     covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
                     let audioData = NSData(contentsOfURL: newPath!)
-                    mediaData = saveMediaToDocs(audioData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: "m4a")
-                    self.recorder.deleteRecording()
+                    mediaData = saveMediaToDocs(audioData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
+                    //self.recorder.deleteRecording()
                 }
                 
                 
