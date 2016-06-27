@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1343,6 +1343,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXw-Eb-FWX">
                                 <rect key="frame" x="0.0" y="82" width="560" height="469"/>
                                 <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wu7-xP-5Gv">
+                                        <rect key="frame" x="0.0" y="83" width="560" height="386"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ER6-VT-u8l" id="N4V-0G-49Y"/>
+                                        </connections>
+                                    </mapView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXr-u1-hCx">
+                                        <rect key="frame" x="138" y="61" width="283" height="46"/>
+                                        <color key="backgroundColor" red="0.73602133989999996" green="0.96545141940000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="lEm-q4-ZFJ"/>
+                                            <constraint firstAttribute="width" constant="283" id="yDN-64-9lL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="A Weekend in London">
+                                            <color key="titleColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showFirstBeat:" destination="ER6-VT-u8l" eventType="touchUpInside" id="35Q-hK-qQO"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCX-tg-TZN">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="85"/>
                                         <subviews>
@@ -1374,11 +1395,14 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P83-5l-IhF">
-                                                <rect key="frame" x="163" y="17" width="38" height="29"/>
+                                                <rect key="frame" x="163" y="17" width="76" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="normal" title="Share">
+                                                <state key="normal" title="Share          ">
                                                     <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="shareButton:" destination="ER6-VT-u8l" eventType="touchUpInside" id="XJc-IE-ziu"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.38857972621917725" blue="0.33894142508506775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1396,27 +1420,6 @@
                                             <constraint firstItem="4mZ-uY-Ls7" firstAttribute="centerY" secondItem="rEP-zE-cGo" secondAttribute="centerY" id="tLp-uI-r41"/>
                                         </constraints>
                                     </view>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wu7-xP-5Gv">
-                                        <rect key="frame" x="0.0" y="83" width="560" height="386"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="ER6-VT-u8l" id="N4V-0G-49Y"/>
-                                        </connections>
-                                    </mapView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXr-u1-hCx">
-                                        <rect key="frame" x="138" y="61" width="283" height="46"/>
-                                        <color key="backgroundColor" red="0.73602133989999996" green="0.96545141940000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="lEm-q4-ZFJ"/>
-                                            <constraint firstAttribute="width" constant="283" id="yDN-64-9lL"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                        <state key="normal" title="A Weekend in London">
-                                            <color key="titleColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="showFirstBeat:" destination="ER6-VT-u8l" eventType="touchUpInside" id="35Q-hK-qQO"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="bCX-tg-TZN" firstAttribute="top" secondItem="wXw-Eb-FWX" secondAttribute="top" id="0bo-E1-gAX"/>
@@ -2158,7 +2161,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7K-lX-lfr">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j7K-lX-lfr">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="39b-wr-Y24">
@@ -2185,7 +2188,7 @@
                                     <constraint firstItem="39b-wr-Y24" firstAttribute="top" secondItem="j7K-lX-lfr" secondAttribute="top" constant="26" id="qdt-Jo-IzV"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mw6-vZ-MpA">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mw6-vZ-MpA">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jzE-AZ-CRb">

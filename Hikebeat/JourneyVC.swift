@@ -20,6 +20,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var backButton: UIButton!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     
     var journey: Journey?
     var pins = [BeatPin]()
@@ -237,6 +238,20 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
         //performSegueWithIdentifier("showBeat", sender: self)
         
     }
+    
+    
+    @IBAction func shareButton(sender: AnyObject) {
+        
+        let slug = journey?.slug
+        let user = userDefaults.stringForKey("username")
+        let base = "https://hikebeat.io/user/"
+        let shareString = base+user!+"/"+slug!
+        let objectsToShare = [shareString]
+        let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
+        
+        presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showBeat" {
