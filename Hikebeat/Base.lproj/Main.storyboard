@@ -942,7 +942,6 @@
                                         </state>
                                         <connections>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="HL1-Qa-huM"/>
-                                            <segue destination="C8a-1U-2Pc" kind="show" id="uuV-8J-skK"/>
                                         </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bdX-Bm-KQG">
@@ -2144,7 +2143,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9Q-tb-FsQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="THz-EQ-umx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1923" y="1693"/>
+            <point key="canvasLocation" x="1885" y="1693"/>
         </scene>
         <!--Profile-->
         <scene sceneID="yoW-hG-QgH">
@@ -2165,9 +2164,9 @@
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGh-hU-z1b">
-                                        <rect key="frame" x="551" y="27" width="31" height="33"/>
+                                        <rect key="frame" x="549" y="27" width="33" height="33"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="31" id="Wnr-uD-Fx5"/>
+                                            <constraint firstAttribute="width" constant="33" id="Wnr-uD-Fx5"/>
                                             <constraint firstAttribute="height" constant="33" id="y7o-av-aPQ"/>
                                         </constraints>
                                         <state key="normal" image="EditTitle"/>
@@ -2442,10 +2441,12 @@
                     <tabBarItem key="tabBarItem" title="Profile" id="NRN-J5-qFu"/>
                     <navigationItem key="navigationItem" id="MYj-rP-Ueh"/>
                     <connections>
+                        <outlet property="blurryBG" destination="2X6-eR-f0a" id="fED-uq-jGL"/>
                         <outlet property="editButton" destination="wGh-hU-z1b" id="TSH-YY-dBk"/>
                         <outlet property="editProfileImageButton" destination="hyU-87-68f" id="d6G-TA-8uM"/>
                         <outlet property="emailLabel" destination="5Bu-Te-CT0" id="GUu-iQ-0fo"/>
                         <outlet property="followersButton" destination="vrp-bZ-jbs" id="MJI-Bu-FnH"/>
+                        <outlet property="infoContainer" destination="jzE-AZ-CRb" id="rQi-13-Fyu"/>
                         <outlet property="nameLabel" destination="vf0-jQ-J6I" id="vPB-aR-qKn"/>
                         <outlet property="nationalityLabel" destination="uZ7-SM-VQ0" id="a7q-et-FLD"/>
                         <outlet property="numberOfJourneys" destination="p0c-CI-rjK" id="Def-wD-Va8"/>
@@ -2741,7 +2742,7 @@ sync</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GiK-Yp-pnE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1065" y="-1164"/>
+            <point key="canvasLocation" x="1061" y="-1164"/>
         </scene>
         <!--Social-->
         <scene sceneID="HkC-Cm-MJq">
@@ -2809,6 +2810,9 @@ sync</string>
                                                 <constraint firstAttribute="width" constant="80" id="cbx-ep-TKc"/>
                                             </constraints>
                                             <state key="normal" image="CloseIcon"/>
+                                            <connections>
+                                                <segue destination="O05-Hs-NUk" kind="unwind" unwindAction="unwindToCompose:" id="Pzc-Sl-06e"/>
+                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="record-btn" translatesAutoresizingMaskIntoConstraints="NO" id="fMX-2w-tTd">
                                             <rect key="frame" x="200" y="153" width="200" height="200"/>
@@ -2911,7 +2915,7 @@ sync</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tot-nu-Zaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O05-Hs-NUk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3287" y="253"/>
+            <point key="canvasLocation" x="3287" y="261"/>
         </scene>
         <!--Show Image ModalVC-->
         <scene sceneID="tmF-O6-OlK">
@@ -3022,7 +3026,6 @@ sync</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ry1-QN-lGj"/>
-        <segue reference="dLo-Dg-JLh"/>
         <segue reference="abJ-vT-9Ah"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -108,6 +108,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, 40.0  )
+        }else if(UIDevice.isIphone4){
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
+            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -80.0  )
         }
         
         

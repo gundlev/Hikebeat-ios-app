@@ -49,6 +49,10 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     @IBOutlet weak var nationalityLabel: UITextField!
     @IBOutlet weak var profileContentView: UIView!
     
+    @IBOutlet weak var infoContainer: UIView!
+    
+    @IBOutlet weak var blurryBG: UIImageView!
+    
     @IBAction func editProfileImageTapped(sender: AnyObject) {
         chooseImage()
     }
@@ -119,8 +123,24 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 //            searchFieldLabelView.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, -40.0  )
 //            searchField.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
 //            searchButton.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
+            infoContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.8, 0.8);
+            infoContainer.transform = CGAffineTransformTranslate( infoContainer.transform, 0.0, -35.0  )
+            
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             self.followersButton.transform = CGAffineTransformTranslate( followersButton.transform, 0.0, 10.0  )
+        }else if(UIDevice.isIphone4){
+            profileContentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
+            profileContentView.transform = CGAffineTransformTranslate( profileContentView.transform, 0.0, -100.0  )
+            
+  
+            profilePicture.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.6, 0.6);
+            profilePicture.transform = CGAffineTransformTranslate( profilePicture.transform, 0, 50.0  )
+
+            editProfileImageButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.6, 0.6);
+            editProfileImageButton.transform = CGAffineTransformTranslate( editProfileImageButton.transform, 0, 50.0  )
+            
+            blurryBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.2, 0.8);
+            blurryBG.transform = CGAffineTransformTranslate( blurryBG.transform, 0, 25  )
         }
         
         let bgGradient = CAGradientLayer()

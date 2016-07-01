@@ -27,6 +27,11 @@ class RecordAudioVC: UIViewController {
     var audioHasBeenRecordedForThisBeat = false
     
     override func viewDidLoad() {
+        
+        if(UIDevice.isIphone4){
+            saveButton.transform = CGAffineTransformTranslate( saveButton.transform, 0.0, -25.0)
+        }
+        
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
         saveButton.layer.masksToBounds = true
         

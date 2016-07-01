@@ -45,6 +45,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, 40.0  )
+        }else if(UIDevice.isIphone4){
+            loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
+            loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, -120.0  )
         }
 
         

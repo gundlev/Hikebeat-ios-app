@@ -66,6 +66,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, 40.0  )
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
+        }else if (UIDevice.isIphone4){
+            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
+            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -110.0  )
+            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
+            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
         }
         
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
