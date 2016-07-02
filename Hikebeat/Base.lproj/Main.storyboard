@@ -868,7 +868,7 @@
                                     <constraint firstItem="KqY-xd-YqV" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="top" constant="26" id="Yd3-Rh-qpN"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71K-pu-Clj">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71K-pu-Clj">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurryBG" translatesAutoresizingMaskIntoConstraints="NO" id="OyD-aK-Ve1">
@@ -958,7 +958,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActiveJourneyCell" id="gAw-y6-adH" customClass="ActiveJourneyCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="3.5" width="187" height="130"/>
+                                                <rect key="frame" x="0.0" y="4" width="187" height="130"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="130"/>
@@ -1028,20 +1028,59 @@
                                     <constraint firstItem="Lj2-sh-ATe" firstAttribute="top" secondItem="Y6k-K5-Jwb" secondAttribute="bottom" constant="18" id="xaE-P6-Uq5"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIE-ph-gcm">
+                                <rect key="frame" x="0.0" y="84" width="600" height="467"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t  quite hit the traget captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
+                                        <rect key="frame" x="188" y="305" width="223" height="41"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" red="0.97524267435073853" green="0.91295677423477173" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoSocial" translatesAutoresizingMaskIntoConstraints="NO" id="YR0-D0-40W">
+                                        <rect key="frame" x="208" y="165" width="185" height="115"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="185" id="u6Q-dr-V8e"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The social functionality is just around the corner. Please stay in touch!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-g8-kd5">
+                                        <rect key="frame" x="178" y="346" width="244" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="v5H-1U-AGY" firstAttribute="top" secondItem="YR0-D0-40W" secondAttribute="bottom" constant="25" id="0t5-mG-3z1"/>
+                                    <constraint firstItem="Hh7-g8-kd5" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="5Kd-ht-xea"/>
+                                    <constraint firstItem="YR0-D0-40W" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="82c-uY-pBa"/>
+                                    <constraint firstItem="YR0-D0-40W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="top" constant="165" id="Sep-lk-t6k"/>
+                                    <constraint firstItem="Hh7-g8-kd5" firstAttribute="top" secondItem="v5H-1U-AGY" secondAttribute="bottom" id="XgG-kj-Ous"/>
+                                    <constraint firstItem="YR0-D0-40W" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="e6m-mu-SLr"/>
+                                    <constraint firstItem="YR0-D0-40W" firstAttribute="leading" secondItem="Hh7-g8-kd5" secondAttribute="leading" constant="30" id="nXm-0W-owE"/>
+                                    <constraint firstItem="YR0-D0-40W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="top" constant="165" id="u2P-1f-yPB"/>
+                                    <constraint firstItem="v5H-1U-AGY" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="xQ5-eP-QL4"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="XIE-ph-gcm" firstAttribute="leading" secondItem="uVe-3f-uGp" secondAttribute="leadingMargin" constant="-20" id="14z-89-6nM"/>
                             <constraint firstItem="Tsp-Lm-zPK" firstAttribute="leading" secondItem="uVe-3f-uGp" secondAttribute="leadingMargin" constant="-20" id="2d9-ph-uXn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XIE-ph-gcm" secondAttribute="trailing" constant="-20" id="2oT-qL-MTN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="71K-pu-Clj" secondAttribute="trailing" constant="-20" id="OKa-tJ-EW0"/>
+                            <constraint firstItem="XIE-ph-gcm" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" id="RAc-8a-py7"/>
                             <constraint firstItem="Tsp-Lm-zPK" firstAttribute="top" secondItem="uVe-3f-uGp" secondAttribute="topMargin" id="TRm-ej-WAp"/>
                             <constraint firstItem="gsu-6Y-U1W" firstAttribute="top" secondItem="71K-pu-Clj" secondAttribute="bottom" id="Yow-JW-Iya"/>
                             <constraint firstItem="71K-pu-Clj" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" id="Z5e-y1-hDr"/>
+                            <constraint firstItem="gsu-6Y-U1W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="bottom" id="d8s-6S-nPI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Tsp-Lm-zPK" secondAttribute="trailing" constant="-20" id="h44-Qb-1is"/>
                             <constraint firstItem="71K-pu-Clj" firstAttribute="leading" secondItem="uVe-3f-uGp" secondAttribute="leadingMargin" constant="-20" id="hRW-ty-8RV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tVG-sV-ZWd"/>
                     <connections>
+                        <outlet property="placeholder" destination="XIE-ph-gcm" id="9ca-oH-oU4"/>
                         <outlet property="popularJourneysButton" destination="WN9-8r-jd3" id="RBJ-jM-uBr"/>
                         <outlet property="popularJourneysCollectionView" destination="bdX-Bm-KQG" id="pNy-xE-J5k"/>
                         <outlet property="searchButton" destination="2pR-0i-2eQ" id="was-nb-S8e"/>
@@ -3006,6 +3045,7 @@ sync</string>
         <image name="NationalityProfileIcon" width="24" height="30"/>
         <image name="NewIcon" width="32" height="32"/>
         <image name="NewJourney" width="90" height="90"/>
+        <image name="NoSocial" width="184" height="115"/>
         <image name="NotActivatedBadge" width="39" height="39"/>
         <image name="NotificationIcon" width="27" height="30"/>
         <image name="PhoneProfileIcon" width="28" height="34"/>
@@ -3026,6 +3066,6 @@ sync</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ry1-QN-lGj"/>
-        <segue reference="abJ-vT-9Ah"/>
+        <segue reference="Ttn-Zq-yK6"/>
     </inferredMetricsTieBreakers>
 </document>
