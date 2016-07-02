@@ -481,6 +481,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         print("timestamp deci: ", self.currentBeat?.timestamp)
         print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
+        print("lat: ", hex(Double((self.currentBeat?.latitude)!)!))
+        print("lng: ", hex(Double((self.currentBeat?.longitude)!)!))
         let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + title + "##" + message
         
         return smsMessageText
@@ -571,6 +573,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         var latitude = ""
         var altitude = ""
         if let location = appDelegate.getLocation() {
+            print("location 2. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
             let gpsCheck = userDefaults.boolForKey("GPS-check")
             if gpsCheck {
                 // Now performing gps check
@@ -581,12 +584,14 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     longitude = String(location.coordinate.longitude)
                     latitude = String(location.coordinate.latitude)
                     altitude = String(round(location.altitude))
+                    print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
                     return (timestamp, latitude, longitude, altitude)
                 }
             } else {
                 longitude = String(location.coordinate.longitude)
                 latitude = String(location.coordinate.latitude)
                 altitude = String(round(location.altitude))
+                print("location 4. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
                 return (timestamp, latitude, longitude, altitude)
             }
         } else {

@@ -17,7 +17,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var activeJourneyButton: UIButton!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var journeys: Results<Journey>!
+    var journeys: [Journey]!
     let realm = try! Realm()
     var activeJourney: Journey?
     var activeIndexpath: Int?
@@ -55,7 +55,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
 
         // Do any additional setup after loading the view.
-        self.journeys = self.realm.objects(Journey)
+        let journeysUnsorted = self.realm.objects(Journey)
+        self.journeys = journeysUnsorted.reverse()
         for journey in self.journeys {
             if journey.active {
                 self.activeIndexpath = self.journeys.indexOf(journey)
@@ -94,7 +95,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func unwindWhenCreatedJourney(unwindSegue: UIStoryboardSegue) {
-        self.journeys = self.realm.objects(Journey)
+        self.journeys = self.realm.objects(Journey).reverse()
         self.activeJourneysCollectionView.reloadData()
         self.journeysTableView.reloadData()
     }

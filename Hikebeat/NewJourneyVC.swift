@@ -72,6 +72,16 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
 
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if self.titleField.isFirstResponder() {
+            view.endEditing(true)
+            
+        } else {
+            performSegueWithIdentifier("backToJourneyModelTap", sender: self)
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

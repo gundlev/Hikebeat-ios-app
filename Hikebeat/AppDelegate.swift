@@ -183,6 +183,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
             currentLocation = locManager.location
         }
+        currentLocation?.coordinate.latitude
+        print("location 1. lat: ", currentLocation?.coordinate.latitude, "lng: ", currentLocation?.coordinate.longitude)
         return currentLocation
     }
 }

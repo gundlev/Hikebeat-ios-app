@@ -144,12 +144,14 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 let e = t.rangeOfString(".")
                 let timestamp = t.substringToIndex((e?.startIndex)!)
                 self.userDefaults.setObject(timestamp, forKey: "lastSync")
-                let numbers = user["permittedPhoneNumbers"].arrayValue
-                var number = ""
+                let numbers = user["options"]["permittedPhoneNumbers"].arrayValue
+                print("numbers: ", numbers)
                 if !numbers.isEmpty {
-                    number = numbers[0].stringValue
+                    let number = numbers[0].stringValue
+                    print("number: ", number)
+                    self.userDefaults.setObject(number, forKey: "permittedPhoneNumbers")
                 }
-                self.userDefaults.setObject(number, forKey: "permittedPhoneNumbers")
+                
                 self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
                 self.userDefaults.setObject((user["options"]["name"].stringValue), forKey: "name")
                 self.userDefaults.setObject((user["options"]["gender"].stringValue), forKey: "gender")
