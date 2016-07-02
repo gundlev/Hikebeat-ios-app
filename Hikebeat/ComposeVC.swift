@@ -13,6 +13,8 @@ import AVFoundation
 import Alamofire
 import SwiftyJSON
 import MessageUI
+import BrightFutures
+import Result
 
 class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
@@ -28,6 +30,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    var beatPromise: Promise<Bool, NoError>!
     
     // Audio variables
     var recorder: AVAudioRecorder!
@@ -48,8 +51,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var imageBG: UIImageView!
     
     @IBAction func sendBeat(sender: AnyObject) {
-//        checkForCorrectInput()
-        performSegueWithIdentifier("showGreenModal", sender: nil)
+        self.beatPromise = Promise<Bool, NoError>()
+        checkForCorrectInput()
     }
     
     override func viewDidLoad() {
@@ -333,6 +336,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     parameters["text"] = currentBeat?.message
                 }
                 // Sending the beat message
+                performSegueWithIdentifier("showGreenModal", sender: nil)
                 Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
                     print("The Response")
                     print(response.response?.statusCode)
@@ -611,6 +615,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 let vc = segue.destinationViewController as! EditMessageVC
                 vc.text = self.messageText!
             }
+        case "showGreenModal":
+            let vc = segue.destinationViewController as! ModalVC
+            vc.future = self.beatPromise.future
         default:
             break
         }

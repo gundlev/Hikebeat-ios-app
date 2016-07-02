@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Result
+import BrightFutures
 
 class ModalVC: UIViewController {
+    
+    var future: Future<Bool, NoError>!
 
     @IBOutlet weak var infoContainer: UIImageView!
     override func viewDidLoad() {

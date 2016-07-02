@@ -54,9 +54,9 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             journeysTableView.transform = CGAffineTransformTranslate(activeJourneyButton.transform, 0.0, 0.0 )
         }
 
-        // Do any additional setup after loading the view.
         let journeysUnsorted = self.realm.objects(Journey)
         self.journeys = journeysUnsorted.reverse()
+        
         for journey in self.journeys {
             if journey.active {
                 self.activeIndexpath = self.journeys.indexOf(journey)
