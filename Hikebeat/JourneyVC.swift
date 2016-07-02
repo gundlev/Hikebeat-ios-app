@@ -56,6 +56,11 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
         setUpPins()
+        if self.pins.count==0{
+            followersLabel.text = "No beats"
+        }else{
+            followersLabel.text = String(self.pins.count)+" beats"
+        }
     }
     
     func setUpPins() {
