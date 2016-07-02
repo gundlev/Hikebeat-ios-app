@@ -34,7 +34,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var player:AVAudioPlayer!
     var meterTimer:NSTimer!
     var soundFileURL:NSURL!
-    
+    var filledin: Int = 0
     
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var editTitleButton: UIImageView!
@@ -72,6 +72,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
         }
+        
+
+        filledin = 0
+        clearButton.hidden = true
         
         editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
@@ -121,6 +125,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     {
 //        let sourceViewController = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
+        filledin==0 ? hideClearButton() : showClearButton()
+        print("test")
     }
 
 
@@ -130,7 +136,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func titleButtonTapped() {
         print("title")
-        
         performSegueWithIdentifier("editTitleModal", sender: self)
     }
 
@@ -147,28 +152,35 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     func imageButtonTapped() {
         print("image")
         self.chooseImage()
-
     }
     
     func videoButtonTapped() {
         print("video")
         self.chooseVideo()
-
     }
     
     func messageButtonTapped() {
         print("message")
-        
         performSegueWithIdentifier("editMessageModal", sender: self)
     }
     
     func applyGreenBorder(view :UIImageView) {
+        filledin += 1
         view.layer.borderWidth = 4
         view.layer.borderColor = greenColor.CGColor
     }
     
     func removeGreenBorder(view: UIImageView) {
+        filledin -= 1
         view.layer.borderWidth = 0
+    }
+    
+    func showClearButton(){
+        clearButton.hidden = false
+    }
+    
+    func hideClearButton(){
+        clearButton.hidden = true
     }
     
     func clearAllForNewBeat() {
@@ -183,6 +195,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
+        filledin = 0
+        hideClearButton()
         enableMediaView(self.editMemoButton)
         enableMediaView(self.editImageButton)
         enableMediaView(self.editVideoButton)
