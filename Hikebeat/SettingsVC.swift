@@ -34,6 +34,15 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var lastSyncLabel: UILabel!
     @IBOutlet weak var settingsContainer: UIView!
     
+    
+    @IBOutlet weak var dotsContainer: UIView!
+    @IBOutlet weak var dot1: UIImageView!
+    @IBOutlet weak var dot2: UIImageView!
+    @IBOutlet weak var dot3: UIImageView!
+    
+    var animationInitialised: Bool!
+    
+    
     @IBAction func notificationChange(sender: UISwitch) {
         if SimpleReachability.isConnectedToNetwork() {
             let parameters:[String: AnyObject] = ["options" : [
@@ -81,11 +90,15 @@ class SettingsVC: UIViewController {
     @IBAction func startSync(sender: AnyObject) {
         print("Syncbutton pressed")
         if toUpload != nil {
+            showDots()
             print("toUpload is not nil")
             let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
             promise.onSuccess(callback: { (Bool) in
                 let synced = self.checkSync()
                 print("In callback")
+                
+                self.hideDots()
+                
                 if synced {
                     let t = String(NSDate().timeIntervalSince1970)
                     let e = t.rangeOfString(".")
@@ -124,6 +137,14 @@ class SettingsVC: UIViewController {
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
+        dot1.layer.cornerRadius = dot1.bounds.width/2
+        dot1.layer.masksToBounds = true
+        
+        dot2.layer.cornerRadius = dot2.bounds.width/2
+        dot2.layer.masksToBounds = true
+        
+        dot3.layer.cornerRadius = dot3.bounds.width/2
+        dot3.layer.masksToBounds = true
         
         syncPictures.layer.cornerRadius = syncPictures.bounds.width/2
         syncMemos.layer.cornerRadius = syncMemos.bounds.width/2
@@ -137,10 +158,14 @@ class SettingsVC: UIViewController {
         
         syncButton.backgroundColor = yellowColor
         
+        syncButton.titleLabel?.hidden = false
+        dotsContainer.hidden = true
+        animationInitialised = false
+        
         gpsSwitch.on = userDefaults.boolForKey("GPS-check")
         gpsSwitch.on = userDefaults.boolForKey("notifications")
         let timestamp = userDefaults.stringForKey("lastSync")
-        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
         let firstDate = NSDate(timeIntervalSince1970: NSTimeInterval(Int(timestamp!)!))
         let secondDate = NSDate()
         let date1 = calendar.startOfDayForDate(firstDate)
@@ -156,7 +181,40 @@ class SettingsVC: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        if(!animationInitialised){
+            let dots = [dot1,dot2,dot3]
+            var delay = 0.0
+            for dot in dots{
+            
+                UIView.animateWithDuration(0.4,delay: delay, options:   [.Repeat, .Autoreverse, .CurveEaseOut], animations: {
+                    dot.center.y -= 15
+                },completion:nil)
+                delay+=0.2
+            }
+            animationInitialised = true
+        }else{
+            let dots = [dot1,dot2,dot3]
+            var delay = 0.0
+            for dot in dots{
+                dot.center.y += 15
+                UIView.animateWithDuration(0.4,delay: delay, options:   [.Repeat, .Autoreverse, .CurveEaseOut], animations: {
+                    dot.center.y -= 15
+                    },completion:nil)
+                delay+=0.2
+            }
+
+        }
         checkSync()
+    }
+
+    func showDots(){
+        syncButton.userInteractionEnabled = false
+        dotsContainer.hidden = false
+    }
+    
+    func hideDots(){
+        syncButton.userInteractionEnabled = true
+        dotsContainer.hidden = true
     }
     
     func checkSync() -> Bool {
