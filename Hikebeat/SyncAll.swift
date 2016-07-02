@@ -36,7 +36,7 @@ func syncAll(progressView: UIProgressView, changes: Results<(Change)>, beats: Re
                     promise.success(successChanges && successBeats)
                 }
             } else {
-                print("w")
+                print("SyncAll: Success on beats alone")
                 promise.success(successBeats)
             }
         }

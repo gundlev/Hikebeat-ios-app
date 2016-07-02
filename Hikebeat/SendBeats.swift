@@ -19,7 +19,7 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
     
     let promise = Promise<Bool, NoError>()
     var count = 0
-    var hasFailed = false
+    var numberOfFails = 0
     for beat in beats {
         print(beat.title)
         print(beat.mediaUploaded)
@@ -61,7 +61,6 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
                     beat.mediaDataId = json["_id"].stringValue
                     beat.mediaUploaded = true
                 }
-                print("progressView: ", progressView)
                 print("There are ", beats.count, " to be uploaded")
 //                print("Increasing progress by: ", increase)
 //                print("Progress before: ", progressView.progress)
@@ -69,15 +68,21 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
 //                print("Progress after: ", progressView.progress)
                 print(4)
                 count += 1
-                if count == beats.count && hasFailed == false {
-                    print("t")
+                print("beats.count: ", beats.count)
+                print("count: ",count)
+                print("numberOfFails: ", numberOfFails)
+                if beats.count == 0 {
+                    print("Done uploading beats with no fails")
                     promise.success(true)
                     //                    appDelegate.currentlyShowingNotie = false
+                } else if beats.count - numberOfFails == 0 {
+                    print("Done uploading beats with ", numberOfFails, " fails")
+                    promise.success(false)
                 }
                 //print(5)
             } else {
                 print("y")
-                hasFailed = true
+                numberOfFails += 1
                 promise.success(false)
             }
             
