@@ -126,7 +126,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 //        let sourceViewController = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
         filledin==0 ? hideClearButton() : showClearButton()
-        print("test")
     }
 
 
@@ -171,7 +170,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     func removeGreenBorder(view: UIImageView) {
-        filledin -= 1
         view.layer.borderWidth = 0
     }
     
