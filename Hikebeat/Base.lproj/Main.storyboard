@@ -135,12 +135,25 @@
                                                     <action selector="signUp:" destination="QNq-c2-xNk" eventType="touchUpInside" id="Kqq-jf-ggN"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XT-oA-wQH">
+                                                <rect key="frame" x="26" y="27" width="115" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="115" id="10L-Kc-RGG"/>
+                                                    <constraint firstAttribute="height" constant="34" id="Yba-6i-x0L"/>
+                                                </constraints>
+                                                <state key="normal" image="BackArrow"/>
+                                                <connections>
+                                                    <action selector="goBack:" destination="ER6-VT-u8l" eventType="touchUpInside" id="Fog-jw-2ws"/>
+                                                    <segue destination="CLL-Fj-MPh" kind="unwind" unwindAction="unwindToLogin:" id="IXf-Q2-ERf"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="8lC-K3-VLT" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="49W-ZA-yHz"/>
                                             <constraint firstItem="9cJ-D5-0LB" firstAttribute="top" secondItem="hZh-Zm-zWI" secondAttribute="bottom" constant="18" id="7tn-LC-5Ro"/>
                                             <constraint firstItem="z7f-I4-yeC" firstAttribute="top" secondItem="9cJ-D5-0LB" secondAttribute="bottom" constant="18" id="FIa-6u-fU7"/>
                                             <constraint firstItem="z7f-I4-yeC" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="FcD-XU-fA3"/>
+                                            <constraint firstItem="3XT-oA-wQH" firstAttribute="top" secondItem="pP9-YY-bdm" secondAttribute="top" constant="27" id="GPB-QC-HFD"/>
                                             <constraint firstItem="SwY-OH-oxY" firstAttribute="top" secondItem="8lC-K3-VLT" secondAttribute="bottom" constant="18" id="aKh-CE-BWA"/>
                                             <constraint firstItem="hZh-Zm-zWI" firstAttribute="top" secondItem="SwY-OH-oxY" secondAttribute="bottom" constant="18" id="bLn-5P-5O6"/>
                                             <constraint firstItem="SwY-OH-oxY" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="dyI-eP-55l"/>
@@ -148,6 +161,7 @@
                                             <constraint firstItem="y1B-s4-q8w" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="gNQ-wW-blz"/>
                                             <constraint firstItem="Q3w-gI-Vyf" firstAttribute="top" secondItem="pP9-YY-bdm" secondAttribute="top" constant="83" id="hIz-6b-MZZ"/>
                                             <constraint firstItem="9cJ-D5-0LB" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="lYM-58-H8Q"/>
+                                            <constraint firstItem="3XT-oA-wQH" firstAttribute="leading" secondItem="pP9-YY-bdm" secondAttribute="leading" constant="26" id="oIH-ow-Px3"/>
                                             <constraint firstItem="y1B-s4-q8w" firstAttribute="top" secondItem="z7f-I4-yeC" secondAttribute="bottom" constant="42" id="rcA-eD-n3F"/>
                                             <constraint firstItem="8lC-K3-VLT" firstAttribute="top" secondItem="Q3w-gI-Vyf" secondAttribute="bottom" constant="66" id="xQA-MT-JpZ"/>
                                             <constraint firstItem="Q3w-gI-Vyf" firstAttribute="centerX" secondItem="pP9-YY-bdm" secondAttribute="centerX" id="xQc-h1-kcJ"/>
@@ -199,6 +213,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v9B-gW-ify" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="CLL-Fj-MPh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="377" y="990"/>
         </scene>
@@ -1032,8 +1047,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIE-ph-gcm">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Ooops we didn’t  quite hit the traget captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
-                                        <rect key="frame" x="188" y="305" width="223" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t  quite hit the traget captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
+                                        <rect key="frame" x="188.5" y="305" width="223" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="223" id="pas-GS-8v0"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.97524267435073853" green="0.91295677423477173" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1044,8 +1062,11 @@
                                             <constraint firstAttribute="width" constant="185" id="u6Q-dr-V8e"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The social functionality is just around the corner. Please stay in touch!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-g8-kd5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The social functionality is just around the corner. Please stay in touch!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-g8-kd5">
                                         <rect key="frame" x="178" y="346" width="244" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="244" id="bi0-J3-KA2"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3111,7 +3132,7 @@ sync</string>
         <image name="trees" width="270" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ry1-QN-lGj"/>
+        <segue reference="9pW-Na-dpl"/>
         <segue reference="Ttn-Zq-yK6"/>
     </inferredMetricsTieBreakers>
 </document>

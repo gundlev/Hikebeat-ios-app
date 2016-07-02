@@ -89,6 +89,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func login(sender: AnyObject) {
         
         /** Parameters to send to the API.*/
