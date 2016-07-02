@@ -113,6 +113,9 @@ class SettingsVC: UIViewController {
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
                 settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
                 settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, 40.0  )
+        }else if (UIDevice.isIphone4){
+            settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
+            settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -100.0  )
         }
         
         let bgGradient = CAGradientLayer()

@@ -43,6 +43,10 @@ class SocialVC: UIViewController, UITextFieldDelegate {
             searchButton.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             self.popularJourneysButton.transform = CGAffineTransformTranslate( popularJourneysButton.transform, 0.0, 10.0  )
+        } else if(UIDevice.isIphone4){
+            searchFieldLabelView.hidden = true
+            searchField.transform = CGAffineTransformTranslate( searchField.transform, 0.0, -107.0  )
+            searchButton.transform = CGAffineTransformTranslate( searchButton.transform, 0.0, -120.0  )
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);

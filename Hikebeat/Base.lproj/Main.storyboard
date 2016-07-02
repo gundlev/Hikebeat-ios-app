@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -486,15 +488,15 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-dN-UqD">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-dN-UqD">
                                                             <rect key="frame" x="40" y="24" width="131" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                             <color key="textColor" red="0.77682477235794067" green="0.95740753412246704" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5u-AL-HPr">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5u-AL-HPr">
                                                             <rect key="frame" x="40" y="45" width="167" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -702,7 +704,6 @@
                                                 <constraint firstAttribute="width" constant="283" id="Jcf-e1-BI9"/>
                                                 <constraint firstAttribute="height" constant="48" id="geU-da-LPc"/>
                                             </constraints>
-                                            <color key="textColor" red="0.3294117647" green="0.78039215689999997" blue="0.98823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                         </textField>
@@ -943,7 +944,6 @@
                                         </state>
                                         <connections>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="HL1-Qa-huM"/>
-                                            <segue destination="C8a-1U-2Pc" kind="show" id="uuV-8J-skK"/>
                                         </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bdX-Bm-KQG">
@@ -1343,6 +1343,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXw-Eb-FWX">
                                 <rect key="frame" x="0.0" y="82" width="560" height="469"/>
                                 <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wu7-xP-5Gv">
+                                        <rect key="frame" x="0.0" y="83" width="560" height="386"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ER6-VT-u8l" id="N4V-0G-49Y"/>
+                                        </connections>
+                                    </mapView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCX-tg-TZN">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="85"/>
                                         <subviews>
@@ -1374,11 +1380,14 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P83-5l-IhF">
-                                                <rect key="frame" x="163" y="17" width="38" height="29"/>
+                                                <rect key="frame" x="163" y="17" width="76" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="normal" title="Share">
+                                                <state key="normal" title="Share          ">
                                                     <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="shareButton:" destination="ER6-VT-u8l" eventType="touchUpInside" id="XJc-IE-ziu"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.38857972621917725" blue="0.33894142508506775" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1396,12 +1405,6 @@
                                             <constraint firstItem="4mZ-uY-Ls7" firstAttribute="centerY" secondItem="rEP-zE-cGo" secondAttribute="centerY" id="tLp-uI-r41"/>
                                         </constraints>
                                     </view>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wu7-xP-5Gv">
-                                        <rect key="frame" x="0.0" y="83" width="560" height="386"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="ER6-VT-u8l" id="N4V-0G-49Y"/>
-                                        </connections>
-                                    </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXr-u1-hCx">
                                         <rect key="frame" x="138" y="61" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.73602133989999996" green="0.96545141940000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1522,15 +1525,15 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-YG-eKg">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-YG-eKg">
                                                             <rect key="frame" x="40" y="40" width="131" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                             <color key="textColor" red="0.77682477240000003" green="0.95740753410000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Cf-IG-zlc">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Cf-IG-zlc">
                                                             <rect key="frame" x="40" y="61" width="167" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -1895,7 +1898,6 @@
                                                 <constraint firstAttribute="width" constant="283" id="XyX-pN-SHr"/>
                                                 <constraint firstAttribute="height" constant="48" id="rps-p8-wjc"/>
                                             </constraints>
-                                            <color key="textColor" red="0.32941176470588235" green="0.7803921568627451" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                         </textField>
@@ -2004,7 +2006,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="180" id="kMA-u2-3BR"/>
                                             </constraints>
-                                            <color key="textColor" red="0.3294117647" green="0.78039215689999997" blue="0.98823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
@@ -2073,7 +2074,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jV4-p6-iNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qXv-e9-goR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1885" y="261"/>
+            <point key="canvasLocation" x="1865" y="261"/>
         </scene>
         <!--Profile-->
         <scene sceneID="nXp-Vt-8KG">
@@ -2144,7 +2145,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9Q-tb-FsQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="THz-EQ-umx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1923" y="1693"/>
+            <point key="canvasLocation" x="1885" y="1693"/>
         </scene>
         <!--Profile-->
         <scene sceneID="yoW-hG-QgH">
@@ -2165,9 +2166,9 @@
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGh-hU-z1b">
-                                        <rect key="frame" x="551" y="27" width="31" height="33"/>
+                                        <rect key="frame" x="549" y="27" width="33" height="33"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="31" id="Wnr-uD-Fx5"/>
+                                            <constraint firstAttribute="width" constant="33" id="Wnr-uD-Fx5"/>
                                             <constraint firstAttribute="height" constant="33" id="y7o-av-aPQ"/>
                                         </constraints>
                                         <state key="normal" image="EditTitle"/>
@@ -2334,7 +2335,7 @@
                                         <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrp-bZ-jbs">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrp-bZ-jbs">
                                         <rect key="frame" x="158" y="167" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2344,7 +2345,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="journeys i follow">
+                                                <fragment content="Your profile">
                                                     <attributes>
                                                         <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="18" name="Helvetica"/>
@@ -2386,9 +2387,6 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
-                                        <connections>
-                                            <action selector="seeFollowingJourneys:" destination="Ce8-il-UYv" eventType="touchUpInside" id="7Oq-zm-zcD"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyU-87-68f">
                                         <rect key="frame" x="246" y="11" width="104" height="104"/>
@@ -2445,10 +2443,12 @@
                     <tabBarItem key="tabBarItem" title="Profile" id="NRN-J5-qFu"/>
                     <navigationItem key="navigationItem" id="MYj-rP-Ueh"/>
                     <connections>
+                        <outlet property="blurryBG" destination="2X6-eR-f0a" id="fED-uq-jGL"/>
                         <outlet property="editButton" destination="wGh-hU-z1b" id="TSH-YY-dBk"/>
                         <outlet property="editProfileImageButton" destination="hyU-87-68f" id="d6G-TA-8uM"/>
                         <outlet property="emailLabel" destination="5Bu-Te-CT0" id="GUu-iQ-0fo"/>
                         <outlet property="followersButton" destination="vrp-bZ-jbs" id="MJI-Bu-FnH"/>
+                        <outlet property="infoContainer" destination="jzE-AZ-CRb" id="rQi-13-Fyu"/>
                         <outlet property="nameLabel" destination="vf0-jQ-J6I" id="vPB-aR-qKn"/>
                         <outlet property="nationalityLabel" destination="uZ7-SM-VQ0" id="a7q-et-FLD"/>
                         <outlet property="numberOfJourneys" destination="p0c-CI-rjK" id="Def-wD-Va8"/>
@@ -2744,7 +2744,7 @@ sync</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GiK-Yp-pnE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1065" y="-1164"/>
+            <point key="canvasLocation" x="1061" y="-1164"/>
         </scene>
         <!--Social-->
         <scene sceneID="HkC-Cm-MJq">
@@ -2812,6 +2812,9 @@ sync</string>
                                                 <constraint firstAttribute="width" constant="80" id="cbx-ep-TKc"/>
                                             </constraints>
                                             <state key="normal" image="CloseIcon"/>
+                                            <connections>
+                                                <segue destination="O05-Hs-NUk" kind="unwind" unwindAction="unwindToCompose:" id="Pzc-Sl-06e"/>
+                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="record-btn" translatesAutoresizingMaskIntoConstraints="NO" id="fMX-2w-tTd">
                                             <rect key="frame" x="200" y="153" width="200" height="200"/>
@@ -2914,7 +2917,7 @@ sync</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tot-nu-Zaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O05-Hs-NUk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3287" y="253"/>
+            <point key="canvasLocation" x="3287" y="261"/>
         </scene>
         <!--Show Image ModalVC-->
         <scene sceneID="tmF-O6-OlK">
@@ -3025,7 +3028,6 @@ sync</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ry1-QN-lGj"/>
-        <segue reference="dLo-Dg-JLh"/>
-        <segue reference="Ttn-Zq-yK6"/>
+        <segue reference="abJ-vT-9Ah"/>
     </inferredMetricsTieBreakers>
 </document>
