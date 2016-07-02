@@ -48,8 +48,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var imageBG: UIImageView!
     
     @IBAction func sendBeat(sender: AnyObject) {
-        checkForCorrectInput()
-        
+//        checkForCorrectInput()
+        performSegueWithIdentifier("showGreenModal", sender: nil)
     }
     
     override func viewDidLoad() {
