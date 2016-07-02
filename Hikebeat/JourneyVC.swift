@@ -61,6 +61,26 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         }else{
             followersLabel.text = String(self.pins.count)+" beats"
         }
+        
+        self.setProfileImage()
+    }
+    
+    func setProfileImage() {
+        let dataPath = getProfileImagePath()
+        let image = UIImage(contentsOfFile: dataPath)
+        if image != nil {
+            self.profileImage.image = image
+        } else {
+            self.profileImage.image = UIImage(named: "DefaultProfile")
+        }
+    }
+    
+    func getProfileImagePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let fileName = "profile_image.jpg"
+        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        return dataPath
     }
     
     func setUpPins() {
