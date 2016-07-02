@@ -62,7 +62,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.activeIndexpath = self.journeys.indexOf(journey)
             }
         }
-        print(journeys)
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
@@ -117,6 +116,9 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let journey = journeys[indexPath.row]
         
         let beats = journey.beats.sorted("timestamp")
+        print(beats)
+        
+        
         if beats.isEmpty {
             cell.journeyDateLabel.text = "No beats"
         } else {

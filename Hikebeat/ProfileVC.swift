@@ -51,6 +51,8 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     
     @IBOutlet weak var infoContainer: UIView!
     
+    
+    
     @IBOutlet weak var blurryBG: UIImageView!
     
     @IBAction func editProfileImageTapped(sender: AnyObject) {

@@ -17,6 +17,9 @@ class SocialVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     
+    
+    @IBOutlet weak var placeholder: UIView!
+    
     var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
     var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
@@ -41,12 +44,15 @@ class SocialVC: UIViewController, UITextFieldDelegate {
             searchFieldLabelView.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, -40.0  )
             searchField.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
             searchButton.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
+             placeholder.transform = CGAffineTransformTranslate( placeholder.transform, 0.0, -80.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             self.popularJourneysButton.transform = CGAffineTransformTranslate( popularJourneysButton.transform, 0.0, 10.0  )
         } else if(UIDevice.isIphone4){
             searchFieldLabelView.hidden = true
             searchField.transform = CGAffineTransformTranslate( searchField.transform, 0.0, -107.0  )
             searchButton.transform = CGAffineTransformTranslate( searchButton.transform, 0.0, -120.0  )
+            
+            placeholder.transform = CGAffineTransformTranslate( placeholder.transform, 0.0, -120.0  )
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
