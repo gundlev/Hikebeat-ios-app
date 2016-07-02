@@ -402,8 +402,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                             self.activeJourney?.beats.append(self.currentBeat!)
                                         }
                                     }
-
-                                    
+                                    self.beatPromise.success(true)
                                 }
                             }
                         } else {
@@ -413,8 +412,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                 self.currentBeat?.mediaUploaded = true
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
-                            
                             self.clearAllForNewBeat()
+                            self.beatPromise.success(true)
                         }
                         
                         //Likely not usefull call to saveContext -> Test it!!

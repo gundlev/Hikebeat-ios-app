@@ -23,9 +23,9 @@ class ModalVC: UIViewController {
         infoContainer.layer.cornerRadius = infoContainer.bounds.height/6
         infoContainer.layer.masksToBounds = true
        
-        _ = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
-        
-        
+        self.future.onSuccess { (success) in
+            _ = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

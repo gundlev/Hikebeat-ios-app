@@ -116,7 +116,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let journey = journeys[indexPath.row]
         
         let beats = journey.beats.sorted("timestamp")
-        print(beats)
+
         
         
         if beats.isEmpty {
