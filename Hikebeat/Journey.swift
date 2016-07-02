@@ -40,6 +40,7 @@ class Journey: Object {
         self.active = active
         self.type = type
     }
+    
     //dynamic var activeString: String
  
 //    required init(

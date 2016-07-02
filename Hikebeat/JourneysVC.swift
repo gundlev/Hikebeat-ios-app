@@ -59,7 +59,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         for journey in self.journeys {
             if journey.active {
-                self.activeIndexpath = self.journeys.indexOf(journey)
+                self.activeIndexpath = self.journeys.indexOf({$0.journeyId == journey.journeyId})
             }
         }
         
