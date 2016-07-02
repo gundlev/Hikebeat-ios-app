@@ -306,9 +306,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 print("Just Before Crash!")
                 self.currentBeat = Beat()
                 self.currentBeat!.fill( titleText, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
-                try! realm.write() {
-                    realm.add(self.currentBeat!)
-                }
+//                try! realm.write() {
+//                    realm.add(self.currentBeat!)
+//                }
                 
                 print("Just After Crash!")
                 self.sendBeat()
@@ -348,10 +348,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                         // Save the messageId to the currentBeat
                         let rawMessageJson = JSON(response.result.value!)
                         let messageJson = rawMessageJson["data"][0]
-                        try! self.realm.write() {
+                        //try! self.realm.write() {
                             self.currentBeat?.messageUploaded = true
                             self.currentBeat?.messageId = messageJson["_id"].stringValue
-                        }
+                        //}
  
                         
                         // If the is an image in the currentBeat, send the image.
@@ -426,7 +426,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                         
                         
                         // Is set to true now but should be changed to false
-
                         try! self.realm.write {
                             self.currentBeat?.mediaUploaded = false
                             self.currentBeat?.messageUploaded = false
@@ -447,9 +446,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                         self.tabBarController?.selectedIndex = 3
                     }
                     alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
-                    try! realm.write() {
-                        realm.delete(self.currentBeat!)
-                    }
+//                    try! realm.write() {
+//                        realm.delete(self.currentBeat!)
+//                    }
                 } else {
                     // This will send it via SMS.
                     print("Not reachable, should send sms")

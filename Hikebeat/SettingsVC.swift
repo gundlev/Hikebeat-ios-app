@@ -84,12 +84,16 @@ class SettingsVC: UIViewController {
             print("toUpload is not nil")
             let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
             promise.onSuccess(callback: { (Bool) in
-                self.checkSync()
-                let t = String(NSDate().timeIntervalSince1970)
-                let e = t.rangeOfString(".")
-                let timestamp = t.substringToIndex((e?.startIndex)!)
-                self.userDefaults.setObject(timestamp, forKey: "lastSync")
-                self.lastSyncLabel.text = "Last synchronize: 0 days ago"
+                let synced = self.checkSync()
+                print("In callback")
+                if synced {
+                    let t = String(NSDate().timeIntervalSince1970)
+                    let e = t.rangeOfString(".")
+                    let timestamp = t.substringToIndex((e?.startIndex)!)
+                    self.userDefaults.setObject(timestamp, forKey: "lastSync")
+                    self.lastSyncLabel.text = "Last synchronize: 0 days ago"
+                }
+
             })
         } else {
             print("toUpload is nil")
@@ -155,7 +159,7 @@ class SettingsVC: UIViewController {
         checkSync()
     }
     
-    func checkSync() {
+    func checkSync() -> Bool {
         print(1)
         let synced = appDelegate.synced()
         if !synced.synced {
@@ -166,6 +170,9 @@ class SettingsVC: UIViewController {
                 self.numbers = (image: 0, video: 0, audio: 0)
                 for beat in self.toUpload!.beats! {
                     print(4)
+                    print(beat.title)
+                    print(beat.mediaType)
+                    print(beat)
                     switch beat.mediaType! {
                     case MediaType.image: self.numbers.image += 1
                     case MediaType.video: self.numbers.video += 1
@@ -175,6 +182,10 @@ class SettingsVC: UIViewController {
                     print(4.5)
                 }
             }
+        } else {
+            self.numbers.image = 0
+            self.numbers.video = 0
+            self.numbers.audio = 0
         }
         self.imageLabel.text = String(numbers.image) + " pictures\nawaiting\nsync"
         self.videoLabel.text = String(numbers.video) + " videos\nawaiting\nsync"
@@ -183,6 +194,11 @@ class SettingsVC: UIViewController {
         setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
         setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)
         print(5)
+        if synced.synced {
+            return true
+        } else {
+            return false
+        }
     }
     
     func setBorderAccordingToStatus(view: UIImageView, mediaType: String) {
