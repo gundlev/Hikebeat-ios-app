@@ -2269,10 +2269,21 @@ Journeys screen and activate one.</string>
                                                 <constraint firstAttribute="width" constant="230" id="bwg-5D-vFz"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending beat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOS-J5-ILb">
+                                            <rect key="frame" x="178" y="430" width="244" height="20.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="244" id="omV-Td-tAz"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="S6I-8M-NTv" firstAttribute="centerX" secondItem="lu1-Eu-zfv" secondAttribute="centerX" id="DgG-xL-hdh"/>
+                                        <constraint firstItem="yOS-J5-ILb" firstAttribute="top" secondItem="S6I-8M-NTv" secondAttribute="bottom" constant="15" id="Jjk-dS-pH5"/>
+                                        <constraint firstItem="yOS-J5-ILb" firstAttribute="centerX" secondItem="lu1-Eu-zfv" secondAttribute="centerX" id="aQT-xY-TiE"/>
                                         <constraint firstItem="S6I-8M-NTv" firstAttribute="centerY" secondItem="lu1-Eu-zfv" secondAttribute="centerY" id="y1b-dP-Fsh"/>
                                     </constraints>
                                 </view>
