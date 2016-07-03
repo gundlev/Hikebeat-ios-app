@@ -35,12 +35,37 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var settingsContainer: UIView!
     
     
+    @IBOutlet weak var logoutButton: UIButton!
+    
+    
     @IBOutlet weak var dotsContainer: UIView!
     @IBOutlet weak var dot1: UIImageView!
     @IBOutlet weak var dot2: UIImageView!
     @IBOutlet weak var dot3: UIImageView!
     
     var animationInitialised: Bool!
+    
+    @IBAction func logoutAction(sender: AnyObject) {
+
+    let appearance = SCLAlertView.SCLAppearance(
+        showCloseButton: false
+    )
+
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Yes"){
+            self.performSegueWithIdentifier("logoutSegue", sender: nil)
+        }
+        
+        alertView.addButton("No") {
+            
+        }
+        
+    alertView.showNotice("Are you sure?", subTitle: "Are you sure you want to logout?")
+   
+        
+
+    }
     
     
     @IBAction func notificationChange(sender: UISwitch) {
