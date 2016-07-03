@@ -274,9 +274,26 @@ class SettingsVC: UIViewController {
             self.numbers.video = 0
             self.numbers.audio = 0
         }
-        self.imageLabel.text = String(numbers.image) + " pictures\nawaiting\nsync"
-        self.videoLabel.text = String(numbers.video) + " videos\nawaiting\nsync"
-        self.memoLabel.text = String(numbers.audio) + " memos\nawaiting\nsync"
+        
+        if numbers.image==1{
+            self.imageLabel.text = String(numbers.image) + " picture\nawaiting\nsync"
+        }else{
+            self.imageLabel.text = String(numbers.image) + " pictures\nawaiting\nsync"
+        }
+
+        if numbers.video==1{
+            self.videoLabel.text = String(numbers.video) + " video\nawaiting\nsync"
+        }else{
+            self.videoLabel.text = String(numbers.video) + " videos\nawaiting\nsync"
+        }
+        
+        if numbers.audio==1{
+            self.memoLabel.text = String(numbers.audio) + " memo\nawaiting\nsync"
+        }else{
+            self.memoLabel.text = String(numbers.audio) + " memos\nawaiting\nsync"
+        }
+
+        
         setBorderAccordingToStatus(self.syncPictures, mediaType: MediaType.image)
         setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
         setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)

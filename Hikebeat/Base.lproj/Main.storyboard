@@ -1048,10 +1048,10 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIE-ph-gcm">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t  quite hit the traget captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
-                                        <rect key="frame" x="188.5" y="305" width="223" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t quite hit the mark captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
+                                        <rect key="frame" x="178" y="305" width="244" height="41"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="223" id="pas-GS-8v0"/>
+                                            <constraint firstAttribute="width" constant="244" id="pas-GS-8v0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.97524267435073853" green="0.91295677423477173" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
