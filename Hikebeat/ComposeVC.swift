@@ -106,7 +106,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         }
         
 
-        
+        NoActiveContainer.button = journeysButton
+        composeContainer.button = sendBeatButton
         
         filledin = 0
         clearButton.hidden = true
