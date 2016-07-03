@@ -87,6 +87,9 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         if(UIDevice.isIphone4){
             cell.beatContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7);
             cell.beatContainer.transform = CGAffineTransformTranslate( cell.beatContainer.transform, 0.0, -20.0  )
+        }else if(UIDevice.isIphone5){
+            cell.beatContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            cell.beatContainer.transform = CGAffineTransformTranslate( cell.beatContainer.transform, 0.0, -20.0  )
         }
         
         cell.beatContainer.layer.cornerRadius = 30

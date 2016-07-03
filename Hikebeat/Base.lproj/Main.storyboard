@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1127,7 +1127,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="82" width="600" height="469"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
@@ -1226,7 +1226,7 @@ Journeys screen and activate one.</string>
                                     <constraint firstAttribute="trailing" secondItem="aB9-x0-cPI" secondAttribute="trailing" constant="20" id="pyX-Hb-pmI"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="82" width="600" height="469"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
@@ -1438,6 +1438,7 @@ Journeys screen and activate one.</string>
                         <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
                         <outlet property="imageBG" destination="ugQ-0V-XXL" id="y2g-cs-krQ"/>
                         <outlet property="journeysButton" destination="Bux-pj-aPf" id="Ek1-iS-x7q"/>
+                        <outlet property="noactiveTop" destination="giZ-FP-1hA" id="Jgx-5Y-zTm"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
                         <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editTitleModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
                         <segue destination="VH6-0C-xlV" kind="presentation" identifier="editMessageModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="8BK-nv-RSI"/>
@@ -2483,14 +2484,13 @@ Journeys screen and activate one.</string>
                                         <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrp-bZ-jbs">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrp-bZ-jbs">
                                         <rect key="frame" x="158" y="167" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="283" id="Cim-K8-NST"/>
                                             <constraint firstAttribute="height" constant="46" id="c6J-re-m1L"/>
                                         </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Your profile">
@@ -2651,7 +2651,7 @@ Journeys screen and activate one.</string>
                                     <constraint firstAttribute="trailing" secondItem="FPR-TS-zWt" secondAttribute="trailing" constant="20" id="suE-Fy-rZ7"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-Xj-PFb">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-Xj-PFb" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="82" width="600" height="469"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">

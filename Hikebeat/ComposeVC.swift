@@ -48,13 +48,14 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var editVideoButton: UIImageView!
     
     
-    @IBOutlet weak var composeContainer: UIView!
+    @IBOutlet weak var composeContainer: aCustomView!
     @IBOutlet weak var imageBG: UIImageView!
     
-    @IBOutlet weak var NoActiveContainer: UIView!
+    @IBOutlet weak var NoActiveContainer: aCustomView!
     
     @IBOutlet weak var journeysButton: UIButton!
     
+    @IBOutlet weak var noactiveTop: NSLayoutConstraint!
     
     @IBAction func sendBeat(sender: AnyObject) {
         self.beatPromise = Promise<Bool, NoError>()
@@ -72,6 +73,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
             NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -50.0  )
             
+            NoActiveContainer.button = journeysButton
+            composeContainer.button = sendBeatButton
+            
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +40.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
@@ -82,15 +86,20 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, 40.0  )
             
+            NoActiveContainer.button = journeysButton
+            composeContainer.button = sendBeatButton
+            
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
         }else if (UIDevice.isIphone4){
             composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -110.0  )
             
-            
             NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
             NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -100.0  )
+            
+            NoActiveContainer.button = journeysButton
+            composeContainer.button = sendBeatButton
             
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
@@ -148,6 +157,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     }
     
+    
+    
     override func viewWillAppear(animated: Bool) {
 //        let isActiveJourney = findActiveJourney()
 //        
@@ -158,6 +169,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if !findActiveJourney() {
             composeContainer.hidden = true
             NoActiveContainer.hidden = false
+            
         }else{
             composeContainer.hidden = false
             NoActiveContainer.hidden = true
@@ -278,6 +290,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         default: print("Type not matching: ", type)
         }
     }
+    
     
 /*
      Realm calls

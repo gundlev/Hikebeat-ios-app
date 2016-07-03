@@ -62,6 +62,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             followersLabel.text = String(self.pins.count)+" beats"
         }
         
+        titleButton.setTitle(journey?.headline, forState: UIControlState.Normal)
+        
         self.setProfileImage()
     }
     
@@ -234,7 +236,8 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
         }
         
         let polyline = BeatPolyline(coordinates: &points, count: points.count)
-        polyline.color = UIColor.blueColor()
+        polyline.color = UIColor(hexString: "#15676C")!
+        polyline.lineWidth = 6.0
         mapView.addOverlay(polyline)
         
     }

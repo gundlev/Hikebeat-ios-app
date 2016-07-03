@@ -56,6 +56,7 @@
 		E111B0791CD0318800915401 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111B0781CD0318800915401 /* LoginVC.swift */; };
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
+		E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1378D801D295E12002E8CD1 /* aCustomView.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
@@ -158,6 +159,7 @@
 		E111B0781CD0318800915401 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
+		E1378D801D295E12002E8CD1 /* aCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aCustomView.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
 				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
+				E1378D801D295E12002E8CD1 /* aCustomView.swift */,
 			);
 			name = Universal;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				858EFEF91D186C9900C50771 /* SCLAlertView.swift in Sources */,
 				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
+				E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */,
 				8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */,
 				8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */,
 				85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */,

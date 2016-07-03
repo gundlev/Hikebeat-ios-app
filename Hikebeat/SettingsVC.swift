@@ -32,7 +32,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var memoLabel: UILabel!
     
     @IBOutlet weak var lastSyncLabel: UILabel!
-    @IBOutlet weak var settingsContainer: UIView!
+    @IBOutlet weak var settingsContainer: aCustomView!
     
     
     @IBOutlet weak var logoutButton: UIButton!
@@ -146,12 +146,18 @@ class SettingsVC: UIViewController {
         if (UIDevice.isIphone5){
             settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
             settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -50.0  )
+            settingsContainer.button = syncButton
+            
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
                 settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
                 settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, 40.0  )
+            settingsContainer.button = syncButton
+            
         }else if (UIDevice.isIphone4){
             settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
             settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -100.0  )
+            
+            settingsContainer.button = syncButton
         }
         
         let bgGradient = CAGradientLayer()

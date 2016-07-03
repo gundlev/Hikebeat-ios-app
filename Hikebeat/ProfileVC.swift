@@ -97,7 +97,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
         
-        followersButton.userInteractionEnabled = true
+        followersButton.userInteractionEnabled = false
         editProfileImageButton.enabled = false
         editProfileImageButton.hidden = true
         
