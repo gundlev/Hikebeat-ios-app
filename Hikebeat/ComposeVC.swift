@@ -231,8 +231,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         removeGreenBorder(self.editMemoButton)
         removeGreenBorder(self.editImageButton)
         removeGreenBorder(self.editVideoButton)
-        self.titleText = ""
-        self.messageText = ""
+        self.titleText = nil
+        self.messageText = nil
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
@@ -490,6 +490,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     alertView.addButton("Go to profile") {
                         print("Second button tapped")
                         self.tabBarController?.selectedIndex = 3
+                        let tabVC = self.tabBarController as! HikebeatTabBarVC
+                        tabVC.deselectCenterButton()
                     }
                     alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
 //                    try! realm.write() {

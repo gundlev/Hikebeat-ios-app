@@ -91,4 +91,7 @@ class HikebeatTabBarVC: UITabBarController {
         }
         
     }
+    func deselectCenterButton() {
+        centerButton.selected = true
+    }
 }
