@@ -13,6 +13,8 @@ import SwiftyJSON
 
 let phoneNumber = "004530962591"
 
+let MediaPathPrefix = "media/"
+
 public let APIname = "bzb42utJUw1ZuWSJVmpLdwXMxScgwXOu4ZrAoL8spEJstyjuroTnnIts2m5Qgxo"
 public let APIPass = "1dfpjdS6gmkDtdQQKbJVy4HezMK4mQYaIWgwyljbdYpMFJO3knQy012Lk2zBVS0"
 public let Headers = [

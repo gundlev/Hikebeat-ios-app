@@ -55,16 +55,14 @@ class SettingsVC: UIViewController {
         
         alertView.addButton("Yes"){
             self.performSegueWithIdentifier("logoutSegue", sender: nil)
+            
         }
         
         alertView.addButton("No") {
             
         }
         
-    alertView.showNotice("Are you sure?", subTitle: "Are you sure you want to logout?")
-   
-        
-
+    alertView.showNotice("Logout", subTitle: "Are you sure you want to logout?")
     }
     
     
