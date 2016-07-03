@@ -15,7 +15,7 @@ import RealmSwift
 class LoginVC: UIViewController, UITextFieldDelegate {
 
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let realm = try! Realm()
+    //let realm = try! Realm()
 
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var backgroundPicture: UIImageView!
@@ -98,12 +98,26 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         /** Parameters to send to the API.*/
         let parameters = ["username": usernameField.text!, "password": passwordField.text!]
         
+//        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+//        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            // do some task
+
+            
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                print("This is run on the main queue, after the previous code in outer block")
+//            })
+        
         
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
         Alamofire.request(.POST, IPAddress + "auth", parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
             
-            print("Response: ",response)
-            print(response.response?.statusCode)
+//            print("Response: ",response)
+//            print(response.response?.statusCode)
+            
+//            let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//            let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//            dispatch_async(backgroundQueue, {
+//                print("This is run on the background queue")
             
             if response.response?.statusCode == 200 {
                 print("value: ", response.result.value)
@@ -171,18 +185,22 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     Request.addAcceptableImageContentTypes(["image/jpg"])
                     Alamofire.request(.GET, profilePhotoUrl).responseImage {
                         response in
-                        print("Statuscoode: ", response.response?.statusCode)
-                        if let image = response.result.value {
+                        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                        dispatch_async(dispatch_get_global_queue(priority, 0)) {
                             
-                            let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-                            let documentsDirectory: AnyObject = paths[0]
-                            let fileName = "profile_image.jpg"
-                            let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
-                            let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
-                            print("The image download and save was: ", success)
-                        } else {
-                            print("could not resolve to image")
-                            print(response)
+                            print("Statuscoode: ", response.response?.statusCode)
+                            if let image = response.result.value {
+                                
+                                let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                                let documentsDirectory: AnyObject = paths[0]
+                                let fileName = "profile_image.jpg"
+                                let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+                                let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
+                                print("The image download and save was: ", success)
+                            } else {
+                                print("could not resolve to image")
+                                print(response)
+                            }
                         }
                     }
                 }
@@ -193,8 +211,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
                 print(urlJourney)
                 Alamofire.request(.GET, urlJourney, encoding: .JSON, headers: Headers).responseJSON { response in
-                    print(response.response?.statusCode)
-                    print(response)
+//                    print(response.response?.statusCode)
+//                    print(response)
+
                     if response.response?.statusCode == 200 {
                         if response.result.value != nil {
                             //print(response.result.value!)
@@ -260,6 +279,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                             }
                                             
                                             Alamofire.download(.GET, mediaData, destination: { (temporaryURL, response) in
+                                                    
                                                 let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                                                 let documentsDirectory: AnyObject = paths[0]
                                                 let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
@@ -267,14 +287,21 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
                                                 return NSURL(fileURLWithPath: dataPath)
                                             }).response { _, _, _, error in
-                                                if let error = error {
-                                                    print("Failed with error: \(error)")
-                                                } else {
-                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId)
-                                                    print("Downloaded file successfully")
-                                                }
+//                                                let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//                                                let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//                                                dispatch_async(backgroundQueue, {
+//                                                    print("This is run on the background queue")
+                                                
+                                                    if let error = error {
+                                                        print("Failed with error: \(error)")
+                                                    } else {
+                                                        let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId)
+                                                        print("Downloaded file successfully")
+                                                    }
+//                                                })
                                             }
+                                            
                                             
                                         default:
                                             print("unknown type of media")
@@ -304,7 +331,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 }
                 print(6)
                 /* Enter the app when logged in*/
-                self.performSegueWithIdentifier("justLoggedIn", sender: self)
+                dispatch_async(dispatch_get_main_queue()) {
+                    // update some UI
+                    self.performSegueWithIdentifier("justLoggedIn", sender: self)
+                }
+                
             } else if response.response?.statusCode == 401 {
                 // User not authorized
                 print("Not Auth!!")
@@ -312,15 +343,23 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 // Wrong username or password
                 print("Wrong username or password")
             }
-            
-            
+            //first call
+//            })
         }
+        //end of bg thread
+//        }
+        
+        
     }
     
     func saveMediaToDocs(mediaData: NSData, journeyId: String, timestamp: String, fileType: String) -> String? {
         
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+//        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//        dispatch_async(backgroundQueue, {
+//            print("This is run on the background queue")
         
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
         let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
         let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
@@ -331,16 +370,23 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         } else {
             return nil
         }
+        
     }
     
     func saveBeatAndAddToJourney(message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?) {
+//        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//        dispatch_async(backgroundQueue, {
+//            print("This is run on the background queue")
+        
+        let localRealm = try! Realm()
         let dataBeat = Beat()
         dataBeat.fill(message["headline"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
-        let localRealm = try! Realm()
         try! localRealm.write {
             localRealm.add(dataBeat)
             journey.beats.append(dataBeat)
         }
+//        })
     }
     
     override func didReceiveMemoryWarning() {

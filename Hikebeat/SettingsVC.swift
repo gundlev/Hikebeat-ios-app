@@ -163,7 +163,7 @@ class SettingsVC: UIViewController {
         animationInitialised = false
         
         gpsSwitch.on = userDefaults.boolForKey("GPS-check")
-        gpsSwitch.on = userDefaults.boolForKey("notifications")
+        notificationSwitch.on = userDefaults.boolForKey("notifications")
         let timestamp = userDefaults.stringForKey("lastSync")
         let calendar: NSCalendar = NSCalendar.currentCalendar()
         let firstDate = NSDate(timeIntervalSince1970: NSTimeInterval(Int(timestamp!)!))
