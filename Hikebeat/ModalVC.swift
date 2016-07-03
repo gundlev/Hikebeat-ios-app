@@ -59,6 +59,20 @@ class ModalVC: UIViewController {
     func backToCompose(){
         performSegueWithIdentifier("goBackToCompose", sender: self)
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     
+        switch segue.identifier! {
+        
+        case "goBackToCompose":
+            let vc = segue.destinationViewController as! ComposeVC
+            vc.clearAllForNewBeat()
+        
+        default:
+            break
+        }
+        
+    }
 
     /*
     // MARK: - Navigation
