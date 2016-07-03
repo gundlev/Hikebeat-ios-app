@@ -46,9 +46,15 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var sendBeatButton: UIButton!
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
-        
+    
+    
     @IBOutlet weak var composeContainer: UIView!
     @IBOutlet weak var imageBG: UIImageView!
+    
+    @IBOutlet weak var NoActiveContainer: UIView!
+    
+    @IBOutlet weak var journeysButton: UIButton!
+    
     
     @IBAction func sendBeat(sender: AnyObject) {
         self.beatPromise = Promise<Bool, NoError>()
@@ -62,21 +68,37 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if (UIDevice.isIphone5){
             composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -50.0  )
+            
+            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
+            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -50.0  )
+            
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +40.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, 40.0  )
+            
+            
+            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, 40.0  )
+            
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
         }else if (UIDevice.isIphone4){
             composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -110.0  )
+            
+            
+            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
+            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -100.0  )
+            
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
         }
         
 
+        
+        
         filledin = 0
         clearButton.hidden = true
         
@@ -86,13 +108,15 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         editMemoButton.layer.cornerRadius = editMemoButton.bounds.width/2
         editImageButton.layer.cornerRadius = editImageButton.bounds.width/2
         sendBeatButton.layer.cornerRadius = sendBeatButton.bounds.height/2
-        
+        journeysButton.layer.cornerRadius = journeysButton.bounds.height/2
+
         editTitleButton.layer.masksToBounds = true
         editMessageButton.layer.masksToBounds = true
         editImageButton.layer.masksToBounds = true
         editVideoButton.layer.masksToBounds = true
         editMemoButton.layer.masksToBounds = true
         sendBeatButton.layer.masksToBounds = true
+        journeysButton.layer.masksToBounds = true
         
         let bgGradient = CAGradientLayer()
         bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
@@ -113,14 +137,30 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
         
+        
+        if !findActiveJourney() {
+            composeContainer.hidden = true
+            NoActiveContainer.hidden = false
+        }else{
+            composeContainer.hidden = false
+            NoActiveContainer.hidden = true
+        }
 
     }
     
     override func viewWillAppear(animated: Bool) {
-        let isActiveJourney = findActiveJourney()
+//        let isActiveJourney = findActiveJourney()
+//        
+//        if isActiveJourney{
+//            print("There is an active journey!")
+//        }
         
-        if isActiveJourney{
-            print("There is an active journey!")
+        if !findActiveJourney() {
+            composeContainer.hidden = true
+            NoActiveContainer.hidden = false
+        }else{
+            composeContainer.hidden = false
+            NoActiveContainer.hidden = true
         }
     }
     
@@ -213,6 +253,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         view.alpha = 1
     }
 
+    
+    @IBAction func gotoJourneys(sender: AnyObject) {
+        self.tabBarController?.selectedIndex = 0
+    }
+    
     func mediaChosen(type: String) {
         switch type {
             case "video":
