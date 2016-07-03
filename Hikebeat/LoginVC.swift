@@ -341,7 +341,19 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 print("Not Auth!!")
             } else if response.response?.statusCode == 400 {
                 // Wrong username or password
-                print("Wrong username or password")
+                
+                print(response.result.value)
+                let errorJson = JSON(response.result.value!)
+                switch errorJson["msg"].stringValue {
+                case "User not authenticated":
+                    print("Wrong username or password")
+                    SCLAlertView().showError("Wrong credentials!", subTitle: "Your username or password does not match any user in our database.")
+                case "User email has not been verified":
+                    print("Email has not been verified")
+                    SCLAlertView().showWarning("Missing email verification", subTitle: "Your have not verified your email address. Please check your email and follow the verification instructions.")
+                default:
+                    print("Unknown error")
+                }
             }
             //first call
 //            })
