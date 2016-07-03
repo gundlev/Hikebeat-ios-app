@@ -1126,6 +1126,82 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p">
+                                <rect key="frame" x="0.0" y="82" width="600" height="469"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
+                                        <rect key="frame" x="15" y="15" width="570" height="439"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Missing an active journey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSQ-si-Rgb">
+                                        <rect key="frame" x="188" y="248" width="223" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="223" id="zEl-vs-WtK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" red="0.97524267440000001" green="0.91295677419999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveJourney" translatesAutoresizingMaskIntoConstraints="NO" id="o5b-0l-Gkn">
+                                        <rect key="frame" x="207" y="70" width="185" height="153"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="153" id="rXc-4w-M4e"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kn4-Dq-nuI">
+                                        <rect key="frame" x="178" y="268" width="244" height="81.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="244" id="2me-Uq-udP"/>
+                                        </constraints>
+                                        <string key="text">You don’t have any active
+journeys. Please go to the
+Journeys screen and activate one.</string>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                        <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowhouses" translatesAutoresizingMaskIntoConstraints="NO" id="34N-q4-NkV">
+                                        <rect key="frame" x="249" y="376" width="102" height="31"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-pj-aPf">
+                                        <rect key="frame" x="159" y="405" width="283" height="46"/>
+                                        <color key="backgroundColor" red="0.97524267435073853" green="0.91295677423477173" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="283" id="IOX-fs-bD6"/>
+                                            <constraint firstAttribute="height" constant="46" id="onk-lZ-nxU"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Go to journeys">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="24" name="Helvetica-Bold"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="gotoJourneys:" destination="jTg-CM-etK" eventType="touchUpInside" id="DTS-mb-lpe"/>
+                                            <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="QLZ-TU-zRB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Soi-Tr-1wP" secondAttribute="bottom" constant="15" id="2og-pv-kxR"/>
+                                    <constraint firstItem="o5b-0l-Gkn" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="70" id="5aE-eX-dhi"/>
+                                    <constraint firstItem="fSQ-si-Rgb" firstAttribute="top" secondItem="o5b-0l-Gkn" secondAttribute="bottom" constant="25" id="JR8-dI-Xr2"/>
+                                    <constraint firstItem="Bux-pj-aPf" firstAttribute="top" secondItem="kn4-Dq-nuI" secondAttribute="bottom" constant="55.5" id="RQJ-bv-iC6"/>
+                                    <constraint firstItem="Bux-pj-aPf" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="RSP-4A-iYU"/>
+                                    <constraint firstItem="kn4-Dq-nuI" firstAttribute="top" secondItem="fSQ-si-Rgb" secondAttribute="bottom" id="T65-DI-PL2"/>
+                                    <constraint firstItem="Bux-pj-aPf" firstAttribute="top" secondItem="34N-q4-NkV" secondAttribute="bottom" constant="-2" id="TaG-di-LhN"/>
+                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="15" id="giZ-FP-1hA"/>
+                                    <constraint firstItem="o5b-0l-Gkn" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="i3U-sH-wPw"/>
+                                    <constraint firstItem="34N-q4-NkV" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="luJ-ky-6ut"/>
+                                    <constraint firstItem="kn4-Dq-nuI" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="rEM-ep-rJ5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Soi-Tr-1wP" secondAttribute="trailing" constant="15" id="sJv-qr-Mwk"/>
+                                    <constraint firstItem="fSQ-si-Rgb" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="scQ-jH-GWC"/>
+                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="leading" secondItem="dcF-oM-r1p" secondAttribute="leading" constant="15" id="zDZ-mr-cPS"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-BD-ZAV">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
                                 <subviews>
@@ -1333,14 +1409,25 @@
                             <constraint firstItem="RCs-Fy-3rY" firstAttribute="bottom" secondItem="hEu-cN-RCu" secondAttribute="top" id="4zg-nm-VEH"/>
                             <constraint firstItem="qXy-BD-ZAV" firstAttribute="top" secondItem="9hh-tn-4nz" secondAttribute="topMargin" id="DF1-sz-GBz"/>
                             <constraint firstItem="RCs-Fy-3rY" firstAttribute="trailing" secondItem="qXy-BD-ZAV" secondAttribute="trailing" id="HXB-uL-voR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dcF-oM-r1p" secondAttribute="trailing" constant="-20" id="InI-Vg-hjR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dcF-oM-r1p" secondAttribute="trailing" constant="-20" id="UcE-e3-FcE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qXy-BD-ZAV" secondAttribute="trailing" constant="-20" id="Vrx-Em-J6Y"/>
                             <constraint firstItem="RCs-Fy-3rY" firstAttribute="leading" secondItem="qXy-BD-ZAV" secondAttribute="leading" id="XBh-VI-TRv"/>
+                            <constraint firstItem="hEu-cN-RCu" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="bottom" id="Yh2-F4-5ph"/>
+                            <constraint firstItem="dcF-oM-r1p" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="bottom" id="a3y-2M-5Jg"/>
+                            <constraint firstItem="dcF-oM-r1p" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="by7-Rh-nWb"/>
                             <constraint firstItem="RCs-Fy-3rY" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="bottom" id="oPJ-iF-iJ4"/>
                             <constraint firstItem="qXy-BD-ZAV" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="v8N-1k-9xf"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="InI-Vg-hjR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" tag="2" title="Hikebeat" id="1gg-GY-TSO"/>
                     <connections>
+                        <outlet property="NoActiveContainer" destination="dcF-oM-r1p" id="T0A-xh-7GR"/>
                         <outlet property="clearButton" destination="aB9-x0-cPI" id="awJ-0l-DHW"/>
                         <outlet property="composeContainer" destination="RCs-Fy-3rY" id="pYO-tu-kyB"/>
                         <outlet property="editImageButton" destination="CQp-Sb-IZE" id="Qzx-AJ-M9C"/>
@@ -1349,6 +1436,7 @@
                         <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>
                         <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
                         <outlet property="imageBG" destination="ugQ-0V-XXL" id="y2g-cs-krQ"/>
+                        <outlet property="journeysButton" destination="Bux-pj-aPf" id="Ek1-iS-x7q"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
                         <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editTitleModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
                         <segue destination="VH6-0C-xlV" kind="presentation" identifier="editMessageModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="8BK-nv-RSI"/>
@@ -3112,6 +3200,8 @@ sync</string>
         <image name="NationalityProfileIcon" width="24" height="30"/>
         <image name="NewIcon" width="32" height="32"/>
         <image name="NewJourney" width="90" height="90"/>
+        <image name="NoActiveBG" width="327" height="488"/>
+        <image name="NoActiveJourney" width="185" height="153"/>
         <image name="NoSocial" width="184" height="115"/>
         <image name="NotActivatedBadge" width="39" height="39"/>
         <image name="NotificationIcon" width="27" height="30"/>
@@ -3130,6 +3220,7 @@ sync</string>
         <image name="record-btn" width="234" height="234"/>
         <image name="stop-btn" width="26" height="26"/>
         <image name="trees" width="270" height="270"/>
+        <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9pW-Na-dpl"/>
