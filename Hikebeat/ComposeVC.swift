@@ -256,6 +256,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBAction func gotoJourneys(sender: AnyObject) {
         self.tabBarController?.selectedIndex = 0
+        let tabVC = self.tabBarController as! HikebeatTabBarVC
+        tabVC.deselectCenterButton()
+        
     }
     
     func mediaChosen(type: String) {

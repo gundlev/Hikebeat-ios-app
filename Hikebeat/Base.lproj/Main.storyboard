@@ -141,7 +141,7 @@
                                                     <constraint firstAttribute="width" constant="115" id="10L-Kc-RGG"/>
                                                     <constraint firstAttribute="height" constant="34" id="Yba-6i-x0L"/>
                                                 </constraints>
-                                                <state key="normal" image="BackArrow"/>
+                                                <state key="normal" image="CloseIcon"/>
                                                 <connections>
                                                     <action selector="goBack:" destination="ER6-VT-u8l" eventType="touchUpInside" id="Fog-jw-2ws"/>
                                                     <segue destination="CLL-Fj-MPh" kind="unwind" unwindAction="unwindToLogin:" id="IXf-Q2-ERf"/>
@@ -421,6 +421,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="tIr-G7-15j"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backgroundPicture" destination="8Bb-0s-zIg" id="LP5-C9-RaL"/>
