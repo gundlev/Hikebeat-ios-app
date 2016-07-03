@@ -17,6 +17,9 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var beatsCollectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var pageCtrlLabel: UILabel!
+    @IBOutlet weak var altPageControl: UIView!
+    
     var startingIndex: Int!
     var journey: Journey!
     var beats: Results<Beat>!
@@ -24,6 +27,8 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     var playingCell: BeatCollectionViewCell?
     var chosenImage: UIImage?
 
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         var insets = self.beatsCollectionView.contentInset
@@ -36,6 +41,7 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.beats = self.journey.beats.sorted("timestamp")
         // Do any additional setup after loading the view.
         self.pageControl.numberOfPages = beatsCollectionView.numberOfItemsInSection(0)
@@ -48,6 +54,15 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
         let indexpath = NSIndexPath(forItem: startingIndex, inSection: 0)
         self.beatsCollectionView.scrollToItemAtIndexPath(indexpath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         pageControl.currentPage = startingIndex
+        pageCtrlLabel.text = String(pageControl.currentPage+1)+"/"+String(pageControl.numberOfPages)
+        
+        if pageControl.numberOfPages>10 {
+            pageControl.hidden = true
+            altPageControl.hidden = false
+        }else{
+            pageControl.hidden = false
+            altPageControl.hidden = true
+        }
     }
 
     
@@ -325,6 +340,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
             }
         }
         self.pageControl.currentPage = Int(ceil(currentPage))
+        self.pageCtrlLabel.text = String(pageControl.currentPage+1)+"/"+String(pageControl.numberOfPages)
     }
     
     
@@ -342,6 +358,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
             }
         }
         self.pageControl.currentPage = Int(ceil(currentPage))
+        self.pageCtrlLabel.text = String(pageControl.currentPage+1)+"/"+String(pageControl.numberOfPages)
     }
     
     @IBAction func unwindToBeats(unwindSegue: UIStoryboardSegue) {

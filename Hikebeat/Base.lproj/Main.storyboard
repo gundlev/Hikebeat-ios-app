@@ -1825,11 +1825,33 @@ Journeys screen and activate one.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="518"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
+                                        <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
                                             <rect key="frame" x="297" y="398" width="7" height="37"/>
                                             <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="currentPageIndicatorTintColor" red="0.73602133989334106" green="0.96545141935348511" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </pageControl>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roS-nl-PvL">
+                                            <rect key="frame" x="250" y="406" width="100" height="23"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ListPin" translatesAutoresizingMaskIntoConstraints="NO" id="hYt-Wi-iKg">
+                                                    <rect key="frame" x="7" y="0.0" width="30" height="21"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/49" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgk-h1-D1d">
+                                                    <rect key="frame" x="58" y="-1.5" width="42" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                                    <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hYt-Wi-iKg" firstAttribute="top" secondItem="roS-nl-PvL" secondAttribute="top" id="3Xw-gC-gse"/>
+                                                <constraint firstAttribute="height" constant="23" id="AGL-6o-ZoT"/>
+                                                <constraint firstAttribute="trailing" secondItem="bgk-h1-D1d" secondAttribute="trailing" id="PgW-vF-Bhe"/>
+                                                <constraint firstItem="bgk-h1-D1d" firstAttribute="centerY" secondItem="hYt-Wi-iKg" secondAttribute="centerY" id="VbD-M1-dVv"/>
+                                                <constraint firstItem="hYt-Wi-iKg" firstAttribute="leading" secondItem="roS-nl-PvL" secondAttribute="leading" constant="7" id="vPh-DB-brC"/>
+                                                <constraint firstAttribute="width" constant="100" id="xh5-xc-cHo"/>
+                                            </constraints>
+                                        </view>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="il6-8V-iJa">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="438"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1987,13 +2009,21 @@ Journeys screen and activate one.</string>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="roS-nl-PvL" firstAttribute="top" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="-32" id="3SE-fH-uIq"/>
                                         <constraint firstItem="il6-8V-iJa" firstAttribute="leading" secondItem="a77-j8-CwZ" secondAttribute="leading" id="9DB-fa-HKy"/>
                                         <constraint firstAttribute="bottom" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="80" id="Asv-h1-yvX"/>
                                         <constraint firstItem="IP1-Ki-95A" firstAttribute="top" secondItem="il6-8V-iJa" secondAttribute="bottom" constant="-40" id="Kyb-fS-CKH"/>
                                         <constraint firstItem="IP1-Ki-95A" firstAttribute="centerX" secondItem="a77-j8-CwZ" secondAttribute="centerX" id="TDz-tQ-O2T"/>
+                                        <constraint firstItem="roS-nl-PvL" firstAttribute="centerX" secondItem="a77-j8-CwZ" secondAttribute="centerX" id="jMF-lU-J0h"/>
+                                        <constraint firstItem="IP1-Ki-95A" firstAttribute="bottom" secondItem="roS-nl-PvL" secondAttribute="bottom" id="jxF-YB-fau"/>
                                         <constraint firstAttribute="trailing" secondItem="il6-8V-iJa" secondAttribute="trailing" id="kLL-ed-fFN"/>
                                         <constraint firstItem="il6-8V-iJa" firstAttribute="top" secondItem="a77-j8-CwZ" secondAttribute="top" id="rpr-6M-y4M"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="jxF-YB-fau"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <blurEffect style="dark"/>
@@ -2012,8 +2042,10 @@ Journeys screen and activate one.</string>
                     </view>
                     <navigationItem key="navigationItem" id="Rbn-HK-IPp"/>
                     <connections>
+                        <outlet property="altPageControl" destination="roS-nl-PvL" id="sBM-wJ-wsY"/>
                         <outlet property="beatsCollectionView" destination="il6-8V-iJa" id="3UM-zg-WFx"/>
                         <outlet property="pageControl" destination="IP1-Ki-95A" id="9kE-Ee-l7f"/>
+                        <outlet property="pageCtrlLabel" destination="bgk-h1-D1d" id="ZrH-pn-n1b"/>
                         <segue destination="7Ro-TB-tMY" kind="presentation" identifier="showImage" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="hM5-y2-nzI"/>
                     </connections>
                 </viewController>
