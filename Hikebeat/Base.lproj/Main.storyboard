@@ -1127,11 +1127,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="82" width="600" height="469"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="82" width="600" height="518"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
-                                        <rect key="frame" x="15" y="15" width="570" height="439"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
+                                        <rect key="frame" x="25" y="25" width="550" height="468"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Missing an active journey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSQ-si-Rgb">
                                         <rect key="frame" x="188" y="248" width="223" height="20.5"/>
@@ -1187,20 +1187,20 @@ Journeys screen and activate one.</string>
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Soi-Tr-1wP" secondAttribute="bottom" constant="15" id="2og-pv-kxR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Soi-Tr-1wP" secondAttribute="bottom" constant="25" id="2og-pv-kxR"/>
                                     <constraint firstItem="o5b-0l-Gkn" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="70" id="5aE-eX-dhi"/>
                                     <constraint firstItem="fSQ-si-Rgb" firstAttribute="top" secondItem="o5b-0l-Gkn" secondAttribute="bottom" constant="25" id="JR8-dI-Xr2"/>
                                     <constraint firstItem="Bux-pj-aPf" firstAttribute="top" secondItem="kn4-Dq-nuI" secondAttribute="bottom" constant="55.5" id="RQJ-bv-iC6"/>
                                     <constraint firstItem="Bux-pj-aPf" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="RSP-4A-iYU"/>
                                     <constraint firstItem="kn4-Dq-nuI" firstAttribute="top" secondItem="fSQ-si-Rgb" secondAttribute="bottom" id="T65-DI-PL2"/>
                                     <constraint firstItem="Bux-pj-aPf" firstAttribute="top" secondItem="34N-q4-NkV" secondAttribute="bottom" constant="-2" id="TaG-di-LhN"/>
-                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="15" id="giZ-FP-1hA"/>
+                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="25" id="giZ-FP-1hA"/>
                                     <constraint firstItem="o5b-0l-Gkn" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="i3U-sH-wPw"/>
                                     <constraint firstItem="34N-q4-NkV" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="luJ-ky-6ut"/>
                                     <constraint firstItem="kn4-Dq-nuI" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="rEM-ep-rJ5"/>
-                                    <constraint firstAttribute="trailing" secondItem="Soi-Tr-1wP" secondAttribute="trailing" constant="15" id="sJv-qr-Mwk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Soi-Tr-1wP" secondAttribute="trailing" constant="25" id="sJv-qr-Mwk"/>
                                     <constraint firstItem="fSQ-si-Rgb" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="scQ-jH-GWC"/>
-                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="leading" secondItem="dcF-oM-r1p" secondAttribute="leading" constant="15" id="zDZ-mr-cPS"/>
+                                    <constraint firstItem="Soi-Tr-1wP" firstAttribute="leading" secondItem="dcF-oM-r1p" secondAttribute="leading" constant="25" id="zDZ-mr-cPS"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-BD-ZAV">
@@ -1226,11 +1226,11 @@ Journeys screen and activate one.</string>
                                     <constraint firstAttribute="trailing" secondItem="aB9-x0-cPI" secondAttribute="trailing" constant="20" id="pyX-Hb-pmI"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="82" width="600" height="469"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="82" width="600" height="518"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
-                                        <rect key="frame" x="23" y="23" width="554" height="423"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
+                                        <rect key="frame" x="23" y="23" width="554" height="472"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
                                         <rect key="frame" x="267" y="26" width="66" height="66"/>
@@ -3240,7 +3240,7 @@ sync</string>
         <image name="BackArrow" width="16" height="22"/>
         <image name="BlurryBG" width="375" height="190"/>
         <image name="CloseIcon" width="23" height="23"/>
-        <image name="ComposeBG" width="330" height="488"/>
+        <image name="ComposeBG" width="330" height="485"/>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
         <image name="ComposePhoto" width="40" height="31"/>
@@ -3260,7 +3260,7 @@ sync</string>
         <image name="NationalityProfileIcon" width="24" height="30"/>
         <image name="NewIcon" width="32" height="32"/>
         <image name="NewJourney" width="90" height="90"/>
-        <image name="NoActiveBG" width="327" height="488"/>
+        <image name="NoActiveBG" width="327" height="485"/>
         <image name="NoActiveJourney" width="185" height="153"/>
         <image name="NoSocial" width="184" height="115"/>
         <image name="NotActivatedBadge" width="39" height="39"/>
