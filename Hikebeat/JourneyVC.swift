@@ -247,6 +247,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         let polyline = BeatPolyline(coordinates: &points, count: points.count)
         polyline.color = UIColor(hexString: "#15676C")!
         polyline.lineWidth = 6.0
+        
         mapView.addOverlay(polyline)
         
     }

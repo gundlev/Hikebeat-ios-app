@@ -167,7 +167,12 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         
         // Settings number of journeys
         let journeys = realm.objects(Journey)
-        self.numberOfJourneys.text = String(journeys.count) + " journeys created"
+        if journeys.count == 1 {
+            self.numberOfJourneys.text = String(journeys.count) + " journey created"
+        } else {
+            self.numberOfJourneys.text = String(journeys.count) + " journeys created"
+        }
+        
         
         // Setting profileImage if there is one
         setProfileImage()
