@@ -156,7 +156,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         return UIImage(contentsOfFile: dataPath)
     }
 
-func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        print("This is the place")
         if let annotation = annotation as? BeatPin {
             let identifier = "pin"
             var view: MKAnnotationView
@@ -167,30 +168,30 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
             } else {
                 // 3
                 view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.canShowCallout = true
+                view.canShowCallout = false
                 view.calloutOffset = CGPoint(x: 0, y: 0)
                 
-                let button = UIButton(type: .DetailDisclosure)
-                button.addTarget(self, action: #selector(showBeat), forControlEvents: UIControlEvents.TouchUpInside)
-
-                view.rightCalloutAccessoryView = button as UIView
-                
-                if annotation.image != nil  {
-                    let imgView = UIImageView()
-                    let image = annotation.image!
-                    if image.size.height > image.size.width {
-                        let ratio = image.size.width/image.size.height
-                        let newWidth = 40 * ratio
-                        imgView.frame = CGRect(x: 0, y: 0, width: newWidth, height: 40)
-                    } else {
-                        let ratio = image.size.height/image.size.width
-                        let newHeight = 40 * ratio
-                        imgView.frame = CGRect(x: 0, y: 0, width: 40, height: newHeight)
-                    }
-                    
-                    imgView.image = annotation.image!
-                    view.leftCalloutAccessoryView = imgView
-                }
+//                let button = UIButton(type: .DetailDisclosure)
+//                button.addTarget(self, action: #selector(showBeat), forControlEvents: UIControlEvents.TouchUpInside)
+//
+//                view.rightCalloutAccessoryView = button as UIView
+//                
+//                if annotation.image != nil  {
+//                    let imgView = UIImageView()
+//                    let image = annotation.image!
+//                    if image.size.height > image.size.width {
+//                        let ratio = image.size.width/image.size.height
+//                        let newWidth = 40 * ratio
+//                        imgView.frame = CGRect(x: 0, y: 0, width: newWidth, height: 40)
+//                    } else {
+//                        let ratio = image.size.height/image.size.width
+//                        let newHeight = 40 * ratio
+//                        imgView.frame = CGRect(x: 0, y: 0, width: 40, height: newHeight)
+//                    }
+//                    
+//                    imgView.image = annotation.image!
+//                    view.leftCalloutAccessoryView = imgView
+//                }
                
                 let pinImage = UIImage(named: "HikebeatPin")
                 view.image = pinImage
@@ -223,7 +224,13 @@ func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation
     }
 
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("Pin button tapped")
+//        print("Pin button tapped")
+//        self.indexOfChosenPin = pins.indexOf(view.annotation as! BeatPin)
+//        performSegueWithIdentifier("showBeat", sender: self)
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        print("pressed an annotation")
         self.indexOfChosenPin = pins.indexOf(view.annotation as! BeatPin)
         performSegueWithIdentifier("showBeat", sender: self)
     }

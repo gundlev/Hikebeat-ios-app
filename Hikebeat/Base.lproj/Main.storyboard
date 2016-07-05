@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Hikebeat Tab BarVC-->
         <scene sceneID="VRi-Ni-lqf">
@@ -1522,8 +1528,8 @@ Journeys screen and activate one.</string>
                                                     <constraint firstAttribute="height" constant="30" id="Wl8-hN-jQK"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="15 Fans" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mZ-uY-Ls7">
-                                                <rect key="frame" x="356" y="23" width="49" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="15 Beats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mZ-uY-Ls7">
+                                                <rect key="frame" x="349" y="23" width="56" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3240,7 +3246,7 @@ sync</string>
         <image name="BackArrow" width="16" height="22"/>
         <image name="BlurryBG" width="375" height="190"/>
         <image name="CloseIcon" width="23" height="23"/>
-        <image name="ComposeBG" width="330" height="485"/>
+        <image name="ComposeBG" width="330" height="473"/>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
         <image name="ComposePhoto" width="40" height="31"/>
@@ -3260,7 +3266,7 @@ sync</string>
         <image name="NationalityProfileIcon" width="24" height="30"/>
         <image name="NewIcon" width="32" height="32"/>
         <image name="NewJourney" width="90" height="90"/>
-        <image name="NoActiveBG" width="327" height="485"/>
+        <image name="NoActiveBG" width="315" height="473"/>
         <image name="NoActiveJourney" width="185" height="153"/>
         <image name="NoSocial" width="184" height="115"/>
         <image name="NotActivatedBadge" width="39" height="39"/>
