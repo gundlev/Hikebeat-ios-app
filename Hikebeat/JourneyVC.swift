@@ -58,7 +58,9 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         setUpPins()
         if self.pins.count==0{
             followersLabel.text = "No beats"
-        }else{
+        }else if self.pins.count == 1 {
+            followersLabel.text = String(self.pins.count)+" beat"
+        } else {
             followersLabel.text = String(self.pins.count)+" beats"
         }
         

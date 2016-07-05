@@ -113,7 +113,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 imagePicker.allowsEditing = true
                 imagePicker.videoMaximumDuration = 15
                 imagePicker.showsCameraControls = true
-                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeMedium
+                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeHigh
                 //self.imagePicker
                 
                 
