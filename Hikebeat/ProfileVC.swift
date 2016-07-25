@@ -76,6 +76,9 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             editProfileImageButton.enabled = true
             editProfileImageButton.hidden = false
             followersButton.userInteractionEnabled = false
+            nameLabel.textColor = UIColor(hexString: "F8E71C")
+            phoneNoLabel.textColor = UIColor(hexString: "F8E71C")
+            
         } else {
             editButton.setImage(UIImage(named: "EditTitle"), forState: UIControlState.Normal)
             //followersButton.titleLabel!.text = "0 followers | 0 following "
@@ -84,6 +87,8 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             editProfileImageButton.enabled = false
             editProfileImageButton.hidden = true
             followersButton.userInteractionEnabled = true
+            nameLabel.textColor = UIColor.whiteColor()
+            phoneNoLabel.textColor = UIColor.whiteColor()
             
             checkForChanges()
         }
