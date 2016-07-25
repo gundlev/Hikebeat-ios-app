@@ -1054,7 +1054,7 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIE-ph-gcm">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="0FC-Ru-w3j">
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="0FC-Ru-w3j">
                                         <rect key="frame" x="25" y="77" width="550" height="360"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t quite hit the mark captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
@@ -3272,12 +3272,12 @@ sync</string>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
         <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="37" height="34"/>
+        <image name="ComposeTitle" width="37" height="35"/>
         <image name="ComposeVideo" width="39" height="31"/>
         <image name="DefaultProfile" width="106" height="106"/>
         <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditMessage" width="134" height="110"/>
-        <image name="EditTitle" width="31" height="29"/>
+        <image name="EditTitle" width="35" height="32"/>
         <image name="GPSIcon" width="27" height="31"/>
         <image name="Hikebeat Big" width="259" height="59"/>
         <image name="HikebeatTypo" width="146" height="34"/>
