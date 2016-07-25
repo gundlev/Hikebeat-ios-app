@@ -2386,10 +2386,10 @@ Journeys screen and activate one.</string>
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGh-hU-z1b">
-                                        <rect key="frame" x="549" y="27" width="33" height="33"/>
+                                        <rect key="frame" x="549" y="27" width="32" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="33" id="Wnr-uD-Fx5"/>
-                                            <constraint firstAttribute="height" constant="33" id="y7o-av-aPQ"/>
+                                            <constraint firstAttribute="width" constant="32" id="Wnr-uD-Fx5"/>
+                                            <constraint firstAttribute="height" constant="30" id="y7o-av-aPQ"/>
                                         </constraints>
                                         <state key="normal" image="EditTitle"/>
                                         <connections>
@@ -2402,7 +2402,7 @@ Journeys screen and activate one.</string>
                                     <constraint firstItem="wGh-hU-z1b" firstAttribute="top" secondItem="j7K-lX-lfr" secondAttribute="top" constant="27" id="52F-VU-8Ob"/>
                                     <constraint firstItem="39b-wr-Y24" firstAttribute="centerX" secondItem="j7K-lX-lfr" secondAttribute="centerX" id="Rk8-hL-Ghx"/>
                                     <constraint firstAttribute="height" constant="84" id="WZ1-ae-OtP"/>
-                                    <constraint firstAttribute="trailing" secondItem="wGh-hU-z1b" secondAttribute="trailing" constant="18" id="fNg-53-VpO"/>
+                                    <constraint firstAttribute="trailing" secondItem="wGh-hU-z1b" secondAttribute="trailing" constant="19" id="fNg-53-VpO"/>
                                     <constraint firstItem="39b-wr-Y24" firstAttribute="top" secondItem="j7K-lX-lfr" secondAttribute="top" constant="26" id="qdt-Jo-IzV"/>
                                 </constraints>
                             </view>
@@ -3265,19 +3265,19 @@ sync</string>
     </scenes>
     <resources>
         <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="16" height="22"/>
+        <image name="BackArrow" width="15" height="20"/>
         <image name="BlurryBG" width="375" height="190"/>
         <image name="CloseIcon" width="23" height="23"/>
         <image name="ComposeBG" width="330" height="473"/>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
         <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="41" height="38"/>
+        <image name="ComposeTitle" width="37" height="34"/>
         <image name="ComposeVideo" width="39" height="31"/>
         <image name="DefaultProfile" width="106" height="106"/>
         <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditMessage" width="134" height="110"/>
-        <image name="EditTitle" width="113" height="107"/>
+        <image name="EditTitle" width="31" height="29"/>
         <image name="GPSIcon" width="27" height="31"/>
         <image name="Hikebeat Big" width="259" height="59"/>
         <image name="HikebeatTypo" width="146" height="34"/>
@@ -3286,7 +3286,7 @@ sync</string>
         <image name="MailProfileIcon" width="35" height="28"/>
         <image name="NameProfileIcon" width="33" height="22"/>
         <image name="NationalityProfileIcon" width="24" height="30"/>
-        <image name="NewIcon" width="32" height="32"/>
+        <image name="NewIcon" width="33" height="33"/>
         <image name="NewJourney" width="90" height="90"/>
         <image name="NoActiveBG" width="315" height="473"/>
         <image name="NoActiveJourney" width="185" height="153"/>
