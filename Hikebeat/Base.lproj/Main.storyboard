@@ -1446,9 +1446,6 @@ Journeys screen and activate one.</string>
                             <constraint firstItem="qXy-BD-ZAV" firstAttribute="leading" secondItem="9hh-tn-4nz" secondAttribute="leadingMargin" constant="-20" id="v8N-1k-9xf"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="dcF-oM-r1p"/>
-                            </mask>
                             <mask key="constraints">
                                 <exclude reference="InI-Vg-hjR"/>
                             </mask>
