@@ -2564,7 +2564,7 @@ Journeys screen and activate one.</string>
                                                 <fragment content="Your profile">
                                                     <attributes>
                                                         <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="18" name="Helvetica"/>
+                                                        <font key="NSFont" size="18" name="Helvetica-Bold"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
