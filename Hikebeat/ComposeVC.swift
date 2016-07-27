@@ -251,7 +251,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        clearAllForNewBeat()
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Clear it!") {
+            self.clearAllForNewBeat()
+        }
+        alertView.addButton("Cancel") {}
+        
+        alertView.showWarning("Clear Beat?", subTitle: "\nAre you sure you want to clear what progress you have made on this beat?")
     }
     
     func imageButtonTapped() {
