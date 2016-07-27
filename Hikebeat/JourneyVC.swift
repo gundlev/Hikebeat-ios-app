@@ -77,6 +77,14 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         } else {
             self.profileImage.image = UIImage(named: "DefaultProfile")
         }
+        let tabGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
+        self.profileImage.addGestureRecognizer(tabGesture)
+        self.profileImage.userInteractionEnabled = true
+    }
+    
+    func goToProfile() {
+        print("go to profile now")
+        self.tabBarController?.selectedIndex = 3
     }
     
     func getProfileImagePath() -> String {
