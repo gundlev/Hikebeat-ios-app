@@ -47,6 +47,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
     
+    @IBOutlet weak var rightTree: UIImageView!
+    @IBOutlet weak var leftTree: UIImageView!
+    @IBOutlet weak var middleHouse: UIImageView!
     
     @IBOutlet weak var composeContainer: aCustomView!
     @IBOutlet weak var imageBG: UIImageView!
@@ -58,8 +61,22 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var noactiveTop: NSLayoutConstraint!
     
     @IBAction func sendBeat(sender: AnyObject) {
-        self.beatPromise = Promise<Bool, NoError>()
-        checkForCorrectInput()
+        print("up")
+//        rightTree.stopAnimating()
+//        stopSendAnimation()
+//        self.beatPromise = Promise<Bool, NoError>()
+//        checkForCorrectInput()
+    }
+    
+    @IBAction func startHoldingToSend(sender: AnyObject) {
+        print("down")
+        startSendAnimation()
+    }
+    
+    @IBAction func letGoOfHoldingOutside(sender: AnyObject) {
+        print("up")
+        rightTree.stopAnimating()
+//        stopSendAnimation()
     }
     
     override func viewDidLoad() {
@@ -104,6 +121,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
         }
+        
+        sendBeatButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(startSendAnimation)))
         
 
         NoActiveContainer.button = journeysButton
@@ -182,6 +201,37 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 //        let sourceViewController = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
         filledin==0 ? hideClearButton() : showClearButton()
+    }
+    
+    func longTap(sender : UIGestureRecognizer){
+        print("Long tap")
+        if sender.state == .Ended {
+            print("UIGestureRecognizerStateEnded")
+            //Do Whatever You want on End of Gesture
+        }
+        else if sender.state == .Began {
+            print("UIGestureRecognizerStateBegan.")
+            //Do Whatever You want on Began of Gesture
+        }
+    }
+    
+    func startSendAnimation() {
+        print("press")
+//        let width = self.view.frame.width
+//        UIImageView.animateWithDuration(NSTimeInterval(2)) {
+//            self.leftTree.transform = CGAffineTransformTranslate(self.leftTree.transform, -width/5, 0)
+//            self.rightTree.transform = CGAffineTransformTranslate(self.rightTree.transform, width/5, 0)
+//            self.middleHouse.transform = CGAffineTransformTranslate(self.middleHouse.transform, 0, -30)
+//        }
+    }
+    
+    func stopSendAnimation() {
+        UIView.animateWithDuration(NSTimeInterval(2)) {
+            self.leftTree.transform = CGAffineTransformTranslate(self.leftTree.transform, 0, 0)
+            self.rightTree.transform = CGAffineTransformTranslate(self.rightTree.transform, 0, 0)
+            self.middleHouse.transform = CGAffineTransformTranslate(self.middleHouse.transform, 0, 0)
+        }
+
     }
 
 

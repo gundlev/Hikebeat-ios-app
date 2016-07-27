@@ -199,7 +199,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     func recordWithPermission(setup:Bool) {
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         // ios 8 and later
-        if (session.respondsToSelector("requestRecordPermission:")) {
+        if (session.respondsToSelector(#selector(AVAudioSession.requestRecordPermission(_:)))) {
             AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
                 if granted {
                     print("Permission to record granted")
@@ -210,7 +210,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
                     self.recorder.record()
                     self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
                         target:self,
-                        selector:"updateAudioMeter:",
+                        selector:#selector(RecordAudioVC.updateAudioMeter(_:)),
                         userInfo:nil,
                         repeats:true)
                 } else {
@@ -266,7 +266,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
             var recordings = files.filter( { (name: String) -> Bool in
                 return name.hasSuffix("m4a")
             })
-            for var i = 0; i < recordings.count; i++ {
+            for i in 0 ..< recordings.count {
                 let path = docsDir + "/" + recordings[i]
                 
                 print("removing \(path)")
@@ -288,17 +288,17 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     func askForNotifications() {
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector:"background:",
+            selector:#selector(RecordAudioVC.background(_:)),
             name:UIApplicationWillResignActiveNotification,
             object:nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector:"foreground:",
+            selector:#selector(RecordAudioVC.foreground(_:)),
             name:UIApplicationWillEnterForegroundNotification,
             object:nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector:"routeChange:",
+            selector:#selector(RecordAudioVC.routeChange(_:)),
             name:AVAudioSessionRouteChangeNotification,
             object:nil)
     }

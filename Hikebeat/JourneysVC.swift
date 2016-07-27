@@ -39,6 +39,9 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewWillAppear(animated: Bool) {
+        if journeys.isEmpty {
+            performSegueWithIdentifier("showNewJourney", sender: self)
+        }
         self.journeysTableView.reloadData()
     }
     

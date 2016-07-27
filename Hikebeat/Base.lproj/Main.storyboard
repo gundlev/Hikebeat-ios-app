@@ -1343,7 +1343,7 @@ Journeys screen and activate one.</string>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SendHome" translatesAutoresizingMaskIntoConstraints="NO" id="S2K-gl-m7S">
-                                        <rect key="frame" x="285" y="413" width="30" height="30"/>
+                                        <rect key="frame" x="285" y="442" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="jQK-wn-26p"/>
                                             <constraint firstAttribute="height" constant="30" id="xL1-1I-Zsd"/>
@@ -1352,6 +1352,7 @@ Journeys screen and activate one.</string>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahQ-bk-OOE">
                                         <rect key="frame" x="158" y="442" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.74117647058823533" green="0.95686274509803915" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="283" id="Vhb-nJ-ThW"/>
                                             <constraint firstAttribute="height" constant="46" id="sOu-2X-w7P"/>
@@ -1367,7 +1368,9 @@ Journeys screen and activate one.</string>
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="letGoOfHoldingOutside:" destination="jTg-CM-etK" eventType="touchUpOutside" id="cb2-fi-kKK"/>
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="FAD-i2-ahx"/>
+                                            <action selector="startHoldingToSend:" destination="jTg-CM-etK" eventType="touchDown" id="CTd-Dl-vHO"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1387,7 +1390,7 @@ Journeys screen and activate one.</string>
                                     <constraint firstItem="Shy-P5-5uK" firstAttribute="centerX" secondItem="RCs-Fy-3rY" secondAttribute="centerX" id="WWV-JX-qN2"/>
                                     <constraint firstItem="S2K-gl-m7S" firstAttribute="leading" secondItem="wF8-Rd-LWZ" secondAttribute="trailing" constant="15" id="XEu-FH-Ahb"/>
                                     <constraint firstItem="ugQ-0V-XXL" firstAttribute="top" secondItem="RCs-Fy-3rY" secondAttribute="topMargin" constant="15" id="ZSN-Q6-KSt"/>
-                                    <constraint firstItem="ahQ-bk-OOE" firstAttribute="top" secondItem="S2K-gl-m7S" secondAttribute="bottom" constant="-1" id="ZYD-qv-Ew9"/>
+                                    <constraint firstItem="ahQ-bk-OOE" firstAttribute="top" secondItem="S2K-gl-m7S" secondAttribute="bottom" constant="-30" id="ZYD-qv-Ew9"/>
                                     <constraint firstAttribute="trailing" secondItem="M8E-Uu-eWH" secondAttribute="trailing" constant="23" id="chb-Sc-mh5"/>
                                     <constraint firstItem="Shy-P5-5uK" firstAttribute="top" secondItem="RlS-Ze-LDi" secondAttribute="bottom" constant="16" id="fYR-gt-DZg"/>
                                     <constraint firstItem="wbM-IN-8hJ" firstAttribute="centerX" secondItem="RCs-Fy-3rY" secondAttribute="centerX" id="h4y-jx-hhD"/>
@@ -1444,7 +1447,10 @@ Journeys screen and activate one.</string>
                         <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
                         <outlet property="imageBG" destination="ugQ-0V-XXL" id="y2g-cs-krQ"/>
                         <outlet property="journeysButton" destination="Bux-pj-aPf" id="Ek1-iS-x7q"/>
+                        <outlet property="leftTree" destination="wF8-Rd-LWZ" id="EwK-uj-zJg"/>
+                        <outlet property="middleHouse" destination="S2K-gl-m7S" id="bKv-bU-xSS"/>
                         <outlet property="noactiveTop" destination="giZ-FP-1hA" id="Jgx-5Y-zTm"/>
+                        <outlet property="rightTree" destination="han-Pg-Vnv" id="67X-34-cdA"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
                         <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editTitleModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
                         <segue destination="VH6-0C-xlV" kind="presentation" identifier="editMessageModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="8BK-nv-RSI"/>
