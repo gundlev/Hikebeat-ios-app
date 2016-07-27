@@ -330,14 +330,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 applyGreenBorder(editVideoButton)
                 disableMediaView(editMemoButton)
                 disableMediaView(editImageButton)
+                showClearButton()
             case "image":
                 applyGreenBorder(editImageButton)
                 disableMediaView(editMemoButton)
                 disableMediaView(editVideoButton)
+                showClearButton()
             case "audio":
                 applyGreenBorder(editMemoButton)
                 disableMediaView(editVideoButton)
                 disableMediaView(editImageButton)
+                showClearButton()
         default: print("Type not matching: ", type)
         }
     }
