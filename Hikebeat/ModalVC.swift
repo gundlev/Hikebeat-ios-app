@@ -25,6 +25,7 @@ class ModalVC: UIViewController {
        
         self.future.onSuccess { (success) in
             _ = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
+            self.infoContainer.image = UIImage(named: "Checkcheck")
         }
     }
     

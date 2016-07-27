@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -878,7 +878,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tsp-Lm-zPK">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="84"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="KqY-xd-YqV">
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
@@ -887,7 +887,7 @@
                                 <color key="backgroundColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="KqY-xd-YqV" firstAttribute="centerX" secondItem="Tsp-Lm-zPK" secondAttribute="centerX" id="BAR-Sx-Uxf"/>
-                                    <constraint firstAttribute="height" constant="84" id="SCd-be-is4"/>
+                                    <constraint firstAttribute="height" constant="82" id="SCd-be-is4"/>
                                     <constraint firstItem="KqY-xd-YqV" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="top" constant="26" id="Yd3-Rh-qpN"/>
                                 </constraints>
                             </view>
@@ -1054,6 +1054,9 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIE-ph-gcm">
                                 <rect key="frame" x="0.0" y="84" width="600" height="467"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="0FC-Ru-w3j">
+                                        <rect key="frame" x="25" y="77" width="550" height="360"/>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops we didn’t quite hit the mark captain!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-1U-AGY">
                                         <rect key="frame" x="178" y="305" width="244" height="41"/>
                                         <constraints>
@@ -1083,13 +1086,28 @@
                                     <constraint firstItem="v5H-1U-AGY" firstAttribute="top" secondItem="YR0-D0-40W" secondAttribute="bottom" constant="25" id="0t5-mG-3z1"/>
                                     <constraint firstItem="Hh7-g8-kd5" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="5Kd-ht-xea"/>
                                     <constraint firstItem="YR0-D0-40W" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="82c-uY-pBa"/>
+                                    <constraint firstItem="0FC-Ru-w3j" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="top" id="9EK-cI-9nD"/>
+                                    <constraint firstItem="0FC-Ru-w3j" firstAttribute="leading" secondItem="XIE-ph-gcm" secondAttribute="leading" constant="25" id="F5V-TC-yiH"/>
+                                    <constraint firstItem="0FC-Ru-w3j" firstAttribute="leading" secondItem="XIE-ph-gcm" secondAttribute="leading" id="P0X-8N-HUX"/>
+                                    <constraint firstAttribute="trailing" secondItem="0FC-Ru-w3j" secondAttribute="trailing" id="S6N-la-HkS"/>
                                     <constraint firstItem="YR0-D0-40W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="top" constant="165" id="Sep-lk-t6k"/>
+                                    <constraint firstAttribute="bottom" secondItem="0FC-Ru-w3j" secondAttribute="bottom" constant="80" id="Sza-7O-zuI"/>
                                     <constraint firstItem="Hh7-g8-kd5" firstAttribute="top" secondItem="v5H-1U-AGY" secondAttribute="bottom" id="XgG-kj-Ous"/>
                                     <constraint firstItem="YR0-D0-40W" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="e6m-mu-SLr"/>
+                                    <constraint firstItem="v5H-1U-AGY" firstAttribute="top" secondItem="0FC-Ru-w3j" secondAttribute="bottom" constant="-162" id="mGk-qP-wOo"/>
                                     <constraint firstItem="YR0-D0-40W" firstAttribute="leading" secondItem="Hh7-g8-kd5" secondAttribute="leading" constant="30" id="nXm-0W-owE"/>
+                                    <constraint firstAttribute="trailing" secondItem="0FC-Ru-w3j" secondAttribute="trailing" constant="25" id="qyy-UB-1Xm"/>
                                     <constraint firstItem="YR0-D0-40W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="top" constant="165" id="u2P-1f-yPB"/>
                                     <constraint firstItem="v5H-1U-AGY" firstAttribute="centerX" secondItem="XIE-ph-gcm" secondAttribute="centerX" id="xQ5-eP-QL4"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9EK-cI-9nD"/>
+                                        <exclude reference="P0X-8N-HUX"/>
+                                        <exclude reference="S6N-la-HkS"/>
+                                        <exclude reference="mGk-qP-wOo"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1098,10 +1116,11 @@
                             <constraint firstItem="Tsp-Lm-zPK" firstAttribute="leading" secondItem="uVe-3f-uGp" secondAttribute="leadingMargin" constant="-20" id="2d9-ph-uXn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XIE-ph-gcm" secondAttribute="trailing" constant="-20" id="2oT-qL-MTN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="71K-pu-Clj" secondAttribute="trailing" constant="-20" id="OKa-tJ-EW0"/>
-                            <constraint firstItem="XIE-ph-gcm" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" id="RAc-8a-py7"/>
+                            <constraint firstItem="XIE-ph-gcm" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" constant="1" id="RAc-8a-py7"/>
                             <constraint firstItem="Tsp-Lm-zPK" firstAttribute="top" secondItem="uVe-3f-uGp" secondAttribute="topMargin" id="TRm-ej-WAp"/>
+                            <constraint firstItem="0FC-Ru-w3j" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="top" constant="160" id="YPV-XP-Ou7"/>
                             <constraint firstItem="gsu-6Y-U1W" firstAttribute="top" secondItem="71K-pu-Clj" secondAttribute="bottom" id="Yow-JW-Iya"/>
-                            <constraint firstItem="71K-pu-Clj" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" id="Z5e-y1-hDr"/>
+                            <constraint firstItem="71K-pu-Clj" firstAttribute="top" secondItem="Tsp-Lm-zPK" secondAttribute="bottom" constant="1" id="Z5e-y1-hDr"/>
                             <constraint firstItem="gsu-6Y-U1W" firstAttribute="top" secondItem="XIE-ph-gcm" secondAttribute="bottom" id="d8s-6S-nPI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Tsp-Lm-zPK" secondAttribute="trailing" constant="-20" id="h44-Qb-1is"/>
                             <constraint firstItem="71K-pu-Clj" firstAttribute="leading" secondItem="uVe-3f-uGp" secondAttribute="leadingMargin" constant="-20" id="hRW-ty-8RV"/>
@@ -1246,8 +1265,8 @@ Journeys screen and activate one.</string>
                                             <constraint firstAttribute="width" constant="66" id="oMQ-ma-YBG"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KH-cm-xuQ">
-                                        <rect key="frame" x="267" y="108" width="66" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KH-cm-xuQ">
+                                        <rect key="frame" x="273" y="108" width="55" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1260,8 +1279,8 @@ Journeys screen and activate one.</string>
                                             <constraint firstAttribute="width" secondItem="RlS-Ze-LDi" secondAttribute="height" multiplier="1:1" id="lnJ-Fg-IJb"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shy-P5-5uK">
-                                        <rect key="frame" x="251" y="245" width="99" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add an emotion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Shy-P5-5uK">
+                                        <rect key="frame" x="250" y="245" width="102" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1527,7 +1546,7 @@ Journeys screen and activate one.</string>
                                                     <constraint firstAttribute="height" constant="30" id="qcg-YE-f4O"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="SendTree" translatesAutoresizingMaskIntoConstraints="NO" id="rEP-zE-cGo">
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ListPin" translatesAutoresizingMaskIntoConstraints="NO" id="rEP-zE-cGo">
                                                 <rect key="frame" x="318" y="17" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="Jb3-oy-VFa"/>
@@ -2370,10 +2389,10 @@ Journeys screen and activate one.</string>
                                         <rect key="frame" x="227" y="26" width="146" height="34"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGh-hU-z1b">
-                                        <rect key="frame" x="549" y="27" width="33" height="33"/>
+                                        <rect key="frame" x="549" y="27" width="32" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="33" id="Wnr-uD-Fx5"/>
-                                            <constraint firstAttribute="height" constant="33" id="y7o-av-aPQ"/>
+                                            <constraint firstAttribute="width" constant="32" id="Wnr-uD-Fx5"/>
+                                            <constraint firstAttribute="height" constant="30" id="y7o-av-aPQ"/>
                                         </constraints>
                                         <state key="normal" image="EditTitle"/>
                                         <connections>
@@ -2386,7 +2405,7 @@ Journeys screen and activate one.</string>
                                     <constraint firstItem="wGh-hU-z1b" firstAttribute="top" secondItem="j7K-lX-lfr" secondAttribute="top" constant="27" id="52F-VU-8Ob"/>
                                     <constraint firstItem="39b-wr-Y24" firstAttribute="centerX" secondItem="j7K-lX-lfr" secondAttribute="centerX" id="Rk8-hL-Ghx"/>
                                     <constraint firstAttribute="height" constant="84" id="WZ1-ae-OtP"/>
-                                    <constraint firstAttribute="trailing" secondItem="wGh-hU-z1b" secondAttribute="trailing" constant="18" id="fNg-53-VpO"/>
+                                    <constraint firstAttribute="trailing" secondItem="wGh-hU-z1b" secondAttribute="trailing" constant="19" id="fNg-53-VpO"/>
                                     <constraint firstItem="39b-wr-Y24" firstAttribute="top" secondItem="j7K-lX-lfr" secondAttribute="top" constant="26" id="qdt-Jo-IzV"/>
                                 </constraints>
                             </view>
@@ -2551,7 +2570,7 @@ Journeys screen and activate one.</string>
                                                 <fragment content="Your profile">
                                                     <attributes>
                                                         <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="18" name="Helvetica"/>
+                                                        <font key="NSFont" size="18" name="Helvetica-Bold"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -3249,19 +3268,19 @@ sync</string>
     </scenes>
     <resources>
         <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="16" height="22"/>
+        <image name="BackArrow" width="15" height="20"/>
         <image name="BlurryBG" width="375" height="190"/>
         <image name="CloseIcon" width="23" height="23"/>
         <image name="ComposeBG" width="330" height="473"/>
         <image name="ComposeMemo" width="24" height="37"/>
         <image name="ComposeMessage" width="36" height="31"/>
         <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="41" height="38"/>
+        <image name="ComposeTitle" width="37" height="35"/>
         <image name="ComposeVideo" width="39" height="31"/>
         <image name="DefaultProfile" width="106" height="106"/>
         <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditMessage" width="134" height="110"/>
-        <image name="EditTitle" width="113" height="107"/>
+        <image name="EditTitle" width="35" height="32"/>
         <image name="GPSIcon" width="27" height="31"/>
         <image name="Hikebeat Big" width="259" height="59"/>
         <image name="HikebeatTypo" width="146" height="34"/>
@@ -3270,7 +3289,7 @@ sync</string>
         <image name="MailProfileIcon" width="35" height="28"/>
         <image name="NameProfileIcon" width="33" height="22"/>
         <image name="NationalityProfileIcon" width="24" height="30"/>
-        <image name="NewIcon" width="32" height="32"/>
+        <image name="NewIcon" width="33" height="33"/>
         <image name="NewJourney" width="90" height="90"/>
         <image name="NoActiveBG" width="315" height="473"/>
         <image name="NoActiveJourney" width="185" height="153"/>
@@ -3298,6 +3317,6 @@ sync</string>
     <inferredMetricsTieBreakers>
         <segue reference="Ry1-QN-lGj"/>
         <segue reference="MRW-Ir-xEe"/>
-        <segue reference="Ttn-Zq-yK6"/>
+        <segue reference="abJ-vT-9Ah"/>
     </inferredMetricsTieBreakers>
 </document>
