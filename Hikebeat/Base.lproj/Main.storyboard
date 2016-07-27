@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -514,8 +514,8 @@
                                                             <color key="textColor" red="0.77682477235794067" green="0.95740753412246704" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5u-AL-HPr">
-                                                            <rect key="frame" x="40" y="45" width="167" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Weekend in London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5u-AL-HPr">
+                                                            <rect key="frame" x="40" y="45" width="445" height="21"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -536,6 +536,8 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="q5u-AL-HPr" firstAttribute="top" secondItem="7Tg-dN-UqD" secondAttribute="bottom" id="CmF-Kc-6X1"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="Ljb-S2-8Fb" secondAttribute="trailing" constant="17" id="G0Z-3e-inR"/>
+                                                        <constraint firstItem="Ljb-S2-8Fb" firstAttribute="leading" secondItem="q5u-AL-HPr" secondAttribute="trailing" constant="31" id="d9i-UF-a9b"/>
                                                         <constraint firstItem="tbt-JW-xe4" firstAttribute="top" secondItem="4Tf-8a-RhR" secondAttribute="topMargin" constant="11" id="fBV-pi-7Ey"/>
                                                         <constraint firstItem="tbt-JW-xe4" firstAttribute="centerX" secondItem="Ljb-S2-8Fb" secondAttribute="centerX" id="kkk-cs-trK"/>
                                                         <constraint firstItem="7Tg-dN-UqD" firstAttribute="leading" secondItem="4Tf-8a-RhR" secondAttribute="leadingMargin" constant="32" id="piH-yb-ZiR"/>
@@ -3317,6 +3319,6 @@ sync</string>
     <inferredMetricsTieBreakers>
         <segue reference="Ry1-QN-lGj"/>
         <segue reference="MRW-Ir-xEe"/>
-        <segue reference="abJ-vT-9Ah"/>
+        <segue reference="Ttn-Zq-yK6"/>
     </inferredMetricsTieBreakers>
 </document>
