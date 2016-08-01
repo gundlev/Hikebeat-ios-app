@@ -101,11 +101,11 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         print("There are saved parkings")
         for beat in (self.journey?.beats)! {
-            var title = ""
+            var message = ""
             var subtitle = ""
             
-            if beat.title != nil {
-                title = beat.title!
+            if beat.message != nil {
+                message = beat.message!
             }
             
             if beat.message != nil {
@@ -119,7 +119,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             }
             
             
-            let beatPin = BeatPin(title: title, timestamp: beat.timestamp, subtitle: subtitle, locationName: "Somewhere", discipline: beat.journeyId, coordinate: CLLocationCoordinate2D(latitude: Double(beat.latitude)!, longitude: Double(beat.longitude)!), lastPin: false, image: image)
+            let beatPin = BeatPin(title: message, timestamp: beat.timestamp, subtitle: subtitle, locationName: "Somewhere", discipline: beat.journeyId, coordinate: CLLocationCoordinate2D(latitude: Double(beat.latitude)!, longitude: Double(beat.longitude)!), lastPin: false, image: image)
             self.journeyMap.addAnnotation(beatPin)
             pinArr.append(beatPin)
         }

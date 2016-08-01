@@ -320,7 +320,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybg-e1-BJi">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="640"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UA6-rW-pj6">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Forgot password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UA6-rW-pj6">
                                         <rect key="frame" x="227" y="478" width="145" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -354,7 +354,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="ryN-sW-C6a">
                                         <rect key="frame" x="236" y="55" width="128" height="121"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rV-69-k3s">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rV-69-k3s">
                                         <rect key="frame" x="158" y="546" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -376,7 +376,7 @@
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="uIh-pE-1XE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
                                         <rect key="frame" x="213" y="602" width="174" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Not an user? Sign up!">
@@ -505,7 +505,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="600" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IZW-ES-bk8" id="4Tf-8a-RhR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-dN-UqD">
@@ -576,7 +576,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActiveJourneyCell" id="OGX-wt-dJD" customClass="ActiveJourneyCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="3.5" width="187" height="130"/>
+                                                <rect key="frame" x="0.0" y="4" width="187" height="130"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="130"/>
@@ -983,7 +983,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ActiveJourneyCell" id="gAw-y6-adH" customClass="ActiveJourneyCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="3.5" width="187" height="130"/>
+                                                <rect key="frame" x="0.0" y="4" width="187" height="130"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="187" height="130"/>
@@ -1175,7 +1175,7 @@
                                             <constraint firstAttribute="height" constant="153" id="rXc-4w-M4e"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kn4-Dq-nuI">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kn4-Dq-nuI">
                                         <rect key="frame" x="178" y="268" width="244" height="81.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="2me-Uq-udP"/>
@@ -1187,10 +1187,10 @@ Journeys screen and activate one.</string>
                                         <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowhouses" translatesAutoresizingMaskIntoConstraints="NO" id="34N-q4-NkV">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="yellowhouses" translatesAutoresizingMaskIntoConstraints="NO" id="34N-q4-NkV">
                                         <rect key="frame" x="249" y="376" width="102" height="31"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-pj-aPf">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-pj-aPf">
                                         <rect key="frame" x="159" y="405" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.97524267435073853" green="0.91295677423477173" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1461,10 +1461,10 @@ Journeys screen and activate one.</string>
                         <outlet property="NoActiveContainer" destination="dcF-oM-r1p" id="T0A-xh-7GR"/>
                         <outlet property="clearButton" destination="aB9-x0-cPI" id="awJ-0l-DHW"/>
                         <outlet property="composeContainer" destination="RCs-Fy-3rY" id="pYO-tu-kyB"/>
+                        <outlet property="editEmotionButton" destination="RlS-Ze-LDi" id="1BF-oO-ISI"/>
                         <outlet property="editImageButton" destination="CQp-Sb-IZE" id="Qzx-AJ-M9C"/>
                         <outlet property="editMemoButton" destination="b48-cP-b37" id="nOs-s5-wM0"/>
-                        <outlet property="editMessageButton" destination="RlS-Ze-LDi" id="dmj-tj-ctQ"/>
-                        <outlet property="editTitleButton" destination="wbM-IN-8hJ" id="5Kf-4d-t8M"/>
+                        <outlet property="editMessageButton" destination="wbM-IN-8hJ" id="lDO-Fa-UoX"/>
                         <outlet property="editVideoButton" destination="d7h-Bj-nNP" id="uMY-6n-H4b"/>
                         <outlet property="imageBG" destination="ugQ-0V-XXL" id="y2g-cs-krQ"/>
                         <outlet property="journeysButton" destination="Bux-pj-aPf" id="Ek1-iS-x7q"/>
@@ -1473,7 +1473,7 @@ Journeys screen and activate one.</string>
                         <outlet property="noactiveTop" destination="giZ-FP-1hA" id="Jgx-5Y-zTm"/>
                         <outlet property="rightTree" destination="han-Pg-Vnv" id="67X-34-cdA"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
-                        <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editTitleModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
+                        <segue destination="5g0-Vz-4gM" kind="presentation" identifier="editEmotionsModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xe3-qb-fco"/>
                         <segue destination="VH6-0C-xlV" kind="presentation" identifier="editMessageModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="8BK-nv-RSI"/>
                         <segue destination="wvg-qm-eID" kind="presentation" identifier="showGreenModal" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="qIq-DZ-hGv"/>
                         <segue destination="zrz-AL-AUL" kind="presentation" identifier="recordAudio" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="2bT-dT-ROe"/>
@@ -1704,7 +1704,7 @@ Journeys screen and activate one.</string>
                                                 <rect key="frame" x="0.0" y="28" width="600" height="120"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h40-2U-0WV" id="2yI-yd-ir0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-YG-eKg">
@@ -1914,14 +1914,14 @@ Journeys screen and activate one.</string>
                                                                                 <color key="textColor" red="0.2274419367313385" green="0.86620205640792847" blue="0.34066462516784668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{{Beat title holder}}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqz-BS-Eh6">
+                                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{{Beat title holder}}" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqz-BS-Eh6">
                                                                                 <rect key="frame" x="41" y="41" width="147" height="21"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <color key="textColor" red="0.051157362759113312" green="0.40429922938346863" blue="0.42625641822814941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" text="{{Message holder}}" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="INt-Dc-Bfd">
-                                                                                <rect key="frame" x="0.0" y="76" width="230" height="34"/>
+                                                                                <rect key="frame" x="0.0" y="63" width="230" height="34"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="230" id="5k4-kZ-KGp"/>
@@ -1971,7 +1971,7 @@ Journeys screen and activate one.</string>
                                                                             <constraint firstItem="MMY-zu-C9m" firstAttribute="top" secondItem="l8t-9X-ieY" secondAttribute="top" constant="12" id="MlD-ZJ-voE"/>
                                                                             <constraint firstItem="HSf-Kl-SIz" firstAttribute="centerY" secondItem="iYF-Ju-S89" secondAttribute="centerY" id="NJe-SH-Yr9"/>
                                                                             <constraint firstAttribute="bottom" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="236" id="Q8C-Ii-LRX"/>
-                                                                            <constraint firstItem="INt-Dc-Bfd" firstAttribute="top" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="14" id="Vpm-KC-Cka"/>
+                                                                            <constraint firstItem="INt-Dc-Bfd" firstAttribute="top" secondItem="eqz-BS-Eh6" secondAttribute="bottom" constant="1" id="Vpm-KC-Cka"/>
                                                                             <constraint firstItem="HSf-Kl-SIz" firstAttribute="height" secondItem="iYF-Ju-S89" secondAttribute="height" id="Wnc-vk-LE8"/>
                                                                             <constraint firstItem="eqz-BS-Eh6" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="Wqp-1V-4FN"/>
                                                                             <constraint firstItem="MMY-zu-C9m" firstAttribute="centerX" secondItem="l8t-9X-ieY" secondAttribute="centerX" id="aFn-mK-vn2"/>
@@ -2105,21 +2105,11 @@ Journeys screen and activate one.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PY1-H3-BuX">
-                                            <rect key="frame" x="159" y="276" width="283" height="48"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="283" id="XyX-pN-SHr"/>
-                                                <constraint firstAttribute="height" constant="48" id="rps-p8-wjc"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                        </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ank-bs-PHJ">
-                                            <rect key="frame" x="159" y="342" width="283" height="46"/>
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ank-bs-PHJ">
+                                            <rect key="frame" x="158" y="469" width="285" height="46"/>
                                             <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="283" id="T63-j0-tlp"/>
+                                                <constraint firstAttribute="width" constant="285" id="T63-j0-tlp"/>
                                                 <constraint firstAttribute="height" constant="46" id="wsK-rg-Z0f"/>
                                             </constraints>
                                             <state key="normal">
@@ -2133,17 +2123,9 @@ Journeys screen and activate one.</string>
                                                 </attributedString>
                                             </state>
                                             <connections>
-                                                <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="xoa-Ph-dgb"/>
-                                                <segue destination="rF9-PC-cE1" kind="unwind" identifier="backToCompose" unwindAction="unwindToCompose:" id="yUl-Mt-9Ze"/>
+                                                <action selector="saveButtonTapped:" destination="5g0-Vz-4gM" eventType="touchUpInside" id="XXm-1P-cQm"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditTitle" translatesAutoresizingMaskIntoConstraints="NO" id="r3M-bD-SN1">
-                                            <rect key="frame" x="251" y="154" width="99" height="99"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="99" id="4aa-GO-eMK"/>
-                                                <constraint firstAttribute="width" constant="99" id="NTU-cp-eDF"/>
-                                            </constraints>
-                                        </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zT7-HO-MlB">
                                             <rect key="frame" x="500" y="20" width="80" height="80"/>
                                             <constraints>
@@ -2152,17 +2134,89 @@ Journeys screen and activate one.</string>
                                             </constraints>
                                             <state key="normal" image="CloseIcon"/>
                                             <connections>
-                                                <segue destination="rF9-PC-cE1" kind="unwind" unwindAction="unwindToCompose:" id="muU-i4-BxA"/>
+                                                <segue destination="rF9-PC-cE1" kind="unwind" identifier="saveAndBack" unwindAction="unwindToCompose:" id="muU-i4-BxA"/>
                                             </connections>
                                         </button>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8VI-mz-QEH">
+                                            <rect key="frame" x="146" y="134" width="310" height="310"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WB5-H9-OXl">
+                                                <size key="itemSize" width="96" height="96"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                            <cells>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emotionCell" id="Cz6-ar-HfW" customClass="EmotionCell" customModule="Hikebeat">
+                                                    <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Orw-PO-btx">
+                                                                <rect key="frame" x="16" y="8" width="65" height="65"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Emotion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2B-A6-y3C">
+                                                                <rect key="frame" x="20" y="72" width="56" height="21"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <constraints>
+                                                        <constraint firstItem="y2B-A6-y3C" firstAttribute="top" secondItem="Orw-PO-btx" secondAttribute="bottom" constant="-1" id="DFZ-sy-uhs"/>
+                                                        <constraint firstItem="Orw-PO-btx" firstAttribute="centerX" secondItem="Cz6-ar-HfW" secondAttribute="centerX" id="zgj-Ab-r6K"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="imageView" destination="Orw-PO-btx" id="lY1-b7-Fdx"/>
+                                                        <outlet property="label" destination="y2B-A6-y3C" id="s7A-sY-NAV"/>
+                                                    </connections>
+                                                </collectionViewCell>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="jDE-Gr-K3Q">
+                                                    <rect key="frame" x="107" y="0.0" width="96" height="96"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </collectionViewCell>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="middleCell" id="8PF-5y-pwx">
+                                                    <rect key="frame" x="214" y="0.0" width="96" height="96"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="you feel?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nev-mH-po2">
+                                                                <rect key="frame" x="4" y="50" width="88" height="21"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                                <color key="textColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How do" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nl6-YE-TPY">
+                                                                <rect key="frame" x="10" y="26" width="77" height="21"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                                <color key="textColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="highlightedColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </collectionViewCell>
+                                            </cells>
+                                            <connections>
+                                                <outlet property="dataSource" destination="5g0-Vz-4gM" id="0RB-ya-t5J"/>
+                                                <outlet property="delegate" destination="5g0-Vz-4gM" id="LSm-Bb-n1Y"/>
+                                            </connections>
+                                        </collectionView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="PY1-H3-BuX" firstAttribute="centerY" secondItem="Qwc-eQ-1K7" secondAttribute="centerY" id="6iy-Wj-Y19"/>
-                                        <constraint firstItem="PY1-H3-BuX" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="JW9-22-ZXq"/>
-                                        <constraint firstItem="r3M-bD-SN1" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" constant="0.5" id="QBF-Wa-h14"/>
-                                        <constraint firstItem="ank-bs-PHJ" firstAttribute="top" secondItem="PY1-H3-BuX" secondAttribute="bottom" constant="18" id="S5V-7L-sa2"/>
-                                        <constraint firstItem="PY1-H3-BuX" firstAttribute="top" secondItem="r3M-bD-SN1" secondAttribute="bottom" constant="23" id="TdI-9l-2bM"/>
+                                        <constraint firstItem="8VI-mz-QEH" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="PPl-vb-Ynn"/>
                                         <constraint firstItem="zT7-HO-MlB" firstAttribute="top" secondItem="Qwc-eQ-1K7" secondAttribute="top" constant="20" id="fmF-bS-Wrz"/>
                                         <constraint firstAttribute="trailing" secondItem="zT7-HO-MlB" secondAttribute="trailing" constant="20" id="mdX-0F-Ywt"/>
                                         <constraint firstItem="ank-bs-PHJ" firstAttribute="centerX" secondItem="Qwc-eQ-1K7" secondAttribute="centerX" id="zPq-es-mux"/>
@@ -2179,14 +2233,15 @@ Journeys screen and activate one.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="8VI-mz-QEH" id="M3A-Nm-sBl"/>
                         <outlet property="saveButton" destination="ank-bs-PHJ" id="MgN-iw-zGh"/>
-                        <outlet property="titleField" destination="PY1-H3-BuX" id="2Ef-Fh-RfI"/>
+                        <segue destination="rF9-PC-cE1" kind="unwind" identifier="backToCompose" unwindAction="unwindToCompose:" id="DPw-9b-NmN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CaP-a0-Jc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="rF9-PC-cE1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2578" y="261"/>
+            <point key="canvasLocation" x="2573" y="261"/>
         </scene>
         <!--Edit MessageVC-->
         <scene sceneID="2Va-97-VPt">
@@ -2206,7 +2261,7 @@ Journeys screen and activate one.</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Jie-dO-Nhi">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Jie-dO-Nhi">
                                             <rect key="frame" x="251" y="158" width="99" height="99"/>
                                             <color key="tintColor" red="0.92559773489999997" green="0.42352941179999998" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -2288,7 +2343,7 @@ Journeys screen and activate one.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jV4-p6-iNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qXv-e9-goR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1865" y="261"/>
+            <point key="canvasLocation" x="1869" y="261"/>
         </scene>
         <!--Profile-->
         <scene sceneID="nXp-Vt-8KG">
@@ -2870,7 +2925,7 @@ sync</string>
                                             <action selector="startSync:" destination="5TD-rD-hXk" eventType="touchUpInside" id="rJo-V8-Tm1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hA-B5-nQy">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hA-B5-nQy">
                                         <rect key="frame" x="184" y="451" width="233" height="21"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Last synchronize:">
@@ -3203,7 +3258,7 @@ sync</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tot-nu-Zaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O05-Hs-NUk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3287" y="261"/>
+            <point key="canvasLocation" x="3299" y="261"/>
         </scene>
         <!--Show Image ModalVC-->
         <scene sceneID="tmF-O6-OlK">
@@ -3281,7 +3336,6 @@ sync</string>
         <image name="ComposeVideo" width="39" height="31"/>
         <image name="DefaultProfile" width="106" height="106"/>
         <image name="DimiInTheHouse" width="106" height="106"/>
-        <image name="EditMessage" width="134" height="110"/>
         <image name="EditTitle" width="35" height="32"/>
         <image name="GPSIcon" width="27" height="31"/>
         <image name="Hikebeat Big" width="259" height="59"/>

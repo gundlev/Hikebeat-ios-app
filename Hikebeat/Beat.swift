@@ -12,7 +12,7 @@ import Realm
 
 class Beat: Object, Comparable {
     
-    dynamic var title: String? = nil
+    dynamic var emotion: String? = nil
     dynamic var journeyId: String = ""
     dynamic var message: String? = nil
     dynamic var latitude: String = ""
@@ -29,7 +29,7 @@ class Beat: Object, Comparable {
     dynamic var isTextMessage: Bool = false
     
     func fill(
-        title: String?,
+        emotion: String?,
         journeyId: String,
         message: String?,
         latitude: String,
@@ -44,7 +44,7 @@ class Beat: Object, Comparable {
         messageUploaded: Bool,
         journey: Journey) {
         
-        self.title = title
+        self.emotion = emotion
         self.journeyId = journeyId
         self.message = message
         self.latitude = latitude

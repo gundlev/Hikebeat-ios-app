@@ -113,13 +113,19 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.beatImage.layer.cornerRadius = 25
         cell.beatImage.layer.masksToBounds = true
 
-        let dataPath = getImagePath("profile_image.jpg")
-        let image = UIImage(contentsOfFile: dataPath)
-        if image != nil {
-            cell.profilePicture.image = image
+        if beat.emotion != nil {
+            let emotionName = numberToEmotion(beat.emotion!)
+            cell.profilePicture.image = UIImage(named: emotionName+"_selected")
         } else {
-            cell.profilePicture.image = UIImage(named: "DefaultProfile")
+            cell.profilePicture.image = UIImage(named: "ContactImage")
         }
+//        let dataPath = getImagePath("profile_image.jpg")
+//        let image = UIImage(contentsOfFile: dataPath)
+//        if image != nil {
+//            cell.profilePicture.image = image
+//        } else {
+//            cell.profilePicture.image = UIImage(named: "ContactImage")
+//        }
         
         // create path
         let width = min(cell.profilePicture.bounds.width, cell.profilePicture.bounds.height)
@@ -146,7 +152,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
 //        cell.scrollView.scrollEnabled = true
         
         cell.journeyTitle.text = journey.headline
-        cell.beatTitle.text = beat.title
+//        cell.beatTitle.text = beat.title
         cell.beatMessage.text = beat.message
         
         
@@ -168,7 +174,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         // setting beat media
         if beat.mediaData != nil {
             print("Item :", indexPath.item)
-            print("Beat Headline: ", beat.title)
+//            print("Beat Headline: ", beat.title)
             print("Mediadata: ", beat.mediaData!)
             switch beat.mediaType! {
             case MediaType.image:

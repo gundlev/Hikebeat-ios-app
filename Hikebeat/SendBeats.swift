@@ -21,7 +21,6 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
     var count = 0
     var numberOfFails = 0
     for beat in beats {
-        print(beat.title)
         print(beat.mediaUploaded)
         
         // Real solution
@@ -55,7 +54,7 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
             print("ResponseCode: ", response.response?.statusCode)
             if response.response?.statusCode == 200 {
                 let json = JSON(response.result.value!)
-                print("Success for beat: ", beat.title)
+                print("Success for beat: ", beat.message)
                 let realm = try! Realm()
                 try! realm.write() {
                     beat.mediaDataId = json["_id"].stringValue

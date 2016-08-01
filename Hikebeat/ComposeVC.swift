@@ -20,8 +20,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     var activeJourney: Journey?
     var realm = try! Realm()
-    var titleText: String?
     var messageText: String?
+    var emotion: String?
     var audioHasBeenRecordedForThisBeat = false
     var imagePicker = UIImagePickerController()
     var currentMediaURL:NSURL?
@@ -40,8 +40,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var filledin: Int = 0
     
     @IBOutlet weak var clearButton: UIButton!
-    @IBOutlet weak var editTitleButton: UIImageView!
     @IBOutlet weak var editMessageButton: UIImageView!
+    @IBOutlet weak var editEmotionButton: UIImageView!
     @IBOutlet weak var editImageButton: UIImageView!
     @IBOutlet weak var sendBeatButton: UIButton!
     @IBOutlet weak var editMemoButton: UIImageView!
@@ -62,10 +62,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBAction func sendBeat(sender: AnyObject) {
         print("up")
-//        rightTree.stopAnimating()
-//        stopSendAnimation()
-//        self.beatPromise = Promise<Bool, NoError>()
-//        checkForCorrectInput()
+        rightTree.stopAnimating()
+        stopSendAnimation()
+        self.beatPromise = Promise<Bool, NoError>()
+        checkForCorrectInput()
     }
     
     @IBAction func startHoldingToSend(sender: AnyObject) {
@@ -131,16 +131,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         filledin = 0
         clearButton.hidden = true
         
-        editTitleButton.layer.cornerRadius = editTitleButton.bounds.width/2
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
+        editEmotionButton.layer.cornerRadius = editEmotionButton.bounds.width/2
         editVideoButton.layer.cornerRadius = editVideoButton.bounds.width/2
         editMemoButton.layer.cornerRadius = editMemoButton.bounds.width/2
         editImageButton.layer.cornerRadius = editImageButton.bounds.width/2
         sendBeatButton.layer.cornerRadius = sendBeatButton.bounds.height/2
         journeysButton.layer.cornerRadius = journeysButton.bounds.height/2
 
-        editTitleButton.layer.masksToBounds = true
         editMessageButton.layer.masksToBounds = true
+        editEmotionButton.layer.masksToBounds = true
         editImageButton.layer.masksToBounds = true
         editVideoButton.layer.masksToBounds = true
         editMemoButton.layer.masksToBounds = true
@@ -154,17 +154,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         view.layer.addSublayer(bgGradient)
         
         
-        editTitleButton.userInteractionEnabled = true
+        editMessageButton.userInteractionEnabled = true
         editMemoButton.userInteractionEnabled = true
         editImageButton.userInteractionEnabled = true
         editVideoButton.userInteractionEnabled = true
-        editMessageButton.userInteractionEnabled = true
+        editEmotionButton.userInteractionEnabled = true
         
-        editTitleButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(titleButtonTapped)))
+        editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(textButtonTapped)))
         editMemoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(memoButtonTapped)))
         editImageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(imageButtonTapped)))
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
-        editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(messageButtonTapped)))
+        editEmotionButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(emotionsButtonTapped)))
         
         
         if !findActiveJourney() {
@@ -239,9 +239,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         return UIStatusBarStyle.LightContent
     }
     
-    func titleButtonTapped() {
-        print("title")
-        performSegueWithIdentifier("editTitleModal", sender: self)
+    func textButtonTapped() {
+        print("text")
+        performSegueWithIdentifier("editMessageModal", sender: self)
     }
 
     func memoButtonTapped() {
@@ -274,9 +274,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         self.chooseVideo()
     }
     
-    func messageButtonTapped() {
-        print("message")
-        performSegueWithIdentifier("editMessageModal", sender: self)
+    func emotionsButtonTapped() {
+        print("emotions")
+        performSegueWithIdentifier("editEmotionsModal", sender: self)
     }
     
     func applyGreenBorder(view :UIImageView) {
@@ -299,13 +299,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func clearAllForNewBeat() {
         print("Clearing for new beat")
-        removeGreenBorder(self.editTitleButton)
         removeGreenBorder(self.editMessageButton)
+        removeGreenBorder(self.editEmotionButton)
         removeGreenBorder(self.editMemoButton)
         removeGreenBorder(self.editImageButton)
         removeGreenBorder(self.editVideoButton)
-        self.titleText = nil
         self.messageText = nil
+        self.emotion = nil
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
@@ -380,11 +380,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         print("Now checking")
         let locationTuple = self.getTimeAndLocation()
         if locationTuple != nil {
-            if ((titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
+            if ((messageText == nil && emotion == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
                 print(0.3)
                 // Give a warning that there is not text or no active journey.
                 print("Something is missing")
-                print("Text: ", titleText == nil && messageText == nil && currentImage == nil && currentMediaURL == nil)
+                print("Text: ", messageText == nil && emotion == nil && currentImage == nil && currentMediaURL == nil)
                 print("Journey: ", self.activeJourney == nil)
                 print("Lat: ", locationTuple!.latitude)
                 print("Lng: ", locationTuple!.longitude)
@@ -431,7 +431,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 //            let locationTuple = self.getTimeAndLocation()
                 print("Just Before Crash!")
                 self.currentBeat = Beat()
-                self.currentBeat!.fill( titleText, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
+                self.currentBeat!.fill( emotion, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
 //                try! realm.write() {
 //                    realm.add(self.currentBeat!)
 //                }
@@ -454,8 +454,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
                 // "headline": localTitle, "text": localMessage,
                 var parameters = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
-                if currentBeat!.title != nil {
-                    parameters["headline"] = currentBeat?.title
+                if currentBeat!.emotion != nil {
+                    parameters["emotion"] = currentBeat?.emotion
                 }
                 if currentBeat!.message != nil {
                     parameters["text"] = currentBeat?.message
@@ -580,16 +580,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 } else {
                     // This will send it via SMS.
                     print("Not reachable, should send sms")
-                    var titleString = ""
+                    var emotionString = ""
                     var messageString = ""
-                    if self.titleText != nil {
-                        titleString = self.titleText!
-                    }
                     if self.messageText != nil {
                         messageString = self.messageText!
                     }
+                    if self.emotion != nil {
+                        emotionString = self.emotion!
+                    }
                     
-                    let messageText = self.genSMSMessageString(titleString, message: messageString, journeyId: self.activeJourney!.journeyId)
+                    let messageText = self.genSMSMessageString(emotionString, message: messageString, journeyId: self.activeJourney!.journeyId)
                     self.sendSMS(messageText)
                 }
 
@@ -605,13 +605,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
      SMS functions
 */
     
-    func genSMSMessageString(title: String, message: String, journeyId: String) -> String {
+    func genSMSMessageString(emotion: String, message: String, journeyId: String) -> String {
         
         print("timestamp deci: ", self.currentBeat?.timestamp)
         print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
         print("lat: ", hex(Double((self.currentBeat?.latitude)!)!))
         print("lng: ", hex(Double((self.currentBeat?.longitude)!)!))
-        let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + title + "##" + message
+        let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + emotion + "##" + message
         
         return smsMessageText
     }
@@ -729,11 +729,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier! {
-        case "editTitleModal":
-            if self.titleText != nil {
+        case "editEmotionsModal":
+            if self.emotion != nil {
                 print(1)
                 let vc = segue.destinationViewController as! EditTitleVC
-                vc.text = self.titleText!
+                vc.emotion = self.emotion!
                 print(1.1)
             }
         case "editMessageModal":

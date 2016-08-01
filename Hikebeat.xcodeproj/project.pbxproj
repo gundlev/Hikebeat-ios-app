@@ -34,6 +34,7 @@
 		858EFF191D19C26B00C50771 /* ShowImageModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858EFF181D19C26B00C50771 /* ShowImageModalVC.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		859EB30D1CDB73E4005353C0 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */; };
+		85A580981D4F46EE00B38B1C /* EmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A580971D4F46EE00B38B1C /* EmotionCell.swift */; };
 		85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */; };
 		85AC90731CE487AF007BE5C2 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90701CE487AF007BE5C2 /* Async.swift */; };
 		85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */; };
@@ -128,6 +129,7 @@
 		858EFF181D19C26B00C50771 /* ShowImageModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowImageModalVC.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		859EB30C1CDB73E4005353C0 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		85A580971D4F46EE00B38B1C /* EmotionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionCell.swift; sourceTree = "<group>"; };
 		85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hikebeat-Bridging-Header.h"; sourceTree = "<group>"; };
 		85AC906E1CE487AF007BE5C2 /* SVPulsingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPulsingAnnotationView.h; sourceTree = "<group>"; };
 		85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPulsingAnnotationView.m; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
 				858EFEFF1D19874700C50771 /* RecordAudioVC.swift */,
 				858EFF031D19897100C50771 /* MemoExt.swift */,
+				85A580971D4F46EE00B38B1C /* EmotionCell.swift */,
 			);
 			name = Compose;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */,
+				85A580981D4F46EE00B38B1C /* EmotionCell.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */,

@@ -38,3 +38,26 @@ public func covertToMedia(pathToInputFile : NSURL, pathToOuputFile: NSURL, fileT
     
     return true
 }
+
+public func numberToEmotion(number: String) -> String {
+    switch number {
+    case "1":
+        return "tired"
+    case "2":
+        return "sad"
+    case "3":
+        return "anxious"
+    case "4":
+        return "angry"
+    case "5":
+        return "relaxed"
+    case "6":
+        return "excited"
+    case "7":
+        return "love"
+    case "8":
+        return "happy"
+    default:
+        return ""
+    }
+}

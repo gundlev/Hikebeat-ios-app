@@ -258,7 +258,7 @@ class SettingsVC: UIViewController {
                 self.numbers = (image: 0, video: 0, audio: 0)
                 for beat in self.toUpload!.beats! {
                     print(4)
-                    print(beat.title)
+                    print(beat.message)
                     print(beat.mediaType)
                     print(beat)
                     switch beat.mediaType! {

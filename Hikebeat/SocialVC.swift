@@ -55,8 +55,8 @@ class SocialVC: UIViewController, UITextFieldDelegate {
             placeholder.transform = CGAffineTransformTranslate( placeholder.transform, 0.0, -120.0  )
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditTitleVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SocialVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SocialVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
 
         
         let bgGradient = CAGradientLayer()
