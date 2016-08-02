@@ -34,9 +34,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var lastSyncLabel: UILabel!
     @IBOutlet weak var settingsContainer: aCustomView!
     
-    
     @IBOutlet weak var logoutButton: UIButton!
-    
     
     @IBOutlet weak var dotsContainer: UIView!
     @IBOutlet weak var dot1: UIImageView!
@@ -47,22 +45,15 @@ class SettingsVC: UIViewController {
     
     @IBAction func logoutAction(sender: AnyObject) {
 
-    let appearance = SCLAlertView.SCLAppearance(
-        showCloseButton: false
-    )
-
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
         let alertView = SCLAlertView(appearance: appearance)
-        
         alertView.addButton("Yes"){
             self.performSegueWithIdentifier("logoutSegue", sender: nil)
-            
         }
-        
-        alertView.addButton("No") {
-            
-        }
-        
-    alertView.showNotice("Logout", subTitle: "Are you sure you want to logout?")
+        alertView.addButton("No") {}
+        alertView.showNotice("Logout", subTitle: "Are you sure you want to logout?")
     }
     
     
@@ -207,7 +198,7 @@ class SettingsVC: UIViewController {
         let numberOfDays = components.day
         lastSyncLabel.text = "Last synchronize: " + String(numberOfDays) + " days ago"
         
-        checkSync()
+//        checkSync()
     }
     
     override func viewDidAppear(animated: Bool) {

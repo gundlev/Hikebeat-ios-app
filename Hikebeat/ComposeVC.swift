@@ -397,7 +397,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 print(0.7)
                 if currentImage != nil {
                     //print(1)
-                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.5)
+                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.3)
                     mediaType = MediaType.image
                     //print(2)
                     mediaData = saveMediaToDocs(imageData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
@@ -498,6 +498,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                 
                                 Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).responseJSON { mediaResponse in
                                     print("This is the media response: ", mediaResponse)
+                                    print("Response", mediaResponse.response)
+                                    print("Debug Description", mediaResponse.debugDescription)
+                                    print("Description", mediaResponse.description)
+                                    print("Request", mediaResponse.request)
                                     
                                     // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
                                     if mediaResponse.response?.statusCode == 200 {
@@ -563,35 +567,36 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
             } else {
                 // check for permitted phoneNumber
-                let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers")!
-                if phoneNumbers == "" {
-                    
-                    let alertView = SCLAlertView()
-                    alertView.addButton("Go to profile") {
-                        print("Second button tapped")
-                        self.tabBarController?.selectedIndex = 3
-                        let tabVC = self.tabBarController as! HikebeatTabBarVC
-                        tabVC.deselectCenterButton()
-                    }
-                    alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
-//                    try! realm.write() {
-//                        realm.delete(self.currentBeat!)
-//                    }
-                } else {
-                    // This will send it via SMS.
-                    print("Not reachable, should send sms")
-                    var emotionString = ""
-                    var messageString = ""
-                    if self.messageText != nil {
-                        messageString = self.messageText!
-                    }
-                    if self.emotion != nil {
-                        emotionString = self.emotion!
-                    }
-                    
-                    let messageText = self.genSMSMessageString(emotionString, message: messageString, journeyId: self.activeJourney!.journeyId)
-                    self.sendSMS(messageText)
+                guard let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers") else {
+                    presentMissingPhoneNumberAlert()
+                    return
                 }
+                
+                guard phoneNumbers != "" else {
+                    presentMissingPhoneNumberAlert()
+                    return
+                }
+                
+//                if phoneNumbers == "" {
+//                    presentMissingPhoneNumberAlert()
+////                    try! realm.write() {
+////                        realm.delete(self.currentBeat!)
+////                    }
+//                } else {
+                    // This will send it via SMS.
+                print("Not reachable, should send sms")
+                var emotionString = ""
+                var messageString = ""
+                if self.messageText != nil {
+                    messageString = self.messageText!
+                }
+                if self.emotion != nil {
+                    emotionString = self.emotion!
+                }
+                
+                let messageText = self.genSMSMessageString(emotionString, message: messageString, journeyId: self.activeJourney!.journeyId)
+                self.sendSMS(messageText)
+//                }
 
                 // The save and setInitial is done in the message methods as it knows whether it fails.
             }
@@ -599,6 +604,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             // TODO: save
             
 
+    }
+    
+    func presentMissingPhoneNumberAlert() {
+        let alertView = SCLAlertView()
+        alertView.addButton("Go to profile") {
+            print("Second button tapped")
+            self.tabBarController?.selectedIndex = 3
+            let tabVC = self.tabBarController as! HikebeatTabBarVC
+            tabVC.deselectCenterButton()
+        }
+        alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
     }
     
 /*

@@ -168,7 +168,11 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         self.nameLabel.text = userDefaults.stringForKey("name")!
         self.emailLabel.text = userDefaults.stringForKey("email")!
         self.nationalityLabel.text = userDefaults.stringForKey("nationality")!
-        self.phoneNoLabel.text = userDefaults.stringForKey("permittedPhoneNumbers")!
+        if let phoneNumber = userDefaults.stringForKey("permittedPhoneNumbers") {
+            self.phoneNoLabel.text = phoneNumber
+        } else {
+            self.phoneNoLabel.placeholder = "Phone no."
+        }
         
         // Settings number of journeys
         let journeys = realm.objects(Journey)

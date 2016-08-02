@@ -90,8 +90,8 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 self.imagePicker.sourceType = .PhotoLibrary;
                 self.imagePicker.mediaTypes = [kUTTypeMovie as String]
                 self.imagePicker.allowsEditing = true
-                self.imagePicker.videoMaximumDuration = 15
-                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeHigh
+                self.imagePicker.videoMaximumDuration = 10
+                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeMedium
                 
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
             }
@@ -111,9 +111,9 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
                 imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video
                 imagePicker.allowsEditing = true
-                imagePicker.videoMaximumDuration = 15
+                imagePicker.videoMaximumDuration = 10
                 imagePicker.showsCameraControls = true
-                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeHigh
+                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeMedium
                 //self.imagePicker
                 
                 
@@ -201,6 +201,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
             
             // User chose image
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            
             if picker.sourceType == .Camera {
                 UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
             }

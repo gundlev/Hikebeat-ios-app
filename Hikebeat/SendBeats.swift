@@ -52,6 +52,8 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
         }.responseJSON { response in
 //            print("This is the media response: ", response)
             print("ResponseCode: ", response.response?.statusCode)
+            print("Response: ", response.response)
+            print("Value", response.result.value)
             if response.response?.statusCode == 200 {
                 let json = JSON(response.result.value!)
                 print("Success for beat: ", beat.message)

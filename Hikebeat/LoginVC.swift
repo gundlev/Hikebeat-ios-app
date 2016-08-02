@@ -168,6 +168,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     let number = numbers[0].stringValue
                     print("number: ", number)
                     self.userDefaults.setObject(number, forKey: "permittedPhoneNumbers")
+                } else {
+                    self.userDefaults.setObject("", forKey: "permittedPhoneNumbers")
                 }
                 
                 self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
