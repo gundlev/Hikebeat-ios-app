@@ -397,7 +397,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 print(0.7)
                 if currentImage != nil {
                     //print(1)
-                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.3)
+                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.4)
                     mediaType = MediaType.image
                     //print(2)
                     mediaData = saveMediaToDocs(imageData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
@@ -496,7 +496,19 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                 customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
                                 customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
                                 
-                                Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).responseJSON { mediaResponse in
+                                Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+                                    //print(totalBytesWritten)
+                                    
+                                    // This closure is NOT called on the main queue for performance
+                                    // reasons. To update your ui, dispatch to the main queue.
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        print("Total bytes written on main queue: \(totalBytesWritten)")
+                                        print("Bytes writtn now: \(totalBytesWritten)")
+                                        let byteIncreasePercentage = Float(bytesWritten) / Float(totalBytesExpectedToWrite)
+//                                        let localIncrease = increase * byteIncreasePercentage
+//                                        progressView.progress = progressView.progress + localIncrease
+                                    }
+                                    }.responseJSON { mediaResponse in
                                     print("This is the media response: ", mediaResponse)
                                     print("Response", mediaResponse.response)
                                     print("Debug Description", mediaResponse.debugDescription)

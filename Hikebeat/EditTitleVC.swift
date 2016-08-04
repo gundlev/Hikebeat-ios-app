@@ -40,11 +40,12 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard indexPath != 4 else {return}
+        
+        guard indexPath.item != 4 else {return}
         
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EmotionCell
         let result = cell.changeStatus()
-        
+        emotion = result
         if result == nil {
             selectedIndexpath = nil
             print("deselected item")
@@ -58,8 +59,10 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 print("no previously selected emotion")
                 selectedIndexpath = indexPath
             }
+            
+            performSegueWithIdentifier("saveAndBack", sender: self)
         }
-        emotion = result
+        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -132,14 +135,17 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let vc = segue.destinationViewController as! ComposeVC
 //        let titleString = self.titleField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if segue.identifier == "saveAndBack" {
+//        if segue.identifier == "saveAndBack" {
             print("saveButtonModal")
             vc.emotion = emotion
             if emotion != nil {
                 vc.applyGreenBorder(vc.editEmotionButton)
+                let emotionString = numberToEmotion(emotion!)
+                vc.editEmotionButton.image = UIImage(named: emotionString)
             } else {
                 vc.removeGreenBorder(vc.editEmotionButton)
+                vc.editEmotionButton.image = UIImage(named: "ComposeMessage")
             }
-        }
+//        }
     }
 }
