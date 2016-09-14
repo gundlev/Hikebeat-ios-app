@@ -15,8 +15,9 @@ import SwiftyJSON
 import MessageUI
 import BrightFutures
 import Result
+import CoreLocation
 
-class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
+class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLocationManagerDelegate {
 
     var activeJourney: Journey?
     var realm = try! Realm()
@@ -31,6 +32,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     var beatPromise: Promise<Bool, NoError>!
+    
+    var currentModal: ModalVC?
     
     // Audio variables
     var recorder: AVAudioRecorder!
@@ -108,7 +111,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             
             imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
             imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
-        }else if (UIDevice.isIphone4){
+        }else if (UIDevice.isIphone4 || UIDevice.isIpad){
             composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
             composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -110.0  )
             
@@ -314,6 +317,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         enableMediaView(self.editMemoButton)
         enableMediaView(self.editImageButton)
         enableMediaView(self.editVideoButton)
+        editEmotionButton.image = UIImage(named: "ComposeMessage")
     }
     
     func disableMediaView(view :UIImageView) {
@@ -378,69 +382,109 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func checkForCorrectInput() {
         print("Now checking")
-        let locationTuple = self.getTimeAndLocation()
-        if locationTuple != nil {
-            if ((messageText == nil && emotion == nil && currentImage == nil && currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
-                print(0.3)
-                // Give a warning that there is not text or no active journey.
-                print("Something is missing")
-                print("Text: ", messageText == nil && emotion == nil && currentImage == nil && currentMediaURL == nil)
-                print("Journey: ", self.activeJourney == nil)
-                print("Lat: ", locationTuple!.latitude)
-                print("Lng: ", locationTuple!.longitude)
-                
-            } else {
-                
-                print(0.4)
-                var mediaData: String? = nil
-                var mediaType: String? = nil
-                print(0.7)
-                if currentImage != nil {
-                    //print(1)
-                    let imageData = UIImageJPEGRepresentation(currentImage!, 0.4)
-                    mediaType = MediaType.image
-                    //print(2)
-                    mediaData = saveMediaToDocs(imageData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
-
-                } else if currentMediaURL != nil {
-                    mediaType = MediaType.video
-                    let newPath = getPathToFileFromName("vid-temp.mp4")
-                    let success = covertToMedia(currentMediaURL!, pathToOuputFile: newPath!, fileType: AVFileTypeMPEG4)
-                    if success {
-                        let videoData = NSData(contentsOfURL: currentMediaURL!)
-                        mediaData = saveMediaToDocs(videoData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".mp4")
-                        if mediaData != nil {
-                            self.removeMediaWithURL(currentMediaURL!)
+        
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+            print("has gps permission")
+            let locationTupleFuture = self.getTimeAndLocation()
+            locationTupleFuture.onSuccess { (locationTuple) in
+                if locationTuple != nil {
+                    if ((self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
+                        print(0.3)
+                        // Give a warning that there is not text or no active journey.
+                        print("Something is missing")
+                        print("Text: ", self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil)
+                        print("Journey: ", self.activeJourney == nil)
+                        print("Lat: ", locationTuple!.latitude)
+                        print("Lng: ", locationTuple!.longitude)
+                        
+                    } else {
+                        
+                        print(0.4)
+                        var mediaData: String? = nil
+                        var mediaType: String? = nil
+                        print(0.7)
+                        if self.currentImage != nil {
+                            //print(1)
+                            let imageData = UIImageJPEGRepresentation(self.currentImage!, 0.4)
+                            mediaType = MediaType.image
+                            //print(2)
+                            mediaData = self.saveMediaToDocs(imageData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
+                            
+                        } else if self.currentMediaURL != nil {
+                            mediaType = MediaType.video
+                            let newPath = self.getPathToFileFromName("vid-temp.mp4")
+                            let success = covertToMedia(self.currentMediaURL!, pathToOuputFile: newPath!, fileType: AVFileTypeMPEG4)
+                            if success {
+                                let videoData = NSData(contentsOfURL: self.currentMediaURL!)
+                                mediaData = self.saveMediaToDocs(videoData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".mp4")
+                                if mediaData != nil {
+                                    self.removeMediaWithURL(self.currentMediaURL!)
+                                }
+                                //print("mediaData: ", mediaData)
+                            }
+                            
+                        } else if self.audioHasBeenRecordedForThisBeat {
+                            mediaType = MediaType.audio
+                            let pathToAudio = self.getPathToFileFromName("audio-temp.acc")
+                            let newPath = self.getPathToFileFromName("audio-temp.m4a")
+                            covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
+                            let audioData = NSData(contentsOfURL: newPath!)
+                            mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
+                            //self.recorder.deleteRecording()
                         }
-                        //print("mediaData: ", mediaData)
+                        
+                        //            let locationTuple = self.getTimeAndLocation()
+                        print("Just Before Crash!")
+                        self.currentBeat = Beat()
+                        self.currentBeat!.fill( self.emotion, journeyId: self.activeJourney!.journeyId, message: self.messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, mediaUrl: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: self.activeJourney!)
+                        //                try! realm.write() {
+                        //                    realm.add(self.currentBeat!)
+                        //                }
+                        
+                        print("Just After Crash!")
+                        self.sendBeat()
                     }
-                    
-                } else if audioHasBeenRecordedForThisBeat {
-                    mediaType = MediaType.audio
-                    let pathToAudio = getPathToFileFromName("audio-temp.acc")
-                    let newPath = getPathToFileFromName("audio-temp.m4a")
-                    covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
-                    let audioData = NSData(contentsOfURL: newPath!)
-                    mediaData = saveMediaToDocs(audioData!, journeyId: (activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
-                    //self.recorder.deleteRecording()
+                } else {
+                    print("location tuple is nil")
                 }
                 
-                
-                
-                
-                //            let locationTuple = self.getTimeAndLocation()
-                print("Just Before Crash!")
-                self.currentBeat = Beat()
-                self.currentBeat!.fill( emotion, journeyId: activeJourney!.journeyId, message: messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: activeJourney!)
-//                try! realm.write() {
-//                    realm.add(self.currentBeat!)
-//                }
-                
-                print("Just After Crash!")
-                self.sendBeat()
             }
-        } else {
-            print("location tuple is nil")
+
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            
+            alertView.addButton("Yes") {
+                UIApplication.openAppSettings()
+            }
+            alertView.addButton("No", action: {})
+            alertView.showInfo("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
+
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            
+            alertView.addButton("Yes") {
+                self.appDelegate.startLocationManager()
+            }
+            alertView.addButton("No") {}
+            
+            alertView.showInfo("Allow GPS?", subTitle: "\nTo be able to show people your awesome journey and place you on a map we need your location. Will you allow the app access to your location?")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("change in location status to: ", status)
+        if (status == CLAuthorizationStatus.Denied) {
+            // The user denied authorization
+            // Discuss with the guys what to do here
+        } else if (status == CLAuthorizationStatus.AuthorizedWhenInUse) {
+            // The user accepted authorization
+            self.checkForCorrectInput()
         }
     }
     
@@ -455,7 +499,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 // "headline": localTitle, "text": localMessage,
                 var parameters = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
                 if currentBeat!.emotion != nil {
-                    parameters["emotion"] = currentBeat?.emotion
+                    parameters["emotion"] = emotionToNumber((currentBeat?.emotion)!)
                 }
                 if currentBeat!.message != nil {
                     parameters["text"] = currentBeat?.message
@@ -496,15 +540,21 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                 customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
                                 customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
                                 
+                                // Get and set progressView
+                                self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
+                                
                                 Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
                                     //print(totalBytesWritten)
                                     
                                     // This closure is NOT called on the main queue for performance
                                     // reasons. To update your ui, dispatch to the main queue.
                                     dispatch_async(dispatch_get_main_queue()) {
-                                        print("Total bytes written on main queue: \(totalBytesWritten)")
+                                        
+                                        print("Total bytes written on main queue: \(totalBytesWritten) out of \(totalBytesExpectedToWrite)")
                                         print("Bytes writtn now: \(totalBytesWritten)")
-                                        let byteIncreasePercentage = Float(bytesWritten) / Float(totalBytesExpectedToWrite)
+                                        
+                                        let bytePercentage = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+                                        self.currentModal?.progressBar?.progress = bytePercentage
 //                                        let localIncrease = increase * byteIncreasePercentage
 //                                        progressView.progress = progressView.progress + localIncrease
                                     }
@@ -561,60 +611,74 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     } else {
                         // Response is not 200
                         print("Error posting the message")
-                        alert("Problem sending", alertMessage: "Some error has occured when trying to send, it will be saved and syncronized later", vc: self, actions:
-                            (title: "Ok",
-                                style: UIAlertActionStyle.Cancel,
-                                function: {}))
+//                        alert("Problem sending", alertMessage: "Some error has occured when trying to send, it will be saved and syncronized later", vc: self, actions:
+//                            (title: "Ok",
+//                                style: UIAlertActionStyle.Cancel,
+//                                function: {}))
+                        let appearance = SCLAlertView.SCLAppearance(
+                            showCloseButton: false
+                        )
+                        let alertView = SCLAlertView(appearance: appearance)
                         
+                        alertView.addButton("Yes") {
+                            self.sendTextMessage()
+                        }
+                        alertView.addButton("No thanks") {}
+                        
+                        alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
+//                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
                         
                         // Is set to true now but should be changed to false
-                        try! self.realm.write {
-                            self.currentBeat?.mediaUploaded = false
-                            self.currentBeat?.messageUploaded = false
-                            self.activeJourney?.beats.append(self.currentBeat!)
-                        }
+                        // TODO: This should be uncommented when
+//                        try! self.realm.write {
+//                            self.currentBeat?.mediaUploaded = false
+//                            self.currentBeat?.messageUploaded = false
+//                            self.activeJourney?.beats.append(self.currentBeat!)
+//                        }
                     }
                     
                 }
 
             } else {
                 // check for permitted phoneNumber
-                guard let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers") else {
-                    presentMissingPhoneNumberAlert()
-                    return
-                }
-                
-                guard phoneNumbers != "" else {
-                    presentMissingPhoneNumberAlert()
-                    return
-                }
-                
-//                if phoneNumbers == "" {
-//                    presentMissingPhoneNumberAlert()
-////                    try! realm.write() {
-////                        realm.delete(self.currentBeat!)
-////                    }
-//                } else {
-                    // This will send it via SMS.
-                print("Not reachable, should send sms")
-                var emotionString = ""
-                var messageString = ""
-                if self.messageText != nil {
-                    messageString = self.messageText!
-                }
-                if self.emotion != nil {
-                    emotionString = self.emotion!
-                }
-                
-                let messageText = self.genSMSMessageString(emotionString, message: messageString, journeyId: self.activeJourney!.journeyId)
-                self.sendSMS(messageText)
-//                }
-
+                //                }
+                sendTextMessage()
                 // The save and setInitial is done in the message methods as it knows whether it fails.
             }
             
             // TODO: save
-            
+    }
+    
+    func sendTextMessage() {
+        guard let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers") else {
+            presentMissingPhoneNumberAlert()
+            return
+        }
+        
+        guard phoneNumbers != "" else {
+            presentMissingPhoneNumberAlert()
+            return
+        }
+        
+        //                if phoneNumbers == "" {
+        //                    presentMissingPhoneNumberAlert()
+        ////                    try! realm.write() {
+        ////                        realm.delete(self.currentBeat!)
+        ////                    }
+        //                } else {
+        // This will send it via SMS.
+        print("Not reachable, should send sms")
+        var emotionString = ""
+        var messageString = ""
+        if self.messageText != nil {
+            messageString = self.messageText!
+        }
+        if self.emotion != nil {
+            emotionString = emotionToNumber(self.emotion!)
+        }
+        
+        let messageText = self.genSMSMessageString(emotionString, message: messageString, seqNumber: self.activeJourney!.seqNumber!)
+        self.sendSMS(messageText)
 
     }
     
@@ -633,13 +697,26 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
      SMS functions
 */
     
-    func genSMSMessageString(emotion: String, message: String, journeyId: String) -> String {
+    func genSMSMessageString(emotion: String, message: String, seqNumber: String) -> String {
         
         print("timestamp deci: ", self.currentBeat?.timestamp)
         print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
         print("lat: ", hex(Double((self.currentBeat?.latitude)!)!))
         print("lng: ", hex(Double((self.currentBeat?.longitude)!)!))
-        let smsMessageText = journeyId + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + " " + emotion + "##" + message
+        var mediaComming = ""
+        if currentBeat?.mediaData != nil {
+            switch currentBeat!.mediaType! {
+            case MediaType.image:
+                mediaComming = " i"
+            case MediaType.video:
+                mediaComming = " v"
+            case MediaType.audio:
+                mediaComming = " a"
+            default:
+                print("error in setting mediatype in sms")
+            }
+        }
+        let smsMessageText = seqNumber + " " + hex(Double((self.currentBeat?.timestamp)!)!) + " " + hex(Double((self.currentBeat?.latitude)!)!) + " " + hex(Double((self.currentBeat?.longitude)!)!) + " " + hex(Double(self.currentBeat!.altitude)!) + mediaComming + " " + emotion + "##" + message
         
         return smsMessageText
     }
@@ -717,10 +794,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
      
      - returns: Bundle with 4 strings: timestamp, latitude, longitude, altitude.
      */
-    func getTimeAndLocation() -> (timestamp: String, latitude: String, longitude: String, altitude: String)? {
+    func getTimeAndLocation() -> Future<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError> {
         let t = String(NSDate().timeIntervalSince1970)
         let e = t.rangeOfString(".")
         let timestamp = t.substringToIndex((e?.startIndex)!)
+        let promise = Promise<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError>()
         //        let timeStamp = NSDateFormatter()
         //        timeStamp.dateFormat = "yyyyMMddHHmmss"
         //        let timeCapture = timeStamp.stringFromDate(currentDate)
@@ -733,26 +811,44 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let gpsCheck = userDefaults.boolForKey("GPS-check")
             if gpsCheck {
                 // Now performing gps check
-                if location.verticalAccuracy > 1500 || location.horizontalAccuracy > 1500 {
+                if location.horizontalAccuracy > 200 {
                     // TODO: modal to tell the user that the gps signal is too poor.
-                    return nil
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+
+                    alertView.addButton("Yes") {
+                        longitude = String(location.coordinate.longitude)
+                        latitude = String(location.coordinate.latitude)
+                        altitude = String(round(location.altitude))
+                        print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
+                        promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
+                    }
+                    alertView.addButton("No") {
+                        promise.success(nil)
+                    }
+                    
+                    alertView.showWarning("Poor GPS precision", subTitle: "\nYour GPS precision is poor, would you like to send a beat anyway?")
                 } else {
                     longitude = String(location.coordinate.longitude)
                     latitude = String(location.coordinate.latitude)
                     altitude = String(round(location.altitude))
                     print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-                    return (timestamp, latitude, longitude, altitude)
+                    promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
                 }
             } else {
                 longitude = String(location.coordinate.longitude)
                 latitude = String(location.coordinate.latitude)
                 altitude = String(round(location.altitude))
                 print("location 4. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-                return (timestamp, latitude, longitude, altitude)
+                promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
             }
         } else {
-            return nil
+            print("why here")
+//            return nil
         }
+        return promise.future
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -772,6 +868,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate {
         case "showGreenModal":
             let vc = segue.destinationViewController as! ModalVC
             vc.future = self.beatPromise.future
+            currentModal = vc
         default:
             break
         }

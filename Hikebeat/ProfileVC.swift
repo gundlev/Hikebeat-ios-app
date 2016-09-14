@@ -135,7 +135,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             self.followersButton.transform = CGAffineTransformTranslate( followersButton.transform, 0.0, 10.0  )
-        }else if(UIDevice.isIphone4){
+        }else if(UIDevice.isIphone4 || UIDevice.isIpad){
             profileContentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
             profileContentView.transform = CGAffineTransformTranslate( profileContentView.transform, 0.0, -100.0  )
             
@@ -248,7 +248,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     func getProfileImagePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let fileName = "profile_image.jpg"
+        let fileName = "media/profile_image.jpg"
         let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
         return dataPath
     }

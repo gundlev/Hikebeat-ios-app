@@ -169,7 +169,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         print(currentFileName)
         
         let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        self.soundFileURL = documentsDirectory.URLByAppendingPathComponent(currentFileName)
+        self.soundFileURL = documentsDirectory.URLByAppendingPathComponent("media/"+currentFileName)
         
         if NSFileManager.defaultManager().fileExistsAtPath(soundFileURL.absoluteString) {
             // probably won't happen. want to do something about it?

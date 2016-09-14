@@ -13,6 +13,10 @@ import BrightFutures
 class ModalVC: UIViewController {
     
     var future: Future<Bool, NoError>!
+    var progressBar: UIProgressView?
+    var progressBarTitle: UILabel?
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
 
     @IBOutlet weak var infoContainer: UIImageView!
     override func viewDidLoad() {
@@ -27,6 +31,23 @@ class ModalVC: UIViewController {
             _ = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
             self.infoContainer.image = UIImage(named: "Checkcheck")
         }
+    }
+    
+    func addProgressBar(titleText: String) -> UIProgressView{
+        progressBar = UIProgressView(frame: CGRect(x: 20, y: ((screenSize.height/3)*2)+20, width: screenSize.width-40, height: 20))
+        progressBar?.progressTintColor = greenColor
+        progressBar?.trackTintColor = UIColor.whiteColor()
+        progressBarTitle = UILabel(frame: CGRect(x: 20, y: ((screenSize.height/3)*2)+40, width: screenSize.width-40, height: 30))
+        progressBarTitle?.textAlignment = .Center
+        progressBarTitle?.text = titleText
+        progressBarTitle?.textColor = UIColor.whiteColor()
+        self.view.addSubview(progressBar!)
+        self.view.addSubview(progressBarTitle!)
+        return progressBar!
+    }
+    
+    func removeProgressBar() {
+        
     }
     
     override func viewDidAppear(animated: Bool) {

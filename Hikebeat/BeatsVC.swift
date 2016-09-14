@@ -98,8 +98,9 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BeatCell", forIndexPath: indexPath) as! BeatCollectionViewCell
         
         let beat = self.beats[indexPath.item]
+        print("Beat Emotion: ", beat.emotion)
        
-        if(UIDevice.isIphone4){
+        if(UIDevice.isIphone4 || UIDevice.isIpad){
             cell.beatContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7);
             cell.beatContainer.transform = CGAffineTransformTranslate( cell.beatContainer.transform, 0.0, -20.0  )
         }else if(UIDevice.isIphone5){
@@ -114,8 +115,12 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.beatImage.layer.masksToBounds = true
 
         if beat.emotion != nil {
-            let emotionName = numberToEmotion(beat.emotion!)
-            cell.profilePicture.image = UIImage(named: emotionName+"_selected")
+            if beat.emotion != "" {
+                let emotionName = beat.emotion!.lowercaseString
+                cell.profilePicture.image = UIImage(named: emotionName+"_selected")
+            } else {
+                cell.profilePicture.image = UIImage(named: "ContactImage")
+            }
         } else {
             cell.profilePicture.image = UIImage(named: "ContactImage")
         }
@@ -149,7 +154,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.profilePicture.layer.addSublayer(frameLayer)
         
         cell.scrollView.userInteractionEnabled = true
-//        cell.scrollView.scrollEnabled = true
+        cell.scrollView.scrollEnabled = false
         
         cell.journeyTitle.text = journey.headline
 //        cell.beatTitle.text = beat.title
@@ -159,8 +164,6 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.bounds.height/2
         cell.profilePicture.layer.masksToBounds = true
         
-        
-        cell.scrollView.scrollEnabled = true
         cell.scrollView.contentSize = CGSizeMake(230, 1000)
         
         // setting date
@@ -296,6 +299,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
             }
         case MediaType.image:
             print("image")
+            print()
             self.chosenImage = UIImage(contentsOfFile: getImagePath(beat.mediaData!))//UIImage(contentsOfFile: self.getImagePath(beat.mediaData!))
             performSegueWithIdentifier("showImage", sender: self)
         default:
@@ -328,7 +332,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
     func getImagePath(name: String) -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(name)
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("media/"+name)
         return dataPath
     }
     

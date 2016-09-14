@@ -97,7 +97,7 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     func getProfileImagePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let fileName = "profile_image.jpg"
+        let fileName = "media/profile_image.jpg"
         let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
         return dataPath
     }

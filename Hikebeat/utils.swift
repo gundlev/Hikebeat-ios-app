@@ -13,7 +13,7 @@ import AVFoundation
 public func getPathToFileFromName(name: String) -> NSURL? {
     let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
     let documentDirectory = paths[0]
-    let pathToFile = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent(name)
+    let pathToFile = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent("media/"+name)
     return pathToFile
 }
 
@@ -59,5 +59,35 @@ public func numberToEmotion(number: String) -> String {
         return "happy"
     default:
         return ""
+    }
+}
+
+
+public func emotionToNumber(number: String) -> String {
+    switch number {
+    case "tired":
+        return "1"
+    case "sad":
+        return "2"
+    case "anxious":
+        return "3"
+    case "angry":
+        return "4"
+    case "relaxed":
+        return "5"
+    case "excited":
+        return "6"
+    case "love":
+        return "7"
+    case "happy":
+        return "8"
+    default:
+        return ""
+    }
+}
+
+extension UIApplication {
+    class func openAppSettings() {
+        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
     }
 }

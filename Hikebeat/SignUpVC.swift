@@ -97,19 +97,23 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
 
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         if (UIDevice.isIphone5){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85)
             signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -50.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
             signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, 40.0  )
-        }else if(UIDevice.isIphone4){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
+        }else if(UIDevice.isIphone4 || UIDevice.isIpad){
+            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75)
             signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -80.0  )
         }
         

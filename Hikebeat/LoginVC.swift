@@ -45,7 +45,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
             loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, 40.0  )
-        }else if(UIDevice.isIphone4){
+        }else if(UIDevice.isIphone4 || UIDevice.isIpad){
             loginContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
             loginContainer.transform = CGAffineTransformTranslate( loginContainer.transform, 0.0, -120.0  )
         }
@@ -80,6 +80,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
     }
 
     
@@ -120,6 +124,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                print("This is run on the background queue")
             
             if response.response?.statusCode == 200 {
+                let createdMediaFolder = self.createMediaFolder()
                 print("value: ", response.result.value)
                 let firstJson = JSON(response.result.value!)
                 let user = firstJson["data"][0]
@@ -195,7 +200,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                 
                                 let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                                 let documentsDirectory: AnyObject = paths[0]
-                                let fileName = "profile_image.jpg"
+                                let fileName = "media/profile_image.jpg"
                                 let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
                                 let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
                                 print("The image download and save was: ", success)
@@ -228,7 +233,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                 //let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
                                 
                                 let dataJourney = Journey()
-                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue)
+                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue, seqNumber: String(journey["seqNumber"].intValue))
                                 print(1)
                                 let localRealm = try! Realm()
                                 try! localRealm.write() {
@@ -265,10 +270,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                                     let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                                                     let documentsDirectory: AnyObject = paths[0]
                                                     let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+".jpg"
-                                                    let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+                                                    let dataPath = documentsDirectory.stringByAppendingPathComponent("media/"+fileName)
                                                     let success = UIImagePNGRepresentation(image)!.writeToFile(dataPath, atomically: true)
                                                     print("The image downloaded: ", success, " moving on to save")
-                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId)
+                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
                                                 } else {
                                                     print("could not resolve to image")
                                                     print(response)
@@ -284,7 +289,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                                     
                                                 let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                                                 let documentsDirectory: AnyObject = paths[0]
-                                                let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+                                                let fileName = "media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
                                                 let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
 
                                                 return NSURL(fileURLWithPath: dataPath)
@@ -298,7 +303,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                                         print("Failed with error: \(error)")
                                                     } else {
                                                         let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId)
+                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
                                                         print("Downloaded file successfully")
                                                     }
 //                                                })
@@ -309,7 +314,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                             print("unknown type of media")
                                         }
                                     } else {
-                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil)
+                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil, mediaUrl: nil)
                                     }
                                     
                                 //hjkfhdsjfhjdksf
@@ -366,6 +371,22 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    func createMediaFolder() -> Bool {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("media")
+        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtPath(dataPath, withIntermediateDirectories: false, attributes: nil)
+            print("Media folder created")
+            return true
+        } catch let error as NSError {
+            print("Failed creating the media folder")
+            print(error.localizedDescription);
+            return false
+        }
+    }
+    
     func saveMediaToDocs(mediaData: NSData, journeyId: String, timestamp: String, fileType: String) -> String? {
         
 //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -375,7 +396,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
+        let fileName = "media/hikebeat_"+journeyId+"_"+timestamp+fileType
         let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
         let success = mediaData.writeToFile(dataPath, atomically: false)
         if success {
@@ -387,7 +408,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    func saveBeatAndAddToJourney(message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?) {
+    func saveBeatAndAddToJourney(message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?, mediaUrl: String?) {
 //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
 //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
 //        dispatch_async(backgroundQueue, {
@@ -395,7 +416,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         let localRealm = try! Realm()
         let dataBeat = Beat()
-        dataBeat.fill(message["headline"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
+        dataBeat.fill(message["emotion"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
         try! localRealm.write {
             localRealm.add(dataBeat)
             journey.beats.append(dataBeat)

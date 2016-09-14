@@ -47,7 +47,7 @@ class SocialVC: UIViewController, UITextFieldDelegate {
              placeholder.transform = CGAffineTransformTranslate( placeholder.transform, 0.0, -80.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
             self.popularJourneysButton.transform = CGAffineTransformTranslate( popularJourneysButton.transform, 0.0, 10.0  )
-        } else if(UIDevice.isIphone4){
+        } else if(UIDevice.isIphone4 || UIDevice.isIpad){
             searchFieldLabelView.hidden = true
             searchField.transform = CGAffineTransformTranslate( searchField.transform, 0.0, -107.0  )
             searchButton.transform = CGAffineTransformTranslate( searchButton.transform, 0.0, -120.0  )

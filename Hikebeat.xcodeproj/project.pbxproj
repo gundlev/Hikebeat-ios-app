@@ -39,6 +39,7 @@
 		85AC90731CE487AF007BE5C2 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90701CE487AF007BE5C2 /* Async.swift */; };
 		85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */; };
 		85AC90761CE4887C007BE5C2 /* BeatPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90751CE4887C007BE5C2 /* BeatPin.swift */; };
+		85B890E61D59EB16009589E6 /* DownloadMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B890E51D59EB16009589E6 /* DownloadMedia.swift */; };
 		85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */; };
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
@@ -136,6 +137,7 @@
 		85AC90701CE487AF007BE5C2 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LFTPulseAnimation.swift; sourceTree = "<group>"; };
 		85AC90751CE4887C007BE5C2 /* BeatPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatPin.swift; sourceTree = "<group>"; };
+		85B890E51D59EB16009589E6 /* DownloadMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadMedia.swift; sourceTree = "<group>"; };
 		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				8525E7D01CF2F92600D87BB5 /* SendChanges.swift */,
 				8525E7D11CF2F92600D87BB5 /* SendBeats.swift */,
 				8525E7D21CF2F92600D87BB5 /* SyncAll.swift */,
+				85B890E51D59EB16009589E6 /* DownloadMedia.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -320,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
-				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
 			);
@@ -336,6 +338,7 @@
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
 				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
 				E1378D801D295E12002E8CD1 /* aCustomView.swift */,
+				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 			);
 			name = Universal;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 			files = (
 				858EFF001D19874700C50771 /* RecordAudioVC.swift in Sources */,
 				858EFEFA1D186C9900C50771 /* SCLExtensions.swift in Sources */,
+				85B890E61D59EB16009589E6 /* DownloadMedia.swift in Sources */,
 				858EFF141D19BDDA00C50771 /* JTSSimpleImageDownloader.m in Sources */,
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,

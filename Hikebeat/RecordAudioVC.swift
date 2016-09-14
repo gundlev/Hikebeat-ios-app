@@ -28,7 +28,7 @@ class RecordAudioVC: UIViewController {
     
     override func viewDidLoad() {
         
-        if(UIDevice.isIphone4){
+        if(UIDevice.isIphone4 || UIDevice.isIpad){
             saveButton.transform = CGAffineTransformTranslate( saveButton.transform, 0.0, -25.0)
         }
         

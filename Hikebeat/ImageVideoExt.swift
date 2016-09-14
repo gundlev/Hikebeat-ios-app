@@ -30,6 +30,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 
                 self.imagePicker.delegate = self
                 self.imagePicker.sourceType = .PhotoLibrary;
+                self.imagePicker.mediaTypes = [kUTTypeImage as String]
                 self.imagePicker.allowsEditing = false
                 
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
@@ -79,7 +80,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
     
     func chooseVideo() {
         let optionsMenu = UIAlertController(title: "Choose resource for video", message: nil, preferredStyle: .ActionSheet)
-        let cameraRoll = UIAlertAction(title: "Photo library", style: .Default, handler: {
+        let cameraRoll = UIAlertAction(title: "Video library", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Camera Roll")
             
@@ -91,7 +92,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 self.imagePicker.mediaTypes = [kUTTypeMovie as String]
                 self.imagePicker.allowsEditing = true
                 self.imagePicker.videoMaximumDuration = 10
-                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeMedium
+                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeIFrame960x540
                 
                 self.presentViewController(self.imagePicker, animated: true, completion: nil)
             }
@@ -113,7 +114,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 imagePicker.allowsEditing = true
                 imagePicker.videoMaximumDuration = 10
                 imagePicker.showsCameraControls = true
-                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeMedium
+                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeIFrame960x540
                 //self.imagePicker
                 
                 
@@ -164,7 +165,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
     func getPathToFileFromName(name: String) -> NSURL? {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentDirectory = paths[0]
-        let pathToFile = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent(name)
+        let pathToFile = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent("media/"+name)
         return pathToFile
     }
     
@@ -218,7 +219,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 
         let documentsDirectory: AnyObject = paths[0]
         let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("media/" + fileName)
         let success = mediaData.writeToFile(dataPath, atomically: false)
         if success {
             print("Saved to Docs with name: ", fileName)

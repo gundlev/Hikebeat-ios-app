@@ -25,24 +25,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-//        let beat = Beat(title: "First", journeyId: "dgihdla7wt3oæ", message: "This is the first", latitude: "12.5489264", longitude: "54.74893278", altitude: "12.5", timestamp: "6329861323", mediaType: nil, mediaData: "", mediaDataId: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: Journey())
-//        print(beat)
-//        try! realm.write {
-//            realm.add(beat)
-//        }
-
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.startReachability()
-        
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+            startLocationManager()
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized {
+            startLocationManager()
+        }
+        return true
+    }
+    
+    func startLocationManager() -> Bool {
         // Setting op locationManager
+
         locManager.delegate = self;
         locManager.requestWhenInUseAuthorization()
         self.locManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         self.locManager.distanceFilter = 1
         self.locManager.startUpdatingLocation()
         self.locManager.startUpdatingHeading()
-
-        
         return true
     }
 
@@ -87,8 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             return (false, changes, beats)
         }
     }
-    
-    
     
     func startReachability() {
         print("startReachability")
@@ -181,6 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         var currentLocation: CLLocation?
         if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
+            print("it does get here")
             currentLocation = locManager.location
         }
         currentLocation?.coordinate.latitude

@@ -109,7 +109,7 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         cell.selectedImage = UIImage(named: emotion+"_selected")!
         cell.deselectedImage = UIImage(named: emotion)!
         cell.imageView.image = UIImage(named: emotion)!
-        cell.emotion = number
+        cell.emotion = emotion
         cell.label.text = emotion.capitalizedString
         if selectedEmotion(cell.emotion) {
             print("emotion chosen found: ", cell.emotion)
@@ -140,7 +140,7 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             vc.emotion = emotion
             if emotion != nil {
                 vc.applyGreenBorder(vc.editEmotionButton)
-                let emotionString = numberToEmotion(emotion!)
+                let emotionString = emotion!
                 vc.editEmotionButton.image = UIImage(named: emotionString)
             } else {
                 vc.removeGreenBorder(vc.editEmotionButton)

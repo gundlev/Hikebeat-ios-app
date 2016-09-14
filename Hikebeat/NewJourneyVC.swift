@@ -60,7 +60,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
                     let realm = try! Realm()
                     try! realm.write() {
                         let journey = Journey()
-                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.on, type: nil)
+                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.on, type: nil, seqNumber: String(json["seqNumber"].intValue))
                         realm.add(journey)
                     }
                     self.performSegueWithIdentifier("backWhenCreated", sender: self)

@@ -18,6 +18,7 @@ class SettingsVC: UIViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var toUpload: (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?)? = nil
     var numbers = (image: 0, video: 0, audio: 0)
+    let realm = try! Realm()
 
     @IBOutlet weak var gpsSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
@@ -50,10 +51,10 @@ class SettingsVC: UIViewController {
         )
         let alertView = SCLAlertView(appearance: appearance)
         alertView.addButton("Yes"){
-            self.performSegueWithIdentifier("logoutSegue", sender: nil)
+            self.deleteAllLocalDataAndLogOut()
         }
         alertView.addButton("No") {}
-        alertView.showNotice("Logout", subTitle: "Are you sure you want to logout?")
+        alertView.showNotice("Logout", subTitle: "Are you sure you want to logout? All local data will be deleted.")
     }
     
     
@@ -144,7 +145,7 @@ class SettingsVC: UIViewController {
                 settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, 40.0  )
             settingsContainer.button = syncButton
             
-        }else if (UIDevice.isIphone4){
+        }else if (UIDevice.isIphone4 || UIDevice.isIpad){
             settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
             settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -100.0  )
             
@@ -226,6 +227,37 @@ class SettingsVC: UIViewController {
 
         }
         checkSync()
+    }
+    
+    func deleteAllLocalDataAndLogOut() {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentDirectory = paths[0]
+        let pathToMedia = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent("media")
+        pathToMedia.absoluteString
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            print("Media folder exists: ", fileManager.fileExistsAtPath(pathToMedia.absoluteString))
+            try fileManager.removeItemAtURL(pathToMedia)
+            print("Media folder exists: ", fileManager.fileExistsAtPath(pathToMedia.absoluteString))
+            print("Media Folder deleted")
+            try! realm.write {
+                realm.deleteAll()
+            }
+            print("Successfully deleted all!")
+            resetUserDefaults()
+            self.performSegueWithIdentifier("logoutSegue", sender: nil)
+        }
+        catch let error as NSError {
+            print("Ooops! Something went wrong: \(error)")
+            print("mediafolder couldn't be deleted.")
+        }
+    }
+    
+    func resetUserDefaults() {
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
+        print("Testing, this chould be nil: ",userDefaults.objectForKey("_id"))
+        print("UserDefaults has been removed")
     }
 
     func showDots(){

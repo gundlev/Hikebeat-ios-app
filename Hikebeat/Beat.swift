@@ -22,6 +22,7 @@ class Beat: Object, Comparable {
     dynamic var mediaType: String? = nil
     dynamic var mediaData: String? = nil
     dynamic var mediaDataId: String? = nil
+    dynamic var mediaUrl: String? = nil
     dynamic var messageId: String? = nil
     dynamic var mediaUploaded: Bool = false
     dynamic var messageUploaded: Bool = false
@@ -39,6 +40,7 @@ class Beat: Object, Comparable {
         mediaType: String?,
         mediaData: String?,
         mediaDataId: String?,
+        mediaUrl: String?,
         messageId: String?,
         mediaUploaded: Bool,
         messageUploaded: Bool,
@@ -54,6 +56,7 @@ class Beat: Object, Comparable {
         self.mediaType = mediaType
         self.mediaData = mediaData
         self.mediaDataId = mediaDataId
+        self.mediaUrl = mediaUrl
         self.messageId = messageId
         self.mediaUploaded = mediaUploaded
         self.messageUploaded = messageUploaded

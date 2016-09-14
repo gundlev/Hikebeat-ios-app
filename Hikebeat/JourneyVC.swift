@@ -22,6 +22,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
+    @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
     var pins = [BeatPin]()
     var indexOfChosenPin: Int?
@@ -66,7 +67,20 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         titleButton.setTitle(journey?.headline, forState: UIControlState.Normal)
         
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
+        
+        beatIcon.addGestureRecognizer(tap1)
+        followersLabel.addGestureRecognizer(tap2)
+        beatIcon.userInteractionEnabled = true
+        followersLabel.userInteractionEnabled = true
+        
         self.setProfileImage()
+    }
+    
+    func showLatestBeat() {
+        self.indexOfChosenPin = pins.count - 1
+        performSegueWithIdentifier("showBeat", sender: self)
     }
     
     func setProfileImage() {
@@ -90,7 +104,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     func getProfileImagePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let fileName = "profile_image.jpg"
+        let fileName = "media/profile_image.jpg"
         let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
         return dataPath
     }
@@ -160,7 +174,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     func getImageWithName(name: String) -> UIImage? {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(name)
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("media/"+name)
         return UIImage(contentsOfFile: dataPath)
     }
 
@@ -290,7 +304,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         let slug = journey?.slug
         let user = userDefaults.stringForKey("username")
-        let base = "https://hikebeat.io/user/"
+        let base = "https://hikebeat.io/"
         let shareString = base+user!+"/"+slug!
         let objectsToShare = [shareString]
         let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
