@@ -12,7 +12,7 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var greenButton: UIButton!
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var fromVC = ""
     
@@ -28,8 +28,8 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         
         let bgGradient = CAGradientLayer()
-        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -38,11 +38,11 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
 
     }
     
-    @IBAction func back(sender: AnyObject) {
+    @IBAction func back(_ sender: AnyObject) {
         if fromVC == "profile" {
-            performSegueWithIdentifier("backToProfile", sender: self)
+            performSegue(withIdentifier: "backToProfile", sender: self)
         } else {
-            performSegueWithIdentifier("backToSocial", sender: self)
+            performSegue(withIdentifier: "backToSocial", sender: self)
         }
     }
 
@@ -50,20 +50,20 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jTitles.count
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.journeysTableView.dequeueReusableCellWithIdentifier("JourneyCell",forIndexPath: indexPath) as! JourneyViewCell
+        let cell = self.journeysTableView.dequeueReusableCell(withIdentifier: "JourneyCell",for: indexPath) as! JourneyViewCell
         
-        cell.journeyDateLabel.text = jDates[indexPath.row]
-        cell.journeyStatusLabel.text = jStatuses[indexPath.row]
-        cell.journeyTitleLabel.text = jTitles[indexPath.row]
+        cell.journeyDateLabel.text = jDates[(indexPath as NSIndexPath).row]
+        cell.journeyStatusLabel.text = jStatuses[(indexPath as NSIndexPath).row]
+        cell.journeyTitleLabel.text = jTitles[(indexPath as NSIndexPath).row]
         
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor.clear
         
         let bgColorView = UIView()
         bgColorView.backgroundColor = darkGreen
@@ -73,10 +73,10 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         appDelegate.fastSegueHack = "social"
-        performSegueWithIdentifier("showOtherJourney", sender: self)
-        self.journeysTableView.deselectRowAtIndexPath(indexPath, animated: true)
+        performSegue(withIdentifier: "showOtherJourney", sender: self)
+        self.journeysTableView.deselectRow(at: indexPath, animated: true)
     }
 
 

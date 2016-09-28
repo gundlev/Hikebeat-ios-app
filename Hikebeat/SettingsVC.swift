@@ -14,8 +14,8 @@ import Alamofire
 
 class SettingsVC: UIViewController {
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let userDefaults = UserDefaults.standard
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var toUpload: (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?)? = nil
     var numbers = (image: 0, video: 0, audio: 0)
     let realm = try! Realm()
@@ -44,7 +44,7 @@ class SettingsVC: UIViewController {
     
     var animationInitialised: Bool!
     
-    @IBAction func logoutAction(sender: AnyObject) {
+    @IBAction func logoutAction(_ sender: AnyObject) {
 
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: false
@@ -58,14 +58,15 @@ class SettingsVC: UIViewController {
     }
     
     
-    @IBAction func notificationChange(sender: UISwitch) {
-        if SimpleReachability.isConnectedToNetwork() {
-            let parameters:[String: AnyObject] = ["options" : [
-                "notifications"  :  sender.on
+    @IBAction func notificationChange(_ sender: UISwitch) {
+        let reachability = Reachability()
+        if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
+            let parameters:[String: Any] = ["options" : [
+                "notifications"  :  sender.isOn
                 ]]
-            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
             print(url)
-            Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                 
                 if response.response?.statusCode == 200 {
                     print("It has been changes in the db")
@@ -75,10 +76,10 @@ class SettingsVC: UIViewController {
                     let realm = try! Realm()
                     try! realm.write() {
                         let change = Change()
-                        let t = String(NSDate().timeIntervalSince1970)
-                        let e = t.rangeOfString(".")
-                        let timestamp = t.substringToIndex((e?.startIndex)!)
-                        change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.on, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                        let t = String(Date().timeIntervalSince1970)
+                        let e = t.range(of: ".")
+                        let timestamp = t.substring(to: (e?.lowerBound)!)
+                        change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.isOn, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
                         realm.add(change)
                     }
                 }
@@ -88,21 +89,21 @@ class SettingsVC: UIViewController {
             let realm = try! Realm()
             try! realm.write() {
                 let change = Change()
-                let t = String(NSDate().timeIntervalSince1970)
-                let e = t.rangeOfString(".")
-                let timestamp = t.substringToIndex((e?.startIndex)!)
-                change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.on, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                let t = String(Date().timeIntervalSince1970)
+                let e = t.range(of: ".")
+                let timestamp = t.substring(to: (e?.lowerBound)!)
+                change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.isOn, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
                 realm.add(change)
             }
         }
 
     }
     
-    @IBAction func GPSCheckChange(sender: UISwitch) {
-        self.userDefaults.setBool(sender.on, forKey: "GPS-check")
+    @IBAction func GPSCheckChange(_ sender: UISwitch) {
+        self.userDefaults.set(sender.isOn, forKey: "GPS-check")
     }
     
-    @IBAction func startSync(sender: AnyObject) {
+    @IBAction func startSync(_ sender: AnyObject) {
         print("Syncbutton pressed")
         if toUpload != nil {
             showDots()
@@ -115,10 +116,10 @@ class SettingsVC: UIViewController {
                 self.hideDots()
                 
                 if synced {
-                    let t = String(NSDate().timeIntervalSince1970)
-                    let e = t.rangeOfString(".")
-                    let timestamp = t.substringToIndex((e?.startIndex)!)
-                    self.userDefaults.setObject(timestamp, forKey: "lastSync")
+                    let t = String(Date().timeIntervalSince1970)
+                    let e = t.range(of: ".")
+                    let timestamp = t.substring(to: (e?.lowerBound)!)
+                    self.userDefaults.set(timestamp, forKey: "lastSync")
                     self.lastSyncLabel.text = "Last synchronize: 0 days ago"
                 }
 
@@ -136,26 +137,26 @@ class SettingsVC: UIViewController {
 
         // Do any additional setup after loading the view.
         if (UIDevice.isIphone5){
-            settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
-            settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -50.0  )
+            settingsContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85);
+            settingsContainer.transform = settingsContainer.transform.translatedBy(x: 0.0, y: -50.0  )
             settingsContainer.button = syncButton
             
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-                settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-                settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, 40.0  )
+                settingsContainer.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1);
+                settingsContainer.transform = settingsContainer.transform.translatedBy(x: 0.0, y: 40.0  )
             settingsContainer.button = syncButton
             
         }else if (UIDevice.isIphone4 || UIDevice.isIpad){
-            settingsContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
-            settingsContainer.transform = CGAffineTransformTranslate( settingsContainer.transform, 0.0, -100.0  )
+            settingsContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.65, y: 0.65);
+            settingsContainer.transform = settingsContainer.transform.translatedBy(x: 0.0, y: -100.0  )
             
             settingsContainer.button = syncButton
         }
         
         settingsContainer.button = syncButton
         let bgGradient = CAGradientLayer()
-        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -180,36 +181,36 @@ class SettingsVC: UIViewController {
         
         syncButton.backgroundColor = yellowColor
         
-        syncButton.titleLabel?.hidden = false
-        dotsContainer.hidden = true
+        syncButton.titleLabel?.isHidden = false
+        dotsContainer.isHidden = true
         animationInitialised = false
         
-        gpsSwitch.on = userDefaults.boolForKey("GPS-check")
-        notificationSwitch.on = userDefaults.boolForKey("notifications")
-        let timestamp = userDefaults.stringForKey("lastSync")
-        let calendar: NSCalendar = NSCalendar.currentCalendar()
-        let firstDate = NSDate(timeIntervalSince1970: NSTimeInterval(Int(timestamp!)!))
-        let secondDate = NSDate()
-        let date1 = calendar.startOfDayForDate(firstDate)
-        let date2 = calendar.startOfDayForDate(secondDate)
+        gpsSwitch.isOn = userDefaults.bool(forKey: "GPS-check")
+        notificationSwitch.isOn = userDefaults.bool(forKey: "notifications")
+        let timestamp = userDefaults.string(forKey: "lastSync")
+        let calendar: Calendar = Calendar.current
+        let firstDate = Date(timeIntervalSince1970: Foundation.TimeInterval(Int(timestamp!)!))
+        let secondDate = Date()
+        let date1 = calendar.startOfDay(for: firstDate)
+        let date2 = calendar.startOfDay(for: secondDate)
         
-        let flags = NSCalendarUnit.Day
-        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
+        let flags = NSCalendar.Unit.day
+        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
         
         let numberOfDays = components.day
-        lastSyncLabel.text = "Last synchronize: " + String(numberOfDays) + " days ago"
+        lastSyncLabel.text = "Last synchronize: " + String(describing: numberOfDays) + " days ago"
         
 //        checkSync()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if(!animationInitialised){
             let dots = [dot1,dot2,dot3]
             var delay = 0.0
             for dot in dots{
             
-                UIView.animateWithDuration(0.4,delay: delay, options:   [.Repeat, .Autoreverse, .CurveEaseOut], animations: {
-                    dot.center.y -= 15
+                UIView.animate(withDuration: 0.4,delay: delay, options:   [.repeat, .autoreverse, .curveEaseOut], animations: {
+                    dot?.center.y -= 15
                 },completion:nil)
                 delay+=0.2
             }
@@ -218,9 +219,9 @@ class SettingsVC: UIViewController {
             let dots = [dot1,dot2,dot3]
             var delay = 0.0
             for dot in dots{
-                dot.center.y += 15
-                UIView.animateWithDuration(0.4,delay: delay, options:   [.Repeat, .Autoreverse, .CurveEaseOut], animations: {
-                    dot.center.y -= 15
+                dot?.center.y += 15
+                UIView.animate(withDuration: 0.4,delay: delay, options:   [.repeat, .autoreverse, .curveEaseOut], animations: {
+                    dot?.center.y -= 15
                     },completion:nil)
                 delay+=0.2
             }
@@ -230,22 +231,22 @@ class SettingsVC: UIViewController {
     }
     
     func deleteAllLocalDataAndLogOut() {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentDirectory = paths[0]
-        let pathToMedia = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent("media")
+        let pathToMedia = URL(fileURLWithPath: documentDirectory).appendingPathComponent("/media")
         pathToMedia.absoluteString
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         do {
-            print("Media folder exists: ", fileManager.fileExistsAtPath(pathToMedia.absoluteString))
-            try fileManager.removeItemAtURL(pathToMedia)
-            print("Media folder exists: ", fileManager.fileExistsAtPath(pathToMedia.absoluteString))
+            print("Media folder exists: ", fileManager.fileExists(atPath: pathToMedia.absoluteString))
+            try fileManager.removeItem(at: pathToMedia)
+            print("Media folder exists: ", fileManager.fileExists(atPath: pathToMedia.absoluteString))
             print("Media Folder deleted")
             try! realm.write {
                 realm.deleteAll()
             }
             print("Successfully deleted all!")
             resetUserDefaults()
-            self.performSegueWithIdentifier("logoutSegue", sender: nil)
+            self.performSegue(withIdentifier: "logoutSegue", sender: nil)
         }
         catch let error as NSError {
             print("Ooops! Something went wrong: \(error)")
@@ -254,20 +255,20 @@ class SettingsVC: UIViewController {
     }
     
     func resetUserDefaults() {
-        let appDomain = NSBundle.mainBundle().bundleIdentifier!
-        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
-        print("Testing, this chould be nil: ",userDefaults.objectForKey("_id"))
+        let appDomain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        print("Testing, this chould be nil: ",userDefaults.object(forKey: "_id"))
         print("UserDefaults has been removed")
     }
 
     func showDots(){
-        syncButton.userInteractionEnabled = false
-        dotsContainer.hidden = false
+        syncButton.isUserInteractionEnabled = false
+        dotsContainer.isHidden = false
     }
     
     func hideDots(){
-        syncButton.userInteractionEnabled = true
-        dotsContainer.hidden = true
+        syncButton.isUserInteractionEnabled = true
+        dotsContainer.isHidden = true
     }
     
     func checkSync() -> Bool {
@@ -329,7 +330,7 @@ class SettingsVC: UIViewController {
         }
     }
     
-    func setBorderAccordingToStatus(view: UIImageView, mediaType: String) {
+    func setBorderAccordingToStatus(_ view: UIImageView, mediaType: String) {
         view.layer.borderWidth = 4
         var color:UIColor = greenColor
         switch mediaType {
@@ -347,7 +348,7 @@ class SettingsVC: UIViewController {
             }
             default: print("wrong")
         }
-        view.layer.borderColor = color.CGColor
+        view.layer.borderColor = color.cgColor
     }
 
     override func didReceiveMemoryWarning() {

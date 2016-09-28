@@ -46,8 +46,8 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     
     func setInitialAudio() {
-        stopButton.hidden = true
-        playButton.hidden = true
+        stopButton.isHidden = true
+        playButton.isHidden = true
         setSessionPlayback()
         askForNotifications()
         checkHeadphones()
@@ -56,27 +56,27 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     func startRecordingAudio() {
         timeLabel.text = "00:00"
-        if player != nil && player.playing {
+        if player != nil && player.isPlaying {
             player.stop()
         }
         
         if recorder == nil {
             print("recording. recorder nil")
-            playButton.hidden = true
-            stopButton.hidden = true
+            playButton.isHidden = true
+            stopButton.isHidden = true
             recordWithPermission(true)
             return
         }
         
-        if recorder != nil && recorder.recording {
+        if recorder != nil && recorder.isRecording {
             print("pausing")
             recorder.pause()
-            recordButton.setTitle("Continue", forState:.Normal)
+            recordButton.setTitle("Continue", for:UIControlState())
             
         } else {
             print("recording")
-            playButton.hidden = true
-            stopButton.hidden = true
+            playButton.isHidden = true
+            stopButton.isHidden = true
             //            recorder.record()
             recordWithPermission(false)
         }
@@ -89,16 +89,16 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         self.audioHasBeenRecordedForThisBeat = false
         self.timeLabel.text = "00:00"
         self.recordCircle.image = UIImage(named: "record-btn")
-        self.recordButton.enabled = true
-        self.saveButton.hidden = true
-        self.playButton.hidden = true
-        self.stopButton.hidden = true
-        self.deleteButton.hidden = true
+        self.recordButton.isEnabled = true
+        self.saveButton.isHidden = true
+        self.playButton.isHidden = true
+        self.stopButton.isHidden = true
+        self.deleteButton.isHidden = true
     }
     
     func stopRecordingAudio() {
         print("stop")
-        self.saveButton.hidden = false
+        self.saveButton.isHidden = false
         
         recorder?.stop()
         player?.stop()
@@ -108,21 +108,21 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
-            deleteButton.hidden = false
-            playButton.hidden = false
-            stopButton.hidden = true
-            recordButton.enabled = false
+            deleteButton.isHidden = false
+            playButton.isHidden = false
+            stopButton.isHidden = true
+            recordButton.isEnabled = false
         } catch let error as NSError {
             print("could not make session inactive")
             print(error.localizedDescription)
         }
     }
     
-    func updateAudioMeter(timer:NSTimer) {
+    func updateAudioMeter(_ timer:Timer) {
         
-        if recorder.recording {
+        if recorder.isRecording {
             let min = Int(recorder.currentTime / 60)
-            let sec = Int(recorder.currentTime % 60)
+            let sec = Int(recorder.currentTime.truncatingRemainder(dividingBy: 60))
             let s = String(format: "%02d:%02d", min, sec)
             timeLabel.text = s
             recorder.updateMeters()
@@ -134,18 +134,18 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     func playAudio() {
         setSessionPlayback()
-        var url:NSURL?
+        var url:URL?
         if self.recorder != nil {
             url = self.recorder.url
         } else {
-            url = self.soundFileURL!
+            url = self.soundFileURL! as URL
         }
         print("playing \(url)")
         
         do {
-            self.player = try AVAudioPlayer(contentsOfURL: url!)
-            stopButton.hidden = false
-            playButton.hidden = true
+            self.player = try AVAudioPlayer(contentsOf: url!)
+            stopButton.isHidden = false
+            playButton.isHidden = true
             player.delegate = self
             player.prepareToPlay()
             player.volume = 1.0
@@ -159,8 +159,8 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     func stopPlayingAudio() {
         self.player.stop()
-        self.playButton.hidden = false
-        self.stopButton.hidden = true
+        self.playButton.isHidden = false
+        self.stopButton.isHidden = true
     }
     
     
@@ -168,26 +168,26 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         let currentFileName = "audio-temp.m4a"
         print(currentFileName)
         
-        let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        self.soundFileURL = documentsDirectory.URLByAppendingPathComponent("media/"+currentFileName)
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        self.soundFileURL = documentsDirectory.appendingPathComponent("/media/"+currentFileName)
         
-        if NSFileManager.defaultManager().fileExistsAtPath(soundFileURL.absoluteString) {
+        if FileManager.default.fileExists(atPath: soundFileURL.absoluteString) {
             // probably won't happen. want to do something about it?
             print("soundfile \(soundFileURL.absoluteString) exists")
         }
         
         let recordSettings:[String : AnyObject] = [
-            AVFormatIDKey: NSNumber(unsignedInt:kAudioFormatMPEG4AAC),
-            AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-            AVEncoderBitRateKey : 320000,
-            AVNumberOfChannelsKey: 2,
-            AVSampleRateKey : 44100.0
+            AVFormatIDKey: NSNumber(value: kAudioFormatMPEG4AAC as UInt32),
+            AVEncoderAudioQualityKey : AVAudioQuality.max.rawValue as AnyObject,
+            AVEncoderBitRateKey : 320000 as AnyObject,
+            AVNumberOfChannelsKey: 2 as AnyObject,
+            AVSampleRateKey : 44100.0 as AnyObject
         ]
         
         do {
-            recorder = try AVAudioRecorder(URL: soundFileURL, settings: recordSettings)
+            recorder = try AVAudioRecorder(url: soundFileURL as URL, settings: recordSettings)
             recorder.delegate = self
-            recorder.meteringEnabled = true
+            recorder.isMeteringEnabled = true
             recorder.prepareToRecord() // creates/overwrites the file at soundFileURL
         } catch let error as NSError {
             recorder = nil
@@ -196,10 +196,10 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         
     }
     
-    func recordWithPermission(setup:Bool) {
+    func recordWithPermission(_ setup:Bool) {
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         // ios 8 and later
-        if (session.respondsToSelector(#selector(AVAudioSession.requestRecordPermission(_:)))) {
+        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
             AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
                 if granted {
                     print("Permission to record granted")
@@ -208,7 +208,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
                         self.setupRecorder()
                     }
                     self.recorder.record()
-                    self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
+                    self.meterTimer = Timer.scheduledTimer(timeInterval: 0.1,
                         target:self,
                         selector:#selector(RecordAudioVC.updateAudioMeter(_:)),
                         userInfo:nil,
@@ -257,12 +257,12 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     func deleteAllRecordings() {
         let docsDir =
-        NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         
         do {
-            let files = try fileManager.contentsOfDirectoryAtPath(docsDir)
+            let files = try fileManager.contentsOfDirectory(atPath: docsDir)
             var recordings = files.filter( { (name: String) -> Bool in
                 return name.hasSuffix("m4a")
             })
@@ -271,7 +271,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
                 
                 print("removing \(path)")
                 do {
-                    try fileManager.removeItemAtPath(path)
+                    try fileManager.removeItem(atPath: path)
                 } catch let error as NSError {
                     NSLog("could not remove \(path)")
                     print(error.localizedDescription)
@@ -287,58 +287,58 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     func askForNotifications() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
             selector:#selector(RecordAudioVC.background(_:)),
-            name:UIApplicationWillResignActiveNotification,
+            name:NSNotification.Name.UIApplicationWillResignActive,
             object:nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
             selector:#selector(RecordAudioVC.foreground(_:)),
-            name:UIApplicationWillEnterForegroundNotification,
+            name:NSNotification.Name.UIApplicationWillEnterForeground,
             object:nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
             selector:#selector(RecordAudioVC.routeChange(_:)),
-            name:AVAudioSessionRouteChangeNotification,
+            name:NSNotification.Name.AVAudioSessionRouteChange,
             object:nil)
     }
     
-    func background(notification:NSNotification) {
+    func background(_ notification:Notification) {
         print("background")
     }
     
-    func foreground(notification:NSNotification) {
+    func foreground(_ notification:Notification) {
         print("foreground")
     }
     
     
-    func routeChange(notification:NSNotification) {
-        print("routeChange \(notification.userInfo)")
+    func routeChange(_ notification:Notification) {
+        print("routeChange \((notification as NSNotification).userInfo)")
         
-        if let userInfo = notification.userInfo {
+        if let userInfo = (notification as NSNotification).userInfo {
             //print("userInfo \(userInfo)")
             if let reason = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt {
                 //print("reason \(reason)")
                 switch AVAudioSessionRouteChangeReason(rawValue: reason)! {
-                case AVAudioSessionRouteChangeReason.NewDeviceAvailable:
+                case AVAudioSessionRouteChangeReason.newDeviceAvailable:
                     print("NewDeviceAvailable")
                     print("did you plug in headphones?")
                     checkHeadphones()
-                case AVAudioSessionRouteChangeReason.OldDeviceUnavailable:
+                case AVAudioSessionRouteChangeReason.oldDeviceUnavailable:
                     print("OldDeviceUnavailable")
                     print("did you unplug headphones?")
                     checkHeadphones()
-                case AVAudioSessionRouteChangeReason.CategoryChange:
+                case AVAudioSessionRouteChangeReason.categoryChange:
                     print("CategoryChange")
-                case AVAudioSessionRouteChangeReason.Override:
+                case AVAudioSessionRouteChangeReason.override:
                     print("Override")
-                case AVAudioSessionRouteChangeReason.WakeFromSleep:
+                case AVAudioSessionRouteChangeReason.wakeFromSleep:
                     print("WakeFromSleep")
-                case AVAudioSessionRouteChangeReason.Unknown:
+                case AVAudioSessionRouteChangeReason.unknown:
                     print("Unknown")
-                case AVAudioSessionRouteChangeReason.NoSuitableRouteForCategory:
+                case AVAudioSessionRouteChangeReason.noSuitableRouteForCategory:
                     print("NoSuitableRouteForCategory")
-                case AVAudioSessionRouteChangeReason.RouteConfigurationChange:
+                case AVAudioSessionRouteChangeReason.routeConfigurationChange:
                     print("RouteConfigurationChange")
                     
                 }
@@ -368,11 +368,11 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
 /*
     AVAudioRecorderDelegate functions
 */
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder,
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder,
         successfully flag: Bool) {
             print("finished recording \(flag)")
-            stopButton.hidden = true
-            playButton.hidden = false
+            stopButton.isHidden = true
+            playButton.isHidden = false
             self.audioHasBeenRecordedForThisBeat = true
             
             // iOS8 and later
@@ -389,8 +389,8 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
 //            self.presentViewController(alert, animated:true, completion:nil)
     }
     
-    func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder,
-        error: NSError?) {
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder,
+        error: Error?) {
             
             if let e = error {
                 print("\(e.localizedDescription)")
@@ -401,13 +401,13 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
 /*
     AVAudioPlayerDelegate functions
 */
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("finished playing \(flag)")
-        stopButton.hidden = true
-        playButton.hidden = false
+        stopButton.isHidden = true
+        playButton.isHidden = false
     }
     
-    func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer, error: NSError?) {
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         if let e = error {
             print("\(e.localizedDescription)")
         }

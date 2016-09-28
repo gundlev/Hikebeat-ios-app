@@ -13,7 +13,7 @@ import BrightFutures
 import Alamofire
 import SwiftyJSON
 
-func downloadMediaForJourney(journey: Journey) {
+func downloadMediaForJourney(_ journey: Journey) {
     let beats = journey.beats
     for beat in beats {
         if beat.mediaType != nil && beat.mediaData == nil {
@@ -21,4 +21,23 @@ func downloadMediaForJourney(journey: Journey) {
             
         }
     }
+}
+
+func downloadAndStoreMedia(url: String, name: String) -> Future<Bool, NoError> {
+    let promise = Promise<Bool, NoError>()
+    print("urlHere: ", url)
+    Alamofire.request(url).responseData { response in
+        print("value: ", response)
+        if let data = response.result.value {
+            if let _ = saveMediaToDocs(fileName: name, data: data) {
+                promise.success(true)
+            } else {
+                promise.success(false)
+            }
+        } else {
+            promise.success(false)
+            print("Failed to get data")
+        }
+    }
+    return promise.future
 }

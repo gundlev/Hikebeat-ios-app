@@ -11,13 +11,13 @@ import UIKit
 
 extension UIImage {
     func correctlyOrientedImage() -> UIImage {
-        if self.imageOrientation == UIImageOrientation.Up {
+        if self.imageOrientation == UIImageOrientation.up {
             return self
         }
         
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        self.drawInRect(CGRectMake(0, 0, self.size.width, self.size.height))
-        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         
         return normalizedImage;

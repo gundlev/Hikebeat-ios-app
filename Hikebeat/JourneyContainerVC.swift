@@ -16,9 +16,9 @@ class JourneyContainerVC: UIViewController {
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "instantiateContainer" {
-            let vc = segue.destinationViewController as! JourneyVC
+            let vc = segue.destination as! JourneyVC
             vc.journey = self.journey
         }
     }

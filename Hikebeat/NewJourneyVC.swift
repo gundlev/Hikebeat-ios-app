@@ -10,13 +10,33 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import RealmSwift
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NewJourneyVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var active: UISwitch!
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var createButton: UIButton!
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +50,12 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         titleField.layer.masksToBounds = true
         createButton.layer.masksToBounds = true
         
-        let paddingView = UIView(frame: CGRectMake(0, 0, 15, self.titleField.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.titleField.frame.height))
         titleField.leftView = paddingView
-        titleField.leftViewMode = UITextFieldViewMode.Always
+        titleField.leftViewMode = UITextFieldViewMode.always
         
         titleField.rightView = paddingView
-        titleField.rightViewMode = UITextFieldViewMode.Always
+        titleField.rightViewMode = UITextFieldViewMode.always
         
         // Do any additional setup after loading the view.
         
@@ -43,13 +63,13 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         titleField.becomeFirstResponder()
     }
     
-    @IBAction func createNewJourney(sender: AnyObject) {
+    @IBAction func createNewJourney(_ sender: AnyObject) {
         if titleField.text?.characters.count > 1 {
-            let parameters: [String: AnyObject] = ["options": ["headline": titleField.text!]]
-            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/journeys"
+            let parameters: [String: Any] = ["options": ["headline": titleField.text!]]
+            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/journeys"
             print(url)
             
-            Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                 print(response.result.value)
                 print(response.response?.statusCode)
                 if response.response?.statusCode == 200 {
@@ -60,10 +80,10 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
                     let realm = try! Realm()
                     try! realm.write() {
                         let journey = Journey()
-                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.on, type: nil, seqNumber: String(json["seqNumber"].intValue))
+                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.isOn, type: nil, seqNumber: String(json["seqNumber"].intValue))
                         realm.add(journey)
                     }
-                    self.performSegueWithIdentifier("backWhenCreated", sender: self)
+                    self.performSegue(withIdentifier: "backWhenCreated", sender: self)
                 } else {
                     print(response)
                 }
@@ -72,12 +92,12 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
 
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if self.titleField.isFirstResponder() {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.titleField.isFirstResponder {
             view.endEditing(true)
             
         } else {
-            performSegueWithIdentifier("backToJourneyModelTap", sender: self)
+            performSegue(withIdentifier: "backToJourneyModelTap", sender: self)
         }
     }
     
@@ -87,23 +107,23 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Foundation.Notification) {
         self.view.frame.origin.y = -130
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Foundation.Notification) {
         self.view.frame.origin.y = 0
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backWhenCreated" {
-            let vc = segue.destinationViewController as! JourneysVC
-            if self.active.on {
+            let vc = segue.destination as! JourneysVC
+            if self.active.isOn {
                 vc.removeOldActiveJourney()
             }
         }

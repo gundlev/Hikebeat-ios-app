@@ -30,7 +30,7 @@ class Beat: Object, Comparable {
     dynamic var isTextMessage: Bool = false
     
     func fill(
-        emotion: String?,
+        _ emotion: String?,
         journeyId: String,
         message: String?,
         latitude: String,

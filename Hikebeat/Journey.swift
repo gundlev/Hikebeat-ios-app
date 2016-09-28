@@ -25,7 +25,7 @@ class Journey: Object {
     
     
     func fill(
-    slug: String?,
+    _ slug: String?,
     userId: String,
     journeyId: String,
     headline: String?,

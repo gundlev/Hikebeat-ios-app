@@ -15,7 +15,7 @@ import Result
 import RealmSwift
 import SwiftyJSON
 
-func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, NoError> {
+func sendBeats(_ beats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, NoError> {
     
     let promise = Promise<Bool, NoError>()
     var count = 0
@@ -37,17 +37,17 @@ func sendBeats(beats: Results<Beat>, progressView: UIProgressView, increase: Flo
         /** The URL for the post*/
         let url = IPAddress + "journeys/" + beat.journeyId + "/media"
         
-        Alamofire.upload(.POST, url, headers: customHeader, file: filePath!).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+        Alamofire.upload(filePath!, to: url, headers: customHeader).uploadProgress { progress in
             //print(totalBytesWritten)
             
             // This closure is NOT called on the main queue for performance
             // reasons. To update your ui, dispatch to the main queue.
-            dispatch_async(dispatch_get_main_queue()) {
-                print("Total bytes written on main queue: \(totalBytesWritten)")
-                print("Bytes writtn now: \(totalBytesWritten)")
-                let byteIncreasePercentage = Float(bytesWritten) / Float(totalBytesExpectedToWrite)
-                let localIncrease = increase * byteIncreasePercentage
-                progressView.progress = progressView.progress + localIncrease
+            DispatchQueue.main.async {
+//                print("Total bytes written on main queue: \(totalBytesWritten)")
+//                print("Bytes writtn now: \(totalBytesWritten)")
+//                let byteIncreasePercentage = Float(bytesWritten) / Float(totalBytesExpectedToWrite)
+//                let localIncrease = increase * byteIncreasePercentage
+//                progressView.progress = progressView.progress + localIncrease
             }
         }.responseJSON { response in
 //            print("This is the media response: ", response)

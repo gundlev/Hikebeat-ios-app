@@ -20,16 +20,16 @@ class aCustomView: UIView {
     }
     */
 
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
-        let translatedPoint = button!.convertPoint(point, fromView: self)
-        if(!self.clipsToBounds && !self.hidden && self.alpha > 0.0){
-        if (CGRectContainsPoint(button!.bounds, translatedPoint)) {
+        let translatedPoint = button!.convert(point, from: self)
+        if(!self.clipsToBounds && !self.isHidden && self.alpha > 0.0){
+        if (button!.bounds.contains(translatedPoint)) {
             print("Your button was pressed")
-            return button!.hitTest(translatedPoint, withEvent: event)
+            return button!.hitTest(translatedPoint, with: event)
         }
         }
-        return super.hitTest(point, withEvent: event)
+        return super.hitTest(point, with: event)
     }
     
 }

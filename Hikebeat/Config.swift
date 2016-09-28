@@ -30,12 +30,12 @@ func getUserExample() -> JSON {
     return user
 }
 
-func hex(number: Double) -> String {
+func hex(_ number: Double) -> String {
     number
     let d = String(number)
-    let e = d.rangeOfString(".")
-    let s1 = d.substringToIndex((e?.startIndex)!)
-    let s2 = d.substringFromIndex((e?.endIndex)!)
+    let e = d.range(of: ".")
+    let s1 = d.substring(to: (e?.lowerBound)!)
+    let s2 = d.substring(from: (e?.upperBound)!)
     
     // Check for leading zeroes in s2 and creating string
     var countZeroes = 0
@@ -82,7 +82,7 @@ func hex(number: Double) -> String {
 //    return journey
 //}
 
-func randomStringWithLength (len : Int) -> NSString {
+func randomStringWithLength (_ len : Int) -> NSString {
     
     let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     
@@ -93,21 +93,21 @@ func randomStringWithLength (len : Int) -> NSString {
     for _ in 0...len-1{
         let length = UInt32 (letters.length)
         let rand = arc4random_uniform(length)
-        randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        randomString.appendFormat("%C", letters.character(at: Int(rand)))
     }
     
     return randomString
 }
 
-func alert(alertTitle: String, alertMessage: String, vc: UIViewController, actions:(title: String, style: UIAlertActionStyle, function: ()->())...) {
+func alert(_ alertTitle: String, alertMessage: String, vc: UIViewController, actions:(title: String, style: UIAlertActionStyle, function: ()->())...) {
     let alertController = UIAlertController(title: alertTitle, message:
-        alertMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        alertMessage, preferredStyle: UIAlertControllerStyle.alert)
     
     for action in actions {
         alertController.addAction(UIAlertAction(title: action.title, style: action.style ,handler: {(alert: UIAlertAction!) in
             action.function()
         }))
     }
-    vc.presentViewController(alertController, animated: true, completion: nil)
+    vc.present(alertController, animated: true, completion: nil)
 }
 

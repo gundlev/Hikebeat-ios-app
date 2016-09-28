@@ -17,8 +17,8 @@ import SwiftyJSON
 //TODO: Implement onError and completeWithFail
 
 
-func sendChanges(progressView: UIProgressView, increase: Float, changes: Results<Change>) -> Future<Bool, NoError> {
-    let sortedChanges = changes.sort()
+func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Results<Change>) -> Future<Bool, NoError> {
+    let sortedChanges = changes.sorted()
     let promise = Promise<Bool, NoError>()
 //    if changes != nil {
 //        if changes?.count > 0 {
@@ -42,14 +42,15 @@ func sendChanges(progressView: UIProgressView, increase: Float, changes: Results
 //    }
 }
 
-private func asyncFunc(changesConst: [Change], progressView: UIProgressView, increase: Float) -> Future<Bool, NoError> {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+private func asyncFunc(_ changesConst: [Change], progressView: UIProgressView, increase: Float) -> Future<Bool, NoError> {
+    let userDefaults = UserDefaults.standard
     
     var changes = changesConst
     let change = changes.first
     
     // Creating json changes object
-    var jsonChanges = [String: AnyObject]()
+    var jsonChangesBool = [String: [String: Bool]]()
+    var jsonChangesString = [String: [String: String]]()
     var parameters:[String: AnyObject]?
     
     if change?.changeAction != ChangeAction.delete && change?.instanceType != InstanceType.profileImage {
@@ -57,10 +58,10 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
         let property = change?.property!
         if change!.stringValue == nil {
             let boolValue = change!.boolValue
-            jsonChanges["options"] = [property! : boolValue]
+            jsonChangesBool["options"] = [property! : boolValue]
         } else {
             let stringValue = change!.stringValue
-            jsonChanges["options"] = [property! : stringValue!]
+            jsonChangesString["options"] = [property! : stringValue!]
         }
         
 //        
@@ -95,10 +96,10 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     }
     
     func getProfileImagePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let fileName = "media/profile_image.jpg"
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
+        let fileName = "/media/profile_image.jpg"
+        let dataPath = documentsDirectory.appending(fileName)
         return dataPath
     }
 
@@ -109,11 +110,11 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     case InstanceType.beat:
         url = IPAddress + "journeys/" + change!.instanceId! + "/messages/" + change!.timestamp!
     case InstanceType.journey:
-        url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/journeys/" + change!.instanceId!
+        url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/journeys/" + change!.instanceId!
     case InstanceType.user:
-        url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+        url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
     case InstanceType.profileImage:
-        url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/profilePhoto"
+        url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/profilePhoto"
     default: print("Creating the url failed.")
     }
     print("Now sending to url: ", url)
@@ -122,14 +123,14 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
     let p = Promise<Bool, NoError>()
     
     // Setting the HTTP method
-    var method = Method.PUT
+    var method = HTTPMethod.put
     switch change!.changeAction {
     case ChangeAction.delete:
-        method = Method.DELETE
+        method = HTTPMethod.delete
     case ChangeAction.update:
-        method = Method.PUT
+        method = HTTPMethod.put
     default:
-        method = Method.POST
+        method = HTTPMethod.post
     }
     
     // Sending change
@@ -140,7 +141,7 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
         print("imagePath")
         print((change?.stringValue!)!)
         var path = getProfileImagePath()
-        Alamofire.upload(.POST, url,headers: customHeader, file: NSURL(fileURLWithPath: path)).responseJSON { mediaResponse in
+        Alamofire.upload(URL(fileURLWithPath: path), to: url,headers: customHeader).responseJSON { mediaResponse in
             if mediaResponse.response?.statusCode == 200 {
                 let rawImageJson = JSON(mediaResponse.result.value!)
                 let mediaJson = rawImageJson["data"][0]
@@ -168,7 +169,13 @@ private func asyncFunc(changesConst: [Change], progressView: UIProgressView, inc
             
         }
     } else {
-        Alamofire.request(method, url, parameters: jsonChanges, encoding: .JSON, headers: Headers).responseJSON { response in
+        var jsonChanges = [String: AnyObject]()
+        if jsonChangesBool.count > 0 {
+            jsonChanges = jsonChangesBool as [String: AnyObject]
+        } else {
+            jsonChanges = jsonChangesString as [String: AnyObject]
+        }
+        Alamofire.request(url, method: method, parameters: jsonChanges, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 print(response.result.value)
                 let removed = changes.removeFirst()

@@ -25,11 +25,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var emotion: String?
     var audioHasBeenRecordedForThisBeat = false
     var imagePicker = UIImagePickerController()
-    var currentMediaURL:NSURL?
+    var currentMediaURL:URL?
     var currentImage:UIImage?
     var currentBeat: Beat?
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let userDefaults = UserDefaults.standard
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     var beatPromise: Promise<Bool, NoError>!
     
@@ -38,8 +38,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     // Audio variables
     var recorder: AVAudioRecorder!
     var player:AVAudioPlayer!
-    var meterTimer:NSTimer!
-    var soundFileURL:NSURL!
+    var meterTimer:Timer!
+    var soundFileURL:URL!
     var filledin: Int = 0
     
     @IBOutlet weak var clearButton: UIButton!
@@ -63,7 +63,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     @IBOutlet weak var noactiveTop: NSLayoutConstraint!
     
-    @IBAction func sendBeat(sender: AnyObject) {
+    @IBAction func sendBeat(_ sender: AnyObject) {
         print("up")
         rightTree.stopAnimating()
         stopSendAnimation()
@@ -71,12 +71,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         checkForCorrectInput()
     }
     
-    @IBAction func startHoldingToSend(sender: AnyObject) {
+    @IBAction func startHoldingToSend(_ sender: AnyObject) {
         print("down")
         startSendAnimation()
     }
     
-    @IBAction func letGoOfHoldingOutside(sender: AnyObject) {
+    @IBAction func letGoOfHoldingOutside(_ sender: AnyObject) {
         print("up")
         rightTree.stopAnimating()
 //        stopSendAnimation()
@@ -87,42 +87,42 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
-            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
-            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -50.0  )
+            composeContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.80, y: 0.80);
+            composeContainer.transform = composeContainer.transform.translatedBy(x: 0.0, y: -50.0  )
             
-            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.80, 0.80);
-            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -50.0  )
+            NoActiveContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.80, y: 0.80);
+            NoActiveContainer.transform = NoActiveContainer.transform.translatedBy(x: 0.0, y: -50.0  )
             
             NoActiveContainer.button = journeysButton
             composeContainer.button = sendBeatButton
             
-            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
-            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +40.0  )
+            imageBG.transform = CGAffineTransform.identity.scaledBy(x: 1.15, y: 1.15);
+            imageBG.transform = imageBG.transform.translatedBy(x: 0.0, y: +40.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, 40.0  )
+            composeContainer.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1);
+            composeContainer.transform = composeContainer.transform.translatedBy(x: 0.0, y: 40.0  )
             
             
-            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
-            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, 40.0  )
+            NoActiveContainer.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1);
+            NoActiveContainer.transform = NoActiveContainer.transform.translatedBy(x: 0.0, y: 40.0  )
             
             NoActiveContainer.button = journeysButton
             composeContainer.button = sendBeatButton
             
-            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85);
-            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, -45.0  )
+            imageBG.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85);
+            imageBG.transform = imageBG.transform.translatedBy(x: 0.0, y: -45.0  )
         }else if (UIDevice.isIphone4 || UIDevice.isIpad){
-            composeContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.65, 0.65);
-            composeContainer.transform = CGAffineTransformTranslate( composeContainer.transform, 0.0, -110.0  )
+            composeContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.65, y: 0.65);
+            composeContainer.transform = composeContainer.transform.translatedBy(x: 0.0, y: -110.0  )
             
-            NoActiveContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
-            NoActiveContainer.transform = CGAffineTransformTranslate( NoActiveContainer.transform, 0.0, -100.0  )
+            NoActiveContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.75, y: 0.75);
+            NoActiveContainer.transform = NoActiveContainer.transform.translatedBy(x: 0.0, y: -100.0  )
             
             NoActiveContainer.button = journeysButton
             composeContainer.button = sendBeatButton
             
-            imageBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.15, 1.15);
-            imageBG.transform = CGAffineTransformTranslate( imageBG.transform, 0.0, +80.0  )
+            imageBG.transform = CGAffineTransform.identity.scaledBy(x: 1.15, y: 1.15);
+            imageBG.transform = imageBG.transform.translatedBy(x: 0.0, y: +80.0  )
         }
         
         sendBeatButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(startSendAnimation)))
@@ -132,7 +132,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         composeContainer.button = sendBeatButton
         
         filledin = 0
-        clearButton.hidden = true
+        clearButton.isHidden = true
         
         editMessageButton.layer.cornerRadius = editMessageButton.bounds.width/2
         editEmotionButton.layer.cornerRadius = editEmotionButton.bounds.width/2
@@ -151,17 +151,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         journeysButton.layer.masksToBounds = true
         
         let bgGradient = CAGradientLayer()
-        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
         
-        editMessageButton.userInteractionEnabled = true
-        editMemoButton.userInteractionEnabled = true
-        editImageButton.userInteractionEnabled = true
-        editVideoButton.userInteractionEnabled = true
-        editEmotionButton.userInteractionEnabled = true
+        editMessageButton.isUserInteractionEnabled = true
+        editMemoButton.isUserInteractionEnabled = true
+        editImageButton.isUserInteractionEnabled = true
+        editVideoButton.isUserInteractionEnabled = true
+        editEmotionButton.isUserInteractionEnabled = true
         
         editMessageButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(textButtonTapped)))
         editMemoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(memoButtonTapped)))
@@ -171,18 +171,18 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         
         
         if !findActiveJourney() {
-            composeContainer.hidden = true
-            NoActiveContainer.hidden = false
+            composeContainer.isHidden = true
+            NoActiveContainer.isHidden = false
         }else{
-            composeContainer.hidden = false
-            NoActiveContainer.hidden = true
+            composeContainer.isHidden = false
+            NoActiveContainer.isHidden = true
         }
 
     }
     
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 //        let isActiveJourney = findActiveJourney()
 //        
 //        if isActiveJourney{
@@ -190,29 +190,29 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //        }
         
         if !findActiveJourney() {
-            composeContainer.hidden = true
-            NoActiveContainer.hidden = false
+            composeContainer.isHidden = true
+            NoActiveContainer.isHidden = false
             
         }else{
-            composeContainer.hidden = false
-            NoActiveContainer.hidden = true
+            composeContainer.isHidden = false
+            NoActiveContainer.isHidden = true
         }
     }
     
-    @IBAction func unwindToCompose(sender: UIStoryboardSegue)
+    @IBAction func unwindToCompose(_ sender: UIStoryboardSegue)
     {
 //        let sourceViewController = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
         filledin==0 ? hideClearButton() : showClearButton()
     }
     
-    func longTap(sender : UIGestureRecognizer){
+    func longTap(_ sender : UIGestureRecognizer){
         print("Long tap")
-        if sender.state == .Ended {
+        if sender.state == .ended {
             print("UIGestureRecognizerStateEnded")
             //Do Whatever You want on End of Gesture
         }
-        else if sender.state == .Began {
+        else if sender.state == .began {
             print("UIGestureRecognizerStateBegan.")
             //Do Whatever You want on Began of Gesture
         }
@@ -229,31 +229,31 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func stopSendAnimation() {
-        UIView.animateWithDuration(NSTimeInterval(2)) {
-            self.leftTree.transform = CGAffineTransformTranslate(self.leftTree.transform, 0, 0)
-            self.rightTree.transform = CGAffineTransformTranslate(self.rightTree.transform, 0, 0)
-            self.middleHouse.transform = CGAffineTransformTranslate(self.middleHouse.transform, 0, 0)
-        }
+        UIView.animate(withDuration: Foundation.TimeInterval(2), animations: {
+            self.leftTree.transform = self.leftTree.transform.translatedBy(x: 0, y: 0)
+            self.rightTree.transform = self.rightTree.transform.translatedBy(x: 0, y: 0)
+            self.middleHouse.transform = self.middleHouse.transform.translatedBy(x: 0, y: 0)
+        }) 
 
     }
 
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     func textButtonTapped() {
         print("text")
-        performSegueWithIdentifier("editMessageModal", sender: self)
+        performSegue(withIdentifier: "editMessageModal", sender: self)
     }
 
     func memoButtonTapped() {
         print("memo")
-        performSegueWithIdentifier("recordAudio", sender: self)
+        performSegue(withIdentifier: "recordAudio", sender: self)
     }
     
     
-    @IBAction func clearButtonTapped(sender: AnyObject) {
+    @IBAction func clearButtonTapped(_ sender: AnyObject) {
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: false
         )
@@ -279,25 +279,25 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func emotionsButtonTapped() {
         print("emotions")
-        performSegueWithIdentifier("editEmotionsModal", sender: self)
+        performSegue(withIdentifier: "editEmotionsModal", sender: self)
     }
     
-    func applyGreenBorder(view :UIImageView) {
+    func applyGreenBorder(_ view :UIImageView) {
         filledin += 1
         view.layer.borderWidth = 4
-        view.layer.borderColor = greenColor.CGColor
+        view.layer.borderColor = greenColor.cgColor
     }
     
-    func removeGreenBorder(view: UIImageView) {
+    func removeGreenBorder(_ view: UIImageView) {
         view.layer.borderWidth = 0
     }
     
     func showClearButton(){
-        clearButton.hidden = false
+        clearButton.isHidden = false
     }
     
     func hideClearButton(){
-        clearButton.hidden = true
+        clearButton.isHidden = true
     }
     
     func clearAllForNewBeat() {
@@ -320,25 +320,25 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         editEmotionButton.image = UIImage(named: "ComposeMessage")
     }
     
-    func disableMediaView(view :UIImageView) {
-        view.userInteractionEnabled = false
+    func disableMediaView(_ view :UIImageView) {
+        view.isUserInteractionEnabled = false
         view.alpha = 0.4
     }
     
-    func enableMediaView(view :UIImageView) {
-        view.userInteractionEnabled = true
+    func enableMediaView(_ view :UIImageView) {
+        view.isUserInteractionEnabled = true
         view.alpha = 1
     }
 
     
-    @IBAction func gotoJourneys(sender: AnyObject) {
+    @IBAction func gotoJourneys(_ sender: AnyObject) {
         self.tabBarController?.selectedIndex = 0
         let tabVC = self.tabBarController as! HikebeatTabBarVC
         tabVC.deselectCenterButton()
         
     }
     
-    func mediaChosen(type: String) {
+    func mediaChosen(_ type: String) {
         switch type {
             case "video":
                 applyGreenBorder(editVideoButton)
@@ -365,7 +365,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 */
     
     func findActiveJourney() -> Bool {
-        let journeys = realm.objects(Journey).filter("active = %@", true)
+        let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
             return false
         } else {
@@ -383,7 +383,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     func checkForCorrectInput() {
         print("Now checking")
         
-        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             print("has gps permission")
             let locationTupleFuture = self.getTimeAndLocation()
             locationTupleFuture.onSuccess { (locationTuple) in
@@ -415,7 +415,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             let newPath = self.getPathToFileFromName("vid-temp.mp4")
                             let success = covertToMedia(self.currentMediaURL!, pathToOuputFile: newPath!, fileType: AVFileTypeMPEG4)
                             if success {
-                                let videoData = NSData(contentsOfURL: self.currentMediaURL!)
+                                let videoData = try? Data(contentsOf: self.currentMediaURL!)
                                 mediaData = self.saveMediaToDocs(videoData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".mp4")
                                 if mediaData != nil {
                                     self.removeMediaWithURL(self.currentMediaURL!)
@@ -428,7 +428,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             let pathToAudio = self.getPathToFileFromName("audio-temp.acc")
                             let newPath = self.getPathToFileFromName("audio-temp.m4a")
                             covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
-                            let audioData = NSData(contentsOfURL: newPath!)
+                            let audioData = try? Data(contentsOf: newPath!)
                             mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
                             //self.recorder.deleteRecording()
                         }
@@ -450,7 +450,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 
             }
 
-        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
             let appearance = SCLAlertView.SCLAppearance(
                 showCloseButton: false
             )
@@ -462,7 +462,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             alertView.addButton("No", action: {})
             alertView.showInfo("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
 
-        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
             let appearance = SCLAlertView.SCLAppearance(
                 showCloseButton: false
             )
@@ -477,12 +477,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         }
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print("change in location status to: ", status)
-        if (status == CLAuthorizationStatus.Denied) {
+        if (status == CLAuthorizationStatus.denied) {
             // The user denied authorization
             // Discuss with the guys what to do here
-        } else if (status == CLAuthorizationStatus.AuthorizedWhenInUse) {
+        } else if (status == CLAuthorizationStatus.authorizedWhenInUse) {
             // The user accepted authorization
             self.checkForCorrectInput()
         }
@@ -491,7 +491,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     func sendBeat() {
             print("sending beat start")
             // Check if there is any network connection and send via the appropriate means.
-            if SimpleReachability.isConnectedToNetwork() {
+        let reachability = Reachability()
+            if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
                 // TODO: send via alamofire
                 let url = IPAddress + "journeys/" + (activeJourney?.journeyId)! + "/messages"
                 print("url: ", url)
@@ -504,9 +505,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 if currentBeat!.message != nil {
                     parameters["text"] = currentBeat?.message
                 }
+//                Alamofire.request("https://httpbin.org/get", parameters: parameters, encoding: URLEncoding.default)
+//                Alamofire.request("https://httpbin.org/post", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+//                let urlString = "https://httpbin.org/post"
+//                Alamofire.request(urlString, method: .post)
                 // Sending the beat message
-                performSegueWithIdentifier("showGreenModal", sender: nil)
-                Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+                performSegue(withIdentifier: "showGreenModal", sender: nil)
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                     print("The Response")
                     print(response.response?.statusCode)
                     print(response)
@@ -542,23 +547,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                 
                                 // Get and set progressView
                                 self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
-                                
-                                Alamofire.upload(.POST, urlMedia,headers: customHeader, file: filePath!).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
-                                    //print(totalBytesWritten)
-                                    
-                                    // This closure is NOT called on the main queue for performance
-                                    // reasons. To update your ui, dispatch to the main queue.
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        
-                                        print("Total bytes written on main queue: \(totalBytesWritten) out of \(totalBytesExpectedToWrite)")
-                                        print("Bytes writtn now: \(totalBytesWritten)")
-                                        
-                                        let bytePercentage = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-                                        self.currentModal?.progressBar?.progress = bytePercentage
-//                                        let localIncrease = increase * byteIncreasePercentage
-//                                        progressView.progress = progressView.progress + localIncrease
-                                    }
-                                    }.responseJSON { mediaResponse in
+                                //Alamofire.upload(urlMedia, method: .post,headers: customHeader, file: filePath!)
+                                Alamofire.upload(filePath!, to: urlMedia, headers: customHeader)
+//                                    .uploadProgress { progress in
+//                                    //print(totalBytesWritten)
+//                                    self.currentModal?.progressBar?.progress = progress.fractionCompleted
+//
+//                                    // This closure is NOT called on the main queue for performance
+//                                    // reasons. To update your ui, dispatch to the main queue.
+//  
+//                                    }
+                                    .responseJSON { mediaResponse in
                                     print("This is the media response: ", mediaResponse)
                                     print("Response", mediaResponse.response)
                                     print("Debug Description", mediaResponse.debugDescription)
@@ -650,7 +649,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func sendTextMessage() {
-        guard let phoneNumbers = userDefaults.stringForKey("permittedPhoneNumbers") else {
+        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumbers") else {
             presentMissingPhoneNumberAlert()
             return
         }
@@ -697,7 +696,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
      SMS functions
 */
     
-    func genSMSMessageString(emotion: String, message: String, seqNumber: String) -> String {
+    func genSMSMessageString(_ emotion: String, message: String, seqNumber: String) -> String {
         
         print("timestamp deci: ", self.currentBeat?.timestamp)
         print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
@@ -721,18 +720,18 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         return smsMessageText
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         
         
         switch (result.rawValue) {
-        case MessageComposeResultCancelled.rawValue:
+        case MessageComposeResult.cancelled.rawValue:
             print("Message Cancelled")
-            self.dismissViewControllerAnimated(true, completion: nil)
-        case MessageComposeResultFailed.rawValue:
+            self.dismiss(animated: true, completion: nil)
+        case MessageComposeResult.failed.rawValue:
             print("Message Failed")
             
-            self.dismissViewControllerAnimated(true, completion: nil)
-        case MessageComposeResultSent.rawValue:
+            self.dismiss(animated: true, completion: nil)
+        case MessageComposeResult.sent.rawValue:
             print("Message Sent")
             
             /* Save the Beat and setInitial*/
@@ -753,7 +752,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 self.activeJourney?.beats.append(self.currentBeat!)
             }
             self.clearAllForNewBeat()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         default:
             break;
         }
@@ -768,7 +767,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
      `messageComposeViewController(controller:, didFinishWithResult result:)`.
      
      */
-    func sendSMS(smsBody: String) {
+    func sendSMS(_ smsBody: String) {
         
         print("In sms function")
         let messageVC = MFMessageComposeViewController()
@@ -777,7 +776,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             messageVC.recipients = [phoneNumber]
             messageVC.messageComposeDelegate = self;
             
-            self.presentViewController(messageVC, animated: false, completion: nil)
+            self.present(messageVC, animated: false, completion: nil)
         }
     }
 
@@ -795,9 +794,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
      - returns: Bundle with 4 strings: timestamp, latitude, longitude, altitude.
      */
     func getTimeAndLocation() -> Future<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError> {
-        let t = String(NSDate().timeIntervalSince1970)
-        let e = t.rangeOfString(".")
-        let timestamp = t.substringToIndex((e?.startIndex)!)
+        let t = String(Date().timeIntervalSince1970)
+        let e = t.range(of: ".")
+        let timestamp = t.substring(to: (e?.lowerBound)!)
         let promise = Promise<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError>()
         //        let timeStamp = NSDateFormatter()
         //        timeStamp.dateFormat = "yyyyMMddHHmmss"
@@ -808,7 +807,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         var altitude = ""
         if let location = appDelegate.getLocation() {
             print("location 2. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-            let gpsCheck = userDefaults.boolForKey("GPS-check")
+            let gpsCheck = userDefaults.bool(forKey: "GPS-check")
             if gpsCheck {
                 // Now performing gps check
                 if location.horizontalAccuracy > 200 {
@@ -851,22 +850,22 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         return promise.future
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case "editEmotionsModal":
             if self.emotion != nil {
                 print(1)
-                let vc = segue.destinationViewController as! EditTitleVC
+                let vc = segue.destination as! EditTitleVC
                 vc.emotion = self.emotion!
                 print(1.1)
             }
         case "editMessageModal":
             if self.messageText != nil {
-                let vc = segue.destinationViewController as! EditMessageVC
+                let vc = segue.destination as! EditMessageVC
                 vc.text = self.messageText!
             }
         case "showGreenModal":
-            let vc = segue.destinationViewController as! ModalVC
+            let vc = segue.destination as! ModalVC
             vc.future = self.beatPromise.future
             currentModal = vc
         default:

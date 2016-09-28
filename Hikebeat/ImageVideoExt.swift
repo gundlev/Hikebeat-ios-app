@@ -20,38 +20,38 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 */
     
     func chooseImage() {
-        let optionsMenu = UIAlertController(title: "Choose resource", message: nil, preferredStyle: .ActionSheet)
-        let cameraRoll = UIAlertAction(title: "Photo library", style: .Default, handler: {
+        let optionsMenu = UIAlertController(title: "Choose resource", message: nil, preferredStyle: .actionSheet)
+        let cameraRoll = UIAlertAction(title: "Photo library", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Photo Library")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
                 print("Library is available")
                 
                 self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .PhotoLibrary;
+                self.imagePicker.sourceType = .photoLibrary;
                 self.imagePicker.mediaTypes = [kUTTypeImage as String]
                 self.imagePicker.allowsEditing = false
                 
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         })
-        let takePhoto = UIAlertAction(title: "Camera", style: .Default, handler: {
+        let takePhoto = UIAlertAction(title: "Camera", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
                 print("Button capture")
                 
                 self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .Camera
-                self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo
+                self.imagePicker.sourceType = .camera
+                self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.photo
                 self.imagePicker.allowsEditing = false
                 
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
         })
@@ -60,7 +60,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         optionsMenu.addAction(takePhoto)
         optionsMenu.addAction(cancel)
         
-        self.presentViewController(optionsMenu, animated: true, completion: nil)
+        self.present(optionsMenu, animated: true, completion: nil)
     }
 
 
@@ -79,46 +79,46 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 */
     
     func chooseVideo() {
-        let optionsMenu = UIAlertController(title: "Choose resource for video", message: nil, preferredStyle: .ActionSheet)
-        let cameraRoll = UIAlertAction(title: "Video library", style: .Default, handler: {
+        let optionsMenu = UIAlertController(title: "Choose resource for video", message: nil, preferredStyle: .actionSheet)
+        let cameraRoll = UIAlertAction(title: "Video library", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Camera Roll")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
                 print("Button library")
                 
                 self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .PhotoLibrary;
+                self.imagePicker.sourceType = .photoLibrary;
                 self.imagePicker.mediaTypes = [kUTTypeMovie as String]
                 self.imagePicker.allowsEditing = true
                 self.imagePicker.videoMaximumDuration = 10
-                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeIFrame960x540
+                self.imagePicker.videoQuality = UIImagePickerControllerQualityType.typeIFrame960x540
                 
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         })
-        let takePhoto = UIAlertAction(title: "Camera", style: .Default, handler: {
+        let takePhoto = UIAlertAction(title: "Camera", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
                 
                 print("captureVideoPressed and camera available.")
                 
                 let imagePicker = UIImagePickerController()
                 
                 imagePicker.delegate = self
-                imagePicker.sourceType = .Camera;
+                imagePicker.sourceType = .camera;
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
-                imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Video
+                imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.video
                 imagePicker.allowsEditing = true
                 imagePicker.videoMaximumDuration = 10
                 imagePicker.showsCameraControls = true
-                imagePicker.videoQuality = UIImagePickerControllerQualityType.TypeIFrame960x540
+                imagePicker.videoQuality = UIImagePickerControllerQualityType.typeIFrame960x540
                 //self.imagePicker
                 
                 
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                self.present(imagePicker, animated: true, completion: nil)
                 
             }
                 
@@ -126,7 +126,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 print("Camera not available.")
             }
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
         })
@@ -135,7 +135,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         optionsMenu.addAction(takePhoto)
         optionsMenu.addAction(cancel)
         
-        self.presentViewController(optionsMenu, animated: true, completion: nil)
+        self.present(optionsMenu, animated: true, completion: nil)
     }
     
 //    func playVideo() {
@@ -148,13 +148,13 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 //        }
 //    }
     
-    func playVideoWithName(name: String) throws {
+    func playVideoWithName(_ name: String) throws {
         let pathToFile = getPathToFileFromName(name)
         if pathToFile != nil {
-            let player = AVPlayer(URL: pathToFile!)
+            let player = AVPlayer(url: pathToFile!)
             let playerController = AVPlayerViewController()
             playerController.player = player
-            self.presentViewController(playerController, animated: true) {
+            self.present(playerController, animated: true) {
                 print("Playing video")
                 player.play()
             }
@@ -162,10 +162,10 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 
     }
     
-    func getPathToFileFromName(name: String) -> NSURL? {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+    func getPathToFileFromName(_ name: String) -> URL? {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentDirectory = paths[0]
-        let pathToFile = NSURL(fileURLWithPath: documentDirectory).URLByAppendingPathComponent("media/"+name)
+        let pathToFile = URL(fileURLWithPath: documentDirectory).appendingPathComponent("media/"+name)
         return pathToFile
     }
     
@@ -179,22 +179,22 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
 //        }
 //    }
     
-    enum AppError : ErrorType {
-        case InvalidResource(String, String)
+    enum AppError : Error {
+        case invalidResource(String, String)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let type = info[UIImagePickerControllerMediaType]
-        print(type!.description)
+        print((type! as AnyObject).description)
 
-        if type?.description! == "public.movie"{
+        if (type as AnyObject).description! == "public.movie"{
             
             // user chose video
-            let currentVideoURL = info[UIImagePickerControllerMediaURL] as! NSURL
+            let currentVideoURL = info[UIImagePickerControllerMediaURL] as! URL
             self.currentMediaURL = currentVideoURL
-            if picker.sourceType == .Camera {
-                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(currentVideoURL.path!) {
-                    UISaveVideoAtPathToSavedPhotosAlbum(currentVideoURL.path!, self, nil, nil)
+            if picker.sourceType == .camera {
+                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(currentVideoURL.path) {
+                    UISaveVideoAtPathToSavedPhotosAlbum(currentVideoURL.path, self, nil, nil)
                 }
             }
             self.mediaChosen("video")
@@ -203,24 +203,24 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
             // User chose image
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             
-            if picker.sourceType == .Camera {
+            if picker.sourceType == .camera {
                 UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
             }
             self.currentImage = image.correctlyOrientedImage()
             self.mediaChosen("image")
 
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func saveMediaToDocs(mediaData: NSData, journeyId: String, timestamp: String, fileType: String) -> String? {
+    func saveMediaToDocs(_ mediaData: Data, journeyId: String, timestamp: String, fileType: String) -> String? {
        
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
 
-        let documentsDirectory: AnyObject = paths[0]
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
         let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("media/" + fileName)
-        let success = mediaData.writeToFile(dataPath, atomically: false)
+        let dataPath = documentsDirectory.appending("/media/" + fileName)
+        let success = (try? mediaData.write(to: URL(fileURLWithPath: dataPath), options: [])) != nil
         if success {
             print("Saved to Docs with name: ", fileName)
             return fileName
@@ -229,10 +229,10 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
     
-    func removeMediaWithURL(mediaURL: NSURL) {
-        let fm = NSFileManager()
+    func removeMediaWithURL(_ mediaURL: URL) {
+        let fm = FileManager()
         do {
-            try fm.removeItemAtURL(mediaURL)
+            try fm.removeItem(at: mediaURL)
         } catch {
             print("problem removing media ")
         }

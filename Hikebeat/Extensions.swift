@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func rotate360Degrees(duration: CFTimeInterval = 1.0,forever: Bool = false, completionDelegate: AnyObject? = nil) {
+    func rotate360Degrees(_ duration: CFTimeInterval = 1.0,forever: Bool = false, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.fromValue = 0.0
         rotateAnimation.toValue = CGFloat(M_PI)
@@ -20,14 +20,14 @@ extension UIView {
             rotateAnimation.repeatCount = HUGE
         }
         
-        if let delegate: AnyObject = completionDelegate {
+        if let delegate = completionDelegate as? CAAnimationDelegate {
             rotateAnimation.delegate = delegate
         }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
+        self.layer.add(rotateAnimation, forKey: nil)
     }
     
-    func animateConstraintWithDuration(duration: NSTimeInterval = 0.5, delay: NSTimeInterval = 0.0, options: UIViewAnimationOptions = [], completion: ((Bool) -> Void)? = nil) {
-        UIView.animateWithDuration(duration, delay:delay, options:options, animations: { [weak self] in
+    func animateConstraintWithDuration(_ duration: TimeInterval = 0.5, delay: TimeInterval = 0.0, options: UIViewAnimationOptions = [], completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: duration, delay:delay, options:options, animations: { [weak self] in
             self?.layoutIfNeeded() ?? ()
             }, completion: completion)
     }
@@ -36,14 +36,14 @@ extension UIView {
         static let ExternalBorderName = "externalBorder"
     }
     
-    func addExternalBorder(borderWidth: CGFloat = 2.0, borderColor: UIColor = UIColor.whiteColor()) -> CALayer {
+    func addExternalBorder(_ borderWidth: CGFloat = 2.0, borderColor: UIColor = UIColor.white) -> CALayer {
         let externalBorder = CALayer()
-        externalBorder.frame = CGRectMake(-borderWidth, -borderWidth, frame.size.width + 2 * borderWidth, frame.size.height + 2 * borderWidth)
-        externalBorder.borderColor = borderColor.CGColor
+        externalBorder.frame = CGRect(x: -borderWidth, y: -borderWidth, width: frame.size.width + 2 * borderWidth, height: frame.size.height + 2 * borderWidth)
+        externalBorder.borderColor = borderColor.cgColor
         externalBorder.borderWidth = borderWidth
         externalBorder.name = Constants.ExternalBorderName
         
-        layer.insertSublayer(externalBorder, atIndex: 0)
+        layer.insertSublayer(externalBorder, at: 0)
         layer.masksToBounds = false
         
         return externalBorder
@@ -55,8 +55,8 @@ extension UIView {
         }
     }
     
-    func removeExternalBorder(externalBorder: CALayer) {
-        guard externalBorder == Constants.ExternalBorderName else { return }
+    func removeExternalBorder(_ externalBorder: CALayer) {
+        guard externalBorder.name == Constants.ExternalBorderName else { return }
         externalBorder.removeFromSuperlayer()
     }
 
@@ -67,7 +67,7 @@ extension UIView {
      
      :param: height The new value for the view's height
      */
-    func setHeight(height: CGFloat) {
+    func setHeight(_ height: CGFloat) {
         
         var frame: CGRect = self.frame
         frame.size.height = height
@@ -80,7 +80,7 @@ extension UIView {
      
      :param: width The new value for the view's width
      */
-    func setWidth(width: CGFloat) {
+    func setWidth(_ width: CGFloat) {
         
         var frame: CGRect = self.frame
         frame.size.width = width
@@ -93,7 +93,7 @@ extension UIView {
      
      :param: x The new x-coordinate of the view's origin point
      */
-    func setX(x: CGFloat) {
+    func setX(_ x: CGFloat) {
         
         var frame: CGRect = self.frame
         frame.origin.x = x
@@ -106,7 +106,7 @@ extension UIView {
      
      :param: y The new y-coordinate of the view's origin point
      */
-    func setY(y: CGFloat) {
+    func setY(_ y: CGFloat) {
         
         var frame: CGRect = self.frame
         frame.origin.y = y
@@ -155,8 +155,8 @@ public extension UIDevice {
         var identifier = ""
         
         for child in mirror.children {
-            if let value = child.value as? Int8 where value != 0 {
-                identifier.append(UnicodeScalar(UInt8(value)))
+            if let value = child.value as? Int8 , value != 0 {
+                identifier.append(String(UnicodeScalar(UInt8(value))))
             }
         }
         return DeviceList[identifier] ?? identifier
@@ -185,7 +185,7 @@ public extension UIDevice {
     
     
     static var isIpad: Bool {
-        if (UIDevice.currentDevice().model.rangeOfString("iPad") != nil) {
+        if (UIDevice.current.model.range(of: "iPad") != nil) {
             return true
         }
         return false
@@ -215,8 +215,8 @@ public extension UIDevice {
         return UIDevice.isSimulatorWithScreenHeigth(736)
     }
     
-    private static func isSimulatorWithScreenHeigth(heigth: CGFloat) -> Bool {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+    fileprivate static func isSimulatorWithScreenHeigth(_ heigth: CGFloat) -> Bool {
+        let screenSize: CGRect = UIScreen.main.bounds
         return modelName == "Simulator" && screenSize.height == heigth
     }
     
@@ -229,16 +229,16 @@ extension UIColor {
         var start = hexStringWithAlpha.startIndex
         
         if hexStringWithAlpha.hasPrefix("#") {
-            start = hexStringWithAlpha.startIndex.advancedBy(1)
+            start = hexStringWithAlpha.characters.index(hexStringWithAlpha.startIndex, offsetBy: 1)
         }
         
-        let hexColor = hexStringWithAlpha.substringFromIndex(start)
+        let hexColor = hexStringWithAlpha.substring(from: start)
         
         if hexColor.characters.count == 8 {
-            let scanner = NSScanner(string: hexColor)
+            let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             
-            if scanner.scanHexLongLong(&hexNumber) {
+            if scanner.scanHexInt64(&hexNumber) {
                 r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
                 g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
                 b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
@@ -258,16 +258,16 @@ extension UIColor {
         var start = hexString.startIndex
         
         if hexString.hasPrefix("#") {
-            start = hexString.startIndex.advancedBy(1)
+            start = hexString.characters.index(hexString.startIndex, offsetBy: 1)
         }
         
-        let hexColor = hexString.substringFromIndex(start)
+        let hexColor = hexString.substring(from: start)
         
         if hexColor.characters.count == 6 {
-            let scanner = NSScanner(string: hexColor)
+            let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             
-            if scanner.scanHexLongLong(&hexNumber) {
+            if scanner.scanHexInt64(&hexNumber) {
                 r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
                 g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
                 b = CGFloat(hexNumber & 0x0000ff) / 255
@@ -289,12 +289,12 @@ extension CAGradientLayer {
         let topColor = UIColor(red: (15/255.0), green: (118/255.0), blue: (128/255.0), alpha: 1)
         let bottomColor = UIColor(red: (84/255.0), green: (187/255.0), blue: (187/255.0), alpha: 1)
         
-        let gradientColors: Array <AnyObject> = [topColor.CGColor, bottomColor.CGColor]
+        let gradientColors: Array <AnyObject> = [topColor.cgColor, bottomColor.cgColor]
         let gradientLocations = [0.0, 1.0]
         
         let gradientLayer: CAGradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors
-        gradientLayer.locations = gradientLocations
+        gradientLayer.locations = gradientLocations as [NSNumber]?
         
         return gradientLayer
     }

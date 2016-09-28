@@ -23,7 +23,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var mediaLength: UILabel!
     
     override func awakeFromNib() {
-        self.scrollView.scrollEnabled = false
+        self.scrollView.isScrollEnabled = false
     }
     
 }

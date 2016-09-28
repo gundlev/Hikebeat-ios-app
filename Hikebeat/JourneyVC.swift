@@ -19,8 +19,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let userDefaults = UserDefaults.standard
     
     @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
@@ -33,14 +33,14 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view.
         
         let bgGradient = CAGradientLayer()
-        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
         let socialGradient = CAGradientLayer()
         socialGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: socialContainerView.bounds.size)
-        socialGradient.colors = [UIColor(hexString: "054D51")!.CGColor, UIColor(hexString: "2E7E5D")!.CGColor]
+        socialGradient.colors = [UIColor(hexString: "054D51")!.cgColor, UIColor(hexString: "2E7E5D")!.cgColor]
         socialGradient.zPosition = -1
         socialContainerView.layer.addSublayer(socialGradient)
         
@@ -65,22 +65,22 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             followersLabel.text = String(self.pins.count)+" beats"
         }
         
-        titleButton.setTitle(journey?.headline, forState: UIControlState.Normal)
+        titleButton.setTitle(journey?.headline, for: UIControlState())
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         
         beatIcon.addGestureRecognizer(tap1)
         followersLabel.addGestureRecognizer(tap2)
-        beatIcon.userInteractionEnabled = true
-        followersLabel.userInteractionEnabled = true
+        beatIcon.isUserInteractionEnabled = true
+        followersLabel.isUserInteractionEnabled = true
         
         self.setProfileImage()
     }
     
     func showLatestBeat() {
         self.indexOfChosenPin = pins.count - 1
-        performSegueWithIdentifier("showBeat", sender: self)
+        performSegue(withIdentifier: "showBeat", sender: self)
     }
     
     func setProfileImage() {
@@ -93,7 +93,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         }
         let tabGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
         self.profileImage.addGestureRecognizer(tabGesture)
-        self.profileImage.userInteractionEnabled = true
+        self.profileImage.isUserInteractionEnabled = true
     }
     
     func goToProfile() {
@@ -102,10 +102,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     }
     
     func getProfileImagePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
         let fileName = "media/profile_image.jpg"
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let dataPath = documentsDirectory.appending("/"+fileName)
         return dataPath
     }
     
@@ -138,14 +138,14 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             pinArr.append(beatPin)
         }
         self.pins = pinArr
-        pinArr.sortInPlace()
+        pinArr.sort()
         let lastElement = pinArr.last
         lastElement?.lastPin = true
         self.zoomToFitMapAnnotations(self.journeyMap)
         self.createPolyline(self.journeyMap)
     }
     
-    func zoomToFitMapAnnotations(aMapView: MKMapView) {
+    func zoomToFitMapAnnotations(_ aMapView: MKMapView) {
         if aMapView.annotations.count == 0 {
             return
         }
@@ -171,19 +171,19 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         aMapView.setRegion(region, animated: true)
     }
     
-    func getImageWithName(name: String) -> UIImage? {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("media/"+name)
+    func getImageWithName(_ name: String) -> UIImage? {
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
+        let dataPath = documentsDirectory.appending("/media/"+name)
         return UIImage(contentsOfFile: dataPath)
     }
 
-    func mapView(localMapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ localMapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         print("This is the place")
         if let annotation = annotation as? BeatPin {
             let identifier = "pin"
             var view: MKAnnotationView
-            if let dequeuedView = localMapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+            if let dequeuedView = localMapView.dequeueReusableAnnotationView(withIdentifier: identifier)
                 as? MKPinAnnotationView { // 2
                     dequeuedView.annotation = annotation
                     view = dequeuedView
@@ -236,7 +236,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         print("yeah")
     }
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         print("this is run")
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
         let polyline = overlay as! BeatPolyline
@@ -245,19 +245,19 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         return polylineRenderer
     }
 
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 //        print("Pin button tapped")
 //        self.indexOfChosenPin = pins.indexOf(view.annotation as! BeatPin)
 //        performSegueWithIdentifier("showBeat", sender: self)
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("pressed an annotation")
-        self.indexOfChosenPin = pins.indexOf(view.annotation as! BeatPin)
-        performSegueWithIdentifier("showBeat", sender: self)
+        self.indexOfChosenPin = pins.index(of: view.annotation as! BeatPin)
+        performSegue(withIdentifier: "showBeat", sender: self)
     }
     
-    func createPolyline(mapView: MKMapView) {
+    func createPolyline(_ mapView: MKMapView) {
         
         let beats = journey?.beats
         var points: [CLLocationCoordinate2D] = [CLLocationCoordinate2D]()
@@ -270,7 +270,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         polyline.color = UIColor(hexString: "#15676C")!
         polyline.lineWidth = 6.0
         
-        mapView.addOverlay(polyline)
+        mapView.add(polyline)
         
     }
 
@@ -279,43 +279,43 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func goBack(sender: AnyObject) {
+    @IBAction func goBack(_ sender: AnyObject) {
         
         if appDelegate.fastSegueHack=="social"{
-            performSegueWithIdentifier("unwindSocialHack", sender: self)
+            performSegue(withIdentifier: "unwindSocialHack", sender: self)
         }else{
-            performSegueWithIdentifier("unwindJourneysHack", sender: self)
+            performSegue(withIdentifier: "unwindJourneysHack", sender: self)
         }
         
     }
     
-    @IBAction func unwindToJourney(unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToJourney(_ unwindSegue: UIStoryboardSegue) {
         
     }
 
-    @IBAction func showFirstBeat(sender: AnyObject) {
+    @IBAction func showFirstBeat(_ sender: AnyObject) {
         
         //performSegueWithIdentifier("showBeat", sender: self)
         
     }
     
     
-    @IBAction func shareButton(sender: AnyObject) {
+    @IBAction func shareButton(_ sender: AnyObject) {
         
         let slug = journey?.slug
-        let user = userDefaults.stringForKey("username")
+        let user = userDefaults.string(forKey: "username")
         let base = "https://hikebeat.io/"
         let shareString = base+user!+"/"+slug!
         let objectsToShare = [shareString]
         let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
         
-        presentViewController(activityViewController, animated: true, completion: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showBeat" {
-            let vc = segue.destinationViewController as! BeatsVC
+            let vc = segue.destination as! BeatsVC
             vc.startingIndex = self.indexOfChosenPin!
             vc.journey = self.journey
         }

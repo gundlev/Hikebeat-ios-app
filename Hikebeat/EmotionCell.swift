@@ -34,7 +34,7 @@ class EmotionCell: UICollectionViewCell {
             return emotion
         } else {
             imageView.image = deselectedImage
-            label.textColor = UIColor.whiteColor()
+            label.textColor = UIColor.white
             return nil
         }
     }

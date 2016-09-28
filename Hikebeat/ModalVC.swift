@@ -15,7 +15,7 @@ class ModalVC: UIViewController {
     var future: Future<Bool, NoError>!
     var progressBar: UIProgressView?
     var progressBarTitle: UILabel?
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let screenSize: CGRect = UIScreen.main.bounds
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
 
     @IBOutlet weak var infoContainer: UIImageView!
@@ -28,19 +28,19 @@ class ModalVC: UIViewController {
         infoContainer.layer.masksToBounds = true
        
         self.future.onSuccess { (success) in
-            _ = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
+            _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
             self.infoContainer.image = UIImage(named: "Checkcheck")
         }
     }
     
-    func addProgressBar(titleText: String) -> UIProgressView{
+    func addProgressBar(_ titleText: String) -> UIProgressView{
         progressBar = UIProgressView(frame: CGRect(x: 20, y: ((screenSize.height/3)*2)+20, width: screenSize.width-40, height: 20))
         progressBar?.progressTintColor = greenColor
-        progressBar?.trackTintColor = UIColor.whiteColor()
+        progressBar?.trackTintColor = UIColor.white
         progressBarTitle = UILabel(frame: CGRect(x: 20, y: ((screenSize.height/3)*2)+40, width: screenSize.width-40, height: 30))
-        progressBarTitle?.textAlignment = .Center
+        progressBarTitle?.textAlignment = .center
         progressBarTitle?.text = titleText
-        progressBarTitle?.textColor = UIColor.whiteColor()
+        progressBarTitle?.textColor = UIColor.white
         self.view.addSubview(progressBar!)
         self.view.addSubview(progressBarTitle!)
         return progressBar!
@@ -50,11 +50,11 @@ class ModalVC: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.pulse(infoContainer)
     }
 
-    func pulse(view:UIView)
+    func pulse(_ view:UIView)
     {
         let pulse1 = CASpringAnimation(keyPath: "transform.scale")
         pulse1.duration = 0.6
@@ -70,7 +70,7 @@ class ModalVC: UIViewController {
         animationGroup.repeatCount = 1000
         animationGroup.animations = [pulse1]
         
-        view.layer.addAnimation(animationGroup, forKey: "pulse")
+        view.layer.add(animationGroup, forKey: "pulse")
     }
     
     override func didReceiveMemoryWarning() {
@@ -79,15 +79,15 @@ class ModalVC: UIViewController {
     }
     
     func backToCompose(){
-        performSegueWithIdentifier("goBackToCompose", sender: self)
+        performSegue(withIdentifier: "goBackToCompose", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      
         switch segue.identifier! {
         
         case "goBackToCompose":
-            let vc = segue.destinationViewController as! ComposeVC
+            let vc = segue.destination as! ComposeVC
             vc.clearAllForNewBeat()
         
         default:

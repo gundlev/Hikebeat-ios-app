@@ -22,8 +22,8 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
 
         // Do any additional setup after loading the view.
         self.messageField.text = self.text
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
 
         messageField.layer.cornerRadius = messageField.bounds.height/8
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
@@ -37,24 +37,24 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         messageField.delegate = self
         placeholderLabel = UILabel()
         placeholderLabel.text = "  Message"
-        placeholderLabel.font = UIFont.systemFontOfSize(messageField.font!.pointSize)
+        placeholderLabel.font = UIFont.systemFont(ofSize: messageField.font!.pointSize)
         placeholderLabel.sizeToFit()
         messageField.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPointMake(5, messageField.font!.pointSize / 2)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: messageField.font!.pointSize / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
-        placeholderLabel.hidden = !messageField.text.isEmpty
+        placeholderLabel.isHidden = !messageField.text.isEmpty
         
         
         messageField.becomeFirstResponder()
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if self.messageField.isFirstResponder() {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.messageField.isFirstResponder {
             view.endEditing(true)
             
         } else {
-            performSegueWithIdentifier("backToCompose", sender: self)
+            performSegue(withIdentifier: "backToCompose", sender: self)
         }
     }
 
@@ -63,21 +63,21 @@ class EditMessageVC: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = !textView.text.isEmpty
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -170
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         self.view.frame.origin.y = 0
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! ComposeVC
-        let messageString = self.messageField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! ComposeVC
+        let messageString = self.messageField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if messageString != "" {
             vc.messageText = messageString
             vc.applyGreenBorder(vc.editMessageButton)

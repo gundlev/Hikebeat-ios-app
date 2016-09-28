@@ -11,11 +11,31 @@ import RealmSwift
 import Alamofire
 import SwiftyJSON
 import ContactsUI
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 
 class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let realm = try! Realm()
     var currentlyEdditing = false
     let yellowColor = UIColor(colorLiteralRed: 255/255, green: 238/255, blue: 0, alpha: 1)
@@ -24,7 +44,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     var newImage: Bool = false
     var store = CNContactStore()
     
-    public let Countries = [
+    open let Countries = [
         "Denmark",
         "Norway",
         "Finland"
@@ -55,40 +75,40 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     
     @IBOutlet weak var blurryBG: UIImageView!
     
-    @IBAction func editProfileImageTapped(sender: AnyObject) {
+    @IBAction func editProfileImageTapped(_ sender: AnyObject) {
         chooseImage()
     }
     
-    @IBAction func seeFollowingJourneys(sender: AnyObject) {
-        performSegueWithIdentifier("showFollowing", sender: self)
+    @IBAction func seeFollowingJourneys(_ sender: AnyObject) {
+        performSegue(withIdentifier: "showFollowing", sender: self)
     }
     
-    @IBAction func editButtonTapped(sender: AnyObject) {
+    @IBAction func editButtonTapped(_ sender: AnyObject) {
         currentlyEdditing = !currentlyEdditing
-        nameLabel.enabled = currentlyEdditing
-        phoneNoLabel.enabled = currentlyEdditing
-        nationalityLabel.enabled = currentlyEdditing
+        nameLabel.isEnabled = currentlyEdditing
+        phoneNoLabel.isEnabled = currentlyEdditing
+        nationalityLabel.isEnabled = currentlyEdditing
         if currentlyEdditing {
-            editButton.setImage(UIImage(named: "ActivatedIcon"), forState: UIControlState.Normal)
+            editButton.setImage(UIImage(named: "ActivatedIcon"), for: UIControlState())
             //followersButton.titleLabel!.text = "Edit Profile"
-            followersButton.highlighted = true
+            followersButton.isHighlighted = true
             followersButton.backgroundColor = yellowColor
-            editProfileImageButton.enabled = true
-            editProfileImageButton.hidden = false
-            followersButton.userInteractionEnabled = false
+            editProfileImageButton.isEnabled = true
+            editProfileImageButton.isHidden = false
+            followersButton.isUserInteractionEnabled = false
             nameLabel.textColor = UIColor(hexString: "F8E71C")
             phoneNoLabel.textColor = UIColor(hexString: "F8E71C")
             
         } else {
-            editButton.setImage(UIImage(named: "EditTitle"), forState: UIControlState.Normal)
+            editButton.setImage(UIImage(named: "EditTitle"), for: UIControlState())
             //followersButton.titleLabel!.text = "0 followers | 0 following "
-            followersButton.highlighted = false
+            followersButton.isHighlighted = false
             followersButton.backgroundColor = greenColor
-            editProfileImageButton.enabled = false
-            editProfileImageButton.hidden = true
-            followersButton.userInteractionEnabled = true
-            nameLabel.textColor = UIColor.whiteColor()
-            phoneNoLabel.textColor = UIColor.whiteColor()
+            editProfileImageButton.isEnabled = false
+            editProfileImageButton.isHidden = true
+            followersButton.isUserInteractionEnabled = true
+            nameLabel.textColor = UIColor.white
+            phoneNoLabel.textColor = UIColor.white
             
             checkForChanges()
         }
@@ -99,29 +119,29 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         super.viewDidLoad()
         
         // setting notification
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
         
-        followersButton.userInteractionEnabled = false
-        editProfileImageButton.enabled = false
-        editProfileImageButton.hidden = true
+        followersButton.isUserInteractionEnabled = false
+        editProfileImageButton.isEnabled = false
+        editProfileImageButton.isHidden = true
         
         self.setProfileImage()
         
         let pickerView = UIPickerView()
         pickerView.backgroundColor = greenColor
-        pickerView.tintColor = UIColor.whiteColor()
+        pickerView.tintColor = UIColor.white
         pickerView.delegate = self
         self.nationalityLabel.inputView = pickerView
 
 //        followersButton.setTitle("0 followers | 0 following ", forState: UIControlState.Normal)
 //        followersButton.setTitle("Edit Profile", forState: UIControlState.Selected)
         
-        nameLabel.enabled = currentlyEdditing
-        emailLabel.enabled = currentlyEdditing
-        phoneNoLabel.enabled = currentlyEdditing
-        numberOfJourneys.enabled = currentlyEdditing
-        nationalityLabel.enabled = currentlyEdditing
+        nameLabel.isEnabled = currentlyEdditing
+        emailLabel.isEnabled = currentlyEdditing
+        phoneNoLabel.isEnabled = currentlyEdditing
+        numberOfJourneys.isEnabled = currentlyEdditing
+        nationalityLabel.isEnabled = currentlyEdditing
         
         phoneNoLabel.tag = 1
         
@@ -130,29 +150,29 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 //            searchFieldLabelView.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, -40.0  )
 //            searchField.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
 //            searchButton.transform = CGAffineTransformTranslate( searchFieldLabelView.transform, 0.0, 0.0  )
-            infoContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.8, 0.8);
-            infoContainer.transform = CGAffineTransformTranslate( infoContainer.transform, 0.0, -35.0  )
+            infoContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8);
+            infoContainer.transform = infoContainer.transform.translatedBy(x: 0.0, y: -35.0  )
             
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            self.followersButton.transform = CGAffineTransformTranslate( followersButton.transform, 0.0, 10.0  )
+            self.followersButton.transform = followersButton.transform.translatedBy(x: 0.0, y: 10.0  )
         }else if(UIDevice.isIphone4 || UIDevice.isIpad){
-            profileContentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75);
-            profileContentView.transform = CGAffineTransformTranslate( profileContentView.transform, 0.0, -100.0  )
+            profileContentView.transform = CGAffineTransform.identity.scaledBy(x: 0.75, y: 0.75);
+            profileContentView.transform = profileContentView.transform.translatedBy(x: 0.0, y: -100.0  )
             
   
-            profilePicture.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.6, 0.6);
-            profilePicture.transform = CGAffineTransformTranslate( profilePicture.transform, 0, 50.0  )
+            profilePicture.transform = CGAffineTransform.identity.scaledBy(x: 0.6, y: 0.6);
+            profilePicture.transform = profilePicture.transform.translatedBy(x: 0, y: 50.0  )
 
-            editProfileImageButton.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.6, 0.6);
-            editProfileImageButton.transform = CGAffineTransformTranslate( editProfileImageButton.transform, 0, 50.0  )
+            editProfileImageButton.transform = CGAffineTransform.identity.scaledBy(x: 0.6, y: 0.6);
+            editProfileImageButton.transform = editProfileImageButton.transform.translatedBy(x: 0, y: 50.0  )
             
-            blurryBG.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.2, 0.8);
-            blurryBG.transform = CGAffineTransformTranslate( blurryBG.transform, 0, 25  )
+            blurryBG.transform = CGAffineTransform.identity.scaledBy(x: 1.2, y: 0.8);
+            blurryBG.transform = blurryBG.transform.translatedBy(x: 0, y: 25  )
         }
         
         let bgGradient = CAGradientLayer()
-        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.mainScreen().bounds.size)
-        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).CGColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).CGColor]
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
@@ -164,18 +184,18 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         profilePicture.layer.masksToBounds = true
         
         // Setting labels to values
-        self.usernameLabel.text = "@" + userDefaults.stringForKey("username")!
-        self.nameLabel.text = userDefaults.stringForKey("name")!
-        self.emailLabel.text = userDefaults.stringForKey("email")!
-        self.nationalityLabel.text = userDefaults.stringForKey("nationality")!
-        if let phoneNumber = userDefaults.stringForKey("permittedPhoneNumbers") {
+        self.usernameLabel.text = "@" + userDefaults.string(forKey: "username")!
+        self.nameLabel.text = userDefaults.string(forKey: "name")!
+        self.emailLabel.text = userDefaults.string(forKey: "email")!
+        self.nationalityLabel.text = userDefaults.string(forKey: "nationality")!
+        if let phoneNumber = userDefaults.string(forKey: "permittedPhoneNumbers") {
             self.phoneNoLabel.text = phoneNumber
         } else {
             self.phoneNoLabel.placeholder = "Phone no."
         }
         
         // Settings number of journeys
-        let journeys = realm.objects(Journey)
+        let journeys = realm.objects(Journey.self)
         if journeys.count == 1 {
             self.numberOfJourneys.text = String(journeys.count) + " journey created"
         } else {
@@ -195,35 +215,35 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 //        }
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return Countries.count
     }
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Countries[row]
     }
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.nationalityLabel.text = Countries[row]
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         let rightImage = image.correctlyOrientedImage()
         let imageData = UIImageJPEGRepresentation(rightImage, 0.5)
 
-        if picker.sourceType == .Camera {
+        if picker.sourceType == .camera {
             UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
         }
         
         saveProfileImageToDocs(imageData!)
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func saveProfileImageToDocs(mediaData: NSData) -> Bool {
+    func saveProfileImageToDocs(_ mediaData: Data) -> Bool {
         let dataPath = getProfileImagePath()
-        let success = mediaData.writeToFile(dataPath, atomically: false)
+        let success = (try? mediaData.write(to: URL(fileURLWithPath: dataPath), options: [])) != nil
         if success {
             print("Saved profile_image to Docs")
             setProfileImage()
@@ -246,45 +266,46 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
     func getProfileImagePath() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let fileName = "media/profile_image.jpg"
-        let dataPath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
+        let fileName = "/media/profile_image.jpg"
+//        let dataPath = documentsDirectory.appendingPathComponent(fileName)
+        let dataPath = documentsDirectory.appending(fileName)
         return dataPath
     }
     
     func chooseImage() {
-        let optionsMenu = UIAlertController(title: "Choose resource", message: nil, preferredStyle: .ActionSheet)
-        let cameraRoll = UIAlertAction(title: "Photo library", style: .Default, handler: {
+        let optionsMenu = UIAlertController(title: "Choose resource", message: nil, preferredStyle: .actionSheet)
+        let cameraRoll = UIAlertAction(title: "Photo library", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Photo Library")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
                 print("Library is available")
                 
                 self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .PhotoLibrary;
+                self.imagePicker.sourceType = .photoLibrary;
                 self.imagePicker.allowsEditing = true
                 
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         })
-        let takePhoto = UIAlertAction(title: "Camera", style: .Default, handler: {
+        let takePhoto = UIAlertAction(title: "Camera", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
             
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
                 print("Button capture")
                 
                 self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .Camera
-                self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.Photo
+                self.imagePicker.sourceType = .camera
+                self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.photo
                 self.imagePicker.allowsEditing = true
                 
-                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Take Photo")
         })
@@ -293,7 +314,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         optionsMenu.addAction(takePhoto)
         optionsMenu.addAction(cancel)
         
-        self.presentViewController(optionsMenu, animated: true, completion: nil)
+        self.present(optionsMenu, animated: true, completion: nil)
     }
     
     
@@ -306,16 +327,18 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     func checkForChanges() {
         var changesArr = [(property: String,value: String)]()
         
-        if self.nameLabel.text != userDefaults.stringForKey("name")! {
+        if self.nameLabel.text != userDefaults.string(forKey: "name")! {
             changesArr.append((UserProperty.name, self.nameLabel.text!))
-            userDefaults.setObject(self.nameLabel.text, forKey: "name")
+            userDefaults.set(self.nameLabel.text, forKey: "name")
         }
-        if self.phoneNoLabel.text != userDefaults.stringForKey("permittedPhoneNumbers")! {
-            if SimpleReachability.isConnectedToNetwork() {
+        //SimpleReachability.isConnectedToNetwork()
+        if self.phoneNoLabel.text != userDefaults.string(forKey: "permittedPhoneNumbers")! {
+            let reachability = Reachability()
+            if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
                 if self.phoneNoLabel.text?.characters.count >= 2 {
                     if wrongCountryCode(self.phoneNoLabel.text!) {
                         SCLAlertView().showWarning("Missing country code!", subTitle: "Your phone number was not changed as you didn't add a country code.")
-                        self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
                     } else {
                         changesArr.append((UserProperty.permittedPhoneNumbers, self.phoneNoLabel.text!))
                     }
@@ -323,12 +346,12 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                 
             } else {
                 SCLAlertView().showWarning("Missing connection!", subTitle: "You need to have network connection to change or set your phone number")
-                self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+                self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
             }
         }
-        if self.nationalityLabel.text != userDefaults.stringForKey("nationality")! {
+        if self.nationalityLabel.text != userDefaults.string(forKey: "nationality")! {
             changesArr.append((UserProperty.nationality, self.nationalityLabel.text!))
-            userDefaults.setObject(self.nationalityLabel.text, forKey: "nationality")
+            userDefaults.set(self.nationalityLabel.text, forKey: "nationality")
         }
         
         if !changesArr.isEmpty {
@@ -348,10 +371,10 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         
         customHeader["x-hikebeat-format"] = "jpg"
         
-        let url = IPAddress + "users/" + userDefaults.stringForKey("_id")! + "/profilePhoto"
+        let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/profilePhoto"
         print("imageURL: ", url)
         print("path: ", self.getProfileImagePath())
-        Alamofire.upload(.POST, url,headers: customHeader, file: NSURL(fileURLWithPath: getProfileImagePath())).responseJSON { mediaResponse in
+        Alamofire.upload(URL(fileURLWithPath: getProfileImagePath()), to: url,headers: customHeader).responseJSON { mediaResponse in
             if mediaResponse.response?.statusCode == 200 {
                 let rawImageJson = JSON(mediaResponse.result.value!)
                 let mediaJson = rawImageJson["data"][0]
@@ -373,39 +396,39 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 
     }
     
-    func sendTextChanges(arr: [(property: String,value: String)]) {
+    func sendTextChanges(_ arr: [(property: String,value: String)]) {
         
         for tuple in arr {
-            var parameters = [String:AnyObject]()
+            var parameters = [String:Any]()
             if tuple.property == UserProperty.permittedPhoneNumbers {
                 parameters["options"] = [tuple.property : [tuple.value]]
             } else {
                 parameters["options"] = [tuple.property : tuple.value]
             }
 
-            let url = IPAddress + "users/" + userDefaults.stringForKey("_id")!
+            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
             print(url)
             print(parameters)
-            Alamofire.request(.PUT, url, parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                 
                 if response.response?.statusCode == 200 {
                     print("It has been changed in the db")
                     if tuple.property == UserProperty.permittedPhoneNumbers {
-                        self.userDefaults.setObject(self.phoneNoLabel.text!, forKey: "permittedPhoneNumbers")
+                        self.userDefaults.set(self.phoneNoLabel.text!, forKey: "permittedPhoneNumbers")
                         
-                        switch CNContactStore.authorizationStatusForEntityType(.Contacts){
-                        case .Authorized:
+                        switch CNContactStore.authorizationStatus(for: .contacts){
+                        case .authorized:
                             print("should check for hikebeat contact")
                             self.checkIfHikbeatContactExist()
                             //TODO: check if hikebeat contact is created.
-                        case .NotDetermined:
+                        case .notDetermined:
                             let appearance = SCLAlertView.SCLAppearance(
                                 showCloseButton: false
                             )
                             let alertView = SCLAlertView(appearance: appearance)
                             alertView.addButton("Yes") {
                                 print("Yes")
-                                self.store.requestAccessForEntityType(.Contacts){succeeded, err in
+                                self.store.requestAccess(for: .contacts){succeeded, err in
                                     guard err == nil && succeeded else{
                                         return
                                     }
@@ -422,7 +445,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                     }
                 } else {
                     if tuple.property == UserProperty.permittedPhoneNumbers {
-                        self.phoneNoLabel.text = self.userDefaults.stringForKey("permittedPhoneNumbers")
+                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
                     }
                     print("No connection or fail, saving change")
                     print(response)
@@ -438,11 +461,11 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
     func checkIfHikbeatContactExist() {
-        let predicate = CNContact.predicateForContactsMatchingName("Hikebeat")
+        let predicate = CNContact.predicateForContacts(matchingName: "Hikebeat")
         let keys = [CNContactGivenNameKey]
         var contacts = [CNContact]()
         do {
-            contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keys)
+            contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keys as [CNKeyDescriptor])
             if contacts.count == 0 {
                 print("contacts: ", contacts.count)
 
@@ -470,9 +493,9 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         contactData.socialProfiles = [facebookProfile]
         
         let request = CNSaveRequest()
-        request.addContact(contactData, toContainerWithIdentifier: nil)
+        request.add(contactData, toContainerWithIdentifier: nil)
         do{
-            try store.executeSaveRequest(request)
+            try store.execute(request)
             print("Successfully added the contact")
         } catch let err{
             print("Failed to save the contact. \(err)")
@@ -480,15 +503,15 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
     func getTimeCommitted() -> String {
-        let t = String(NSDate().timeIntervalSince1970)
-        let e = t.rangeOfString(".")
-        let timestamp = t.substringToIndex((e?.startIndex)!)
+        let t = String(Date().timeIntervalSince1970)
+        let e = t.range(of: ".")
+        let timestamp = t.substring(to: (e?.lowerBound)!)
         return timestamp
     }
     
-    func wrongCountryCode(number: String) -> Bool {
-        let plus = number.substringWithRange(Range<String.Index>(start: number.startIndex, end: number.startIndex.advancedBy(1)))
-        let zerozero = number.substringWithRange(Range<String.Index>(start: number.startIndex, end: number.startIndex.advancedBy(2)))
+    func wrongCountryCode(_ number: String) -> Bool {
+        let plus = number.substring(with: (number.startIndex ..< number.characters.index(number.startIndex, offsetBy: 1)))
+        let zerozero = number.substring(with: (number.startIndex ..< number.characters.index(number.startIndex, offsetBy: 2)))
         if plus == "+" || zerozero == "00" {
             return false
         } else {
@@ -496,16 +519,16 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 && textField.text?.characters.count >= 2 {
             if wrongCountryCode(textField.text!) {
                 SCLAlertView().showWarning("Missing country code!", subTitle: "Please remember to add country code to your phone number.")
@@ -513,15 +536,15 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         }
     }
     
-    @IBAction func unwindToProfile(unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToProfile(_ unwindSegue: UIStoryboardSegue) {
         
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Foundation.Notification) {
         self.view.frame.origin.y = -130
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Foundation.Notification) {
         self.view.frame.origin.y = 0
     }
 
@@ -531,9 +554,9 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFollowing" {
-            let vc = segue.destinationViewController as! UniversalListOfJourneysVC
+            let vc = segue.destination as! UniversalListOfJourneysVC
             vc.fromVC = "profile"
         }
     }

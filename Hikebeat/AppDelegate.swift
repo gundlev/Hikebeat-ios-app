@@ -11,27 +11,31 @@ import CoreLocation
 import Realm
 import RealmSwift
 import Result
+import UserNotifications
+import NotificationCenter
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var locManager: CLLocationManager = CLLocationManager()
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     var reachability: Reachability!
     
     //a fast hack for displaying which VC initated a segue transition Social vs Journeys
     var fastSegueHack = ""
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//        UIApplication.shared.applicationIconBadgeNumber = 0
+
+        UIApplication.shared.statusBarStyle = .lightContent
         self.startReachability()
-        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             startLocationManager()
-        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Authorized {
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorized {
             startLocationManager()
         }
+//        registerForNotification()
         return true
     }
     
@@ -47,35 +51,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
     internal func synced() -> (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?) {
         let realmLocal = try! Realm()
         print("starting sync method")
-        let beatsQuery = NSCompoundPredicate(type: .AndPredicateType, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false), NSPredicate(format: "mediaData != %@", "")])
-        let changeQuery = NSPredicate(format: "uploaded = %@", false)
-        let beats = realmLocal.objects(Beat).filter(beatsQuery)
-        let changes = realmLocal.objects(Change).filter(changeQuery)
+        let beatsQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false as CVarArg), NSPredicate(format: "mediaData != %@", "")])
+        let changeQuery = NSPredicate(format: "uploaded = %@", false as CVarArg)
+        let beats = realmLocal.objects(Beat.self).filter(beatsQuery)
+        let changes = realmLocal.objects(Change.self).filter(changeQuery)
         if beats.isEmpty && changes.isEmpty {
             print("all empty")
             return (true, nil, nil)
@@ -92,7 +97,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func startReachability() {
         print("startReachability")
         do {
-            reachability = try Reachability.reachabilityForInternetConnection()
+            reachability = Reachability()
+            try reachability.startNotifier()
             print("Success reachability")
         } catch {
             print("Unable to create Reachability")
@@ -101,8 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         reachability.whenReachable = { reachability in
             
-            dispatch_async(dispatch_get_main_queue()) {
-                if reachability.isReachableViaWiFi() {
+            DispatchQueue.main.async {
+                if reachability.isReachableViaWiFi {
                     print("Reachable via WiFi")
                 } else {
                     print("Reachable via Cellular")
@@ -179,7 +185,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func getLocation() -> CLLocation? {
         
         var currentLocation: CLLocation?
-        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
+        if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse){
             print("it does get here")
             currentLocation = locManager.location
         }
@@ -187,5 +193,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         print("location 1. lat: ", currentLocation?.coordinate.latitude, "lng: ", currentLocation?.coordinate.longitude)
         return currentLocation
     }
+    
+    
+    
+/*
+    Notification stuff
+*/
+    
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // What to do when app recieves notification
+        UIApplication.shared.applicationIconBadgeNumber += 1
+        print("recieved notification")
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("This is the token:")
+        print(deviceToken)
+        
+        var devToken = String(format: "%@", deviceToken as CVarArg)
+        devToken = devToken.trimmingCharacters(in: CharacterSet(charactersIn: "<>"))
+        devToken = devToken.replacingOccurrences(of: " ", with: "")
+        
+        print(devToken)
+        userDefaults.set(devToken, forKey: "device_token")
+        
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
+        UIApplication.shared.applicationIconBadgeNumber += 1
+        completionHandler([.alert, .sound])
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+    }
+
 }
 

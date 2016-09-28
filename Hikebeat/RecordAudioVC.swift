@@ -22,53 +22,53 @@ class RecordAudioVC: UIViewController {
     
     var recorder: AVAudioRecorder!
     var player:AVAudioPlayer!
-    var meterTimer:NSTimer!
-    var soundFileURL:NSURL!
+    var meterTimer:Timer!
+    var soundFileURL:URL!
     var audioHasBeenRecordedForThisBeat = false
     
     override func viewDidLoad() {
         
         if(UIDevice.isIphone4 || UIDevice.isIpad){
-            saveButton.transform = CGAffineTransformTranslate( saveButton.transform, 0.0, -25.0)
+            saveButton.transform = saveButton.transform.translatedBy(x: 0.0, y: -25.0)
         }
         
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
         saveButton.layer.masksToBounds = true
         
         setInitialAudio()
-        saveButton.hidden = true
-        playButton.hidden = true
-        deleteButton.hidden = true
+        saveButton.isHidden = true
+        playButton.isHidden = true
+        deleteButton.isHidden = true
     }
     
-    @IBAction func recordAudio(sender: AnyObject) {
+    @IBAction func recordAudio(_ sender: AnyObject) {
         startRecordingAudio()
         self.recordCircle.image = UIImage(named: "record-btn-active")
     }
 
-    @IBAction func insideStop(sender: AnyObject) {
+    @IBAction func insideStop(_ sender: AnyObject) {
         stopRecordingAudio()
     }
     
-    @IBAction func outsideStop(sender: AnyObject) {
+    @IBAction func outsideStop(_ sender: AnyObject) {
         stopRecordingAudio()
     }
     
-    @IBAction func playbackAudio(sender: AnyObject) {
+    @IBAction func playbackAudio(_ sender: AnyObject) {
         playAudio()
     }
     
-    @IBAction func stopPlayback(sender: AnyObject) {
+    @IBAction func stopPlayback(_ sender: AnyObject) {
         stopPlayingAudio()
     }
     
-    @IBAction func deleteCurrentRecording(sender: AnyObject) {
+    @IBAction func deleteCurrentRecording(_ sender: AnyObject) {
         deleteRecording()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backToCompose" {
-            let vc = segue.destinationViewController as! ComposeVC
+            let vc = segue.destination as! ComposeVC
             vc.mediaChosen(MediaType.audio)
             vc.audioHasBeenRecordedForThisBeat = self.audioHasBeenRecordedForThisBeat
         }

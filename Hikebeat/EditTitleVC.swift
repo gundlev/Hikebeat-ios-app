@@ -11,7 +11,7 @@ import UIKit
 class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var emotion: String?
-    var selectedIndexpath: NSIndexPath?
+    var selectedIndexpath: IndexPath?
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var saveButton: UIButton!
@@ -23,27 +23,27 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         saveButton.layer.masksToBounds = true
     }
     
-    @IBAction func saveButtonTapped(sender: AnyObject) {
-        performSegueWithIdentifier("saveAndBack", sender: self)
+    @IBAction func saveButtonTapped(_ sender: AnyObject) {
+        performSegue(withIdentifier: "saveAndBack", sender: self)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-            performSegueWithIdentifier("backToCompose", sender: self)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            performSegue(withIdentifier: "backToCompose", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard indexPath.item != 4 else {return}
+        guard (indexPath as NSIndexPath).item != 4 else {return}
         
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! EmotionCell
+        let cell = collectionView.cellForItem(at: indexPath) as! EmotionCell
         let result = cell.changeStatus()
         emotion = result
         if result == nil {
@@ -52,7 +52,7 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         } else {
             if selectedIndexpath != nil {
                 print("already one chosen")
-                let oldCell = collectionView.cellForItemAtIndexPath(selectedIndexpath!) as! EmotionCell
+                let oldCell = collectionView.cellForItem(at: selectedIndexpath!) as! EmotionCell
                 oldCell.changeStatus()
                 selectedIndexpath = indexPath
             } else {
@@ -60,24 +60,24 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 selectedIndexpath = indexPath
             }
             
-            performSegueWithIdentifier("saveAndBack", sender: self)
+            performSegue(withIdentifier: "saveAndBack", sender: self)
         }
         
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard indexPath.item != 4 else {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("middleCell", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard (indexPath as NSIndexPath).item != 4 else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "middleCell", for: indexPath)
             return cell
         }
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("emotionCell", forIndexPath: indexPath) as! EmotionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emotionCell", for: indexPath) as! EmotionCell
         
-        switch indexPath.item {
+        switch (indexPath as NSIndexPath).item {
         case 0:
             return setCell("happy", number: "8", indexPath: indexPath)
         case 1:
@@ -104,13 +104,13 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-    func setCell(emotion: String, number: String, indexPath: NSIndexPath) -> EmotionCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("emotionCell", forIndexPath: indexPath) as! EmotionCell
+    func setCell(_ emotion: String, number: String, indexPath: IndexPath) -> EmotionCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emotionCell", for: indexPath) as! EmotionCell
         cell.selectedImage = UIImage(named: emotion+"_selected")!
         cell.deselectedImage = UIImage(named: emotion)!
         cell.imageView.image = UIImage(named: emotion)!
         cell.emotion = emotion
-        cell.label.text = emotion.capitalizedString
+        cell.label.text = emotion.capitalized
         if selectedEmotion(cell.emotion) {
             print("emotion chosen found: ", cell.emotion)
             cell.changeStatus()
@@ -120,7 +120,7 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-    func selectedEmotion(currentEmotion: String) -> Bool {
+    func selectedEmotion(_ currentEmotion: String) -> Bool {
         if emotion != nil {
             if currentEmotion == emotion! {
                 return true
@@ -132,8 +132,8 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! ComposeVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! ComposeVC
 //        let titleString = self.titleField.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
 //        if segue.identifier == "saveAndBack" {
             print("saveButtonModal")

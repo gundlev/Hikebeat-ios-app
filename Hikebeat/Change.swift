@@ -23,7 +23,7 @@ class Change: Object, Comparable {
     dynamic var uploaded: Bool = false
     
     func fill(
-        instanceType: String,
+        _ instanceType: String,
         timeCommitted: String,
         stringValue: String?,
         boolValue: Bool,

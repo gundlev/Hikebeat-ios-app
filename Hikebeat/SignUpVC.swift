@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
 
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var logoTypeface: UIImageView!
@@ -25,13 +25,13 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var signupContainer: UIView!
     
-    @IBAction func signUp(sender: AnyObject) {
+    @IBAction func signUp(_ sender: AnyObject) {
         if true {//passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
             
             let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
             print(parameters)
             
-            Alamofire.request(.POST, IPAddress + "users", parameters: parameters, encoding: .JSON, headers: Headers).responseJSON { response in
+            Alamofire.request((IPAddress + "users"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                 if response.response?.statusCode == 200 {
                     print("user has been created")
                     let rawUser = JSON(response.result.value!)
@@ -39,7 +39,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     print("This is the user: ",user)
                     
                     print("setting user")
-                    self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
+                    self.userDefaults.set(user["username"].stringValue, forKey: "username")
                     
                     var optionsDictionary = [String:String]()
                     for (key, value) in user["options"].dictionaryValue {
@@ -66,22 +66,22 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                         permittedPhoneNumbersArray.append(value.stringValue)
                     }
                     
-                    self.userDefaults.setObject(optionsDictionary, forKey: "options")
-                    self.userDefaults.setBool((user["options"]["notifications"].boolValue), forKey: "notifications")
-                    self.userDefaults.setObject((user["options"]["name"].stringValue), forKey: "name")
-                    self.userDefaults.setObject((user["options"]["gender"].stringValue), forKey: "gender")
-                    self.userDefaults.setObject((user["options"]["nationality"].stringValue), forKey: "nationality")
-                    self.userDefaults.setObject(journeyIdsArray, forKey: "journeyIds")
-                    self.userDefaults.setObject(followingArray, forKey: "following")
-                    self.userDefaults.setObject(deviceTokensArray, forKey: "deviceTokens")
-                    self.userDefaults.setObject(user["_id"].stringValue, forKey: "_id")
-                    self.userDefaults.setObject(user["username"].stringValue, forKey: "username")
-                    self.userDefaults.setObject(user["email"].stringValue, forKey: "email")
-                    self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
-                    self.userDefaults.setBool(true, forKey: "loggedIn")
-                    self.userDefaults.setObject(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
+                    self.userDefaults.set(optionsDictionary, forKey: "options")
+                    self.userDefaults.set((user["options"]["notifications"].boolValue), forKey: "notifications")
+                    self.userDefaults.set((user["options"]["name"].stringValue), forKey: "name")
+                    self.userDefaults.set((user["options"]["gender"].stringValue), forKey: "gender")
+                    self.userDefaults.set((user["options"]["nationality"].stringValue), forKey: "nationality")
+                    self.userDefaults.set(journeyIdsArray, forKey: "journeyIds")
+                    self.userDefaults.set(followingArray, forKey: "following")
+                    self.userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
+                    self.userDefaults.set(user["_id"].stringValue, forKey: "_id")
+                    self.userDefaults.set(user["username"].stringValue, forKey: "username")
+                    self.userDefaults.set(user["email"].stringValue, forKey: "email")
+                    self.userDefaults.set(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
+                    self.userDefaults.set(true, forKey: "loggedIn")
+                    self.userDefaults.set(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
                     
-                    self.performSegueWithIdentifier("showMainAfterRegister", sender: self)
+                    self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
                     
                 } else if response.response?.statusCode == 400 {
                     // email or username has been uses
@@ -97,7 +97,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
 
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
@@ -107,14 +107,14 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         
         if (UIDevice.isIphone5){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.85, 0.85)
-            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -50.0  )
+            signupContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
+            signupContainer.transform = signupContainer.transform.translatedBy(x: 0.0, y: -50.0  )
         }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
-            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, 40.0  )
+            signupContainer.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+            signupContainer.transform = signupContainer.transform.translatedBy(x: 0.0, y: 40.0  )
         }else if(UIDevice.isIphone4 || UIDevice.isIpad){
-            signupContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75)
-            signupContainer.transform = CGAffineTransformTranslate( signupContainer.transform, 0.0, -80.0  )
+            signupContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.75, y: 0.75)
+            signupContainer.transform = signupContainer.transform.translatedBy(x: 0.0, y: -80.0  )
         }
         
         
@@ -137,39 +137,39 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         
         
         
-        let paddingView = UIView(frame: CGRectMake(0, 0, 20, self.usernameField.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.usernameField.frame.height))
         usernameField.leftView = paddingView
-        usernameField.leftViewMode = UITextFieldViewMode.Always
+        usernameField.leftViewMode = UITextFieldViewMode.always
         
         usernameField.rightView = paddingView
-        usernameField.rightViewMode = UITextFieldViewMode.Always
+        usernameField.rightViewMode = UITextFieldViewMode.always
         
         
-        let paddingView2 = UIView(frame: CGRectMake(0, 0, 20, self.passwordField.frame.height))
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.passwordField.frame.height))
         passwordField.leftView = paddingView2
-        passwordField.leftViewMode = UITextFieldViewMode.Always
+        passwordField.leftViewMode = UITextFieldViewMode.always
         
         passwordField.rightView = paddingView2
-        passwordField.rightViewMode = UITextFieldViewMode.Always
+        passwordField.rightViewMode = UITextFieldViewMode.always
         
-        let paddingView3 = UIView(frame: CGRectMake(0, 0, 20, self.passwordField.frame.height))
+        let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.passwordField.frame.height))
         emailField.leftView = paddingView3
-        emailField.leftViewMode = UITextFieldViewMode.Always
+        emailField.leftViewMode = UITextFieldViewMode.always
         
         emailField.rightView = paddingView3
-        emailField.rightViewMode = UITextFieldViewMode.Always
+        emailField.rightViewMode = UITextFieldViewMode.always
 
-        let paddingView4 = UIView(frame: CGRectMake(0, 0, 20, self.passwordField.frame.height))
+        let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.passwordField.frame.height))
         rePasswordField.leftView = paddingView4
-        rePasswordField.leftViewMode = UITextFieldViewMode.Always
+        rePasswordField.leftViewMode = UITextFieldViewMode.always
         
         rePasswordField.rightView = paddingView4
-        rePasswordField.rightViewMode = UITextFieldViewMode.Always
+        rePasswordField.rightViewMode = UITextFieldViewMode.always
 
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name:UIKeyboardWillHideNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
         
     }
 
@@ -178,7 +178,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == self.usernameField{
             self.emailField.becomeFirstResponder()
@@ -198,11 +198,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         return true;
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -130
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         self.view.frame.origin.y = 0
     }
     

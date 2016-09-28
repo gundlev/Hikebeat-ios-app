@@ -11,7 +11,7 @@ import UIKit
 
 class HikebeatTabBarVC: UITabBarController {
     
-    let centerButton = UIButton(type: UIButtonType.Custom)
+    let centerButton = UIButton(type: UIButtonType.custom)
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     
     override func viewDidLoad() {
@@ -19,9 +19,9 @@ class HikebeatTabBarVC: UITabBarController {
         self.selectedIndex = 2
         self.tabBar.barTintColor = UIColor(red:0.082, green:0.404, blue:0.424, alpha:1.00)
         self.tabBar.tintColor = greenColor
-        self.tabBar.translucent = false
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: greenColor], forState: UIControlState.Selected)
+        self.tabBar.isTranslucent = false
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for: UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: greenColor], for: UIControlState.selected)
        
         
         let items = self.tabBar.items
@@ -29,17 +29,17 @@ class HikebeatTabBarVC: UITabBarController {
         for item in items! {
             switch item.title! {
             case "Journeys":
-                item.selectedImage = UIImage(named:"JourneysSelected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                item.image = UIImage(named:"JourneysUnselected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                item.selectedImage = UIImage(named:"JourneysSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+                item.image = UIImage(named:"JourneysUnselected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
             case "Social":
-                item.selectedImage = UIImage(named:"SocialSelected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                item.image = UIImage(named:"SocialUnselected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                item.selectedImage = UIImage(named:"SocialSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+                item.image = UIImage(named:"SocialUnselected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
             case "Settings":
-                item.selectedImage = UIImage(named:"SettingsSelected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                item.image = UIImage(named:"SettingsUnselected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                item.selectedImage = UIImage(named:"SettingsSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+                item.image = UIImage(named:"SettingsUnselected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
             case "Profile":
-                item.selectedImage = UIImage(named:"ProfileSelected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                item.image = UIImage(named:"ProfileUnselected")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                item.selectedImage = UIImage(named:"ProfileSelected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+                item.image = UIImage(named:"ProfileUnselected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
             default:
                 print("default")
             }
@@ -50,18 +50,18 @@ class HikebeatTabBarVC: UITabBarController {
         
         let selected = UIImage(named: "TabBarMainSelected")!
         let unselected = UIImage(named: "TabBarMainUnselected")!
-        centerButton.frame = CGRectMake(0.0, 0.0, selected.size.width, selected.size.height)
+        centerButton.frame = CGRect(x: 0.0, y: 0.0, width: selected.size.width, height: selected.size.height)
         
         /*
          Purposefully setting UIControlState reversed to avoid having the button return to normal when holding a pres.
          This should be fixed at some point but works perfectly right now. This means that the state "Selected" is true when
          it is not selected and visa versa.
          */
-        centerButton.setBackgroundImage(selected, forState: UIControlState.Normal)
-        centerButton.setBackgroundImage(unselected, forState: UIControlState.Selected)
+        centerButton.setBackgroundImage(selected, for: UIControlState())
+        centerButton.setBackgroundImage(unselected, for: UIControlState.selected)
         centerButton.adjustsImageWhenHighlighted = false
-        centerButton.selected = false
-        centerButton.addTarget(self, action: #selector(centerButtonPressed), forControlEvents: UIControlEvents.TouchDown)
+        centerButton.isSelected = false
+        centerButton.addTarget(self, action: #selector(centerButtonPressed), for: UIControlEvents.touchDown)
         
         let heightDifference = self.tabBar.frame.size.height/2;
         
@@ -78,21 +78,21 @@ class HikebeatTabBarVC: UITabBarController {
     func centerButtonPressed() {
         self.selectedIndex = 2
         // Reverse, the button is actually pressed here.
-        centerButton.selected = false
+        centerButton.isSelected = false
     }
     
-    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 2 {
             // Reverse, the button is actually pressed here.
-            centerButton.selected = false
+            centerButton.isSelected = false
         } else {
             // Reverse, the button is actually not pressed here.
-            centerButton.selected = true
+            centerButton.isSelected = true
         }
         
     }
     
     func deselectCenterButton() {
-        centerButton.selected = true
+        centerButton.isSelected = true
     }
 }

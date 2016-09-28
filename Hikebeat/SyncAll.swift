@@ -15,7 +15,7 @@ import Result
 import RealmSwift
 import Realm
 
-func syncAll(progressView: UIProgressView, changes: Results<(Change)>, beats: Results<(Beat)>) -> Future<Bool, NoError> {
+func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, beats: Results<(Beat)>) -> Future<Bool, NoError> {
     // Performing fetch
     let promise = Promise<Bool, NoError>()
     
