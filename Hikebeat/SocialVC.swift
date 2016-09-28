@@ -8,30 +8,19 @@
 
 import UIKit
 
-class SocialVC: UIViewController, UITextFieldDelegate {
+class SocialVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var popularJourneysButton: UIButton!
-    @IBOutlet weak var popularJourneysCollectionView: UICollectionView!
-    
-    @IBOutlet weak var searchFieldLabelView: UIView!
-    @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var journeysTableView: UITableView!
     @IBOutlet weak var searchButton: UIButton!
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    @IBOutlet weak var placeholder: UIView!
-    
-    var jStatuses = ["Active journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey","Finished journey"]
     var jTitles = ["A Weekend in London","Adventures in Milano","Hike Madness in Sweden","Meeting in Prague","Wonderful Copenhagen","To Paris and Back","Camino De Santiago"]
-    var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
+    var jInfos = ["123 followers | 25 beats","123 followers | 25 beats","123 followers | 25 beats","123 followers | 25 beats","123 followers | 25 beats","123 followers | 25 beats","123 followers | 25 beats"]
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var insets = self.popularJourneysCollectionView.contentInset
-        let value = (self.view.frame.size.width - (self.popularJourneysCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
-        insets.left = value
-        insets.right = value
-        self.popularJourneysCollectionView.contentInset = insets
-        self.popularJourneysCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+        
     }
     
     override func viewDidLoad() {
@@ -41,22 +30,12 @@ class SocialVC: UIViewController, UITextFieldDelegate {
         
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
-            searchFieldLabelView.transform = searchFieldLabelView.transform.translatedBy(x: 0.0, y: -40.0  )
-            searchField.transform = searchFieldLabelView.transform.translatedBy(x: 0.0, y: 0.0  )
-            searchButton.transform = searchFieldLabelView.transform.translatedBy(x: 0.0, y: 0.0  )
-             placeholder.transform = placeholder.transform.translatedBy(x: 0.0, y: -80.0  )
-        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            self.popularJourneysButton.transform = popularJourneysButton.transform.translatedBy(x: 0.0, y: 10.0  )
-        } else if(UIDevice.isIphone4 || UIDevice.isIpad){
-            searchFieldLabelView.isHidden = true
-            searchField.transform = searchField.transform.translatedBy(x: 0.0, y: -107.0  )
-            searchButton.transform = searchButton.transform.translatedBy(x: 0.0, y: -120.0  )
             
-            placeholder.transform = placeholder.transform.translatedBy(x: 0.0, y: -120.0  )
-        }
+        }else if(UIDevice.isIphone6SPlus || UIDevice.isIphone6Plus){
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SocialVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(SocialVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+        } else if(UIDevice.isIphone4 || UIDevice.isIpad){
+          
+        }
 
         
         let bgGradient = CAGradientLayer()
@@ -65,27 +44,13 @@ class SocialVC: UIViewController, UITextFieldDelegate {
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
-        popularJourneysButton.layer.cornerRadius = popularJourneysButton.bounds.height/2
-        popularJourneysButton.layer.masksToBounds = true
-        
-        searchField.layer.cornerRadius = searchField.bounds.height/2
-        searchField.layer.masksToBounds = true
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         searchButton.layer.cornerRadius = searchButton.bounds.height/2
         searchButton.layer.masksToBounds = true
-
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.searchField.frame.height))
-        searchField.leftView = paddingView
-        searchField.leftViewMode = UITextFieldViewMode.always
-        
-        searchField.rightView = paddingView
-        searchField.rightViewMode = UITextFieldViewMode.always
-        
-        
-         self.searchField.delegate = self;
-        
-        
+        searchButton.imageEdgeInsets = UIEdgeInsetsMake(0, 23, 0, 0)
+        searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 23, 0, 0)
         
     }
     
@@ -98,17 +63,33 @@ class SocialVC: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return jTitles.count
     }
     
-    func keyboardWillShow(_ sender: Notification) {
-        self.view.frame.origin.y = -130
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.journeysTableView.dequeueReusableCell(withIdentifier: "FeaturedCell",for: indexPath) as! FeaturedJourneyViewCell
+        
+        cell.journeyInfoLabel.text = jInfos[(indexPath as NSIndexPath).row]
+        cell.journeyTitleLabel.text = jTitles[(indexPath as NSIndexPath).row]
+        cell.journeyProfileImage.image = UIImage(named: "DimiInTheHouse")
+                
+
+        cell.backgroundColor = UIColor.clear
+        
+//        let bgColorView = UIView()
+//        bgColorView.backgroundColor = darkGreen
+//        cell.selectedBackgroundView = bgColorView
+//        
+        return cell
+        
     }
     
-    func keyboardWillHide(_ sender: Notification) {
-        self.view.frame.origin.y = 0
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        appDelegate.fastSegueHack = "social"
+        performSegue(withIdentifier: "showOtherJourney", sender: self)
+        self.journeysTableView.deselectRow(at: indexPath, animated: true)
     }
     
     /*
@@ -121,33 +102,4 @@ class SocialVC: UIViewController, UITextFieldDelegate {
     }
     */
 
-}
-
-extension SocialVC : UICollectionViewDataSource, UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return jTitles.count
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActiveJourneyCell", for: indexPath) as! ActiveJourneyCollectionViewCell
-        
-        cell.journeyTitleLabel.text = jTitles[(indexPath as NSIndexPath).row]
-        let profileBadge = UIImage(named: "DimiInTheHouse")
-        cell.badgeImage.image = profileBadge
-        
-        cell.badgeImage.layer.cornerRadius = cell.badgeImage.bounds.height/2
-        cell.badgeImage.layer.masksToBounds = true
-
-        cell.badgeImage.layer.borderWidth = 3
-        cell.badgeImage.layer.borderColor = UIColor(hexString: "15676C")!.cgColor
-        
-        cell.backgroundColor = UIColor.clear
-        
-        return cell
-    }
 }
