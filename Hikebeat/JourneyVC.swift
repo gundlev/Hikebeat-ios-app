@@ -141,34 +141,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         pinArr.sort()
         let lastElement = pinArr.last
         lastElement?.lastPin = true
-        self.zoomToFitMapAnnotations(self.journeyMap)
+        self.journeyMap.showAnnotations(self.journeyMap.annotations, animated: true)
         self.createPolyline(self.journeyMap)
-    }
-    
-    func zoomToFitMapAnnotations(_ aMapView: MKMapView) {
-        if aMapView.annotations.count == 0 {
-            return
-        }
-        var topLeftCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
-        topLeftCoord.latitude = -90
-        topLeftCoord.longitude = 180
-        var bottomRightCoord: CLLocationCoordinate2D = CLLocationCoordinate2D()
-        bottomRightCoord.latitude = 90
-        bottomRightCoord.longitude = -180
-        for annotation: MKAnnotation in aMapView.annotations {
-            topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude)
-            topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude)
-            bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude)
-            bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude)
-        }
-        
-        var region: MKCoordinateRegion = MKCoordinateRegion()
-        region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5
-        region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5
-        region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.8
-        region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.8
-        region = aMapView.regionThatFits(region)
-        aMapView.setRegion(region, animated: true)
     }
     
     func getImageWithName(_ name: String) -> UIImage? {

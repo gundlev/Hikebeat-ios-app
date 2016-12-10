@@ -20,6 +20,8 @@ import CoreLocation
 class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLocationManagerDelegate {
 
     var activeJourney: Journey?
+    var journeys: Results<Journey>?
+    var activeIndexpath: IndexPath!
     var realm = try! Realm()
     var messageText: String?
     var emotion: String?
@@ -32,7 +34,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     let userDefaults = UserDefaults.standard
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
     var beatPromise: Promise<Bool, NoError>!
-    
+    var showingJourneySelect = false
+    var firstLoad = true
     var currentModal: ModalVC?
     
     // Audio variables
@@ -42,6 +45,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var soundFileURL:URL!
     var filledin: Int = 0
     
+    @IBOutlet weak var activeJourneyButton: UIButton!
+    @IBOutlet weak var tableViewSelectJourney: UITableView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var editMessageButton: UIImageView!
     @IBOutlet weak var editEmotionButton: UIImageView!
@@ -62,6 +67,17 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     @IBOutlet weak var journeysButton: UIButton!
     
     @IBOutlet weak var noactiveTop: NSLayoutConstraint!
+    
+    @IBAction func chooseActiveJourney(_ sender: Any) {
+        if showingJourneySelect {
+            animateSelectJourneyUp(animated: true)
+//            self.activeJourneyButton.setTitle(self.activeJourney?.headline, for: .normal)
+        } else {
+            animateSelectJourneyDown(animated: true)
+//            self.activeJourneyButton.setTitle("Done", for: .normal)
+        }
+        showingJourneySelect = !showingJourneySelect
+    }
     
     @IBAction func sendBeat(_ sender: AnyObject) {
         print("up")
@@ -84,7 +100,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
+        self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
             composeContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.80, y: 0.80);
@@ -177,12 +194,23 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             composeContainer.isHidden = false
             NoActiveContainer.isHidden = true
         }
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        animateSelectJourneyUp(animated: false)
+        if firstLoad {
+            let center = self.tableViewSelectJourney.center
+            self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
+            self.tableViewSelectJourney.isHidden = false
+            firstLoad = false
+        }
     }
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
+//        animateSelectJourneyUp(animated: false)
+//        let center = self.tableViewSelectJourney.center
+//        self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
 //        let isActiveJourney = findActiveJourney()
 //        
 //        if isActiveJourney{
@@ -365,11 +393,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 */
     
     func findActiveJourney() -> Bool {
+        self.journeys = realm.objects(Journey.self)
         let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
             return false
         } else {
             self.activeJourney = journeys[0]
+            self.activeJourneyButton.setTitle(self.activeJourney!.headline, for: .normal)
             return true
         }
 
@@ -437,6 +467,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         print("Just Before Crash!")
                         self.currentBeat = Beat()
                         self.currentBeat!.fill( self.emotion, journeyId: self.activeJourney!.journeyId, message: self.messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, mediaUrl: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: self.activeJourney!)
+                        self.currentBeat!.journey = self.activeJourney
                         //                try! realm.write() {
                         //                    realm.add(self.currentBeat!)
                         //                }

@@ -81,13 +81,15 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     self.userDefaults.set(true, forKey: "loggedIn")
                     self.userDefaults.set(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
                     
+                    createMediaFolder()
                     self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
                     
                 } else if response.response?.statusCode == 400 {
                     // email or username has been uses
                     print("email or username has been used")
                     print(response.result.value)
-                    
+                    let json = JSON(response.result.value)
+                    SCLAlertView().showWarning("Sorry", subTitle: "\n" + json["msg"].stringValue)
                 }
             }
         } else {

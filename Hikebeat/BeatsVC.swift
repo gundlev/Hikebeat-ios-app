@@ -99,7 +99,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         let beat = self.beats[(indexPath as NSIndexPath).item]
         print("Beat Emotion: ", beat.emotion)
-       
+        cell.beat = beat
         if(UIDevice.isIphone4 || UIDevice.isIpad){
             cell.beatContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.7, y: 0.7);
             cell.beatContainer.transform = cell.beatContainer.transform.translatedBy(x: 0.0, y: -20.0  )
@@ -175,48 +175,51 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         
         // setting beat media
-        if beat.mediaData != nil {
+//        if beat.mediaData != nil {
             print("Item :", (indexPath as NSIndexPath).item)
 //            print("Beat Headline: ", beat.title)
-            print("Mediadata: ", beat.mediaData!)
+//            print("Mediadata: ", beat.mediaData!)
             switch beat.mediaType! {
             case MediaType.image:
                 print("image")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.beatImage.image = UIImage(named: "picture-btn")
-                cell.beatImage.isHidden = false
-                cell.playButton.isHidden = false
+//                cell.beatImage.isHidden = false
+//                cell.playButton.isHidden = false
                 cell.mediaType.text = "Image"
+                cell.setImage()
             case MediaType.video:
                 print("video")
                 let image = videoSnapshot(getImagePath(beat.mediaData!) as NSString)
                 cell.beatImage.image = UIImage(named: "video-btn")
-                cell.beatImage.isHidden = false
-                cell.playButton.isHidden = false
+//                cell.beatImage.isHidden = false
+//                cell.playButton.isHidden = false
 //                cell.playButton.imageView?.image = UIImage(named: "play-btn")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Video"
+                cell.setMedia(fileType: "mp4")
             case MediaType.audio:
                 print("audio")
                 cell.beatImage.image = UIImage(named: "memo-btn-passive")
-                cell.beatImage.isHidden = false
-                cell.playButton.isHidden = false
+//                cell.beatImage.isHidden = false
+//                cell.playButton.isHidden = false
 //                cell.playButton.setImage(UIImage(), forState: UIControlState.Normal)
                 //cell.playButton.imageView?.image = UIImage()
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Memo"
+                cell.setMedia(fileType: "m4a")
             default:
                 print("default")
                 cell.mediaType.text = " "
                 cell.beatImage.isHidden = true
                 cell.playButton.isHidden = true
             }
-        } else {
-            print("MediaData is nil")
-            cell.mediaType.text = " "
-            cell.beatImage.isHidden = true
-            cell.playButton.isHidden = true
-        }
+//        } else {
+//            print("MediaData is nil")
+//            cell.mediaType.text = " "
+//            cell.beatImage.isHidden = true
+//            cell.playButton.isHidden = true
+//        }
         return cell
     }
     

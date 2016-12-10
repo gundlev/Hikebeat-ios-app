@@ -32,10 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         self.startReachability()
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             startLocationManager()
-        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorized {
+        } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways {
             startLocationManager()
         }
-//        registerForNotification()
+        registerForNotification()
         return true
     }
     
@@ -206,8 +206,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         // What to do when app recieves notification
-        UIApplication.shared.applicationIconBadgeNumber += 1
-        print("recieved notification")
+//        UIApplication.shared.applicationIconBadgeNumber += 1
+        print("recieved notification 1")
+        print(userInfo)
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -215,6 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         print(deviceToken)
         
         var devToken = String(format: "%@", deviceToken as CVarArg)
+        print(devToken)
         devToken = devToken.trimmingCharacters(in: CharacterSet(charactersIn: "<>"))
         devToken = devToken.replacingOccurrences(of: " ", with: "")
         
@@ -223,15 +225,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
     }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("fetch noti")
+        UIApplication.shared.applicationIconBadgeNumber += 1
+        print(userInfo)
+        print("_________________")
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//        UIApplication.shared.applicationIconBadgeNumber += 1
+        print("recieved notification 2")
+
+    }
+//
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        completionHandler(UIBackgroundFetchResult.newData)
+//    }
+//    
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
-        UIApplication.shared.applicationIconBadgeNumber += 1
-        completionHandler([.alert, .sound])
+//        UIApplication.shared.applicationIconBadgeNumber += 1
+        print("recieved notification 3")
+
     }
     
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
+        print("presenting")
     }
 
 }

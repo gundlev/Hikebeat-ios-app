@@ -77,6 +77,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         passwordField.rightView = paddingView2
         passwordField.rightViewMode = UITextFieldViewMode.always
         
+        usernameField.text = "niklas"
+        passwordField.text = "ABC123"
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
@@ -122,13 +125,13 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //            let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
 //            dispatch_async(backgroundQueue, {
 //                print("This is run on the background queue")
-            
+//            print(response)
             if response.response?.statusCode == 200 {
                 let createdMediaFolder = self.createMediaFolder()
-                print("value: ", response.result.value)
+//                print("value: ", response.result.value)
                 let firstJson = JSON(response.result.value!)
                 let user = firstJson["data"][0]
-                
+                print("user: ", user)
                 print("setting user")
                 self.userDefaults.set(user["username"].stringValue, forKey: "username")
                 var optionsDictionary = [String:String]()
@@ -141,6 +144,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 for (value) in user["journeyIds"].arrayValue {
                     journeyIdsArray.append(value.stringValue)
                 }
+                
                 var followingArray = [String]()
                 for (value) in user["following"].arrayValue {
                     followingArray.append(value.stringValue)
@@ -216,138 +220,144 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 
                 /* Get all the journeys*/
                 print("Getting the journeys")
-                let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
-                print(urlJourney)
-                Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
-//                    print(response.response?.statusCode)
-//                    print(response)
-
-                    if response.response?.statusCode == 200 {
-                        if response.result.value != nil {
-                            //print(response.result.value!)
-                            let rawJson = JSON(response.result.value!)
-                            let json = rawJson["data"]
-                            //print(json)
-                            for (_, journey) in json {
-                                let headline = journey["options"]["headline"].stringValue
-                                print(headline)
-                                //let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
-                                
-                                let dataJourney = Journey()
-                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue, seqNumber: String(journey["seqNumber"].intValue))
-                                print(1)
-                                let localRealm = try! Realm()
-                                try! localRealm.write() {
-                                    localRealm.add(dataJourney)
-                                }
-                                print(2)
-                                
-                                for (_,followerId) in journey["followers"] {
-                                    print(3)
-                                    try! localRealm.write() {
-                                        let follower = Follower()
-                                        follower.userId = followerId.stringValue
-                                    }
-                                    print(4)
-                                }
-                                
-                                for (_, message) in journey["messages"]  {
-                                    print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
-                                    //print(message)
-                                    let mediaType = message["media"]["type"].stringValue
-                                    let mediaData = message["media"]["path"].stringValue
-                                    let mediaDataId = message["media"]["_id"].stringValue
-
-                                    
-                                    if mediaData != "" && mediaType != "" {
-                                        switch mediaType {
-                                        case MediaType.image:
-//                                            Request.addAcceptableImageContentTypes(["image/jpg"])
-                                            Alamofire.request(mediaData).responseImage {
-                                                response in
-                                                print("Statuscoode: ", response.response?.statusCode)
-                                                if let image = response.result.value {
-                                                    
-                                                    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-                                                    let documentsDirectory: AnyObject = paths[0] as AnyObject
-                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+".jpg"
-                                                    let dataPath = documentsDirectory.appending("/media/"+fileName)
-                                                    let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
-                                                    print("The image downloaded: ", success, " moving on to save")
-                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-                                                } else {
-                                                    print("could not resolve to image")
-                                                    print(response)
-                                                }
-                                            }
-                                        case MediaType.video, MediaType.audio:
-                                            var fileType = ".mp4"
-                                            if mediaType == MediaType.audio {
-                                                fileType = ".m4a"
-                                            }
-                                            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-                                            let fm = FileManager()
-                                            
-                                            let documentsDirectory: AnyObject = paths[0] as AnyObject
-                                            let fileName = "/media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-                                            let dataPath = documentsDirectory.appending(fileName)
-                                            
-                                            let pathURL = URL(fileURLWithPath: dataPath)
-                                            let destination = DownloadRequest.suggestedDownloadDestination(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)
-//                                            destination.append("DO STUFF HERE")
-//                                            DownloadRequest.suggestedDownloadDestination(for: FileManager., in: HTTPURLResponse())
-                                            let future = downloadAndStoreMedia(url: mediaData, name: fileName)
-                                            future.onSuccess(callback: { (success) in
-                                                if success {
-                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-                                                }
-                                            })
-                                            
-//                                            Alamofire.download(mediaData, method: .post, to: {
-//                                                (temporaryURL, response) in
-//                                                
-//                                                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-//                                                let fm = FileManager()
-//                                                // (destinationURL: URL, options: DownloadRequest.DownloadOptions)
-//                                                let documentsDirectory: AnyObject = paths[0] as AnyObject
-//                                                let fileName = "media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-//                                                let dataPath = documentsDirectory.appending(fileName)
-//                                                return dataPath
-////                                                return URL(fileURLWithPath: dataPath)
-//                                            }).response { response in
-////                                                let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-////                                                let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-////                                                dispatch_async(backgroundQueue, {
-////                                                    print("This is run on the background queue")
-//                                                
-//                                                    if response.response?.statusCode != 200 {
-//                                                        print("Failed with error)")
-//                                                    } else {
-//                                                        let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-//                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-//                                                        print("Downloaded file successfully")
-//                                                    }
-////                                                })
+                
+                let journeysFuture = getJourneysForUser(userId: user["_id"].stringValue)
+                journeysFuture.onSuccess(callback: { (tuple) in
+                    print("FINISHED: ", tuple)
+                })
+                
+//                let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
+//                print(urlJourney)
+//                Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+////                    print(response.response?.statusCode)
+//                    print("JOURNEY: ", response)
+//
+//                    if response.response?.statusCode == 200 {
+//                        if response.result.value != nil {
+//                            //print(response.result.value!)
+//                            let rawJson = JSON(response.result.value!)
+//                            let json = rawJson["data"]
+//                            //print(json)
+//                            for (_, journey) in json {
+//                                let headline = journey["options"]["headline"].stringValue
+//                                print(headline)
+//                                //let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
+//                                
+//                                let dataJourney = Journey()
+//                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue, seqNumber: String(journey["seqNumber"].intValue))
+//                                print(1)
+//                                let localRealm = try! Realm()
+//                                try! localRealm.write() {
+//                                    localRealm.add(dataJourney)
+//                                }
+//                                print(2)
+//                                print("followers: ",journey["followers"])
+//                                for (_,followerId) in journey["followers"] {
+//                                    print(3)
+//                                    try! localRealm.write() {
+//                                        let follower = Follower()
+//                                        follower.userId = followerId.stringValue
+//                                    }
+//                                    print(4)
+//                                }
+//                                
+//                                for (_, message) in journey["messages"]  {
+//                                    print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
+//                                    //print(message)
+//                                    let mediaType = message["media"]["type"].stringValue
+//                                    let mediaData = message["media"]["path"].stringValue
+//                                    let mediaDataId = message["media"]["_id"].stringValue
+//
+//                                    
+//                                    if mediaData != "" && mediaType != "" {
+//                                        switch mediaType {
+//                                        case MediaType.image:
+////                                            Request.addAcceptableImageContentTypes(["image/jpg"])
+//                                            Alamofire.request(mediaData).responseImage {
+//                                                response in
+//                                                print("Statuscoode: ", response.response?.statusCode)
+//                                                if let image = response.result.value {
+//                                                    
+//                                                    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//                                                    let documentsDirectory: AnyObject = paths[0] as AnyObject
+//                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+".jpg"
+//                                                    let dataPath = documentsDirectory.appending("/media/"+fileName)
+//                                                    let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
+//                                                    print("The image downloaded: ", success, " moving on to save")
+//                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
+//                                                } else {
+//                                                    print("could not resolve to image")
+//                                                    print(response)
+//                                                }
 //                                            }
-                                            
-                                            
-                                        default:
-                                            print("unknown type of media")
-                                        }
-                                    } else {
-                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil, mediaUrl: nil)
-                                    }
-                                    
-                                //hjkfhdsjfhjdksf
-                                    
-                                }
-                            }
-                        }
-                        
-                    } else {
-                        // something is wrong
-                    }
-                }
+//                                        case MediaType.video, MediaType.audio:
+//                                            var fileType = ".mp4"
+//                                            if mediaType == MediaType.audio {
+//                                                fileType = ".m4a"
+//                                            }
+//                                            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//                                            let fm = FileManager()
+//                                            
+//                                            let documentsDirectory: AnyObject = paths[0] as AnyObject
+//                                            let fileName = "/media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+//                                            let dataPath = documentsDirectory.appending(fileName)
+//                                            
+//                                            let pathURL = URL(fileURLWithPath: dataPath)
+//                                            let destination = DownloadRequest.suggestedDownloadDestination(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)
+////                                            destination.append("DO STUFF HERE")
+////                                            DownloadRequest.suggestedDownloadDestination(for: FileManager., in: HTTPURLResponse())
+//                                            let future = downloadAndStoreMedia(url: mediaData, path: fileName)
+//                                            future.onSuccess(callback: { (success) in
+//                                                if success {
+//                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
+//                                                }
+//                                            })
+//                                            
+////                                            Alamofire.download(mediaData, method: .post, to: {
+////                                                (temporaryURL, response) in
+////                                                
+////                                                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+////                                                let fm = FileManager()
+////                                                // (destinationURL: URL, options: DownloadRequest.DownloadOptions)
+////                                                let documentsDirectory: AnyObject = paths[0] as AnyObject
+////                                                let fileName = "media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+////                                                let dataPath = documentsDirectory.appending(fileName)
+////                                                return dataPath
+//////                                                return URL(fileURLWithPath: dataPath)
+////                                            }).response { response in
+//////                                                let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//////                                                let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//////                                                dispatch_async(backgroundQueue, {
+//////                                                    print("This is run on the background queue")
+////                                                
+////                                                    if response.response?.statusCode != 200 {
+////                                                        print("Failed with error)")
+////                                                    } else {
+////                                                        let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
+////                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
+////                                                        print("Downloaded file successfully")
+////                                                    }
+//////                                                })
+////                                            }
+//                                            
+//                                            
+//                                        default:
+//                                            print("unknown type of media")
+//                                        }
+//                                    } else {
+//                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil, mediaUrl: nil)
+//                                    }
+//                                    
+//                                //hjkfhdsjfhjdksf
+//                                    
+//                                }
+//                            }
+//                        }
+//                        
+//                    } else {
+//                        // something is wrong
+//                    }
+//                }
                 print("This is what is saved: \n\n\n\n")
                 print(5)
                 let localRealm = try! Realm()
@@ -429,21 +439,21 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    func saveBeatAndAddToJourney(_ message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?, mediaUrl: String?) {
-//        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-//        dispatch_async(backgroundQueue, {
-//            print("This is run on the background queue")
-        
-        let localRealm = try! Realm()
-        let dataBeat = Beat()
-        dataBeat.fill(message["emotion"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
-        try! localRealm.write {
-            localRealm.add(dataBeat)
-            journey.beats.append(dataBeat)
-        }
-//        })
-    }
+//    func saveBeatAndAddToJourney(_ message: JSON, journey: Journey, mediaType: String?, mediaData: String?, mediaDataId: String?, mediaUrl: String?) {
+////        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+////        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+////        dispatch_async(backgroundQueue, {
+////            print("This is run on the background queue")
+//        
+//        let localRealm = try! Realm()
+//        let dataBeat = Beat()
+//        dataBeat.fill(message["emotion"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: mediaData, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true)
+//        try! localRealm.write {
+//            localRealm.add(dataBeat)
+//            journey.beats.append(dataBeat)
+//        }
+////        })
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

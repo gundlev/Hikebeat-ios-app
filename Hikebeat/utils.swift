@@ -11,6 +11,11 @@ import UIKit
 import AVFoundation
 import UserNotifications
 
+public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
+public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
+public let lightGreen = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
+
+
 public func getPathToFileFromName(_ name: String) -> URL? {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentDirectory = paths[0]
@@ -18,38 +23,19 @@ public func getPathToFileFromName(_ name: String) -> URL? {
     return pathToFile
 }
 
-func saveMediaToDocs(fileName: String, data: Data) -> String? {
-    print("Image name: ", fileName)
+public func createMediaFolder() -> Bool {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let documentsDirectory: AnyObject = paths[0] as AnyObject
-    let dataPath = documentsDirectory.appending("/"+fileName)
-    print("datapath: ", dataPath)
-    let url = Foundation.URL(fileURLWithPath: dataPath)
-    let fm = FileManager()
-    let folderPath = documentsDirectory.appending("/media")
-    if fm.fileExists(atPath: folderPath) {
-        print("file aldready exists")
-    } else {
-        print("file doesn't exist")
-        let folderUrl =  Foundation.URL(fileURLWithPath: folderPath)//documentsDirectory.appendingPathComponent("images")!
-        
-        do {
-            try FileManager.default.createDirectory(atPath: folderUrl.path, withIntermediateDirectories: false, attributes: nil)
-            print("is the directory now created? ", fm.fileExists(atPath: folderPath))
-        } catch {
-            print("Folder failed to be created")
-        }
-    }
-    print("URL: ", url)
+    let dataPath = documentsDirectory.appending("/media")
     
     do {
-        try data.write(to: url, options: Data.WritingOptions.atomicWrite)
-        //try? imageData.write(to: Foundation.URL(fileURLWithPath: dataPath), options: [])
-        print("Success at saving")
-        return fileName
-    } catch {
-        print("Error saving image")
-        return nil
+        try FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: false, attributes: nil)
+        print("Media folder created")
+        return true
+    } catch let error as NSError {
+        print("Failed creating the media folder")
+        print(error.localizedDescription);
+        return false
     }
 }
 

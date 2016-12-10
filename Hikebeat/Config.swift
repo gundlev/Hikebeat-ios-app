@@ -22,7 +22,8 @@ public let Headers = [
     "Authorization": "Basic YnpiNDJ1dEpVdzFadVdTSlZtcExkd1hNeFNjZ3dYT3U0WnJBb0w4c3BFSnN0eWp1cm9Ubm5JdHMybTVRZ3hvOjFkZnBqZFM2Z21rRHRkUVFLYkpWeTRIZXpNSzRtUVlhSVdnd3lsamJkWXBNRkpPM2tuUXkwMTJMazJ6QlZTMA=="
 ]
 
-public let IPAddress = "https://hikebeat.rocks/api/"
+public let IPAddress = "https://hikebeat-api-production.herokuapp.com/api/"
+
 
 func getUserExample() -> JSON {
     

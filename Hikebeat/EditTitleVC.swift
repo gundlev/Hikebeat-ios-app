@@ -21,6 +21,8 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         super.viewDidLoad()
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
         saveButton.layer.masksToBounds = true
+        collectionView.isHidden = false
+//        self.view.addSubview(self.collectionView)
     }
     
     @IBAction func saveButtonTapped(_ sender: AnyObject) {

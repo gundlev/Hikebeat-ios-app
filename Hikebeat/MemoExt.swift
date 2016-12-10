@@ -196,11 +196,36 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         
     }
     
+    func checkForMicPermission() {
+        let microPhoneStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio)
+        
+        switch microPhoneStatus {
+        case .authorized:
+            // Has access
+            print("Authorized")
+        case .denied:
+            // No access granted
+            print("Denied")
+        case .restricted:
+            // Microphone disabled in settings
+            print("Restricted")
+        case .notDetermined:
+            // Didn't request access yet
+            print("Undetermined")
+        }
+    }
+    
     func recordWithPermission(_ setup:Bool) {
+        print(1)
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         // ios 8 and later
+        print(2)
         if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
-            AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+            print(3)
+            checkForMicPermission()
+            
+            session.requestRecordPermission({(granted: Bool)-> Void in
+                print(4)
                 if granted {
                     print("Permission to record granted")
                     self.setSessionPlayAndRecord()

@@ -188,8 +188,13 @@ class SettingsVC: UIViewController {
         gpsSwitch.isOn = userDefaults.bool(forKey: "GPS-check")
         notificationSwitch.isOn = userDefaults.bool(forKey: "notifications")
         let timestamp = userDefaults.string(forKey: "lastSync")
+        let firstDate: Date!
+        if timestamp == nil {
+            firstDate = Date()
+        } else {
+            firstDate = Date(timeIntervalSince1970: Foundation.TimeInterval(Int(timestamp!)!))
+        }
         let calendar: Calendar = Calendar.current
-        let firstDate = Date(timeIntervalSince1970: Foundation.TimeInterval(Int(timestamp!)!))
         let secondDate = Date()
         let date1 = calendar.startOfDay(for: firstDate)
         let date2 = calendar.startOfDay(for: secondDate)
@@ -198,7 +203,7 @@ class SettingsVC: UIViewController {
         let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
         
         let numberOfDays = components.day
-        lastSyncLabel.text = "Last synchronize: " + String(describing: numberOfDays) + " days ago"
+        lastSyncLabel.text = "Last synchronize: " + String(describing: numberOfDays!) + " days ago"
         
 //        checkSync()
     }
@@ -236,14 +241,15 @@ class SettingsVC: UIViewController {
         let pathToMedia = URL(fileURLWithPath: documentDirectory).appendingPathComponent("/media")
         pathToMedia.absoluteString
         let fileManager = FileManager.default
+        try! realm.write {
+            realm.deleteAll()
+        }
         do {
             print("Media folder exists: ", fileManager.fileExists(atPath: pathToMedia.absoluteString))
             try fileManager.removeItem(at: pathToMedia)
             print("Media folder exists: ", fileManager.fileExists(atPath: pathToMedia.absoluteString))
             print("Media Folder deleted")
-            try! realm.write {
-                realm.deleteAll()
-            }
+
             print("Successfully deleted all!")
             resetUserDefaults()
             self.performSegue(withIdentifier: "logoutSegue", sender: nil)
