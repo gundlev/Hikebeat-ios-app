@@ -149,7 +149,7 @@
                                                 <state key="normal" image="CloseIcon"/>
                                                 <connections>
                                                     <action selector="goBack:" destination="ER6-VT-u8l" eventType="touchUpInside" id="Fog-jw-2ws"/>
-                                                    <segue destination="CLL-Fj-MPh" kind="unwind" unwindAction="unwindToLogin:" id="IXf-Q2-ERf"/>
+                                                    <segue destination="CLL-Fj-MPh" kind="unwind" unwindAction="unwindToWalkthrough:" id="q5m-gc-ZX4"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -507,16 +507,6 @@
                                             <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="uIh-pE-1XE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qun-Cl-gzP">
-                                        <frame key="frameInset" minX="213" minY="602" width="174" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Not an user? Sign up!">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="showRegister:" destination="bD8-Mi-Qht" eventType="touchUpInside" id="YCl-xa-arZ"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.21665610923423423" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -525,7 +515,6 @@
                                     <constraint firstItem="6rV-69-k3s" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="Fxm-QY-x8m"/>
                                     <constraint firstItem="uUm-fe-SyH" firstAttribute="top" secondItem="mm1-tZ-mo5" secondAttribute="bottom" constant="18" id="HNw-vY-XPb"/>
                                     <constraint firstItem="ryN-sW-C6a" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="IMD-ci-BoA"/>
-                                    <constraint firstItem="qun-Cl-gzP" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="M4a-bB-WG6"/>
                                     <constraint firstItem="ryN-sW-C6a" firstAttribute="top" secondItem="Ybg-e1-BJi" secondAttribute="top" constant="55" id="VTY-A7-no7"/>
                                     <constraint firstItem="mm1-tZ-mo5" firstAttribute="top" secondItem="3Dw-VB-N09" secondAttribute="bottom" constant="78" id="ZPo-kP-dSy"/>
                                     <constraint firstAttribute="height" constant="640" id="bqj-QI-NwT"/>
@@ -533,21 +522,33 @@
                                     <constraint firstItem="mm1-tZ-mo5" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="kp4-pa-YAp"/>
                                     <constraint firstItem="UA6-rW-pj6" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="puS-dO-IAM"/>
                                     <constraint firstItem="uUm-fe-SyH" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="tQR-hz-V2A"/>
-                                    <constraint firstItem="qun-Cl-gzP" firstAttribute="top" secondItem="6rV-69-k3s" secondAttribute="bottom" constant="10" id="vdV-uL-Lwl"/>
                                     <constraint firstItem="3Dw-VB-N09" firstAttribute="centerX" secondItem="Ybg-e1-BJi" secondAttribute="centerX" id="zCG-e8-iwA"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUe-hh-HrC">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="4FC-I2-P3r"/>
+                                    <constraint firstAttribute="width" constant="115" id="Ja6-ac-paH"/>
+                                </constraints>
+                                <state key="normal" image="CloseIcon"/>
+                                <connections>
+                                    <action selector="goBack:" destination="ER6-VT-u8l" eventType="touchUpInside" id="4gx-uR-n5Z"/>
+                                    <segue destination="3S8-2W-MFd" kind="unwind" unwindAction="unwindToWalkthrough:" id="Ehe-GZ-h5g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.46274509803921571" green="0.73333333333333328" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vF7-Iu-g7C" firstAttribute="top" secondItem="lN2-vd-bXo" secondAttribute="topMargin" id="62L-c8-Zlh"/>
                             <constraint firstItem="Yiv-vU-GSx" firstAttribute="top" secondItem="vF7-Iu-g7C" secondAttribute="bottom" id="Apu-ur-pjK"/>
+                            <constraint firstItem="kUe-hh-HrC" firstAttribute="top" secondItem="lN2-vd-bXo" secondAttribute="top" constant="26" id="DYa-7Y-R12"/>
                             <constraint firstItem="vF7-Iu-g7C" firstAttribute="leading" secondItem="lN2-vd-bXo" secondAttribute="leadingMargin" constant="-20" id="FmJ-ZB-nYA"/>
                             <constraint firstItem="8Bb-0s-zIg" firstAttribute="top" secondItem="lN2-vd-bXo" secondAttribute="topMargin" id="KfA-R2-vVs"/>
                             <constraint firstItem="Yiv-vU-GSx" firstAttribute="top" secondItem="Ybg-e1-BJi" secondAttribute="bottom" id="PSd-RW-3RM"/>
                             <constraint firstItem="Ybg-e1-BJi" firstAttribute="leading" secondItem="lN2-vd-bXo" secondAttribute="leadingMargin" constant="-20" id="Pju-uM-AJt"/>
                             <constraint firstItem="8Bb-0s-zIg" firstAttribute="leading" secondItem="lN2-vd-bXo" secondAttribute="leading" constant="-243" id="QxN-en-iko"/>
                             <constraint firstItem="Ybg-e1-BJi" firstAttribute="top" secondItem="lN2-vd-bXo" secondAttribute="topMargin" id="YFN-EE-maf"/>
+                            <constraint firstItem="kUe-hh-HrC" firstAttribute="leading" secondItem="lN2-vd-bXo" secondAttribute="leading" constant="26" id="jNy-cI-Pd4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vF7-Iu-g7C" secondAttribute="trailing" constant="-20" id="lJs-iF-gAe"/>
                             <constraint firstItem="Yiv-vU-GSx" firstAttribute="top" secondItem="8Bb-0s-zIg" secondAttribute="bottom" constant="-35" id="ldS-91-bh8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ybg-e1-BJi" secondAttribute="trailing" constant="-20" id="sQA-nw-4xB"/>
@@ -568,13 +569,13 @@
                         <outlet property="logoOutline" destination="ryN-sW-C6a" id="uIB-Oc-078"/>
                         <outlet property="logoTypeface" destination="3Dw-VB-N09" id="tEO-wy-e0T"/>
                         <outlet property="passwordField" destination="uUm-fe-SyH" id="yCc-fe-Dqo"/>
-                        <outlet property="registerButton" destination="qun-Cl-gzP" id="AGX-Pv-nh5"/>
                         <outlet property="usernameField" destination="mm1-tZ-mo5" id="Vif-77-mOK"/>
                         <segue destination="nkA-us-yFp" kind="show" identifier="justLoggedIn" id="Ry1-QN-lGj"/>
                         <segue destination="QNq-c2-xNk" kind="show" identifier="showRegister" id="CbR-7C-QI3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z99-6d-B44" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="3S8-2W-MFd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-313" y="990"/>
         </scene>
@@ -4688,8 +4689,8 @@ sync</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ICD-V2-34R"/>
-        <segue reference="5ke-jW-l81"/>
+        <segue reference="Ry1-QN-lGj"/>
         <segue reference="qsf-TC-dGc"/>
-        <segue reference="dg6-j1-ehS"/>
+        <segue reference="CbR-7C-QI3"/>
     </inferredMetricsTieBreakers>
 </document>

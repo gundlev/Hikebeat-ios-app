@@ -25,6 +25,11 @@ class WalkthroughVC: BWWalkthroughViewController {
         
     }
     
+    
+    @IBAction func unwindToWalkthrough(_ unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func showSignUpAction(_ sender: AnyObject) {
         performSegue(withIdentifier: "showSignUp", sender: self)
     }

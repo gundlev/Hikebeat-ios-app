@@ -475,8 +475,8 @@
 				85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */,
 				858EFF051D19BDCD00C50771 /* ImageEnlargement */,
 				858EFEF61D186C8B00C50771 /* SCLAlertView */,
+				E17F5B301DFDE9CA00C1A2B0 /* BWWalkthrough */,
 				85AC906C1CE4877F007BE5C2 /* MapFiles */,
-				E162EF641DFC4BDA00E58E0F /* BWWalkthrough */,
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
 			);
 			name = "Frameworks and Libs";
@@ -518,7 +518,7 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		E162EF641DFC4BDA00E58E0F /* BWWalkthrough */ = {
+		E17F5B301DFDE9CA00C1A2B0 /* BWWalkthrough */ = {
 			isa = PBXGroup;
 			children = (
 				E162EF651DFC4BF100E58E0F /* BWWalkthroughPageViewController.swift */,
