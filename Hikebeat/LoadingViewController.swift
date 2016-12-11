@@ -11,7 +11,9 @@ import UIKit
 class LoadingViewController: UIViewController {
 
     let userDefaults = UserDefaults.standard
-    var segueIdentifyer = ""
+    var needWelcome: Bool = true
+    var welcome: BWWalkthroughViewController!
+    
     
     @IBOutlet weak var circleImageView: UIImageView!
     @IBOutlet weak var patternImageView: UIImageView!
@@ -26,14 +28,6 @@ class LoadingViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setNeedsStatusBarAppearanceUpdate()
-
-        let loggedIn = userDefaults.bool(forKey: "loggedIn")
-        if loggedIn {
-            segueIdentifyer = "showMain"
-        } else {
-            segueIdentifyer = "showLogin"
-            //segueIdentifyer = "showLogin"
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +77,13 @@ class LoadingViewController: UIViewController {
         //Jump to next in a sec
         _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if needWelcome {
+            self.presentWelcome()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -95,9 +96,37 @@ class LoadingViewController: UIViewController {
     
     
     func timeToMoveOn() {
-            self.performSegue(withIdentifier: segueIdentifyer, sender: self)
-
-//        If already logged in:
-//        self.performSegueWithIdentifier("showMain", sender: self)
+        if userDefaults.bool(forKey: "loggedIn") {
+            self.performSegue(withIdentifier: "showMain", sender: self)
+        } else {
+            presentWelcome()
+        }
+    }
+    
+    func presentWelcome() {
+        let stb = UIStoryboard(name: "Main", bundle: nil)
+        welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! BWWalkthroughViewController
+        
+        let step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
+        let step_two = stb.instantiateViewController(withIdentifier: "welcome_step_2")
+        let step_three = stb.instantiateViewController(withIdentifier: "welcome_step_3")
+        let step_four = stb.instantiateViewController(withIdentifier: "welcome_step_4")
+        let step_five = stb.instantiateViewController(withIdentifier: "welcome_step_5")
+        
+        let step_last_repeat_step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
+        
+        // Attach the pages to the master
+        welcome.add(viewController: step_one)
+        welcome.add(viewController: step_two)
+        welcome.add(viewController: step_three)
+        welcome.add(viewController: step_four)
+        welcome.add(viewController: step_five)
+        
+        welcome.add(viewController: step_last_repeat_step_one)
+        
+        self.present(welcome, animated: false) {
+            ()->() in
+            self.needWelcome = false
+        }
     }
 }
