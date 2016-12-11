@@ -1,5 +1,5 @@
 //
-//  WalkthroughFramework.swift
+//  HikebeatWalkthroughFramework.swift
 //  Hikebeat
 //
 //  Created by Dimitar Gyurov on 12/11/16.
@@ -15,7 +15,7 @@ import UIKit
 /// Walkthrough Delegate:
 /// This delegate performs basic operations such as dismissing the Walkthrough or call whatever action on page change.
 /// Probably the Walkthrough is presented by this delegate.
-@objc public protocol BWWalkthroughViewControllerDelegate{
+@objc public protocol HikebeatWalkthroughViewControllerDelegate{
     
     @objc optional func walkthroughCloseButtonPressed()              // If the skipRequest(sender:) action is connected to a button, this function is called when that button is pressed.
     @objc optional func walkthroughNextButtonPressed()               // Called when the "next page" button is pressed
@@ -26,7 +26,7 @@ import UIKit
 
 /// Walkthrough Page:
 /// The walkthrough page represents any page added to the Walkthrough.
-@objc public protocol BWWalkthroughPage{
+@objc public protocol HikebeatWalkthroughPage{
     /// While sliding to the "next" slide (from right to left), the "current" slide changes its offset from 1.0 to 2.0 while the "next" slide changes it from 0.0 to 1.0
     /// While sliding to the "previous" slide (left to right), the current slide changes its offset from 1.0 to 0.0 while the "previous" slide changes it from 2.0 to 1.0
     /// The other pages update their offsets whith values like 2.0, 3.0, -2.0... depending on their positions and on the status of the walkthrough
@@ -35,12 +35,13 @@ import UIKit
 }
 
 
-@objc open class BWWalkthroughViewController: UIViewController, UIScrollViewDelegate{
+@objc open class HikebeatWalkthroughViewController: UIViewController, UIScrollViewDelegate{
     
     // MARK: - Public properties -
     
-    weak open var delegate:BWWalkthroughViewControllerDelegate?
+    weak open var delegate:HikebeatWalkthroughViewControllerDelegate?
     var shouldAutoSlideshow: Bool = true
+    var slideshowTimer : Timer?
     
     // If you need a page control, next or prev buttons, add them via IB and connect with these Outlets
     @IBOutlet open var pageControl:UIPageControl?
@@ -95,7 +96,7 @@ import UIKit
         
         // Initialize UI Elements
         
-        pageControl?.addTarget(self, action: #selector(BWWalkthroughViewController.pageControlDidTouch), for: UIControlEvents.touchUpInside)
+        pageControl?.addTarget(self, action: #selector(HikebeatWalkthroughViewController.pageControlDidTouch), for: UIControlEvents.touchUpInside)
         
         // Scrollview
         
@@ -112,6 +113,33 @@ import UIKit
         
         pageControl?.numberOfPages = controllers.count-1
         pageControl?.currentPage = 0
+        
+        if shouldAutoSlideshow {
+            startSlideshowTimer()
+        }
+    }
+    
+    func startSlideshowTimer()
+    {
+        if slideshowTimer == nil {
+            slideshowTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(HikebeatWalkthroughViewController.slideshowAction), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func stopSlideshowTimer()
+    {
+        if slideshowTimer != nil {
+            slideshowTimer!.invalidate()
+            slideshowTimer = nil
+        }
+    }
+    
+    func slideshowAction() {
+        if currentPage==controllers.count-2 {
+            restartSlideshow()
+        } else {
+            nextPage()
+        }
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -145,9 +173,6 @@ import UIKit
     }
     
     func pageControlDidTouch(){
-        if let pc = pageControl{
-            gotoPage(pc.currentPage)
-        }
     }
     
     fileprivate func gotoPage(_ page:Int){
@@ -161,8 +186,23 @@ import UIKit
         }
     }
     
+    fileprivate func restartSlideshow(){
+        var frame = scrollview.frame
+        frame.origin.x = CGFloat(controllers.count-1) * frame.size.width
+        scrollview.scrollRectToVisible(frame, animated: true)
+        
+        let when = DispatchTime.now() + 0.3
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            var frame2 = self.scrollview.frame
+            frame2.origin.x = CGFloat(0) * frame2.size.width
+            self.scrollview.scrollRectToVisible(frame2, animated: false)
+            self.pageControl?.currentPage = 0
+        }
+    }
+
+    
     /// Add a new page to the walkthrough.
-    /// To have information about the current position of the page in the walkthrough add a UIVIewController which implements BWWalkthroughPage
+    /// To have information about the current position of the page in the walkthrough add a UIVIewController which implements HikebeatWalkthroughPage
     /// - viewController: The view controller that will be added at the end of the view controllers list.
     open func add(viewController:UIViewController)->Void{
         
@@ -231,7 +271,7 @@ import UIKit
         
         for i in 0 ..< controllers.count {
             
-            if let vc = controllers[i] as? BWWalkthroughPage{
+            if let vc = controllers[i] as? HikebeatWalkthroughPage{
                 
                 let mx = ((scrollview.contentOffset.x + view.bounds.size.width) - (view.bounds.size.width * CGFloat(i))) / view.bounds.size.width
                 
@@ -249,6 +289,14 @@ import UIKit
                 }
             }
         }
+    }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        stopSlideshowTimer()
+    }
+    
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        startSlideshowTimer()
     }
     
     open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -302,7 +350,7 @@ public enum WalkthroughAnimationType:String{
     }
 }
 
-open class BWWalkthroughPageViewController: UIViewController, BWWalkthroughPage {
+open class HikebeatWalkthroughPageViewController: UIViewController, HikebeatWalkthroughPage {
     
     private var animation:WalkthroughAnimationType = .Linear
     private var subviewsSpeed:[CGPoint] = Array()
@@ -330,7 +378,7 @@ open class BWWalkthroughPageViewController: UIViewController, BWWalkthroughPage 
         }
     }
     
-    // MARK: BWWalkthroughPage Implementation
+    // MARK: HikebeatWalkthroughPage Implementation
     
     override open func viewDidLoad() {
         super.viewDidLoad()

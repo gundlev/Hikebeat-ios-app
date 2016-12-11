@@ -97,7 +97,7 @@ class LoadingViewController: UIViewController {
         
         // Init a new welcome
         let stb = UIStoryboard(name: "Main", bundle: nil)
-        let welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! BWWalkthroughViewController
+        let welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! HikebeatWalkthroughViewController
         
         // Add all steps to the container
         let step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WalkthroughVC: BWWalkthroughViewController {
+class WalkthroughVC: HikebeatWalkthroughViewController {
     
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var facebookButton: UIButton!
