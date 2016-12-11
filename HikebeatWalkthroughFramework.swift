@@ -94,10 +94,6 @@ import UIKit
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize UI Elements
-        
-        pageControl?.addTarget(self, action: #selector(HikebeatWalkthroughViewController.pageControlDidTouch), for: UIControlEvents.touchUpInside)
-        
         // Scrollview
         
         scrollview.delegate = self
@@ -171,9 +167,6 @@ import UIKit
     /// connect the button to this IBAction and implement the delegate with the skipWalkthrough
     @IBAction open func close(_ sender: AnyObject) {
         delegate?.walkthroughCloseButtonPressed?()
-    }
-    
-    func pageControlDidTouch(){
     }
     
     fileprivate func gotoPage(_ page:Int){
