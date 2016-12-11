@@ -11,9 +11,6 @@ import UIKit
 class LoadingViewController: UIViewController {
 
     let userDefaults = UserDefaults.standard
-    var needWelcome: Bool = true
-    var welcome: BWWalkthroughViewController!
-    
     
     @IBOutlet weak var circleImageView: UIImageView!
     @IBOutlet weak var patternImageView: UIImageView!
@@ -77,13 +74,6 @@ class LoadingViewController: UIViewController {
         //Jump to next in a sec
         _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(LoadingViewController.timeToMoveOn), userInfo: nil, repeats: false)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if needWelcome {
-            self.presentWelcome()
-        }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -104,15 +94,19 @@ class LoadingViewController: UIViewController {
     }
     
     func presentWelcome() {
-        let stb = UIStoryboard(name: "Main", bundle: nil)
-        welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! BWWalkthroughViewController
         
+        // Init a new welcome
+        let stb = UIStoryboard(name: "Main", bundle: nil)
+        let welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! BWWalkthroughViewController
+        
+        // Add all steps to the container
         let step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
         let step_two = stb.instantiateViewController(withIdentifier: "welcome_step_2")
         let step_three = stb.instantiateViewController(withIdentifier: "welcome_step_3")
         let step_four = stb.instantiateViewController(withIdentifier: "welcome_step_4")
         let step_five = stb.instantiateViewController(withIdentifier: "welcome_step_5")
         
+        // Duplicate of the first step for infinite scrolling effect
         let step_last_repeat_step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
         
         // Attach the pages to the master
@@ -122,11 +116,14 @@ class LoadingViewController: UIViewController {
         welcome.add(viewController: step_four)
         welcome.add(viewController: step_five)
         
+        // Attach step one again, so that we achieve the infinte scroll effect
         welcome.add(viewController: step_last_repeat_step_one)
         
-        self.present(welcome, animated: false) {
-            ()->() in
-            self.needWelcome = false
-        }
+        // Animation style
+        welcome.modalTransitionStyle = .crossDissolve
+        
+        // Present the welcome screen
+        self.present(welcome, animated: true, completion: nil)
     }
 }
+
