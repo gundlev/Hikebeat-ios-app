@@ -64,6 +64,7 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
             self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
         })
         print("Starting y: \(center.y), Ending y: \(center.y-self.tableViewSelectJourney.frame.height)")
+        checkForActiveJourney()
     }
     
     func animateSelectJourneyDown(animated: Bool) {

@@ -77,8 +77,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         passwordField.rightView = paddingView2
         passwordField.rightViewMode = UITextFieldViewMode.always
         
-        usernameField.text = "niklas"
-        passwordField.text = "ABC123"
+        usernameField.text = "john1"
+        passwordField.text = "gkBB1991"
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
@@ -101,7 +101,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func login(_ sender: AnyObject) {
-        
+        print("logging in now")
         /** Parameters to send to the API.*/
         let parameters = ["username": usernameField.text!, "password": passwordField.text!]
         
@@ -116,22 +116,17 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
-        Alamofire.request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
-            
-//            print("Response: ",response)
-//            print(response.response?.statusCode)
-            
-//            let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-//            let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-//            dispatch_async(backgroundQueue, {
-//                print("This is run on the background queue")
-//            print(response)
+        Alamofire.request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+            print("Raw: ", response)
+
             if response.response?.statusCode == 200 {
                 let createdMediaFolder = self.createMediaFolder()
 //                print("value: ", response.result.value)
                 let firstJson = JSON(response.result.value!)
-                let user = firstJson["data"][0]
-                print("user: ", user)
+                let user = firstJson["data"]["user"]
+                let token = firstJson["data"]["token"].stringValue
+                self.userDefaults.set(token, forKey: "token")
+                print("Responsio: ", firstJson)
                 print("setting user")
                 self.userDefaults.set(user["username"].stringValue, forKey: "username")
                 var optionsDictionary = [String:String]()

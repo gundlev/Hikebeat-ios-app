@@ -46,6 +46,8 @@
 		8593DB111DFC187E00604BFA /* SearchJourneyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593DB101DFC187E00604BFA /* SearchJourneyCell.swift */; };
 		8593DB131DFC188A00604BFA /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593DB121DFC188A00604BFA /* SearchUserCell.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
+		85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A31DFC4227006431E5 /* SocialCalls.swift */; };
+		85A067A61DFC4486006431E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A51DFC4486006431E5 /* User.swift */; };
 		85A580981D4F46EE00B38B1C /* EmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A580971D4F46EE00B38B1C /* EmotionCell.swift */; };
 		85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AC906F1CE487AF007BE5C2 /* SVPulsingAnnotationView.m */; };
 		85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC90711CE487AF007BE5C2 /* LFTPulseAnimation.swift */; };
@@ -152,6 +154,8 @@
 		8593DB101DFC187E00604BFA /* SearchJourneyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchJourneyCell.swift; sourceTree = "<group>"; };
 		8593DB121DFC188A00604BFA /* SearchUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
+		85A067A31DFC4227006431E5 /* SocialCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialCalls.swift; sourceTree = "<group>"; };
+		85A067A51DFC4486006431E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		85A580971D4F46EE00B38B1C /* EmotionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionCell.swift; sourceTree = "<group>"; };
 		85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hikebeat-Bridging-Header.h"; sourceTree = "<group>"; };
 		85AC906E1CE487AF007BE5C2 /* SVPulsingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPulsingAnnotationView.h; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 				85B890E51D59EB16009589E6 /* DownloadMedia.swift */,
 				8593DAAC1DF3248500604BFA /* JourneyCalls.swift */,
 				8593DAAE1DF325C500604BFA /* Save.swift */,
+				85A067A31DFC4227006431E5 /* SocialCalls.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 				85F2B4721CC4E4E0004704F3 /* Beat.swift */,
 				85F2B4741CC4EF6A004704F3 /* Change.swift */,
 				859EB30A1CDB6A88005353C0 /* Follower.swift */,
+				85A067A51DFC4486006431E5 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -744,7 +750,9 @@
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
 				8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */,
 				8593DB0D1DFB6BC400604BFA /* SelectJourneyCell.swift in Sources */,
+				85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
+				85A067A61DFC4486006431E5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

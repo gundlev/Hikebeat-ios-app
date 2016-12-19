@@ -276,37 +276,38 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
     @IBAction func playBeatVideoOrAudio(_ sender: AnyObject) {
         print("button pressed")
         let beat = self.beats[sender.tag]
-        let cell = beatsCollectionView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! BeatCollectionViewCell
-        switch beat.mediaType! {
-        case MediaType.video:
-            print("video")
-            do {
-                try playVideoWithName(beat.mediaData!)
-            } catch {
-                print("error in playing video")
-            }
-        case MediaType.audio:
-            print("audio")
-            if self.playingCell == nil {
-                self.playAudio(beat)
-                cell.beatImage.image = UIImage(named: "memo-btn-active")
-                self.playingCell = cell
-            } else {
-                if self.player != nil {
-                    self.player.stop()
-                    if playingCell != nil {
-                        self.playingCell?.beatImage.image = UIImage(named: "memo-btn-passive")
-                        self.playingCell = nil
+        if let cell = beatsCollectionView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as? BeatCollectionViewCell {
+            switch beat.mediaType! {
+            case MediaType.video:
+                print("video")
+                do {
+                    try playVideoWithName(beat.mediaData!)
+                } catch {
+                    print("error in playing video")
+                }
+            case MediaType.audio:
+                print("audio")
+                if self.playingCell == nil {
+                    self.playAudio(beat)
+                    cell.beatImage.image = UIImage(named: "memo-btn-active")
+                    self.playingCell = cell
+                } else {
+                    if self.player != nil {
+                        self.player.stop()
+                        if playingCell != nil {
+                            self.playingCell?.beatImage.image = UIImage(named: "memo-btn-passive")
+                            self.playingCell = nil
+                        }
                     }
                 }
+            case MediaType.image:
+                print("image")
+                print()
+                self.chosenImage = UIImage(contentsOfFile: getImagePath(beat.mediaData!))//UIImage(contentsOfFile: self.getImagePath(beat.mediaData!))
+                performSegue(withIdentifier: "showImage", sender: self)
+            default:
+                print("default")
             }
-        case MediaType.image:
-            print("image")
-            print()
-            self.chosenImage = UIImage(contentsOfFile: getImagePath(beat.mediaData!))//UIImage(contentsOfFile: self.getImagePath(beat.mediaData!))
-            performSegue(withIdentifier: "showImage", sender: self)
-        default:
-            print("default")
         }
     }
     

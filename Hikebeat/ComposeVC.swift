@@ -186,7 +186,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editEmotionButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(emotionsButtonTapped)))
         
-        
+        checkForActiveJourney()
+
+    }
+    
+    func checkForActiveJourney() {
         if !findActiveJourney() {
             composeContainer.isHidden = true
             NoActiveContainer.isHidden = false
@@ -394,6 +398,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func findActiveJourney() -> Bool {
         self.journeys = realm.objects(Journey.self)
+        print("journeys: ", self.journeys)
+        self.tableViewSelectJourney.reloadData()
         let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
             return false
@@ -529,7 +535,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 print("url: ", url)
 
                 // "headline": localTitle, "text": localMessage,
-                var parameters = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
+                var parameters: [String: Any] = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
                 if currentBeat!.emotion != nil {
                     parameters["emotion"] = emotionToNumber((currentBeat?.emotion)!)
                 }
@@ -541,6 +547,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //                let urlString = "https://httpbin.org/post"
 //                Alamofire.request(urlString, method: .post)
                 // Sending the beat message
+                
+
                 performSegue(withIdentifier: "showGreenModal", sender: nil)
                 Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                     print("The Response")

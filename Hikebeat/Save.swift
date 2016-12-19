@@ -26,6 +26,7 @@ func saveImageToDocs(fileName: String, image: UIImage) -> Future<Bool, NoError> 
 }
 
 func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoError> {
+    print("JoruneyJson: ", journeyJson)
     return Future { complete in
         DispatchQueue.global().async {
             let headline = journeyJson["options"]["headline"].stringValue
@@ -40,33 +41,40 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoE
             try! localRealm.write() {
                 localRealm.add(journey)
             }
+            
             print("followers: ",journeyJson["followers"])
-            for (_,followerId) in journeyJson["followers"] {
-                print("Saving follower")
-                try! localRealm.write() {
-                    let follower = Follower()
-                    follower.userId = followerId.stringValue
+            if journeyJson["followers"] != nil {
+                print("fucking nil")
+                for (_,followerId) in journeyJson["followers"] {
+                    print("Saving follower")
+                    try! localRealm.write() {
+                        let follower = Follower()
+                        follower.userId = followerId.stringValue
+                    }
                 }
+
             }
             
             var finishedBeats = 0
             var failedBeats = 0
             
-            for (_, message) in journeyJson["messages"]  {
-                print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
-                let mediaType = message["media"]["type"].stringValue
-                let mediaUrl = message["media"]["path"].stringValue
-                let mediaDataId = message["media"]["_id"].stringValue
-                
-                do {
-                    print("saving beat")
-                    try localRealm.write {
-                        let beat = Beat()
-                        beat.fill(message["emotion"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
-                        localRealm.add(beat)
-                        journey.beats.append(beat)
+            if journeyJson["messages"] != nil {
+                for (_, message) in journeyJson["messages"]  {
+                    print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
+                    let mediaType = message["media"]["type"].stringValue
+                    let mediaUrl = message["media"]["path"].stringValue
+                    let mediaDataId = message["media"]["_id"].stringValue
+                    
+                    do {
+                        print("saving beat")
+                        try localRealm.write {
+                            let beat = Beat()
+                            beat.fill(message["emotion"].stringValue, journeyId: journey.journeyId, message: message["text"].stringValue, latitude: message["lat"].stringValue, longitude: message["lng"].stringValue, altitude: message["alt"].stringValue, timestamp: message["timeCapture"].stringValue, mediaType: mediaType, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: message["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
+                            localRealm.add(beat)
+                            journey.beats.append(beat)
+                        }
+                    } catch {
                     }
-                } catch {
                 }
             }
             complete(.success(true))

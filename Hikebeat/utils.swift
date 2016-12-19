@@ -134,3 +134,81 @@ extension UIApplication {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
 }
+
+
+func hex(_ number: Double) -> String {
+    number
+    let d = String(number)
+    let e = d.range(of: ".")
+    let s1 = d.substring(to: (e?.lowerBound)!)
+    let s2 = d.substring(from: (e?.upperBound)!)
+    
+    // Check for leading zeroes in s2 and creating string
+    var countZeroes = 0
+    for char in s2.characters {
+        if char == "0" {
+            countZeroes += 1
+        } else {
+            break
+        }
+    }
+    var zeroString = ""
+    if countZeroes > 0 {
+        for _ in 1...countZeroes {
+            zeroString += "0"
+        }
+    }
+    // Cast to Int
+    let n1 = Int(s1)
+    let n2 = Int(s2)
+    
+    // Create hex
+    if s1 == "-0" {
+        let st = "-0." + zeroString + String(n2!, radix: 36)
+        return st
+    } else {
+        if n2 == 0 {
+            let st = String(n1!, radix: 36)
+            return st
+        }
+        let st = String(n1!, radix: 36) + "." + zeroString + String(n2!, radix: 36)
+        return st
+    }
+}
+
+func getProfileImagePath() -> String {
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+    let documentsDirectory: AnyObject = paths[0] as AnyObject
+    let fileName = "/media/profile_image.jpg"
+    let dataPath = documentsDirectory.appending(fileName)
+    return dataPath
+}
+
+func randomStringWithLength (_ len : Int) -> NSString {
+    
+    let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    
+    let randomString : NSMutableString = NSMutableString(capacity: len)
+    
+    
+    
+    for _ in 0...len-1{
+        let length = UInt32 (letters.length)
+        let rand = arc4random_uniform(length)
+        randomString.appendFormat("%C", letters.character(at: Int(rand)))
+    }
+    
+    return randomString
+}
+
+func alert(_ alertTitle: String, alertMessage: String, vc: UIViewController, actions:(title: String, style: UIAlertActionStyle, function: ()->())...) {
+    let alertController = UIAlertController(title: alertTitle, message:
+        alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+    
+    for action in actions {
+        alertController.addAction(UIAlertAction(title: action.title, style: action.style ,handler: {(alert: UIAlertAction!) in
+            action.function()
+        }))
+    }
+    vc.present(alertController, animated: true, completion: nil)
+}

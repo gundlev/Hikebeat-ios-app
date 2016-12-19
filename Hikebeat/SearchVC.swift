@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
-class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var serachBar: UISearchBar!
+    @IBOutlet weak var searchTextField: UITextField!
     
     var journeysButton: UIButton!
     var usersButton: UIButton!
@@ -22,20 +24,34 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     var scrollViewWidth: CGFloat!
     var scrollViewHeight: CGFloat!
     
+    var featuredJourneys = [Journey]()
+    var featuredUsers = [User]()
+    
     override func viewDidLoad() {
         if firstLoad {
+            
+            self.serachBar.backgroundColor = standardGreen
+            self.serachBar.barTintColor = standardGreen
+            searchTextField.leftViewMode = .always
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: "SearchIconiOS")
+            searchTextField.leftView = imageView
+            searchTextField.layer.cornerRadius = searchTextField.bounds.height/2
+            searchTextField.layer.masksToBounds = true
+            searchTextField.returnKeyType = .search
+            searchTextField.delegate = self
             
             scrollView.delegate = self
             scrollViewWidth = UIScreen.main.bounds.width
             scrollViewHeight = self.scrollView.frame.height
             scrollView.isDirectionalLockEnabled = true
             self.scrollView.contentSize = CGSize(width: scrollViewWidth * 2, height: scrollViewHeight)
-
             
-            journeysButton = UIButton(frame: CGRect(x: 0, y: 40, width: scrollViewWidth/2, height: 30))
-            usersButton = UIButton(frame: CGRect(x: 0, y: 40, width: scrollViewWidth/2, height: 30))
-            journeysButton.center = CGPoint(x: self.view.frame.width/4, y: 50)
-            usersButton.center = CGPoint(x: (self.view.frame.width/4)*3, y: 50)
+            journeysButton = UIButton(frame: CGRect(x: 0, y: 140, width: scrollViewWidth/2, height: 30))
+            usersButton = UIButton(frame: CGRect(x: 0, y: 140, width: scrollViewWidth/2, height: 30))
+            journeysButton.center = CGPoint(x: self.view.frame.width/4, y: 85)
+            usersButton.center = CGPoint(x: (self.view.frame.width/4)*3, y: 85)
             journeysButton.setTitleColor(lightGreen, for: .normal)
             usersButton.setTitleColor(lightGreen, for: .normal)
             journeysButton.setTitle("Journeys", for: .normal)
@@ -55,6 +71,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             journeysTableView.rowHeight = 90
             journeysTableView.tag = 1
             journeysTableView.delaysContentTouches = false
+            journeysTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             
             usersTableView = UITableView(frame: CGRect(x: scrollViewWidth, y: 0, width: scrollViewWidth, height: scrollViewHeight))
             usersTableView.delegate = self
@@ -71,7 +88,23 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             
             firstLoad = false
         }
-
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("search was tapped")
+        self.view.endEditing(true)
+        return true
+    }
+    
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let featuredJourneysFuture = getFeaturedJourneys(nextPage: "")
+        featuredJourneysFuture.onSuccess { (featuredJourneys) in
+            print("returned for hell")
+            self.featuredJourneys = featuredJourneys
+            self.journeysTableView.reloadData()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -116,7 +149,13 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        switch tableView.tag {
+        case 1:
+            return self.featuredJourneys.count
+        case 2:
+            return self.featuredUsers.count
+        default: return 0
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
