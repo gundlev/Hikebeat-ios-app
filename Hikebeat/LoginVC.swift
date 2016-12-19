@@ -96,10 +96,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
-        
-    }
-    
     @IBAction func login(_ sender: AnyObject) {
         print("logging in now")
         /** Parameters to send to the API.*/

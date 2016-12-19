@@ -11,7 +11,6 @@ import UIKit
 class LoadingViewController: UIViewController {
 
     let userDefaults = UserDefaults.standard
-    var segueIdentifyer = ""
     
     @IBOutlet weak var circleImageView: UIImageView!
     @IBOutlet weak var patternImageView: UIImageView!
@@ -26,14 +25,6 @@ class LoadingViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.setNeedsStatusBarAppearanceUpdate()
-
-        let loggedIn = userDefaults.bool(forKey: "loggedIn")
-        if loggedIn {
-            segueIdentifyer = "showMain"
-        } else {
-            segueIdentifyer = "showLogin"
-            //segueIdentifyer = "showLogin"
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,9 +86,44 @@ class LoadingViewController: UIViewController {
     
     
     func timeToMoveOn() {
-            self.performSegue(withIdentifier: segueIdentifyer, sender: self)
-
-//        If already logged in:
-//        self.performSegueWithIdentifier("showMain", sender: self)
+        if userDefaults.bool(forKey: "loggedIn") {
+            self.performSegue(withIdentifier: "showMain", sender: self)
+        } else {
+            presentWelcome()
+        }
+    }
+    
+    func presentWelcome() {
+        
+        // Init a new welcome
+        let stb = UIStoryboard(name: "Main", bundle: nil)
+        let welcome = stb.instantiateViewController(withIdentifier: "welcome_container") as! HikebeatWalkthroughViewController
+        
+        // Add all steps to the container
+        let step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
+        let step_two = stb.instantiateViewController(withIdentifier: "welcome_step_2")
+        let step_three = stb.instantiateViewController(withIdentifier: "welcome_step_3")
+        let step_four = stb.instantiateViewController(withIdentifier: "welcome_step_4")
+        let step_five = stb.instantiateViewController(withIdentifier: "welcome_step_5")
+        
+        // Duplicate of the first step for infinite scrolling effect
+        let step_last_repeat_step_one = stb.instantiateViewController(withIdentifier: "welcome_step_1")
+        
+        // Attach the pages to the master
+        welcome.add(viewController: step_one)
+        welcome.add(viewController: step_two)
+        welcome.add(viewController: step_three)
+        welcome.add(viewController: step_four)
+        welcome.add(viewController: step_five)
+        
+        // Attach step one again, so that we achieve the infinte scroll effect
+        welcome.add(viewController: step_last_repeat_step_one)
+        
+        // Animation style
+        welcome.modalTransitionStyle = .crossDissolve
+        
+        // Present the welcome screen
+        self.present(welcome, animated: true, completion: nil)
     }
 }
+

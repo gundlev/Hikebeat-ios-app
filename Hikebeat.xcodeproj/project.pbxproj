@@ -72,9 +72,11 @@
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */; };
+		E17F5B2E1DFDC99800C1A2B0 /* WalkthroughVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17F5B2D1DFDC99800C1A2B0 /* WalkthroughVC.swift */; };
 		E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991611CD380E400EC46B2 /* JourneyViewCell.swift */; };
 		E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */; };
 		E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */; };
+		E18A06E31DFE03E10087A23E /* HikebeatWalkthroughFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A06E21DFE03E10087A23E /* HikebeatWalkthroughFramework.swift */; };
 		E19A21271D9C1C7F002F9532 /* FeaturedJourneyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A21261D9C1C7F002F9532 /* FeaturedJourneyViewCell.swift */; };
 		E19A21291D9C2C3D002F9532 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19A21281D9C2C3D002F9532 /* SearchViewController.swift */; };
 		E1A3F6A11CD570B2005D9775 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4341CC4DD33004704F3 /* Main.storyboard */; };
@@ -166,7 +168,7 @@
 		85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVideoExt.swift; sourceTree = "<group>"; };
 		85F2B42D1CC4DD33004704F3 /* Hikebeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hikebeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4301CC4DD33004704F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		85F2B4351CC4DD33004704F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85F2B4371CC4DD33004704F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85F2B43C1CC4DD33004704F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -190,9 +192,11 @@
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
 		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
 		E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalListOfJourneysVC.swift; sourceTree = "<group>"; };
+		E17F5B2D1DFDC99800C1A2B0 /* WalkthroughVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WalkthroughVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E18991611CD380E400EC46B2 /* JourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewCell.swift; sourceTree = "<group>"; };
 		E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveJourneyCollectionViewCell.swift; sourceTree = "<group>"; };
 		E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		E18A06E21DFE03E10087A23E /* HikebeatWalkthroughFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HikebeatWalkthroughFramework.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E19A21261D9C1C7F002F9532 /* FeaturedJourneyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedJourneyViewCell.swift; sourceTree = "<group>"; };
 		E19A21281D9C2C3D002F9532 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 				85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */,
 				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
+				E17F5B2D1DFDC99800C1A2B0 /* WalkthroughVC.swift */,
 			);
 			name = Starting;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 				85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */,
 				858EFF051D19BDCD00C50771 /* ImageEnlargement */,
 				858EFEF61D186C8B00C50771 /* SCLAlertView */,
+				E17F5B301DFDE9CA00C1A2B0 /* Walkthrough */,
 				85AC906C1CE4877F007BE5C2 /* MapFiles */,
 				85CA7DBD1CCE7BEC00A4F249 /* Reachability */,
 			);
@@ -514,6 +520,14 @@
 				85A7D0DA1CEDDC0400EC9578 /* Settings */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		E17F5B301DFDE9CA00C1A2B0 /* Walkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				E18A06E21DFE03E10087A23E /* HikebeatWalkthroughFramework.swift */,
+			);
+			name = Walkthrough;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -700,10 +714,12 @@
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
 				E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
+				E17F5B2E1DFDC99800C1A2B0 /* WalkthroughVC.swift in Sources */,
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
 				851A51F61D9A6CAB00CA7EA5 /* Async.swift in Sources */,
 				858EFF121D19BDDA00C50771 /* JTSImageViewController.m in Sources */,
 				858EFF161D19BDDA00C50771 /* UIImage+JTSImageEffects.m in Sources */,
+				E18A06E31DFE03E10087A23E /* HikebeatWalkthroughFramework.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,
 				858EFF171D19BDDA00C50771 /* UIApplication+JTSImageViewController.m in Sources */,

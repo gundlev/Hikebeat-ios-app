@@ -1,4 +1,4 @@
-github "eggswift/SwiftyJSON" "swift3"
+github "SwiftyJSON/SwiftyJSON" "master"
 github "Alamofire/Alamofire" "master"
 github "Alamofire/AlamofireImage" "master"
 github "realm/realm-cocoa" "master"
