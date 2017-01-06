@@ -21,9 +21,19 @@ class SearchJourneyCell: UITableViewCell {
             let width = UIScreen.main.bounds.width
             let height: CGFloat = 90
             self.backgroundColor = .clear
-            profileImage = UIImageView(frame: CGRect(x: 20, y: 20, width: 50, height: 50))
+            profileImage = UIImageView(frame: CGRect(x: 15, y: 20, width: 50, height: 50))
+            profileImage.layer.cornerRadius = profileImage.frame.width/2
+            profileImage.layer.masksToBounds = true
             setProfileImage()
-//            headline = UILabel(frame: CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>))
+            headline = UILabel(frame: CGRect(x: 80, y: 25, width: width-100, height: 25))
+            headline.textColor = lightGreen
+            headline.adjustsFontSizeToFitWidth = true
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 50, width: width-100, height: 10))
+            followersBeats.textColor = .white
+            followersBeats.font = UIFont.systemFont(ofSize: 13)
+            self.addSubview(profileImage)
+            self.addSubview(headline)
+            self.addSubview(followersBeats)
             self.firstLoad = false
         }
     }

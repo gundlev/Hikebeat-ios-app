@@ -119,7 +119,7 @@ import UIKit
     func startSlideshowTimer()
     {
         if slideshowTimer == nil {
-            slideshowTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(HikebeatWalkthroughViewController.slideshowAction), userInfo: nil, repeats: true)
+            slideshowTimer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(HikebeatWalkthroughViewController.slideshowAction), userInfo: nil, repeats: true)
         }
     }
     

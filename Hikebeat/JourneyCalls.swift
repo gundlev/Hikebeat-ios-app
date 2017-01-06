@@ -54,3 +54,18 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
     }
 }
 
+func deleteJourney(journeyId: String) -> Future<Bool, NoError> {
+    return Future { complete in
+        let userId = userDefaults.string(forKey: "_id")
+        let urlJourney = IPAddress + "users/\(userId!)/journeys/\(journeyId)"
+        print(urlJourney)
+        Alamofire.request(urlJourney, method: .delete, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            print("Delete response: ", response)
+            if response.response?.statusCode == 200 {
+                complete(.success(true))
+            } else {
+                complete(.success(false))
+            }
+        }
+    }
+}

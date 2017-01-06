@@ -50,11 +50,11 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Yes"){
+        _ = alertView.addButton("Yes"){
             self.deleteAllLocalDataAndLogOut()
         }
-        alertView.addButton("No") {}
-        alertView.showNotice("Logout", subTitle: "Are you sure you want to logout? All local data will be deleted.")
+        _ = alertView.addButton("No") {}
+        _ = alertView.showNotice("Logout", subTitle: "Are you sure you want to logout? All local data will be deleted.")
     }
     
     
@@ -70,7 +70,7 @@ class SettingsVC: UIViewController {
                 
                 if response.response?.statusCode == 200 {
                     print("It has been changes in the db")
-                    ChangeAction.update
+//                    ChangeAction.update
                 } else {
                     print("No connection or fail, saving change")
                     let realm = try! Realm()
@@ -232,14 +232,14 @@ class SettingsVC: UIViewController {
             }
 
         }
-        checkSync()
+        _ = checkSync()
     }
     
     func deleteAllLocalDataAndLogOut() {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentDirectory = paths[0]
         let pathToMedia = URL(fileURLWithPath: documentDirectory).appendingPathComponent("/media")
-        pathToMedia.absoluteString
+//        pathToMedia.absoluteString
         let fileManager = FileManager.default
         try! realm.write {
             realm.deleteAll()
@@ -263,7 +263,7 @@ class SettingsVC: UIViewController {
     func resetUserDefaults() {
         let appDomain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
-        print("Testing, this chould be nil: ",userDefaults.object(forKey: "_id"))
+//        print("Testing, this chould be nil: ",userDefaults.object(forKey: "_id"))
         print("UserDefaults has been removed")
     }
 
@@ -287,10 +287,10 @@ class SettingsVC: UIViewController {
                 print(3)
                 self.numbers = (image: 0, video: 0, audio: 0)
                 for beat in self.toUpload!.beats! {
-                    print(4)
-                    print(beat.message)
-                    print(beat.mediaType)
-                    print(beat)
+//                    print(4)
+//                    print(beat.message)
+//                    print(beat.mediaType)
+//                    print(beat)
                     switch beat.mediaType! {
                     case MediaType.image: self.numbers.image += 1
                     case MediaType.video: self.numbers.video += 1

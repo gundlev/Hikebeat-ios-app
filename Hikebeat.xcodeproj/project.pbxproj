@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8504199E1E0AC51B0008906A /* SimCardCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8504199D1E0AC51B0008906A /* SimCardCalls.swift */; };
 		8512E0F11CD4DC9E0085CE2B /* RotationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */; };
 		8512E0F51CD4E7520085CE2B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F21CD4E7520085CE2B /* Config.swift */; };
 		8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F31CD4E7520085CE2B /* Structs.swift */; };
@@ -21,6 +22,7 @@
 		851A51F41D9A6C1700CA7EA5 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51ED1D9A6C1700CA7EA5 /* SwiftyJSON.framework */; };
 		851A51F61D9A6CAB00CA7EA5 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A51F51D9A6CAB00CA7EA5 /* Async.swift */; };
 		851A51F81D9A6DB700CA7EA5 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A51F71D9A6DB700CA7EA5 /* Reachability.swift */; };
+		852469CC1E2034400074F831 /* UploadMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852469CB1E2034400074F831 /* UploadMedia.swift */; };
 		8525E7D31CF2F92600D87BB5 /* SyncWithAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */; };
 		8525E7D41CF2F92600D87BB5 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CF1CF2F92600D87BB5 /* Upload.swift */; };
 		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
@@ -110,6 +112,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8504199D1E0AC51B0008906A /* SimCardCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimCardCalls.swift; sourceTree = "<group>"; };
 		8512E0F01CD4DC9E0085CE2B /* RotationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationExtension.swift; sourceTree = "<group>"; };
 		8512E0F21CD4E7520085CE2B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8512E0F31CD4E7520085CE2B /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
@@ -125,6 +128,7 @@
 		851A51F51D9A6CAB00CA7EA5 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		851A51F71D9A6DB700CA7EA5 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		851A51F91D9A97E500CA7EA5 /* Hikebeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hikebeat.entitlements; sourceTree = "<group>"; };
+		852469CB1E2034400074F831 /* UploadMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadMedia.swift; sourceTree = "<group>"; };
 		8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncWithAPI.swift; sourceTree = "<group>"; };
 		8525E7CF1CF2F92600D87BB5 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
@@ -265,6 +269,8 @@
 				8593DAAC1DF3248500604BFA /* JourneyCalls.swift */,
 				8593DAAE1DF325C500604BFA /* Save.swift */,
 				85A067A31DFC4227006431E5 /* SocialCalls.swift */,
+				8504199D1E0AC51B0008906A /* SimCardCalls.swift */,
+				852469CB1E2034400074F831 /* UploadMedia.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -315,12 +321,12 @@
 			isa = PBXGroup;
 			children = (
 				E18991611CD380E400EC46B2 /* JourneyViewCell.swift */,
+				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
 				E15A4CF41CD4B0560053496A /* JourneyVC.swift */,
 				E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */,
 				85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */,
 				E15A4CF81CD4E6970053496A /* BeatsVC.swift */,
 				E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */,
-				E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */,
 				858EFF181D19C26B00C50771 /* ShowImageModalVC.swift */,
 			);
 			name = Journey;
@@ -705,6 +711,7 @@
 				8593DB111DFC187E00604BFA /* SearchJourneyCell.swift in Sources */,
 				858D263C1D8AE11300019E8F /* SCLAlertView.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
+				8504199E1E0AC51B0008906A /* SimCardCalls.swift in Sources */,
 				85AC90761CE4887C007BE5C2 /* BeatPin.swift in Sources */,
 				858EFF131D19BDDA00C50771 /* JTSImageInfo.m in Sources */,
 				858EFF191D19C26B00C50771 /* ShowImageModalVC.swift in Sources */,
@@ -750,6 +757,7 @@
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
 				85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */,
+				852469CC1E2034400074F831 /* UploadMedia.swift in Sources */,
 				85A580981D4F46EE00B38B1C /* EmotionCell.swift in Sources */,
 				85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */,
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,

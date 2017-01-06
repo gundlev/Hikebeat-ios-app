@@ -291,12 +291,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-        alertView.addButton("Clear it!") {
+        _ = alertView.addButton("Clear it!") {
             self.clearAllForNewBeat()
         }
-        alertView.addButton("Cancel") {}
+        _ = alertView.addButton("Cancel") {}
         
-        alertView.showWarning("Clear Beat?", subTitle: "\nAre you sure you want to clear what progress you have made on this beat?")
+        _ = alertView.showWarning("Clear Beat?", subTitle: "\nAre you sure you want to clear what progress you have made on this beat?")
     }
     
     func imageButtonTapped() {
@@ -807,7 +807,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
      
      */
     func sendSMS(_ smsBody: String) {
-        
+        let usrDef = UserDefaults.standard
+        print("NumberUserDef: ", usrDef.string(forKey: "hikebeat_phoneNumber")!)
+        let phoneNumber = userDefaults.string(forKey: "hikebeat_phoneNumber")!
+        print("phoneNumber: ", phoneNumber)
         print("In sms function")
         let messageVC = MFMessageComposeViewController()
         if MFMessageComposeViewController.canSendText() {

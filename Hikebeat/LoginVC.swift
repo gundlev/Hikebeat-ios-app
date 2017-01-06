@@ -156,6 +156,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 self.userDefaults.set(user["_id"].stringValue, forKey: "_id")
                 self.userDefaults.set(user["username"].stringValue, forKey: "username")
                 self.userDefaults.set(user["email"].stringValue, forKey: "email")
+                print("Numberoo: ", user["simCard"]["phoneNumber"].stringValue)
+                self.userDefaults.set(user["simCard"]["phoneNumber"].stringValue, forKey: "hikebeat_phoneNumber")
+                let phoneNumber = self.userDefaults.string(forKey: "hikebeat_phoneNumber")!
+                print("Number: ", phoneNumber)
                 //self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
                 self.userDefaults.set(true, forKey: "loggedIn")
                 let t = String(Date().timeIntervalSince1970)

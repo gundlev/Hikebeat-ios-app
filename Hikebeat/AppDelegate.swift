@@ -68,6 +68,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
+            print("checking for number now")
+            if userDefaults.bool(forKey: "loggedIn") {
+                let future = updateSimCard()
+                future.onSuccess { (success) in
+                    print("Change made to sim card: ", success)
+                }
+            }
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

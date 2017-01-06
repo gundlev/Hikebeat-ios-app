@@ -27,6 +27,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     var featuredJourneys = [Journey]()
     var featuredUsers = [User]()
     
+    var currentJourneys = [Journey]()
+    var currentUsers = [User]()
+
     override func viewDidLoad() {
         if firstLoad {
             
@@ -103,7 +106,20 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         featuredJourneysFuture.onSuccess { (featuredJourneys) in
             print("returned for hell")
             self.featuredJourneys = featuredJourneys
+            if self.currentJourneys.isEmpty {
+                self.currentJourneys = self.featuredJourneys
+            }
             self.journeysTableView.reloadData()
+        }
+        
+        let featuredUsersFuture = getFeaturedUsers(nextPage: "")
+        featuredUsersFuture.onSuccess { (featuredUsers) in
+            print("returned for hell")
+            self.featuredUsers = featuredUsers
+            if self.currentUsers.isEmpty {
+                self.currentUsers = self.featuredUsers
+            }
+            self.usersTableView.reloadData()
         }
     }
     
@@ -151,9 +167,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case 1:
-            return self.featuredJourneys.count
+            return self.currentJourneys.count
         case 2:
-            return self.featuredUsers.count
+            return self.currentUsers.count
         default: return 0
         }
     }
@@ -187,12 +203,15 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case 1:
-            print("One")
+            print("JourneyCell")
             let cell = tableView.dequeueReusableCell(withIdentifier: "journeyCell") as! SearchJourneyCell
+            let journey = self.currentJourneys[indexPath.row]
             cell.awakeFromNib()
+            cell.headline.text = journey.headline
+            cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
             return cell
         default:
-            print("Two")
+            print("UserCell")
             let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
             cell.awakeFromNib()
             return cell

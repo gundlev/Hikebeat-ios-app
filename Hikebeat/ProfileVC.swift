@@ -484,6 +484,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         contactData.givenName = "Hikebeat"
         contactData.organizationName = "Hikebeat"
         let img = UIImage(named: "ContactImage")
+        let phoneNumber = userDefaults.string(forKey: "hikebeat_phoneNumber")!
         contactData.imageData = UIImagePNGRepresentation(img!)
         contactData.phoneNumbers = [CNLabeledValue(label: CNLabelWork, value: CNPhoneNumber(stringValue: phoneNumber))]
         contactData.emailAddresses = [CNLabeledValue(label: CNLabelWork,value: "contact@hikebeat.com")]

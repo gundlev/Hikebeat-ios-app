@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 import SwiftyJSON
 
-let phoneNumber = "004530962591"
+//let phoneNumber = "004530962591"
 
 public let userDefaults = UserDefaults.standard
 

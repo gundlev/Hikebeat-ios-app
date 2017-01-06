@@ -31,7 +31,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
             print(parameters)
             
-            Alamofire.request((IPAddress + "users"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            Alamofire.request((IPAddress + "users"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
                 if response.response?.statusCode == 200 {
                     print("user has been created")
                     let rawUser = JSON(response.result.value!)

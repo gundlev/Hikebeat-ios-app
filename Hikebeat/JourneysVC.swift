@@ -112,6 +112,30 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return footerView
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let journey = self.journeys[indexPath.row]
+            self.journeys.remove(at: indexPath.row)
+            let future = deleteJourney(journeyId: journey.journeyId)
+            future.onSuccess(callback: { (success) in
+                if success {
+                    try! self.realm.write {
+                        self.realm.delete(journey)
+                    }
+                } else {
+                    //TODO: save deletion in changes.
+                }
+            })
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.journeysTableView.dequeueReusableCell(withIdentifier: "JourneyCell",for: indexPath) as! JourneyViewCell

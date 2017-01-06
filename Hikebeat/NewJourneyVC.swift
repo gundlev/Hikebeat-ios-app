@@ -64,9 +64,11 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func createNewJourney(_ sender: AnyObject) {
+        guard titleField.text != nil else {return}
+        guard titleField.text! != "" else {return}
         if titleField.text?.characters.count > 1 {
             let parameters: [String: Any] = ["options": ["headline": titleField.text!]]
-            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/journeys"
+            let url = IPAddress + "users/journeys"
             print(url)
             
             Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
@@ -74,7 +76,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
                 print(response.response?.statusCode)
                 if response.response?.statusCode == 200 {
                     let rawJson = JSON(response.result.value!)
-                    let json = rawJson["data"][0]
+                    let json = rawJson["data"]
                     print(json)
                     print("Journey Created!")
                     let realm = try! Realm()

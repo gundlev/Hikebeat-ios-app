@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -320,7 +320,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eb-sl-Wwc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1180" y="264.91754122938534"/>
+            <point key="canvasLocation" x="-1194" y="260"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -383,6 +383,7 @@
                         <outlet property="patternImageView" destination="FlJ-UO-mEi" id="GIa-XU-Ut3"/>
                         <outlet property="treesImageView" destination="gF8-rA-VEV" id="Ufh-Ue-Qfd"/>
                         <segue destination="nkA-us-yFp" kind="show" identifier="showMain" id="5ke-jW-l81"/>
+                        <segue destination="rSC-gl-gGm" kind="show" identifier="showWalkThrough" id="udg-Np-fqg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -903,19 +904,19 @@
                                                 <action selector="createNewJourney:" destination="osy-Wb-Zr6" eventType="touchUpInside" id="SKP-ah-9E9"/>
                                             </connections>
                                         </button>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" onImage="GPSIcon" offImage="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="mJa-iK-TS6">
+                                        <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" onImage="GPSIcon" offImage="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="mJa-iK-TS6">
                                             <rect key="frame" x="393" y="386" width="51" height="31"/>
                                             <color key="onTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="thumbTintColor" red="0.73590463399887085" green="0.96826595067977905" blue="0.03473818302154541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </switch>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ActivedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2qN-HA-0Jc">
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ActivedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2qN-HA-0Jc">
                                             <rect key="frame" x="159" y="384" width="35" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="jYp-ta-d0j"/>
                                                 <constraint firstAttribute="width" constant="35" id="wwz-sD-Gqr"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Activate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rux-Ov-3Pc">
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Activate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rux-Ov-3Pc">
                                             <rect key="frame" x="206" y="390" width="71" height="24"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1556,7 +1557,7 @@ Journeys screen and activate one.</string>
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4rj-VC-Voc">
-                                <rect key="frame" x="0.0" y="82" width="373" height="536"/>
+                                <rect key="frame" x="0.0" y="82" width="373" height="585"/>
                                 <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -1711,7 +1712,7 @@ Journeys screen and activate one.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoA-M5-6Ls">
-                                <rect key="frame" x="0.0" y="0.0" width="1000" height="82"/>
+                                <rect key="frame" x="-4" y="0.0" width="351" height="82"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kG-UG-YMx">
                                         <rect key="frame" x="20" y="26" width="115" height="34"/>
@@ -1725,7 +1726,7 @@ Journeys screen and activate one.</string>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="mPZ-br-8MP">
-                                        <rect key="frame" x="427" y="26" width="146" height="34"/>
+                                        <rect key="frame" x="102.5" y="26" width="146" height="34"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1738,10 +1739,10 @@ Journeys screen and activate one.</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXw-Eb-FWX">
-                                <rect key="frame" x="0.0" y="82" width="1000" height="918"/>
+                                <rect key="frame" x="-4" y="82" width="351" height="585"/>
                                 <subviews>
                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXr-u1-hCx">
-                                        <rect key="frame" x="358.5" y="61" width="283" height="46"/>
+                                        <rect key="frame" x="34" y="61" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.69063067436218262" green="0.97938668727874756" blue="0.034069672226905823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="lEm-q4-ZFJ"/>
@@ -1756,37 +1757,37 @@ Journeys screen and activate one.</string>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCX-tg-TZN">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="85"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="85"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DimiInTheHouse" translatesAutoresizingMaskIntoConstraints="NO" id="nnt-WW-tYj">
-                                                <rect key="frame" x="478.5" y="10" width="43" height="43"/>
+                                                <rect key="frame" x="154" y="10" width="43" height="43"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="43" id="F0t-Tx-oNo"/>
                                                     <constraint firstAttribute="width" constant="43" id="f5E-GI-gp2"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShareIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aov-7c-y07">
-                                                <rect key="frame" x="430.5" y="16.5" width="30" height="30"/>
+                                                <rect key="frame" x="106" y="16.5" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="TmP-Fx-y9O"/>
                                                     <constraint firstAttribute="height" constant="30" id="qcg-YE-f4O"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ListPin" translatesAutoresizingMaskIntoConstraints="NO" id="rEP-zE-cGo">
-                                                <rect key="frame" x="538.5" y="16.5" width="30" height="30"/>
+                                                <rect key="frame" x="214" y="16.5" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="Jb3-oy-VFa"/>
                                                     <constraint firstAttribute="height" constant="30" id="Wl8-hN-jQK"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 Beats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mZ-uY-Ls7">
-                                                <rect key="frame" x="576.5" y="23" width="55.5" height="17"/>
+                                                <rect key="frame" x="252" y="23" width="55.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984109401702881" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P83-5l-IhF">
-                                                <rect key="frame" x="383.5" y="17" width="76" height="29"/>
+                                                <rect key="frame" x="59" y="17" width="76" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="Share          ">
                                                     <color key="titleColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984109401702881" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1812,7 +1813,7 @@ Journeys screen and activate one.</string>
                                         </constraints>
                                     </view>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wu7-xP-5Gv">
-                                        <rect key="frame" x="0.0" y="83" width="1000" height="835"/>
+                                        <rect key="frame" x="0.0" y="83" width="351" height="502"/>
                                         <connections>
                                             <outlet property="delegate" destination="ER6-VT-u8l" id="N4V-0G-49Y"/>
                                         </connections>
@@ -2829,7 +2830,7 @@ Journeys screen and activate one.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CaP-a0-Jc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="rF9-PC-cE1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2572" y="260.41979010494754"/>
+            <point key="canvasLocation" x="2633" y="260"/>
         </scene>
         <!--Edit MessageVC-->
         <scene sceneID="2Va-97-VPt">
@@ -2931,7 +2932,7 @@ Journeys screen and activate one.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jV4-p6-iNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qXv-e9-goR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1869" y="261"/>
+            <point key="canvasLocation" x="1846" y="260"/>
         </scene>
         <!--Profile-->
         <scene sceneID="nXp-Vt-8KG">
@@ -4035,7 +4036,7 @@ sync</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tot-nu-Zaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="O05-Hs-NUk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3975" y="251"/>
+            <point key="canvasLocation" x="3438" y="265"/>
         </scene>
         <!--Show Image ModalVC-->
         <scene sceneID="tmF-O6-OlK">
@@ -4203,10 +4204,10 @@ sync</string>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="JourneyCell" rowHeight="100" id="1W1-ft-TgE" customClass="JourneyViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1W1-ft-TgE" id="jCM-Dj-pt1">
-                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultProfile" translatesAutoresizingMaskIntoConstraints="NO" id="tmo-0n-ejC">
@@ -4344,10 +4345,10 @@ sync</string>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeaturedCell" id="8VN-30-gkM" customClass="FeaturedJourneyViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="30" width="1000" height="90"/>
+                                        <rect key="frame" x="0.0" y="30" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8VN-30-gkM" id="9t6-t6-eJ5">
-                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultProfile" translatesAutoresizingMaskIntoConstraints="NO" id="uHG-9K-CkC">
@@ -4358,7 +4359,7 @@ sync</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dimitar posted a new beat in Hiking in the Italian Alps with Hikebeat." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtX-xn-ZZB">
-                                                    <rect key="frame" x="89" y="17" width="308" height="34"/>
+                                                    <rect key="frame" x="89" y="17" width="308" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="308" id="n7G-tk-BWM"/>
                                                     </constraints>
@@ -4464,10 +4465,10 @@ sync</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="tMq-RP-lbK">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="70"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tMq-RP-lbK" id="CY5-kg-UJj">
-                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@theo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xQ-MC-VBf">
@@ -4872,8 +4873,9 @@ sync</string>
         <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ry1-QN-lGj"/>
-        <segue reference="CbR-7C-QI3"/>
+        <segue reference="udg-Np-fqg"/>
+        <segue reference="5ke-jW-l81"/>
+        <segue reference="dg6-j1-ehS"/>
         <segue reference="abJ-vT-9Ah"/>
     </inferredMetricsTieBreakers>
 </document>
