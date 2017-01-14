@@ -23,6 +23,15 @@
 		851A51F61D9A6CAB00CA7EA5 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A51F51D9A6CAB00CA7EA5 /* Async.swift */; };
 		851A51F81D9A6DB700CA7EA5 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A51F71D9A6DB700CA7EA5 /* Reachability.swift */; };
 		852469CC1E2034400074F831 /* UploadMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852469CB1E2034400074F831 /* UploadMedia.swift */; };
+		852469CF1E204EEE0074F831 /* ErrorEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852469CE1E204EEE0074F831 /* ErrorEnums.swift */; };
+		852469EC1E2053BA0074F831 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E71D9A6C1700CA7EA5 /* Alamofire.framework */; };
+		852469ED1E2053BA0074F831 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E81D9A6C1700CA7EA5 /* AlamofireImage.framework */; };
+		852469EE1E2053BA0074F831 /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E91D9A6C1700CA7EA5 /* BrightFutures.framework */; };
+		852469EF1E2053BA0074F831 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51EA1D9A6C1700CA7EA5 /* Realm.framework */; };
+		852469F01E2053BA0074F831 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51EB1D9A6C1700CA7EA5 /* RealmSwift.framework */; };
+		852469F11E2053BA0074F831 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51EC1D9A6C1700CA7EA5 /* Result.framework */; };
+		852469F21E2053BA0074F831 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51ED1D9A6C1700CA7EA5 /* SwiftyJSON.framework */; };
+		852469F41E2053E30074F831 /* UploadMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852469F31E2053E30074F831 /* UploadMediaTests.swift */; };
 		8525E7D31CF2F92600D87BB5 /* SyncWithAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */; };
 		8525E7D41CF2F92600D87BB5 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7CF1CF2F92600D87BB5 /* Upload.swift */; };
 		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
@@ -59,7 +68,6 @@
 		85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4301CC4DD33004704F3 /* AppDelegate.swift */; };
 		85F2B4331CC4DD33004704F3 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4321CC4DD33004704F3 /* LoadingViewController.swift */; };
 		85F2B4381CC4DD33004704F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F2B4371CC4DD33004704F3 /* Assets.xcassets */; };
-		85F2B4461CC4DD33004704F3 /* HikebeatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4451CC4DD33004704F3 /* HikebeatTests.swift */; };
 		85F2B4511CC4DD33004704F3 /* HikebeatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4501CC4DD33004704F3 /* HikebeatUITests.swift */; };
 		85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4701CC4E3D2004704F3 /* Journey.swift */; };
 		85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4721CC4E4E0004704F3 /* Beat.swift */; };
@@ -95,7 +103,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		85F2B4421CC4DD33004704F3 /* PBXContainerItemProxy */ = {
+		852469E71E2053850074F831 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 85F2B4251CC4DD33004704F3 /* Project object */;
 			proxyType = 1;
@@ -129,6 +137,10 @@
 		851A51F71D9A6DB700CA7EA5 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		851A51F91D9A97E500CA7EA5 /* Hikebeat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Hikebeat.entitlements; sourceTree = "<group>"; };
 		852469CB1E2034400074F831 /* UploadMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadMedia.swift; sourceTree = "<group>"; };
+		852469CE1E204EEE0074F831 /* ErrorEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorEnums.swift; sourceTree = "<group>"; };
+		852469E21E2053850074F831 /* APITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		852469E61E2053850074F831 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		852469F31E2053E30074F831 /* UploadMediaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadMediaTests.swift; sourceTree = "<group>"; };
 		8525E7CE1CF2F92600D87BB5 /* SyncWithAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncWithAPI.swift; sourceTree = "<group>"; };
 		8525E7CF1CF2F92600D87BB5 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
@@ -176,9 +188,6 @@
 		85F2B4351CC4DD33004704F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85F2B4371CC4DD33004704F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85F2B43C1CC4DD33004704F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85F2B4411CC4DD33004704F3 /* HikebeatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HikebeatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		85F2B4451CC4DD33004704F3 /* HikebeatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikebeatTests.swift; sourceTree = "<group>"; };
-		85F2B4471CC4DD33004704F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85F2B44C1CC4DD33004704F3 /* HikebeatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HikebeatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F2B4501CC4DD33004704F3 /* HikebeatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikebeatUITests.swift; sourceTree = "<group>"; };
 		85F2B4521CC4DD33004704F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -215,6 +224,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		852469DF1E2053850074F831 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				852469EC1E2053BA0074F831 /* Alamofire.framework in Frameworks */,
+				852469ED1E2053BA0074F831 /* AlamofireImage.framework in Frameworks */,
+				852469EE1E2053BA0074F831 /* BrightFutures.framework in Frameworks */,
+				852469EF1E2053BA0074F831 /* Realm.framework in Frameworks */,
+				852469F01E2053BA0074F831 /* RealmSwift.framework in Frameworks */,
+				852469F11E2053BA0074F831 /* Result.framework in Frameworks */,
+				852469F21E2053BA0074F831 /* SwiftyJSON.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85F2B42A1CC4DD33004704F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -226,13 +249,6 @@
 				851A51F21D9A6C1700CA7EA5 /* RealmSwift.framework in Frameworks */,
 				851A51F31D9A6C1700CA7EA5 /* Result.framework in Frameworks */,
 				851A51F41D9A6C1700CA7EA5 /* SwiftyJSON.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85F2B43E1CC4DD33004704F3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,8 +269,18 @@
 				8512E0F21CD4E7520085CE2B /* Config.swift */,
 				8512E0F31CD4E7520085CE2B /* Structs.swift */,
 				8512E0F41CD4E7520085CE2B /* utils.swift */,
+				852469CE1E204EEE0074F831 /* ErrorEnums.swift */,
 			);
 			name = "Config and Utils";
+			sourceTree = "<group>";
+		};
+		852469E31E2053850074F831 /* APITests */ = {
+			isa = PBXGroup;
+			children = (
+				852469E61E2053850074F831 /* Info.plist */,
+				852469F31E2053E30074F831 /* UploadMediaTests.swift */,
+			);
+			path = APITests;
 			sourceTree = "<group>";
 		};
 		8525E7CC1CF2F8D500D87BB5 /* Sync */ = {
@@ -426,8 +452,8 @@
 			children = (
 				85F2B46C1CC4E353004704F3 /* Frameworks and Libs */,
 				85F2B42F1CC4DD33004704F3 /* Hikebeat */,
-				85F2B4441CC4DD33004704F3 /* HikebeatTests */,
 				85F2B44F1CC4DD33004704F3 /* HikebeatUITests */,
+				852469E31E2053850074F831 /* APITests */,
 				85F2B42E1CC4DD33004704F3 /* Products */,
 				8549C76E1D89ECFE00313EBB /* Frameworks */,
 			);
@@ -437,8 +463,8 @@
 			isa = PBXGroup;
 			children = (
 				85F2B42D1CC4DD33004704F3 /* Hikebeat.app */,
-				85F2B4411CC4DD33004704F3 /* HikebeatTests.xctest */,
 				85F2B44C1CC4DD33004704F3 /* HikebeatUITests.xctest */,
+				852469E21E2053850074F831 /* APITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -458,15 +484,6 @@
 				85F2B43C1CC4DD33004704F3 /* Info.plist */,
 			);
 			path = Hikebeat;
-			sourceTree = "<group>";
-		};
-		85F2B4441CC4DD33004704F3 /* HikebeatTests */ = {
-			isa = PBXGroup;
-			children = (
-				85F2B4451CC4DD33004704F3 /* HikebeatTests.swift */,
-				85F2B4471CC4DD33004704F3 /* Info.plist */,
-			);
-			path = HikebeatTests;
 			sourceTree = "<group>";
 		};
 		85F2B44F1CC4DD33004704F3 /* HikebeatUITests */ = {
@@ -539,6 +556,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		852469E11E2053850074F831 /* APITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 852469E91E2053850074F831 /* Build configuration list for PBXNativeTarget "APITests" */;
+			buildPhases = (
+				852469DE1E2053850074F831 /* Sources */,
+				852469DF1E2053850074F831 /* Frameworks */,
+				852469E01E2053850074F831 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				852469E81E2053850074F831 /* PBXTargetDependency */,
+			);
+			name = APITests;
+			productName = APITests;
+			productReference = 852469E21E2053850074F831 /* APITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		85F2B42C1CC4DD33004704F3 /* Hikebeat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85F2B4551CC4DD33004704F3 /* Build configuration list for PBXNativeTarget "Hikebeat" */;
@@ -556,24 +591,6 @@
 			productName = Hikebeat;
 			productReference = 85F2B42D1CC4DD33004704F3 /* Hikebeat.app */;
 			productType = "com.apple.product-type.application";
-		};
-		85F2B4401CC4DD33004704F3 /* HikebeatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 85F2B4581CC4DD33004704F3 /* Build configuration list for PBXNativeTarget "HikebeatTests" */;
-			buildPhases = (
-				85F2B43D1CC4DD33004704F3 /* Sources */,
-				85F2B43E1CC4DD33004704F3 /* Frameworks */,
-				85F2B43F1CC4DD33004704F3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				85F2B4431CC4DD33004704F3 /* PBXTargetDependency */,
-			);
-			name = HikebeatTests;
-			productName = HikebeatTests;
-			productReference = 85F2B4411CC4DD33004704F3 /* HikebeatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		85F2B44B1CC4DD33004704F3 /* HikebeatUITests */ = {
 			isa = PBXNativeTarget;
@@ -599,10 +616,15 @@
 		85F2B4251CC4DD33004704F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Niklas Gundlev";
 				TargetAttributes = {
+					852469E11E2053850074F831 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 85F2B42C1CC4DD33004704F3;
+					};
 					85F2B42C1CC4DD33004704F3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 62PHHA9WNZ;
@@ -616,11 +638,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					85F2B4401CC4DD33004704F3 = {
-						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
-						TestTargetID = 85F2B42C1CC4DD33004704F3;
 					};
 					85F2B44B1CC4DD33004704F3 = {
 						CreatedOnToolsVersion = 7.3;
@@ -643,13 +660,20 @@
 			projectRoot = "";
 			targets = (
 				85F2B42C1CC4DD33004704F3 /* Hikebeat */,
-				85F2B4401CC4DD33004704F3 /* HikebeatTests */,
 				85F2B44B1CC4DD33004704F3 /* HikebeatUITests */,
+				852469E11E2053850074F831 /* APITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		852469E01E2053850074F831 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85F2B42B1CC4DD33004704F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -657,13 +681,6 @@
 				E1A3F6A11CD570B2005D9775 /* Main.storyboard in Resources */,
 				E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */,
 				85F2B4381CC4DD33004704F3 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85F2B43F1CC4DD33004704F3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +717,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		852469DE1E2053850074F831 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				852469F41E2053E30074F831 /* UploadMediaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85F2B4291CC4DD33004704F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,6 +764,7 @@
 				85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */,
 				8512E0F51CD4E7520085CE2B /* Config.swift in Sources */,
 				E19A21291D9C2C3D002F9532 /* SearchViewController.swift in Sources */,
+				852469CF1E204EEE0074F831 /* ErrorEnums.swift in Sources */,
 				85F2B4731CC4E4E0004704F3 /* Beat.swift in Sources */,
 				858D263D1D8AE11300019E8F /* SCLExtensions.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
@@ -780,14 +806,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85F2B43D1CC4DD33004704F3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				85F2B4461CC4DD33004704F3 /* HikebeatTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		85F2B4481CC4DD33004704F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -799,10 +817,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		85F2B4431CC4DD33004704F3 /* PBXTargetDependency */ = {
+		852469E81E2053850074F831 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 85F2B42C1CC4DD33004704F3 /* Hikebeat */;
-			targetProxy = 85F2B4421CC4DD33004704F3 /* PBXContainerItemProxy */;
+			targetProxy = 852469E71E2053850074F831 /* PBXContainerItemProxy */;
 		};
 		85F2B44E1CC4DD33004704F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -823,6 +841,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		852469EA1E2053850074F831 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = APITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hikebeat.APITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hikebeat.app/Hikebeat";
+			};
+			name = Debug;
+		};
+		852469EB1E2053850074F831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = APITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hikebeat.APITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hikebeat.app/Hikebeat";
+			};
+			name = Release;
+		};
 		85F2B4531CC4DD33004704F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -837,8 +894,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -882,8 +941,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -902,6 +963,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -957,32 +1019,6 @@
 			};
 			name = Release;
 		};
-		85F2B4591CC4DD33004704F3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = HikebeatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.hikebeat.HikebeatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hikebeat.app/Hikebeat";
-			};
-			name = Debug;
-		};
-		85F2B45A1CC4DD33004704F3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = HikebeatTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.hikebeat.HikebeatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hikebeat.app/Hikebeat";
-			};
-			name = Release;
-		};
 		85F2B45C1CC4DD33004704F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1010,6 +1046,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		852469E91E2053850074F831 /* Build configuration list for PBXNativeTarget "APITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				852469EA1E2053850074F831 /* Debug */,
+				852469EB1E2053850074F831 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		85F2B4281CC4DD33004704F3 /* Build configuration list for PBXProject "Hikebeat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1024,15 +1068,6 @@
 			buildConfigurations = (
 				85F2B4561CC4DD33004704F3 /* Debug */,
 				85F2B4571CC4DD33004704F3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		85F2B4581CC4DD33004704F3 /* Build configuration list for PBXNativeTarget "HikebeatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				85F2B4591CC4DD33004704F3 /* Debug */,
-				85F2B45A1CC4DD33004704F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

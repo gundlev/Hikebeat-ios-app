@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -42,9 +42,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "85F2B44B1CC4DD33004704F3"
-               BuildableName = "HikebeatUITests.xctest"
-               BlueprintName = "HikebeatUITests"
+               BlueprintIdentifier = "852469D31E20535D0074F831"
+               BuildableName = "UploadMediaTests.xctest"
+               BlueprintName = "UploadMediaTests"
+               ReferencedContainer = "container:Hikebeat.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "852469E11E2053850074F831"
+               BuildableName = "APITests.xctest"
+               BlueprintName = "APITests"
                ReferencedContainer = "container:Hikebeat.xcodeproj">
             </BuildableReference>
          </TestableReference>

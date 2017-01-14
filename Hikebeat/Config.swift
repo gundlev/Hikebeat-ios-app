@@ -25,6 +25,8 @@ public let Headers = [
     "x-access-token": userDefaults.string(forKey: "token")!
 ]
 
+
+
 public let LoginHeaders = [
     "Content-Type": "application/json",
     "Authorization": "Basic YnpiNDJ1dEpVdzFadVdTSlZtcExkd1hNeFNjZ3dYT3U0WnJBb0w4c3BFSnN0eWp1cm9Ubm5JdHMybTVRZ3hvOjFkZnBqZFM2Z21rRHRkUVFLYkpWeTRIZXpNSzRtUVlhSVdnd3lsamJkWXBNRkpPM2tuUXkwMTJMazJ6QlZTMA=="

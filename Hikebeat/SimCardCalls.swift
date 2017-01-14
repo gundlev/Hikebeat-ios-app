@@ -19,6 +19,7 @@ func updateSimCard() -> Future<Bool, NoError> {
         Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
             print(response)
             let json = JSON(response.result.value)
+            guard response.response?.statusCode == 200 else {complete(.success(false)); return}
             print("SimCard check response: ", json)
             let isActive = json["data"]["isActive"].boolValue
             if isActive {

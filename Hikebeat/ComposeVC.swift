@@ -398,7 +398,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func findActiveJourney() -> Bool {
         self.journeys = realm.objects(Journey.self)
-        print("journeys: ", self.journeys)
+//        print("journeys: ", self.journeys)
         self.tableViewSelectJourney.reloadData()
         let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
@@ -463,7 +463,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             mediaType = MediaType.audio
                             let pathToAudio = self.getPathToFileFromName("audio-temp.acc")
                             let newPath = self.getPathToFileFromName("audio-temp.m4a")
-                            covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
+                            _ = covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
                             let audioData = try? Data(contentsOf: newPath!)
                             mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
                             //self.recorder.deleteRecording()
@@ -493,11 +493,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             )
             let alertView = SCLAlertView(appearance: appearance)
             
-            alertView.addButton("Yes") {
+            _ = alertView.addButton("Yes") {
                 UIApplication.openAppSettings()
             }
-            alertView.addButton("No", action: {})
-            alertView.showInfo("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
+            _ = alertView.addButton("No", action: {})
+            _ = alertView.showInfo("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
 
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
             let appearance = SCLAlertView.SCLAppearance(
@@ -505,12 +505,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             )
             let alertView = SCLAlertView(appearance: appearance)
             
-            alertView.addButton("Yes") {
-                self.appDelegate.startLocationManager()
+            _ = alertView.addButton("Yes") {
+                _ = self.appDelegate.startLocationManager()
             }
-            alertView.addButton("No") {}
+            _ = alertView.addButton("No") {}
             
-            alertView.showInfo("Allow GPS?", subTitle: "\nTo be able to show people your awesome journey and place you on a map we need your location. Will you allow the app access to your location?")
+            _ = alertView.showInfo("Allow GPS?", subTitle: "\nTo be able to show people your awesome journey and place you on a map we need your location. Will you allow the app access to your location?")
         }
     }
     
@@ -542,17 +542,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 if currentBeat!.message != nil {
                     parameters["text"] = currentBeat?.message
                 }
-//                Alamofire.request("https://httpbin.org/get", parameters: parameters, encoding: URLEncoding.default)
-//                Alamofire.request("https://httpbin.org/post", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-//                let urlString = "https://httpbin.org/post"
-//                Alamofire.request(urlString, method: .post)
-                // Sending the beat message
-                
 
+                // Sending beat message
                 performSegue(withIdentifier: "showGreenModal", sender: nil)
                 Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
                     print("The Response")
-                    print(response.response?.statusCode)
+//                    print(response.response?.statusCode)
                     print(response)
                     
                     // if response is 200 OK from server go on.
@@ -585,7 +580,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                 customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
                                 
                                 // Get and set progressView
-                                self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
+                                _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
                                 //Alamofire.upload(urlMedia, method: .post,headers: customHeader, file: filePath!)
                                 Alamofire.upload(filePath!, to: urlMedia, headers: customHeader)
 //                                    .uploadProgress { progress in
@@ -598,10 +593,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //                                    }
                                     .responseJSON { mediaResponse in
                                     print("This is the media response: ", mediaResponse)
-                                    print("Response", mediaResponse.response)
+//                                    print("Response", mediaResponse.response)
                                     print("Debug Description", mediaResponse.debugDescription)
                                     print("Description", mediaResponse.description)
-                                    print("Request", mediaResponse.request)
+//                                    print("Request", mediaResponse.request)
                                     
                                     // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
                                     if mediaResponse.response?.statusCode == 200 {
@@ -658,12 +653,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         )
                         let alertView = SCLAlertView(appearance: appearance)
                         
-                        alertView.addButton("Yes") {
+                        _ = alertView.addButton("Yes") {
                             self.sendTextMessage()
                         }
-                        alertView.addButton("No thanks") {}
+                        _ = alertView.addButton("No thanks") {}
                         
-                        alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
+                        _ = alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
 //                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
                         
                         // Is set to true now but should be changed to false
@@ -722,13 +717,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func presentMissingPhoneNumberAlert() {
         let alertView = SCLAlertView()
-        alertView.addButton("Go to profile") {
+        _ = alertView.addButton("Go to profile") {
             print("Second button tapped")
             self.tabBarController?.selectedIndex = 3
             let tabVC = self.tabBarController as! HikebeatTabBarVC
             tabVC.deselectCenterButton()
         }
-        alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
+        _ = alertView.showWarning("Missing Phone number", subTitle: "You have to add a phone number in your profile to be able to send text messages. We need to know the text is comming from you")
     }
     
 /*
@@ -737,7 +732,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func genSMSMessageString(_ emotion: String, message: String, seqNumber: String) -> String {
         
-        print("timestamp deci: ", self.currentBeat?.timestamp)
+//        print("timestamp deci: ", self.currentBeat?.timestamp)
         print("timestamp hex: ", hex(Double((self.currentBeat?.timestamp)!)!))
         print("lat: ", hex(Double((self.currentBeat?.latitude)!)!))
         print("lng: ", hex(Double((self.currentBeat?.longitude)!)!))
@@ -859,18 +854,18 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                     )
                     let alertView = SCLAlertView(appearance: appearance)
 
-                    alertView.addButton("Yes") {
+                    _ = alertView.addButton("Yes") {
                         longitude = String(location.coordinate.longitude)
                         latitude = String(location.coordinate.latitude)
                         altitude = String(round(location.altitude))
                         print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
                         promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
                     }
-                    alertView.addButton("No") {
+                    _ = alertView.addButton("No") {
                         promise.success(nil)
                     }
                     
-                    alertView.showWarning("Poor GPS precision", subTitle: "\nYour GPS precision is poor, would you like to send a beat anyway?")
+                    _ = alertView.showWarning("Poor GPS precision", subTitle: "\nYour GPS precision is poor, would you like to send a beat anyway?")
                 } else {
                     longitude = String(location.coordinate.longitude)
                     latitude = String(location.coordinate.latitude)

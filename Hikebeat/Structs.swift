@@ -15,6 +15,12 @@ public struct MediaType {
     public static let none = "none"
 }
 
+public struct MediaUploadHeader {
+    public static let image = "image/jpeg"
+    public static let video = "video/mp4"
+    public static let audio = "audio/mp4"
+}
+
 public struct EntityType {
     public static let DataBeat = "DataBeat"
     public static let DataJourney = "DataJourney"
