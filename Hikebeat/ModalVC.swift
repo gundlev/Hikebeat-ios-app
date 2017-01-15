@@ -46,6 +46,10 @@ class ModalVC: UIViewController {
         return progressBar!
     }
     
+    func setProgress(_ progress: Float) {
+        self.progressBar?.progress = progress
+    }
+    
     func removeProgressBar() {
         
     }

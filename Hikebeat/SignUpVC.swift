@@ -31,11 +31,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
             print(parameters)
             
-            Alamofire.request((IPAddress + "users"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+            Alamofire.request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+                print(response)
                 if response.response?.statusCode == 200 {
                     print("user has been created")
                     let rawUser = JSON(response.result.value!)
-                    let user = rawUser["data"][0]
+                    let user = rawUser["data"]
                     print("This is the user: ",user)
                     
                     print("setting user")
@@ -65,6 +66,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     for (value) in user["permittedPhoneNumbers"].arrayValue {
                         permittedPhoneNumbersArray.append(value.stringValue)
                     }
+                    
+                    self.userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
+                    self.userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
                     
                     self.userDefaults.set(optionsDictionary, forKey: "options")
                     self.userDefaults.set((user["options"]["notifications"].boolValue), forKey: "notifications")

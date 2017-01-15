@@ -28,6 +28,7 @@ func getFeaturedJourneys(nextPage: String) -> Future<[Journey], NoError> {
                     journey.headline = jsonJourney["options"]["headline"].stringValue
                     journey.journeyId = jsonJourney["_id"].stringValue
                     journey.numberOfBeats = jsonJourney["messageCount"].intValue
+                    journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
                     journeys.append(journey)
                 }
 
@@ -48,12 +49,18 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
             let jsonUsers = json["data"]["docs"]
             var users = [User]()
             if jsonUsers != nil {
-                for (_, jsonJourney) in jsonUsers {
-//                    let journey = User(id: <#T##String#>, username: <#T##String#>, numberOfJourneys: <#T##String#>, numberOfBeats: <#T##String#>, numberOfFollowers: <#T##String#>, numberOfFollowing: <#T##String#>, profilePhoto: <#T##UIImage#>)
-
-//                    users.append(journey)
+                for (_, jsonUser) in jsonUsers {
+                    print("User: ", jsonUser)
+                    users.append(User(
+                        id: jsonUser["_id"].stringValue,
+                        username: jsonUser["username"].stringValue,
+                        numberOfJourneys: String(jsonUser["journeyIds"].arrayValue.count),
+                        numberOfBeats: jsonUser["_id"].stringValue,
+                        followerCount: jsonUser["followerCount"].stringValue,
+                        followsCount: jsonUser["followsCount"].stringValue,
+                        profilePhotoUrl: jsonUser["options"]["profilePhoto"].stringValue
+                    ))
                 }
-                
             }
             complete(.success(users))
         }

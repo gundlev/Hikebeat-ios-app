@@ -51,6 +51,8 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     ]
     
 
+    @IBOutlet weak var followsCountLabel: UILabel!
+    @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var editProfileImageButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var profilePicture: UIImageView!
@@ -202,6 +204,9 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             self.numberOfJourneys.text = String(journeys.count) + " journeys created"
         }
         
+        self.followsCountLabel.text = userDefaults.string(forKey: "followsCount")
+        self.followersCountLabel.text = userDefaults.string(forKey: "followerCount")
+        
         
         // Setting profileImage if there is one
         setProfileImage()
@@ -213,6 +218,17 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 //        if image != nil {
 //            profilePicture.image = image
 //        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getStats().onSuccess { (dict) in
+            self.followsCountLabel.text = dict["followsCount"]
+            self.userDefaults.set(dict["followsCount"], forKey: "followsCount")
+            self.followersCountLabel.text = dict["followerCount"]
+            self.userDefaults.set(dict["followerCount"],forKey: "followerCount")
+        }.onFailure { (error) in
+            print(error)
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -236,7 +252,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
         }
         
-        saveProfileImageToDocs(imageData!)
+        _ = saveProfileImageToDocs(imageData!)
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -367,33 +383,19 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
     func sendProfileImage() {
-        var customHeader = Headers
-        
-        customHeader["x-hikebeat-format"] = "jpg"
-        
-        let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")! + "/profilePhoto"
-        print("imageURL: ", url)
-        print("path: ", self.getProfileImagePath())
-        Alamofire.upload(URL(fileURLWithPath: getProfileImagePath()), to: url,headers: customHeader).responseJSON { mediaResponse in
-            if mediaResponse.response?.statusCode == 200 {
-                let rawImageJson = JSON(mediaResponse.result.value!)
-                let mediaJson = rawImageJson["data"][0]
-                print(mediaResponse)
-                self.newImage = false
-                print("The image has been posted")
-            } else {
-                print("Error posting the image, saving in changes")
-                print(mediaResponse)
-                let localRealm = try! Realm()
-                try! localRealm.write() {
-                    let change = Change()
-                    change.fill(InstanceType.profileImage, timeCommitted: self.getTimeCommitted(), stringValue: "profile_image.jpg", boolValue: false, property: nil, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-                    localRealm.add(change)
-                }
+        uploadProfileImage(path: URL(fileURLWithPath: getProfileImagePath())) { (progress) in
+            print("Upload progress: ", progress)
+        }.onSuccess { (success) in
+            self.newImage = false
+        }.onFailure { (error) in
+            print(error)
+            let localRealm = try! Realm()
+            try! localRealm.write() {
+                let change = Change()
+                change.fill(InstanceType.profileImage, timeCommitted: self.getTimeCommitted(), stringValue: "profile_image.jpg", boolValue: false, property: nil, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+                localRealm.add(change)
             }
-
         }
-
     }
     
     func sendTextChanges(_ arr: [(property: String,value: String)]) {

@@ -57,6 +57,11 @@
                BlueprintName = "APITests"
                ReferencedContainer = "container:Hikebeat.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "UploadMediaTests/testUploadImage()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

@@ -104,7 +104,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         let featuredJourneysFuture = getFeaturedJourneys(nextPage: "")
         featuredJourneysFuture.onSuccess { (featuredJourneys) in
-            print("returned for hell")
+            print("returned journeys")
             self.featuredJourneys = featuredJourneys
             if self.currentJourneys.isEmpty {
                 self.currentJourneys = self.featuredJourneys
@@ -114,7 +114,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
         let featuredUsersFuture = getFeaturedUsers(nextPage: "")
         featuredUsersFuture.onSuccess { (featuredUsers) in
-            print("returned for hell")
+            print("returned users")
+            print(featuredUsers)
             self.featuredUsers = featuredUsers
             if self.currentUsers.isEmpty {
                 self.currentUsers = self.featuredUsers
@@ -209,11 +210,32 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             cell.awakeFromNib()
             cell.headline.text = journey.headline
             cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
+            if journey.ownerProfilePhoto != nil {
+                cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
+            } else {
+                cell.downloadProfileImage(imageUrl: journey.ownerProfilePhotoUrl!).onSuccess(callback: { (image) in
+                    journey.ownerProfilePhoto = UIImageJPEGRepresentation(image, 1)
+                }).onFailure(callback: { (error) in
+                    print(error)
+                })
+            }
             return cell
         default:
             print("UserCell")
             let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
             cell.awakeFromNib()
+            let user = self.currentUsers[indexPath.row]
+            if user.profilePhoto != nil {
+                cell.profileImage.image = user.profilePhoto!
+            } else {
+                cell.downloadProfileImage(imageUrl: user.profilePhotoUrl).onSuccess(callback: { (image) in
+                    user.profilePhoto = image
+                }).onFailure(callback: { (error) in
+                    print(error)
+                })
+            }
+            cell.numberOfJourneys.text = "\(user.numberOfJourneys) Journeys"
+            cell.username.text = user.username
             return cell
         }
     }

@@ -13,23 +13,24 @@ class User: Any {
     var username: String
     var numberOfJourneys: String
     var numberOfBeats: String
-    var numberOfFollowers: String
-    var numberOfFollowing: String
-    var profilePhoto: UIImage
+    var followerCount: String
+    var followsCount: String
+    var profilePhoto: UIImage?
+    var profilePhotoUrl: String
     
     init(id: String,
         username: String,
         numberOfJourneys: String,
         numberOfBeats: String,
-        numberOfFollowers: String,
-        numberOfFollowing: String,
-        profilePhoto: UIImage) {
+        followerCount: String,
+        followsCount: String,
+        profilePhotoUrl: String) {
         self.id = id
         self.username = username
         self.numberOfBeats = numberOfBeats
         self.numberOfJourneys = numberOfJourneys
-        self.numberOfFollowers = numberOfFollowers
-        self.numberOfFollowing = numberOfFollowing
-        self.profilePhoto = profilePhoto
+        self.followerCount = followerCount
+        self.followsCount = followsCount
+        self.profilePhotoUrl = profilePhotoUrl
     }
 }

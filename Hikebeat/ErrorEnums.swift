@@ -14,3 +14,11 @@ enum MediaUploadError: Swift.Error {
     case s3Upload
     case createMedia
 }
+
+enum UserCallError: Swift.Error {
+    case statsCall
+}
+
+enum MediaDownloadError: Swift.Error {
+    case profileImage
+}

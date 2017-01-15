@@ -149,6 +149,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 for (value) in user["permittedPhoneNumbers"].arrayValue {
                     permittedPhoneNumbersArray.append(value.stringValue)
                 }
+                
+                self.userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
+                self.userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
+                
                 self.userDefaults.set(optionsDictionary, forKey: "options")
                 self.userDefaults.set(journeyIdsArray, forKey: "journeyIds")
                 self.userDefaults.set(followingArray, forKey: "following")

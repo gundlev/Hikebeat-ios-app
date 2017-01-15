@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import BrightFutures
 
 class SearchJourneyCell: UITableViewCell {
     
@@ -15,6 +16,7 @@ class SearchJourneyCell: UITableViewCell {
     var headline: UILabel!
     var followersBeats: UILabel!
     var firstLoad = true
+    var imageActivity: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         if firstLoad {
@@ -24,7 +26,7 @@ class SearchJourneyCell: UITableViewCell {
             profileImage = UIImageView(frame: CGRect(x: 15, y: 20, width: 50, height: 50))
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
-            setProfileImage()
+            imageActivity = UIActivityIndicatorView(frame: CGRect(x: 15, y: 20, width: 50, height: 50))
             headline = UILabel(frame: CGRect(x: 80, y: 25, width: width-100, height: 25))
             headline.textColor = lightGreen
             headline.adjustsFontSizeToFitWidth = true
@@ -32,20 +34,26 @@ class SearchJourneyCell: UITableViewCell {
             followersBeats.textColor = .white
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)
+            self.addSubview(imageActivity)
             self.addSubview(headline)
             self.addSubview(followersBeats)
             self.firstLoad = false
         }
     }
     
-    func setProfileImage() {
-        let dataPath = getProfileImagePath()
-        let image = UIImage(contentsOfFile: dataPath)
-        if image != nil {
-            self.profileImage.image = image
-            print("setting profile image")
-        } else {
+    func downloadProfileImage(imageUrl: String) -> Future<UIImage, MediaDownloadError> {
+        return Future { complete in
+            imageActivity.startAnimating()
             self.profileImage.image = UIImage(named: "DefaultProfile")
+            downloadImage(imageUrl: imageUrl)
+                .onSuccess { (image) in
+                    self.profileImage.image = image
+                    self.imageActivity.stopAnimating()
+                    complete(.success(image))
+                }.onFailure { (error) in
+                    print("Error: ", error)
+                    complete(.failure(error))
+            }
         }
     }
 }

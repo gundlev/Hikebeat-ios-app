@@ -99,7 +99,7 @@ class UploadMediaTests: XCTestCase {
         }
         
         // 3. Create media to API
-        let testUploadJourneyId = "5870380e31b08400129be9ad"
+        let testUploadJourneyId = "587a45e06b41fc00122055d5"
         let t = String(Date().timeIntervalSince1970)
         let e = t.range(of: ".")
         let timestamp = t.substring(to: (e?.lowerBound)!)
@@ -107,6 +107,26 @@ class UploadMediaTests: XCTestCase {
         createMediaOnAPI(journeyId: testUploadJourneyId, fileKey: fileKey, timeCapture: timestamp).onSuccess { (success) in
             createExp.fulfill()
         }.onFailure { (error) in
+            XCTFail("Failed upload with error: \(error)")
+            createExp.fulfill()
+        }
+        waitForExpectations(timeout: 10) { (error) in
+            print("Timeout with error: \(error)")
+        }
+        XCTAssert(true)
+    }
+    
+    func testUploadProfileImage() {
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0] as AnyObject
+        let testPath = "/testUploadImage.jpg"
+        let createExp = self.expectation(description: "signedUrl recieved")
+        uploadProfileImage(path: URL(fileURLWithPath: documentsDirectory.appending(testPath))) { (progress) in
+            print("Progress: ", progress)
+        }.onSuccess { (success) in
+            createExp.fulfill()
+        }.onFailure { (error) in
+            print(error)
             XCTFail("Failed upload with error: \(error)")
             createExp.fulfill()
         }

@@ -44,6 +44,24 @@ func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage
     }
 }
 
+func downloadImage(imageUrl: String) -> Future<UIImage, MediaDownloadError> {
+    return Future { complete in
+        Alamofire.request(imageUrl).responseImage {
+            response in
+            print("response: ", response)
+            print("Statuscoode: ", response.response?.statusCode as Any)
+            if let image = response.result.value {
+                complete(.success(image))
+            } else {
+                print("Downloading image from url failed: ", imageUrl)
+                print("Failed getting image")
+                print("image: ", response.result.value)
+                complete(.failure(.profileImage))
+            }
+        }
+    }
+}
+
 
 func downloadAndStoreMedia(url: String, fileName: String) -> Future<Bool, NoError> {
 

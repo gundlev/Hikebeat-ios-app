@@ -571,63 +571,74 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             
                             let filePath = self.getPathToFileFromName((self.currentBeat?.mediaData)!)
                             if filePath != nil {
-                                let urlMedia = IPAddress + "journeys/" + (self.activeJourney?.journeyId)! + "/media"
-                                print(urlMedia)
-                                
-                                var customHeader = Headers
-                                
-                                customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
-                                customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
-                                
-                                // Get and set progressView
+                                print("Upload starting")
                                 _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
-                                //Alamofire.upload(urlMedia, method: .post,headers: customHeader, file: filePath!)
-                                Alamofire.upload(filePath!, to: urlMedia, headers: customHeader)
-//                                    .uploadProgress { progress in
-//                                    //print(totalBytesWritten)
-//                                    self.currentModal?.progressBar?.progress = progress.fractionCompleted
-//
-//                                    // This closure is NOT called on the main queue for performance
-//                                    // reasons. To update your ui, dispatch to the main queue.
-//  
-//                                    }
-                                    .responseJSON { mediaResponse in
-                                    print("This is the media response: ", mediaResponse)
-//                                    print("Response", mediaResponse.response)
-                                    print("Debug Description", mediaResponse.debugDescription)
-                                    print("Description", mediaResponse.description)
-//                                    print("Request", mediaResponse.request)
-                                    
-                                    // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
-                                    if mediaResponse.response?.statusCode == 200 {
-                                        let rawImageJson = JSON(mediaResponse.result.value!)
-                                        let mediaJson = rawImageJson["data"][0]
-                                        print(mediaResponse)
-                                        print("The image has been posted")
-                                        
-                                        // Set the imageId in currentBeat
-                                        print("messageId: ", mediaJson["_id"].stringValue)
-                                        
-                                        
-                                        // Set the uploaded variable to true as the image has been uplaoded.
-                                        
-                                        try! self.realm.write {
-                                            self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
-                                            self.currentBeat?.mediaUploaded = true
-                                            self.activeJourney?.beats.append(self.currentBeat!)
-                                        }
-                                        
-                                        self.clearAllForNewBeat()
-                                    } else {
-                                        print("Error posting the image")
-                                        
-                                        try! self.realm.write {
-                                            self.currentBeat?.mediaUploaded = false
-                                            self.activeJourney?.beats.append(self.currentBeat!)
-                                        }
+                                uploadeMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
+                                    print("Upload succeeded with id: ", id)
+                                    try! self.realm.write {
+                                        self.currentBeat?.mediaDataId = id
+                                        self.currentBeat?.mediaUploaded = true
+                                        self.activeJourney?.beats.append(self.currentBeat!)
                                     }
+                                    self.clearAllForNewBeat()
                                     self.beatPromise.success(true)
-                                }
+                                }).onFailure(callback: { (error) in
+                                    print("Error uploading media: ", error)
+                                    // TODO: handle error by saving correctly
+                                    try! self.realm.write {
+                                        self.currentBeat?.mediaUploaded = false
+                                        self.activeJourney?.beats.append(self.currentBeat!)
+                                    }
+                                    self.clearAllForNewBeat()
+                                    self.beatPromise.success(true)
+                                })
+                                
+//                                let urlMedia = IPAddress + "journeys/" + (self.activeJourney?.journeyId)! + "/media"
+//                                print(urlMedia)
+//                                
+//                                var customHeader = Headers
+//                                
+//                                customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
+//                                customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
+//                                
+//                                // Get and set progressView
+//                                _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
+//                                Alamofire.upload(filePath!, to: urlMedia, headers: customHeader)
+//
+//                                    .responseJSON { mediaResponse in
+//                                    
+//                                    // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
+//                                    if mediaResponse.response?.statusCode == 200 {
+//                                        let rawImageJson = JSON(mediaResponse.result.value!)
+//                                        let mediaJson = rawImageJson["data"][0]
+//                                        print(mediaResponse)
+//                                        print("The image has been posted")
+//                                        
+//                                        // Set the imageId in currentBeat
+//                                        print("messageId: ", mediaJson["_id"].stringValue)
+//                                        
+//                                        
+//                                        // Set the uploaded variable to true as the image has been uplaoded.
+//                                        
+//                                        try! self.realm.write {
+//                                            self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
+//                                            self.currentBeat?.mediaUploaded = true
+//                                            self.activeJourney?.beats.append(self.currentBeat!)
+//                                        }
+//                                        
+//                                        self.clearAllForNewBeat()
+//                                    } else {
+//                                        print("Error posting the image")
+//                                        
+//                                        try! self.realm.write {
+//                                            self.currentBeat?.mediaUploaded = false
+//                                            self.activeJourney?.beats.append(self.currentBeat!)
+//                                        }
+//                                    }
+//                                    self.beatPromise.success(true)
+//                                }
+                            } else {
+                                print("Could not resolve filepath")
                             }
                         } else {
                             print("There's no image")

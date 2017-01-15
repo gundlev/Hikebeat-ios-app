@@ -37,6 +37,7 @@
 		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
 		8525E7D61CF2F92600D87BB5 /* SendBeats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D11CF2F92600D87BB5 /* SendBeats.swift */; };
 		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
+		85562F3F1E2AE5170078CC51 /* UserCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85562F3E1E2AE5170078CC51 /* UserCalls.swift */; };
 		85869CD11CCE019A004CFF4F /* HikebeatTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */; };
 		858D263C1D8AE11300019E8F /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858D263A1D8AE11300019E8F /* SCLAlertView.swift */; };
 		858D263D1D8AE11300019E8F /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858D263B1D8AE11300019E8F /* SCLExtensions.swift */; };
@@ -146,6 +147,7 @@
 		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
 		8525E7D11CF2F92600D87BB5 /* SendBeats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBeats.swift; sourceTree = "<group>"; };
 		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
+		85562F3E1E2AE5170078CC51 /* UserCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalls.swift; sourceTree = "<group>"; };
 		85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HikebeatTabBarVC.swift; sourceTree = "<group>"; };
 		858D263A1D8AE11300019E8F /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		858D263B1D8AE11300019E8F /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				85A067A31DFC4227006431E5 /* SocialCalls.swift */,
 				8504199D1E0AC51B0008906A /* SimCardCalls.swift */,
 				852469CB1E2034400074F831 /* UploadMedia.swift */,
+				85562F3E1E2AE5170078CC51 /* UserCalls.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				858EFF041D19897100C50771 /* MemoExt.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
+				85562F3F1E2AE5170078CC51 /* UserCalls.swift in Sources */,
 				E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */,
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				E17F5B2E1DFDC99800C1A2B0 /* WalkthroughVC.swift in Sources */,
@@ -1053,6 +1057,7 @@
 				852469EB1E2053850074F831 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		85F2B4281CC4DD33004704F3 /* Build configuration list for PBXProject "Hikebeat" */ = {
 			isa = XCConfigurationList;

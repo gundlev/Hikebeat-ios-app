@@ -22,6 +22,8 @@ class Journey: Object {
     dynamic var active: Bool = false
     dynamic var type: String? = nil
     dynamic var seqNumber: String? = nil
+    dynamic var ownerProfilePhotoUrl: String? = nil
+    dynamic var ownerProfilePhoto: Data? = nil
     var followers = List<Follower>()
     var beats = List<Beat>()
     

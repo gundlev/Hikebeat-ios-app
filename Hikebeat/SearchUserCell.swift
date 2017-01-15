@@ -8,14 +8,17 @@
 
 import Foundation
 import UIKit
+import BrightFutures
 
 class SearchUserCell: UITableViewCell {
     
     var profileImage: UIImageView!
-    var headline: UILabel!
+    var username: UILabel!
     var journeyIcon: UIImageView!
     var numberOfJourneys: UILabel!
+    var followersBeats: UILabel!
     var firstLoad = true
+    var imageActivity: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         if firstLoad {
@@ -25,30 +28,42 @@ class SearchUserCell: UITableViewCell {
             profileImage = UIImageView(frame: CGRect(x: 20, y: 20, width: 50, height: 50))
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
-            setProfileImage()
-            headline = UILabel(frame: CGRect(x: 80, y: 30, width: width-160, height: 30))
-            headline.textColor = lightGreen
-            headline.adjustsFontSizeToFitWidth = true
-            journeyIcon = UIImageView(frame: CGRect(x: width-60, y: 25, width: 25, height: 25))
+            imageActivity = UIActivityIndicatorView(frame: CGRect(x: 20, y: 20, width: 50, height: 50))
+            username = UILabel(frame: CGRect(x: 80, y: 30, width: width-160, height: 30))
+            username.textColor = lightGreen
+            username.adjustsFontSizeToFitWidth = true
+            journeyIcon = UIImageView(frame: CGRect(x: width-60, y: 25, width: 20, height: 25))
+            journeyIcon.contentMode = .scaleAspectFit
             journeyIcon.image = UIImage(named: "tiny_backpack")
-            numberOfJourneys = UILabel(frame: CGRect(x: 80, y: 50, width: width-100, height: 10))
+            numberOfJourneys = UILabel(frame: CGRect(x: width-100, y: 50, width: 100, height: 20))
             numberOfJourneys.textColor = .white
+            numberOfJourneys.textAlignment = .center
             numberOfJourneys.font = UIFont.systemFont(ofSize: 13)
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 50, width: width-100, height: 10))
+            followersBeats.textColor = .white
+            followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)
-            self.addSubview(headline)
-//            self.addSubview(followersBeats)
+            self.addSubview(username)
+            self.addSubview(imageActivity)
+            self.addSubview(journeyIcon)
+            self.addSubview(numberOfJourneys)
             self.firstLoad = false
         }
     }
     
-    func setProfileImage() {
-        let dataPath = getProfileImagePath()
-        let image = UIImage(contentsOfFile: dataPath)
-        if image != nil {
-            self.profileImage.image = image
-            print("setting profile image")
-        } else {
+    func downloadProfileImage(imageUrl: String) -> Future<UIImage, MediaDownloadError> {
+        return Future { complete in
+            imageActivity.startAnimating()
             self.profileImage.image = UIImage(named: "DefaultProfile")
+            downloadImage(imageUrl: imageUrl)
+                .onSuccess { (image) in
+                    self.profileImage.image = image
+                    self.imageActivity.stopAnimating()
+                    complete(.success(image))
+                }.onFailure { (error) in
+                    print("Error: ", error)
+                    complete(.failure(error))
+            }
         }
     }
 }

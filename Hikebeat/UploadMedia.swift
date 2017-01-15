@@ -13,7 +13,7 @@ import RealmSwift
 import BrightFutures
 import Result
 
-func uploadeMedia(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, MediaUploadError> {
+func uploadeMediaForBeat(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, MediaUploadError> {
     return Future { complete in
         // 1. Get signedUrl and id from API
         getSignedUrlAndId(type: type).onSuccess(callback: { (tuple) in
@@ -31,6 +31,47 @@ func uploadeMedia(type: String, path: URL, journeyId: String, timeCapture: Strin
         }).onFailure(callback: { (error) in
             complete(.failure(error))
         })
+    }
+}
+
+func uploadProfileImage(path: URL, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<Bool, MediaUploadError> {
+    return Future { complete in
+        // 1. Get signedUrl and id from API
+        getSignedUrlAndId(type: "profile-photo").onSuccess(callback: { (tuple) in
+            // 2. Upload media to S3
+            uploadToS3(signedUrl: tuple.signedUrl, path: path, type: MediaType.image, progressCallback: progressCallback).onSuccess(callback: { (success) in
+                // 3. Call create media to API
+                createProfilePhotoOnAPI(fileKey: tuple.id).onSuccess(callback: { (success) in
+                    complete(.success(success))
+                }).onFailure(callback: { (error) in
+                    complete(.failure(error))
+                })
+            }).onFailure(callback: { (error) in
+                complete(.failure(error))
+            })
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
+    }
+}
+
+func createProfilePhotoOnAPI(fileKey: String) -> Future<Bool, MediaUploadError> {
+    return Future { complete in
+        let userId = userDefaults.string(forKey: "_id")
+        let url = IPAddress + "users/\(userId!)/profile-photo"
+        let parameters = [
+            "fileKey" : fileKey
+        ]
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+//                print("create media: ", response.request?.httpBody)
+//                print("response: ", response)
+                complete(.success(true))
+            } else {
+                complete(.failure(.createMedia))
+                print(response)
+            }
+        }
     }
 }
 
@@ -86,6 +127,8 @@ func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -
         ]
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
             if response.response?.statusCode == 200 {
+                print("create media: ", response.request?.httpBody)
+                print("response: ", response)
                 complete(.success(true))
             } else {
                 complete(.failure(.createMedia))
@@ -93,3 +136,5 @@ func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -
         }
     }
 }
+
+
