@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import BRYXBanner
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -27,6 +28,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     @IBAction func signUp(_ sender: AnyObject) {
         if true {//passwordField.text == rePasswordField.text && emailField.text != "" && usernameField.text != "" {
+            
+            guard passwordField.text != "" else {missingValues(); return}
+            guard rePasswordField.text != "" else {missingValues(); return}
+            guard emailField.text != "" else {missingValues(); return}
+            guard usernameField.text != "" else {missingValues(); return}
+            guard passwordField.text == rePasswordField.text else {noneMatchingPasswords(); return}
             
             let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
             print(parameters)
@@ -91,16 +98,40 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 } else if response.response?.statusCode == 400 {
                     // email or username has been uses
                     print("email or username has been used")
-                    print(response.result.value)
+//                    print(response.result.value)
                     let json = JSON(response.result.value)
-                    SCLAlertView().showWarning("Sorry", subTitle: "\n" + json["msg"].stringValue)
+                    if let errors = json["errors"].array {
+                        var bannerText = ""
+                        for var i in 0...errors.count-1 {
+                            print(errors[i])
+                            if i != 0 {
+                                bannerText += "\n\n"
+                            }
+                            bannerText += "\(errors[i]["friendlyMessage"].stringValue)"
+                        }
+                        let banner = Banner(title: nil, subtitle: bannerText, image: nil, backgroundColor: .red, didTapBlock: nil)
+                        banner.dismissesOnTap = true
+                        banner.show(duration: 10.0)
+                    }
+//                    SCLAlertView().showWarning("Sorry", subTitle: "\n" + json["meta"]["message"].stringValue)
                 }
             }
         } else {
             // The password an repeatPassword is not the same.
             //print("not filled out correct")
         }
-
+    }
+    
+    func noneMatchingPasswords() {
+        let banner = Banner(title: nil, subtitle: "The passwords does not match. Please make sure that the password and re-type password feilds are identical.", image: nil, backgroundColor: .red, didTapBlock: nil)
+        banner.dismissesOnTap = true
+        banner.show(duration: 10.0)
+    }
+    
+    func missingValues() {
+        let banner = Banner(title: nil, subtitle: "Please make sure that all fields are filled", image: nil, backgroundColor: .red, didTapBlock: nil)
+        banner.dismissesOnTap = true
+        banner.show(duration: 10.0)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

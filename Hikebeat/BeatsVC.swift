@@ -190,7 +190,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 cell.setImage()
             case MediaType.video:
                 print("video")
-                let image = videoSnapshot(getImagePath(beat.mediaData!) as NSString)
+//                let image = videoSnapshot(getImagePath(beat.mediaData!) as NSString)
                 cell.beatImage.image = UIImage(named: "video-btn")
 //                cell.beatImage.isHidden = false
 //                cell.playButton.isHidden = false

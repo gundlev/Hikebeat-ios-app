@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //        UIApplication.shared.applicationIconBadgeNumber = 0
-
         UIApplication.shared.statusBarStyle = .lightContent
         self.startReachability()
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {

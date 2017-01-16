@@ -22,3 +22,14 @@ enum UserCallError: Swift.Error {
 enum MediaDownloadError: Swift.Error {
     case profileImage
 }
+
+enum SearchError: Swift.Error {
+    case userSearch
+    case journeySearch
+}
+
+enum CompressionError: Swift.Error {
+    case avAssetExportFail
+    case compressionFailed
+    case compressionCancelled
+}

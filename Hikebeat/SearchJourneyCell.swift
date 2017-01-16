@@ -21,16 +21,16 @@ class SearchJourneyCell: UITableViewCell {
     override func awakeFromNib() {
         if firstLoad {
             let width = UIScreen.main.bounds.width
-            let height: CGFloat = 90
-            self.backgroundColor = .clear
-            profileImage = UIImageView(frame: CGRect(x: 15, y: 20, width: 50, height: 50))
+            let height: CGFloat = 70
+            self.backgroundColor = standardGreen
+            profileImage = UIImageView(frame: CGRect(x: 15, y: 10, width: 50, height: 50))
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
-            imageActivity = UIActivityIndicatorView(frame: CGRect(x: 15, y: 20, width: 50, height: 50))
-            headline = UILabel(frame: CGRect(x: 80, y: 25, width: width-100, height: 25))
-            headline.textColor = lightGreen
+            imageActivity = UIActivityIndicatorView(frame: CGRect(x: 15, y: 10, width: 50, height: 50))
+            headline = UILabel(frame: CGRect(x: 80, y: 15, width: width-100, height: 25))
+            headline.textColor = .white
             headline.adjustsFontSizeToFitWidth = true
-            followersBeats = UILabel(frame: CGRect(x: 80, y: 50, width: width-100, height: 10))
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
             followersBeats.textColor = .white
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)

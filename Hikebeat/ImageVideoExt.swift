@@ -91,7 +91,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 self.imagePicker.sourceType = .photoLibrary;
                 self.imagePicker.mediaTypes = [kUTTypeMovie as String]
                 self.imagePicker.allowsEditing = true
-                self.imagePicker.videoMaximumDuration = 10
+                self.imagePicker.videoMaximumDuration = 30
                 self.imagePicker.videoQuality = UIImagePickerControllerQualityType.typeIFrame960x540
                 
                 self.present(self.imagePicker, animated: true, completion: nil)
@@ -112,7 +112,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
                 imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureMode.video
                 imagePicker.allowsEditing = true
-                imagePicker.videoMaximumDuration = 10
+                imagePicker.videoMaximumDuration = 30
                 imagePicker.showsCameraControls = true
                 imagePicker.videoQuality = UIImagePickerControllerQualityType.typeIFrame960x540
                 //self.imagePicker
@@ -235,6 +235,21 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
             try fm.removeItem(at: mediaURL)
         } catch {
             print("problem removing media ")
+        }
+    }
+    
+    func compressVideo(inputURL: URL, outputURL: URL, handler:@escaping (_ exportSession: AVAssetExportSession?)-> Void) {
+        let urlAsset = AVURLAsset(url: inputURL, options: nil)
+        guard let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality) else {
+            handler(nil)
+            return
+        }
+        
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = AVFileTypeMPEG4
+        exportSession.shouldOptimizeForNetworkUse = true
+        exportSession.exportAsynchronously { () -> Void in
+            handler(exportSession)
         }
     }
     

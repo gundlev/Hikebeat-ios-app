@@ -408,7 +408,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                 parameters["options"] = [tuple.property : tuple.value]
             }
 
-            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
+            let url = IPAddress + "users"
             print(url)
             print(parameters)
             Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in

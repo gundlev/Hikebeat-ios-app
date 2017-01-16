@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 import UserNotifications
+import BrightFutures
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
@@ -60,26 +61,53 @@ public func registerForNotification() {
     }
 }
 
-public func covertToMedia(_ pathToInputFile : URL, pathToOuputFile: URL, fileType: String) -> Bool {
-    
-    let asset = AVAsset(url: pathToInputFile)
-    
-    let session = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetPassthrough)
-    
-    print(AVAssetExportSession.exportPresets(compatibleWith: asset))
-    
-    session?.outputURL = pathToOuputFile
-    session?.outputFileType = fileType
-    
-    session?.exportAsynchronously(completionHandler: { () -> Void in
-        print("The session is done exporting")
-    })
-    
-    let assetOut = AVAsset(url: pathToOuputFile)
-    
-    print(assetOut.description)
-    
-    return true
+func covertToMedia(_ pathToInputFile : URL, pathToOuputFile: URL, fileType: String) -> Future<Bool, CompressionError> {
+    return Future { complete in
+        print(1)
+        let asset = AVAsset(url: pathToInputFile)
+        print(2)
+        let data = NSData(contentsOf: pathToInputFile)!
+        print(3)
+        print("File size before compression: \(Double(data.length / 1048)) kb")
+        guard let session = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetMediumQuality) else {
+            complete(.failure(.avAssetExportFail))
+            return
+        }
+        print(4)
+//        print(AVAssetExportSession.exportPresets(compatibleWith: asset))
+        print("input path: ", pathToInputFile)
+        print("output path: ", pathToOuputFile)
+        session.outputURL = pathToOuputFile
+        session.outputFileType = fileType
+        session.shouldOptimizeForNetworkUse = true
+        print(5)
+        session.exportAsynchronously(completionHandler: { () -> Void in
+            print("The session is done exporting")
+            switch session.status {
+            case .unknown:
+                break
+            case .waiting:
+                break
+            case .exporting:
+                break
+            case .completed:
+                let compressedData = NSData(contentsOf: pathToOuputFile)
+                print("File size after compression: \(Double((compressedData?.length)! / 1048)) kb")
+                complete(.success(true))
+                break
+            case .failed:
+                complete(.failure(.compressionFailed))
+                break
+            case .cancelled:
+                complete(.failure(.compressionCancelled))
+
+                break
+            }
+
+    //        let data = NSData(contentsOf: pathToOuputFile)!
+    //        print("File size after compression: \(Double(data.length / 1048)) kb")
+        })
+    }
 }
 
 public func numberToEmotion(_ number: String) -> String {

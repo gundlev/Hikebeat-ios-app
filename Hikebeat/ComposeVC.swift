@@ -344,6 +344,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
+        self.audioHasBeenRecordedForThisBeat = false
         filledin = 0
         hideClearButton()
         enableMediaView(self.editMemoButton)
@@ -445,48 +446,40 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             mediaType = MediaType.image
                             //print(2)
                             mediaData = self.saveMediaToDocs(imageData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".jpg")
+                            self.completedCheck(locationTuple: locationTuple!, mediaData: mediaData, mediaType: mediaType)
                             
                         } else if self.currentMediaURL != nil {
                             mediaType = MediaType.video
-                            let newPath = self.getPathToFileFromName("vid-temp.mp4")
-                            let success = covertToMedia(self.currentMediaURL!, pathToOuputFile: newPath!, fileType: AVFileTypeMPEG4)
-                            if success {
-                                let videoData = try? Data(contentsOf: self.currentMediaURL!)
+                            let newPath = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".mp4")
+                            covertToMedia(self.currentMediaURL!, pathToOuputFile: newPath, fileType: AVFileTypeMPEG4)
+                            .onSuccess(callback: { (success) in
+                                let videoData = try? Data(contentsOf: newPath)
                                 mediaData = self.saveMediaToDocs(videoData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".mp4")
                                 if mediaData != nil {
                                     self.removeMediaWithURL(self.currentMediaURL!)
                                 }
-                                //print("mediaData: ", mediaData)
-                            }
-                            
+                                self.completedCheck(locationTuple: locationTuple!, mediaData: mediaData, mediaType: mediaType)
+                            }).onFailure(callback: { (error) in
+                                print("Error: ", error)
+                                return
+                            })
                         } else if self.audioHasBeenRecordedForThisBeat {
                             mediaType = MediaType.audio
-                            let pathToAudio = self.getPathToFileFromName("audio-temp.acc")
-                            let newPath = self.getPathToFileFromName("audio-temp.m4a")
-                            _ = covertToMedia(pathToAudio!, pathToOuputFile: newPath!, fileType: AVFileTypeAppleM4A)
-                            let audioData = try? Data(contentsOf: newPath!)
-                            mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
-                            //self.recorder.deleteRecording()
+                            let pathToAudio = self.getPathToFileFromName("audio-temp.m4a")
+                            let newPath = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4a")
+                            print("Now converting")
+                            covertToMedia(pathToAudio!, pathToOuputFile: newPath, fileType: AVFileTypeMPEG4)
+                            .onSuccess(callback: { (success) in
+                                let audioData = try? Data(contentsOf: newPath)
+                                mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
+                                self.completedCheck(locationTuple: locationTuple!, mediaData: mediaData, mediaType: mediaType)
+                            })
                         }
-                        
-                        //            let locationTuple = self.getTimeAndLocation()
-                        print("Just Before Crash!")
-                        self.currentBeat = Beat()
-                        self.currentBeat!.fill( self.emotion, journeyId: self.activeJourney!.journeyId, message: self.messageText, latitude: locationTuple!.latitude, longitude: locationTuple!.longitude, altitude: locationTuple!.altitude, timestamp: locationTuple!.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, mediaUrl: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: self.activeJourney!)
-                        self.currentBeat!.journey = self.activeJourney
-                        //                try! realm.write() {
-                        //                    realm.add(self.currentBeat!)
-                        //                }
-                        
-                        print("Just After Crash!")
-                        self.sendBeat()
                     }
                 } else {
                     print("location tuple is nil")
                 }
-                
             }
-
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
             let appearance = SCLAlertView.SCLAppearance(
                 showCloseButton: false
@@ -514,6 +507,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         }
     }
     
+    func completedCheck(locationTuple: (timestamp: String, latitude: String, longitude: String, altitude: String), mediaData: String?, mediaType: String?) {
+        self.currentBeat = Beat()
+        self.currentBeat!.fill( self.emotion, journeyId: self.activeJourney!.journeyId, message: self.messageText, latitude: locationTuple.latitude, longitude: locationTuple.longitude, altitude: locationTuple.altitude, timestamp: locationTuple.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, mediaUrl: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: self.activeJourney!)
+        self.currentBeat!.journey = self.activeJourney
+        self.sendBeat()
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print("change in location status to: ", status)
         if (status == CLAuthorizationStatus.denied) {
@@ -526,7 +526,40 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func sendBeat() {
-            print("sending beat start")
+        print("sending beat start")
+//        let outputFileURL = self.getPathToFileFromName((self.currentBeat?.mediaData)!)!
+//        guard let data = NSData(contentsOf: outputFileURL as URL) else {
+//            return
+//        }
+//        print("File size before compression: \(Double(data.length / 1048)) kb")
+//        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".mp4")
+//
+//        compressVideo(inputURL: outputFileURL as URL, outputURL: compressedURL) { (exportSession) in
+//            guard let session = exportSession else {
+//                return
+//            }
+//            print("session Status: ", session.status)
+//            switch session.status {
+//            case .unknown:
+//                break
+//            case .waiting:
+//                break
+//            case .exporting:
+//                break
+//            case .completed:
+//                guard let compressedData = NSData(contentsOf: compressedURL) else {
+//                    return
+//                }
+//                
+//                print("File size after compression: \(Double(compressedData.length / 1048)) kb")
+//            case .failed:
+//                break
+//            case .cancelled:
+//                break
+//            }
+//        }
+//        
+//        return 
             // Check if there is any network connection and send via the appropriate means.
         let reachability = Reachability()
             if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {

@@ -77,7 +77,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
                     self.beatImage.isHidden = false
                     self.playButton.isHidden = false
                     try! realm.write {
-                        self.beat.mediaData = "hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).jpg"
+                        self.beat.mediaData = "hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).\(fileType)"
                     }
                 } else {
                     print("problems getting the image for beat in setImage")

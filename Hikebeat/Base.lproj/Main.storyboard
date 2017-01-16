@@ -4564,12 +4564,8 @@ sync</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVy-Ye-0un">
-                                <rect key="frame" x="0.0" y="105" width="601" height="446"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kK2-zk-E3t">
-                                <rect key="frame" x="0.0" y="105" width="375" height="513"/>
+                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kK2-zk-E3t">
+                                <rect key="frame" x="148" y="345" width="227" height="273"/>
                                 <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </scrollView>
                             <searchBar hidden="YES" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkH-Hi-fpr">
@@ -4592,18 +4588,26 @@ sync</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lyo-K1-nDd">
+                                <rect key="frame" x="0.0" y="85" width="375" height="533"/>
+                                <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="g32-FQ-SdZ" id="aGU-Fj-yrS"/>
+                                    <outlet property="delegate" destination="g32-FQ-SdZ" id="HKc-1K-GIF"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="gDt-qi-jS5" secondAttribute="trailing" constant="-6" id="5Ue-5N-XXZ"/>
                             <constraint firstItem="gDt-qi-jS5" firstAttribute="top" secondItem="5hl-2x-59i" secondAttribute="bottom" constant="2" id="7VD-IE-tUf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FVy-Ye-0un" secondAttribute="trailing" constant="-242" id="9sC-S4-HOg"/>
+                            <constraint firstItem="lyo-K1-nDd" firstAttribute="top" secondItem="5hl-2x-59i" secondAttribute="bottom" constant="65" id="JrP-Lj-LrB"/>
+                            <constraint firstItem="fil-Pj-Pgx" firstAttribute="top" secondItem="lyo-K1-nDd" secondAttribute="bottom" id="Mzl-df-OmB"/>
                             <constraint firstItem="fil-Pj-Pgx" firstAttribute="top" secondItem="kK2-zk-E3t" secondAttribute="bottom" id="TcZ-a2-lIh"/>
                             <constraint firstItem="kK2-zk-E3t" firstAttribute="top" secondItem="5hl-2x-59i" secondAttribute="bottom" constant="85" id="VUO-Fz-dOk"/>
+                            <constraint firstItem="lyo-K1-nDd" firstAttribute="leading" secondItem="Dff-Xr-8n3" secondAttribute="leadingMargin" constant="-16" id="XJS-fg-LxG"/>
                             <constraint firstItem="gDt-qi-jS5" firstAttribute="leading" secondItem="Dff-Xr-8n3" secondAttribute="leadingMargin" constant="-6" id="csw-Ab-OOV"/>
-                            <constraint firstItem="FVy-Ye-0un" firstAttribute="leading" secondItem="Dff-Xr-8n3" secondAttribute="leadingMargin" constant="-16" id="hV1-H7-WAf"/>
-                            <constraint firstItem="fil-Pj-Pgx" firstAttribute="top" secondItem="FVy-Ye-0un" secondAttribute="bottom" constant="67" id="oif-OW-jqy"/>
-                            <constraint firstItem="FVy-Ye-0un" firstAttribute="top" secondItem="5hl-2x-59i" secondAttribute="bottom" constant="85" id="wAh-aW-Zdi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lyo-K1-nDd" secondAttribute="trailing" constant="-16" id="ocV-GE-g1e"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kK2-zk-E3t" secondAttribute="trailing" constant="-16" id="wPt-W6-RKG"/>
                             <constraint firstItem="kK2-zk-E3t" firstAttribute="leading" secondItem="Dff-Xr-8n3" secondAttribute="leadingMargin" constant="-16" id="zTX-w1-Qvt"/>
                         </constraints>
@@ -4612,8 +4616,10 @@ sync</string>
                     <navigationItem key="navigationItem" id="jcI-kM-Qis"/>
                     <connections>
                         <outlet property="scrollView" destination="kK2-zk-E3t" id="OVF-Lm-fQ1"/>
+                        <outlet property="searchTableView" destination="lyo-K1-nDd" id="Z5F-vJ-IZA"/>
                         <outlet property="searchTextField" destination="gDt-qi-jS5" id="Nzu-S2-J4V"/>
                         <outlet property="serachBar" destination="NkH-Hi-fpr" id="dlp-4C-hcy"/>
+                        <segue destination="JZQ-I9-lET" kind="show" identifier="showJourney" id="9B6-dr-Cd4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pL-Ae-kHW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4875,9 +4881,9 @@ sync</string>
         <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="udg-Np-fqg"/>
         <segue reference="5ke-jW-l81"/>
+        <segue reference="udg-Np-fqg"/>
         <segue reference="dg6-j1-ehS"/>
-        <segue reference="abJ-vT-9Ah"/>
+        <segue reference="9B6-dr-Cd4"/>
     </inferredMetricsTieBreakers>
 </document>

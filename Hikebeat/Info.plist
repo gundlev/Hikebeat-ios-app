@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>29</string>
+	<string>30</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
@@ -30,10 +30,6 @@
 	<string>We need access to your camera for you to take awesome pictures.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>To make your life easier we would like to create a Hikebeat contact and keep it up to date with the correct phonenumber.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is needed to for the service to function.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Your location is needed to for the service to function.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed to for the service to function.</string>
 	<key>NSMicrophoneUsageDescription</key>
