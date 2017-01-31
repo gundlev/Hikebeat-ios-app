@@ -16,7 +16,7 @@ class SettingsVC: UIViewController {
     
     let userDefaults = UserDefaults.standard
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var toUpload: (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?)? = nil
+    var toUpload: (synced:Bool, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>)? = nil
     var numbers = (image: 0, video: 0, audio: 0)
     let realm = try! Realm()
 
@@ -108,11 +108,10 @@ class SettingsVC: UIViewController {
         if toUpload != nil {
             showDots()
             print("toUpload is not nil")
-            let promise = syncAll(UIProgressView(), changes: self.toUpload!.changes!, beats: self.toUpload!.beats!)
-            promise.onSuccess(callback: { (Bool) in
+            syncAll(UIProgressView(), changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
+            .onSuccess(callback: { (Bool) in
                 let synced = self.checkSync()
                 print("In callback")
-                
                 self.hideDots()
                 
                 if synced {
@@ -283,14 +282,15 @@ class SettingsVC: UIViewController {
         if !synced.synced {
             print(2)
             self.toUpload = synced
-            if !(synced.beats?.isEmpty)! {
+            if !synced.mediaBeats.isEmpty {
                 print(3)
                 self.numbers = (image: 0, video: 0, audio: 0)
-                for beat in self.toUpload!.beats! {
+                for beat in self.toUpload!.mediaBeats {
 //                    print(4)
 //                    print(beat.message)
 //                    print(beat.mediaType)
 //                    print(beat)
+                    guard beat.mediaType != nil else {continue}
                     switch beat.mediaType! {
                     case MediaType.image: self.numbers.image += 1
                     case MediaType.video: self.numbers.video += 1

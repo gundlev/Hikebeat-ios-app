@@ -14,7 +14,7 @@ import Alamofire
 import AlamofireImage
 import SwiftyJSON
 
-func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failedJourneys: Int)?, NoError>{
+func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failedJourneys: Int)?, UserCallError>{
     return Future { complete in
         let urlJourney = IPAddress + "users/" + userId + "/journeys"
         print(urlJourney)
@@ -28,8 +28,8 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
                     let json = rawJson["data"]
                     for (_, journey) in json {
                         // saveJourney
-                        let journeyFuture = saveJourneyWithNoData(journeyJson: journey, userId: userId)
-                        journeyFuture.onSuccess(callback: { (success) in
+                        saveJourneyWithNoData(journeyJson: journey, userId: userId)
+                        .onSuccess(callback: { (success) in
                             if success {
                                 finishedJourneys += 1
                                 if (finishedJourneys + failedJourneys) == json.count {
@@ -47,8 +47,7 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
                     }
                 }
             } else {
-                complete(.success(nil))
-                // something is wrong
+                complete(.failure(.getJourneysForUser))
             }
         }
     }

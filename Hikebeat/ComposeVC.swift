@@ -474,8 +474,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                 mediaData = self.saveMediaToDocs(audioData!, journeyId: (self.activeJourney?.journeyId)!, timestamp: locationTuple!.timestamp, fileType: ".m4a")
                                 self.completedCheck(locationTuple: locationTuple!, mediaData: mediaData, mediaType: mediaType)
                             })
+                        } else {
+                            self.completedCheck(locationTuple: locationTuple!, mediaData: mediaData, mediaType: mediaType)
                         }
                     }
+
                 } else {
                     print("location tuple is nil")
                 }
@@ -527,39 +530,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func sendBeat() {
         print("sending beat start")
-//        let outputFileURL = self.getPathToFileFromName((self.currentBeat?.mediaData)!)!
-//        guard let data = NSData(contentsOf: outputFileURL as URL) else {
-//            return
-//        }
-//        print("File size before compression: \(Double(data.length / 1048)) kb")
-//        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".mp4")
-//
-//        compressVideo(inputURL: outputFileURL as URL, outputURL: compressedURL) { (exportSession) in
-//            guard let session = exportSession else {
-//                return
-//            }
-//            print("session Status: ", session.status)
-//            switch session.status {
-//            case .unknown:
-//                break
-//            case .waiting:
-//                break
-//            case .exporting:
-//                break
-//            case .completed:
-//                guard let compressedData = NSData(contentsOf: compressedURL) else {
-//                    return
-//                }
-//                
-//                print("File size after compression: \(Double(compressedData.length / 1048)) kb")
-//            case .failed:
-//                break
-//            case .cancelled:
-//                break
-//            }
-//        }
-//        
-//        return 
             // Check if there is any network connection and send via the appropriate means.
         let reachability = Reachability()
             if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
@@ -606,7 +576,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             if filePath != nil {
                                 print("Upload starting")
                                 _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
-                                uploadeMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
+                                uploadMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
                                     print("Upload succeeded with id: ", id)
                                     try! self.realm.write {
                                         self.currentBeat?.mediaDataId = id
@@ -625,51 +595,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                     self.clearAllForNewBeat()
                                     self.beatPromise.success(true)
                                 })
-                                
-//                                let urlMedia = IPAddress + "journeys/" + (self.activeJourney?.journeyId)! + "/media"
-//                                print(urlMedia)
-//                                
-//                                var customHeader = Headers
-//                                
-//                                customHeader["x-hikebeat-timeCapture"] = self.currentBeat?.timestamp
-//                                customHeader["x-hikebeat-type"] = self.currentBeat?.mediaType!
-//                                
-//                                // Get and set progressView
-//                                _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
-//                                Alamofire.upload(filePath!, to: urlMedia, headers: customHeader)
-//
-//                                    .responseJSON { mediaResponse in
-//                                    
-//                                    // If everything is 200 OK from server save the imageId in currentBeat variable mediaDataId.
-//                                    if mediaResponse.response?.statusCode == 200 {
-//                                        let rawImageJson = JSON(mediaResponse.result.value!)
-//                                        let mediaJson = rawImageJson["data"][0]
-//                                        print(mediaResponse)
-//                                        print("The image has been posted")
-//                                        
-//                                        // Set the imageId in currentBeat
-//                                        print("messageId: ", mediaJson["_id"].stringValue)
-//                                        
-//                                        
-//                                        // Set the uploaded variable to true as the image has been uplaoded.
-//                                        
-//                                        try! self.realm.write {
-//                                            self.currentBeat?.mediaDataId = mediaJson["_id"].stringValue
-//                                            self.currentBeat?.mediaUploaded = true
-//                                            self.activeJourney?.beats.append(self.currentBeat!)
-//                                        }
-//                                        
-//                                        self.clearAllForNewBeat()
-//                                    } else {
-//                                        print("Error posting the image")
-//                                        
-//                                        try! self.realm.write {
-//                                            self.currentBeat?.mediaUploaded = false
-//                                            self.activeJourney?.beats.append(self.currentBeat!)
-//                                        }
-//                                    }
-//                                    self.beatPromise.success(true)
-//                                }
                             } else {
                                 print("Could not resolve filepath")
                             }
@@ -684,14 +609,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             self.beatPromise.success(true)
                         }
                         
-                        //Likely not usefull call to saveContext -> Test it!!
                     } else {
                         // Response is not 200
                         print("Error posting the message")
-//                        alert("Problem sending", alertMessage: "Some error has occured when trying to send, it will be saved and syncronized later", vc: self, actions:
-//                            (title: "Ok",
-//                                style: UIAlertActionStyle.Cancel,
-//                                function: {}))
                         let appearance = SCLAlertView.SCLAppearance(
                             showCloseButton: false
                         )
@@ -700,18 +620,28 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         _ = alertView.addButton("Yes") {
                             self.sendTextMessage()
                         }
-                        _ = alertView.addButton("No thanks") {}
+                        _ = alertView.addButton("No thanks") {
+                            try! self.realm.write {
+                                if self.currentBeat?.mediaData != nil {
+                                    self.currentBeat?.mediaUploaded = false
+                                } else {
+                                    self.currentBeat?.mediaUploaded = true
+                                }
+                                if self.currentBeat?.message != nil {
+                                    self.currentBeat?.messageUploaded = false
+                                } else {
+                                    self.currentBeat?.messageUploaded = true
+                                }
+                                self.activeJourney?.beats.append(self.currentBeat!)
+                            }
+                        }
                         
                         _ = alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
 //                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
                         
                         // Is set to true now but should be changed to false
                         // TODO: This should be uncommented when
-//                        try! self.realm.write {
-//                            self.currentBeat?.mediaUploaded = false
-//                            self.currentBeat?.messageUploaded = false
-//                            self.activeJourney?.beats.append(self.currentBeat!)
-//                        }
+
                     }
                     
                 }
@@ -719,23 +649,40 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             } else {
                 // check for permitted phoneNumber
                 //                }
-                sendTextMessage()
+                try! self.realm.write {
+                    if self.currentBeat?.mediaData != nil {
+                        print("There's media")
+                        self.currentBeat?.mediaUploaded = false
+                    } else {
+                        self.currentBeat?.mediaUploaded = true
+                    }
+                    if self.currentBeat?.message != nil {
+                        print("There's text!")
+                        self.currentBeat?.messageUploaded = false
+                    } else {
+                        self.currentBeat?.messageUploaded = true
+                    }
+                    self.activeJourney?.beats.append(self.currentBeat!)
+                }
+                self.clearAllForNewBeat()
+
+//                sendTextMessage()
                 // The save and setInitial is done in the message methods as it knows whether it fails.
             }
-            
+        
             // TODO: save
     }
     
     func sendTextMessage() {
-        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumbers") else {
-            presentMissingPhoneNumberAlert()
-            return
-        }
+//        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumbers") else {
+//            presentMissingPhoneNumberAlert()
+//            return
+//        }
         
-        guard phoneNumbers != "" else {
-            presentMissingPhoneNumberAlert()
-            return
-        }
+//        guard phoneNumbers != "" else {
+//            presentMissingPhoneNumberAlert()
+//            return
+//        }
         
         //                if phoneNumbers == "" {
         //                    presentMissingPhoneNumberAlert()

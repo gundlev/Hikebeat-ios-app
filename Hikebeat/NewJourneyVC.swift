@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import RealmSwift
-import BRYXBanner
+import SwiftyDrop
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -68,9 +68,10 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     @IBAction func createNewJourney(_ sender: AnyObject) {
         guard titleField.text != nil else {return}
         guard titleField.text! != "" else {
-            let banner = Banner(title: nil, subtitle: "Journey headline can not be empty.", image: nil, backgroundColor: .red, didTapBlock: nil)
-            banner.dismissesOnTap = true
-            banner.show(duration: 10.0)
+            Drop.down("Journey headline can not be empty.", state: .error)
+//            let banner = Banner(title: nil, subtitle: "Journey headline can not be empty.", image: nil, backgroundColor: .red, didTapBlock: nil)
+//            banner.dismissesOnTap = true
+//            banner.show(duration: 10.0)
             return
         }
         if titleField.text?.characters.count > 1 {

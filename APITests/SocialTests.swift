@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import BrightFutures
 
 @testable import Hikebeat
 

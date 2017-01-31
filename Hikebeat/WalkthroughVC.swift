@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import FacebookLogin
+import FacebookCore
 
 class WalkthroughVC: HikebeatWalkthroughViewController {
     
@@ -66,6 +68,22 @@ class WalkthroughVC: HikebeatWalkthroughViewController {
     }
     
     @IBAction func facebookAction(_ sender: AnyObject) {
-        //TODO attach fb login
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        loginManager.logIn([ .publicProfile, .email, .userFriends ], viewController: self) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print(grantedPermissions)
+                print(declinedPermissions)
+                print("Logged in!")
+                print("token: ", accessToken.authenticationToken)
+                
+            }
+        }
+
     }
 }

@@ -11,11 +11,30 @@ import UIKit
 import AVFoundation
 import UserNotifications
 import BrightFutures
+import JWTDecode
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
 public let lightGreen = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
 
+
+func shouldRefreshToken() -> Bool {
+    print("TOEKN REFRESH")
+    do {
+        let jwt = try decode(jwt: userDefaults.string(forKey: "token")!)
+        let expTimestamp = jwt.body["exp"]
+        let date = Date(timeIntervalSince1970: expTimestamp as! TimeInterval)
+        let now = Date()
+        let cal = Calendar.current
+        let dayComponents = (cal as NSCalendar).components(.day, from: now, to: date, options: [])
+        let days = dayComponents.day!
+        return days > 30
+    } catch {
+        print("error")
+        return false
+    }
+    return true
+}
 
 public func getPathToFileFromName(_ name: String) -> URL? {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import BRYXBanner
+import SwiftyDrop
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -109,9 +109,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                             }
                             bannerText += "\(errors[i]["friendlyMessage"].stringValue)"
                         }
-                        let banner = Banner(title: nil, subtitle: bannerText, image: nil, backgroundColor: .red, didTapBlock: nil)
-                        banner.dismissesOnTap = true
-                        banner.show(duration: 10.0)
+                        Drop.down(bannerText, state: .error)
+//                        let banner = Banner(title: nil, subtitle: bannerText, image: nil, backgroundColor: .red, didTapBlock: nil)
+//                        banner.dismissesOnTap = true
+//                        banner.show(duration: 10.0)
                     }
 //                    SCLAlertView().showWarning("Sorry", subTitle: "\n" + json["meta"]["message"].stringValue)
                 }
@@ -123,15 +124,17 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     }
     
     func noneMatchingPasswords() {
-        let banner = Banner(title: nil, subtitle: "The passwords does not match. Please make sure that the password and re-type password feilds are identical.", image: nil, backgroundColor: .red, didTapBlock: nil)
-        banner.dismissesOnTap = true
-        banner.show(duration: 10.0)
+        Drop.down("The passwords does not match. Please make sure that the password and re-type password feilds are identical.", state: .error, duration: 15, action: nil)
+//        let banner = Banner(title: nil, subtitle: "The passwords does not match. Please make sure that the password and re-type password feilds are identical.", image: nil, backgroundColor: .red, didTapBlock: nil)
+//        banner.dismissesOnTap = true
+//        banner.show(duration: 10.0)
     }
     
     func missingValues() {
-        let banner = Banner(title: nil, subtitle: "Please make sure that all fields are filled", image: nil, backgroundColor: .red, didTapBlock: nil)
-        banner.dismissesOnTap = true
-        banner.show(duration: 10.0)
+        Drop.down("Please make sure that all fields are filled.", state: .error, duration: 15, action: nil)
+//        let banner = Banner(title: nil, subtitle: "Please make sure that all fields are filled", image: nil, backgroundColor: .red, didTapBlock: nil)
+//        banner.dismissesOnTap = true
+//        banner.show(duration: 10.0)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

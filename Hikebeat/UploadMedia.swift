@@ -13,7 +13,7 @@ import RealmSwift
 import BrightFutures
 import Result
 
-func uploadeMediaForBeat(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, MediaUploadError> {
+func uploadMediaForBeat(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, MediaUploadError> {
     return Future { complete in
         // 1. Get signedUrl and id from API
         getSignedUrlAndId(type: type).onSuccess(callback: { (tuple) in
@@ -80,6 +80,7 @@ func getSignedUrlAndId(type: String) -> Future<(signedUrl: String, id: String), 
         let urlJourney = IPAddress + "media/\(type)"
         print("url: ",urlJourney)
         Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            print("signedResponse: ", response)
             if response.response?.statusCode == 200 {
                 let json = JSON(response.result.value!)
                 let signedUrl = json["data"]["signedUrl"].stringValue.removingPercentEncoding!
@@ -127,8 +128,6 @@ func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -
         ]
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
             if response.response?.statusCode == 200 {
-                print("create media: ", response.request?.httpBody)
-                print("response: ", response)
                 complete(.success(true))
             } else {
                 complete(.failure(.createMedia))

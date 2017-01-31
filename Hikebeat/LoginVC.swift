@@ -116,6 +116,14 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             print("Raw: ", response)
 
             if response.response?.statusCode == 200 {
+//                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
+//                let json = JSON(response.result.value!)
+                
+                
+                
+                
+                
+                
                 let createdMediaFolder = self.createMediaFolder()
 //                print("value: ", response.result.value)
                 let firstJson = JSON(response.result.value!)
@@ -196,26 +204,22 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                    Request.addAcceptableImageContentTypes(["image/jpg"])
                     Alamofire.request(profilePhotoUrl).responseImage {
                         response in
-                        let priority = DispatchQueue.GlobalQueuePriority.default
-                        DispatchQueue.global(priority: priority).async {
                             
-                            print("Statuscoode: ", response.response?.statusCode)
-                            if let image = response.result.value {
-                                
-                                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-                                let documentsDirectory: AnyObject = paths[0] as AnyObject
-                                let fileName = "/media/profile_image.jpg"
-                                let dataPath = documentsDirectory.appending(fileName)
-                                let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
-                                print("The image download and save was: ", success)
-                            } else {
-                                print("could not resolve to image")
-                                print(response)
-                            }
+                        print("Statuscoode: ", response.response?.statusCode)
+                        if let image = response.result.value {
+                            
+                            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+                            let documentsDirectory: AnyObject = paths[0] as AnyObject
+                            let fileName = "/media/profile_image.jpg"
+                            let dataPath = documentsDirectory.appending(fileName)
+                            let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
+                            print("The image download and save was: ", success)
+                        } else {
+                            print("could not resolve to image")
+                            print(response)
                         }
                     }
                 }
-                
                 
                 /* Get all the journeys*/
                 print("Getting the journeys")
@@ -225,153 +229,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     print("FINISHED: ", tuple)
                 })
                 
-//                let urlJourney = IPAddress + "users/" + user["_id"].stringValue + "/journeys"
-//                print(urlJourney)
-//                Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
-////                    print(response.response?.statusCode)
-//                    print("JOURNEY: ", response)
-//
-//                    if response.response?.statusCode == 200 {
-//                        if response.result.value != nil {
-//                            //print(response.result.value!)
-//                            let rawJson = JSON(response.result.value!)
-//                            let json = rawJson["data"]
-//                            //print(json)
-//                            for (_, journey) in json {
-//                                let headline = journey["options"]["headline"].stringValue
-//                                print(headline)
-//                                //let active = user["activeJourneyId"].stringValue == journey["_id"].stringValue
-//                                
-//                                let dataJourney = Journey()
-//                                dataJourney.fill(journey["slug"].stringValue, userId: user["_id"].stringValue, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue, seqNumber: String(journey["seqNumber"].intValue))
-//                                print(1)
-//                                let localRealm = try! Realm()
-//                                try! localRealm.write() {
-//                                    localRealm.add(dataJourney)
-//                                }
-//                                print(2)
-//                                print("followers: ",journey["followers"])
-//                                for (_,followerId) in journey["followers"] {
-//                                    print(3)
-//                                    try! localRealm.write() {
-//                                        let follower = Follower()
-//                                        follower.userId = followerId.stringValue
-//                                    }
-//                                    print(4)
-//                                }
-//                                
-//                                for (_, message) in journey["messages"]  {
-//                                    print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
-//                                    //print(message)
-//                                    let mediaType = message["media"]["type"].stringValue
-//                                    let mediaData = message["media"]["path"].stringValue
-//                                    let mediaDataId = message["media"]["_id"].stringValue
-//
-//                                    
-//                                    if mediaData != "" && mediaType != "" {
-//                                        switch mediaType {
-//                                        case MediaType.image:
-////                                            Request.addAcceptableImageContentTypes(["image/jpg"])
-//                                            Alamofire.request(mediaData).responseImage {
-//                                                response in
-//                                                print("Statuscoode: ", response.response?.statusCode)
-//                                                if let image = response.result.value {
-//                                                    
-//                                                    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-//                                                    let documentsDirectory: AnyObject = paths[0] as AnyObject
-//                                                    let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+".jpg"
-//                                                    let dataPath = documentsDirectory.appending("/media/"+fileName)
-//                                                    let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
-//                                                    print("The image downloaded: ", success, " moving on to save")
-//                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: MediaType.image, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-//                                                } else {
-//                                                    print("could not resolve to image")
-//                                                    print(response)
-//                                                }
-//                                            }
-//                                        case MediaType.video, MediaType.audio:
-//                                            var fileType = ".mp4"
-//                                            if mediaType == MediaType.audio {
-//                                                fileType = ".m4a"
-//                                            }
-//                                            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-//                                            let fm = FileManager()
-//                                            
-//                                            let documentsDirectory: AnyObject = paths[0] as AnyObject
-//                                            let fileName = "/media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-//                                            let dataPath = documentsDirectory.appending(fileName)
-//                                            
-//                                            let pathURL = URL(fileURLWithPath: dataPath)
-//                                            let destination = DownloadRequest.suggestedDownloadDestination(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)
-////                                            destination.append("DO STUFF HERE")
-////                                            DownloadRequest.suggestedDownloadDestination(for: FileManager., in: HTTPURLResponse())
-//                                            let future = downloadAndStoreMedia(url: mediaData, path: fileName)
-//                                            future.onSuccess(callback: { (success) in
-//                                                if success {
-//                                                    self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-//                                                }
-//                                            })
-//                                            
-////                                            Alamofire.download(mediaData, method: .post, to: {
-////                                                (temporaryURL, response) in
-////                                                
-////                                                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-////                                                let fm = FileManager()
-////                                                // (destinationURL: URL, options: DownloadRequest.DownloadOptions)
-////                                                let documentsDirectory: AnyObject = paths[0] as AnyObject
-////                                                let fileName = "media/hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-////                                                let dataPath = documentsDirectory.appending(fileName)
-////                                                return dataPath
-//////                                                return URL(fileURLWithPath: dataPath)
-////                                            }).response { response in
-//////                                                let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-//////                                                let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-//////                                                dispatch_async(backgroundQueue, {
-//////                                                    print("This is run on the background queue")
-////                                                
-////                                                    if response.response?.statusCode != 200 {
-////                                                        print("Failed with error)")
-////                                                    } else {
-////                                                        let fileName = "hikebeat_"+journey["_id"].stringValue+"_"+message["timeCapture"].stringValue+fileType
-////                                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: mediaType, mediaData: fileName, mediaDataId: mediaDataId, mediaUrl: mediaData)
-////                                                        print("Downloaded file successfully")
-////                                                    }
-//////                                                })
-////                                            }
-//                                            
-//                                            
-//                                        default:
-//                                            print("unknown type of media")
-//                                        }
-//                                    } else {
-//                                        self.saveBeatAndAddToJourney(message, journey: dataJourney, mediaType: nil, mediaData: nil, mediaDataId: nil, mediaUrl: nil)
-//                                    }
-//                                    
-//                                //hjkfhdsjfhjdksf
-//                                    
-//                                }
-//                            }
-//                        }
-//                        
-//                    } else {
-//                        // something is wrong
-//                    }
-//                }
-                print("This is what is saved: \n\n\n\n")
-                print(5)
-                let localRealm = try! Realm()
-                let journeys = localRealm.objects(Journey.self)
-                if journeys.isEmpty {
-                    print("There is nothing")
-                } else {
-                    print(journeys.description)
-                }
-                print(6)
+                
                 /* Enter the app when logged in*/
-                DispatchQueue.main.async {
-                    // update some UI
-                    self.performSegue(withIdentifier: "justLoggedIn", sender: self)
-                }
+
+                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
                 
             } else if response.response?.statusCode == 401 {
                 // User not authorized

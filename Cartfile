@@ -3,4 +3,7 @@ github "Alamofire/Alamofire" "master"
 github "Alamofire/AlamofireImage" "master"
 github "realm/realm-cocoa" "master"
 github "Thomvis/BrightFutures" "swift3.0"
-github "bryx-inc/BRYXBanner"
+github "auth0/JWTDecode.swift"
+github "morizotter/SwiftyDrop" ~> 3.0
+github "facebook/Facebook-SDK-Swift"
+github "ninjaprox/NVActivityIndicatorView"

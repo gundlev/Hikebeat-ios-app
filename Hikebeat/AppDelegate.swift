@@ -13,6 +13,9 @@ import RealmSwift
 import Result
 import UserNotifications
 import NotificationCenter
+import FacebookCore
+import FacebookLogin
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
@@ -30,12 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         UIApplication.shared.statusBarStyle = .lightContent
         self.startReachability()
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
-            startLocationManager()
+            _ = startLocationManager()
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways {
-            startLocationManager()
+            _ = startLocationManager()
         }
         registerForNotification()
-        return true
+        
+        AppEventsLogger.activate(application)
+
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     func startLocationManager() -> Bool {
@@ -62,10 +68,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
+        print("you check now")
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        if shouldRefreshToken() {
+            refreshToken()
+            .onSuccess { (token) in
+                print("Token refreshed")
+            }.onFailure(callback: { (error) in
+                print("Error: ", error)
+            })
+        }
+
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
             print("checking for number now")
@@ -82,24 +98,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    internal func synced() -> (synced:Bool, changes: Results<(Change)>?, beats: Results<(Beat)>?) {
+    internal func synced() -> (synced:Bool, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) {
         let realmLocal = try! Realm()
         print("starting sync method")
-        let beatsQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded = %@", false as CVarArg), NSPredicate(format: "mediaData != %@", "")])
+        let mediaQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded == %@", false as CVarArg), NSPredicate(format: "mediaData != %@", "")])
+        let beatQuery = NSPredicate(format: "messageUploaded == %@", false as CVarArg)
         let changeQuery = NSPredicate(format: "uploaded = %@", false as CVarArg)
-        let beats = realmLocal.objects(Beat.self).filter(beatsQuery)
+        let media = realmLocal.objects(Beat.self).filter(mediaQuery)
+        let beats = realmLocal.objects(Beat.self).filter(beatQuery)
         let changes = realmLocal.objects(Change.self).filter(changeQuery)
-        if beats.isEmpty && changes.isEmpty {
-            print("all empty")
-            return (true, nil, nil)
-        } else {
-            print("There's something")
-            print("Are there changes? ", !changes.isEmpty)
-            print("Are there beats? ", !beats.isEmpty)
-            print(beats)
-            print(changes)
-            return (false, changes, beats)
-        }
+        print("Are there changes? ", !changes.isEmpty)
+        print("Are there media? ", !media.isEmpty)
+        print("Are there beats? ", !media.isEmpty)
+        return ((changes.isEmpty && beats.isEmpty && media.isEmpty), changes, media, beats)
     }
     
     func startReachability() {
@@ -261,6 +272,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         print("presenting")
+    }
+    
+    
+    func application(_ application: UIApplication,
+                     open url: URL,
+                     sourceApplication: String?,
+                     annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
     }
 
 }

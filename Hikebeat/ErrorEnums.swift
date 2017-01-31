@@ -17,6 +17,8 @@ enum MediaUploadError: Swift.Error {
 
 enum UserCallError: Swift.Error {
     case statsCall
+    case refreshTokenCall
+    case getJourneysForUser
 }
 
 enum MediaDownloadError: Swift.Error {
@@ -32,4 +34,11 @@ enum CompressionError: Swift.Error {
     case avAssetExportFail
     case compressionFailed
     case compressionCancelled
+}
+
+enum SyncError: Swift.Error {
+    case uploadBeat
+    case uploadMedia
+    case uploadChange
+    case uploadAll
 }
