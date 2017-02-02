@@ -12,16 +12,27 @@ import AVFoundation
 import UserNotifications
 import BrightFutures
 import JWTDecode
+import NVActivityIndicatorView
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
 public let lightGreen = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
 
+func showActivity() {
+    let activityData = ActivityData(size: nil, message: nil, messageFont: nil, type: NVActivityIndicatorType.lineSpinFadeLoader, color: nil, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: nil, backgroundColor: nil)
+    
+    NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+}
+
+func hideActivity() {
+    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+}
 
 func shouldRefreshToken() -> Bool {
     print("TOEKN REFRESH")
+    guard let token = userDefaults.string(forKey: "token") else {return false}
     do {
-        let jwt = try decode(jwt: userDefaults.string(forKey: "token")!)
+        let jwt = try decode(jwt: token)
         let expTimestamp = jwt.body["exp"]
         let date = Date(timeIntervalSince1970: expTimestamp as! TimeInterval)
         let now = Date()

@@ -68,22 +68,11 @@ class WalkthroughVC: HikebeatWalkthroughViewController {
     }
     
     @IBAction func facebookAction(_ sender: AnyObject) {
-        let loginManager = LoginManager()
-        loginManager.logOut()
-        loginManager.logIn([ .publicProfile, .email, .userFriends ], viewController: self) { loginResult in
-            switch loginResult {
-            case .failed(let error):
-                print(error)
-            case .cancelled:
-                print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print(grantedPermissions)
-                print(declinedPermissions)
-                print("Logged in!")
-                print("token: ", accessToken.authenticationToken)
-                
-            }
+        loginWithFacebook(viewController: self)
+        .onSuccess { (success) in
+            self.performSegue(withIdentifier: "loggedIn", sender: self)
+        }.onFailure { (error) in
+            print("Something went wrong in the facebook login")
         }
-
     }
 }

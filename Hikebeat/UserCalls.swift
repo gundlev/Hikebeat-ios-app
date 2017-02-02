@@ -11,6 +11,7 @@ import SwiftyJSON
 import Alamofire
 import BrightFutures
 import Result
+import FacebookLogin
 
 func getStats() -> Future<[String: String], UserCallError> {
     return Future { complete in
@@ -39,6 +40,51 @@ func refreshToken() -> Future<String, UserCallError> {
             let newToken = json["data"].stringValue
             userDefaults.set(newToken, forKey: "token")
             complete(.success(newToken))
+        }
+    }
+}
+
+func loginWithFacebook(viewController: UIViewController) -> Future<Bool, UserCallError> {
+    return Future { complete in
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        loginManager.logIn([ .publicProfile, .email, .userFriends ], viewController: viewController) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+                complete(.failure(.facebookLogin))
+            case .cancelled:
+                print("User cancelled login.")
+                complete(.failure(.facebookLogin))
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print(grantedPermissions)
+                print(declinedPermissions)
+                print("Logged in!")
+                print("token: ", accessToken.authenticationToken)
+                let url = IPAddress + "auth/facebook"
+                let parameters = ["access_token": accessToken.authenticationToken]
+                showActivity()
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
+                    response in
+                    if response.response?.statusCode == 200 {
+                        print("Facebook Respose: ", response)
+                        print(response.result.value as Any)
+                        let json = JSON(response.result.value!)
+                        handleUserAfterLogin(json: json)
+                            .onSuccess(callback: { (success) in
+                                hideActivity()
+                                complete(.success(success))
+                            }).onFailure(callback: { (error) in
+                                hideActivity()
+                                complete(.failure(error))
+                                
+                            })
+                    } else {
+                        print("response: ", response)
+                        complete(.failure(.facebookLogin))
+                    }
+                }
+            }
         }
     }
 }

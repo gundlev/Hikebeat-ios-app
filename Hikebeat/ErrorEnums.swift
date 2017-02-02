@@ -19,6 +19,7 @@ enum UserCallError: Swift.Error {
     case statsCall
     case refreshTokenCall
     case getJourneysForUser
+    case facebookLogin
 }
 
 enum MediaDownloadError: Swift.Error {

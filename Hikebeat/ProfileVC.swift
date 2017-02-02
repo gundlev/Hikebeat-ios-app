@@ -210,14 +210,6 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         
         // Setting profileImage if there is one
         setProfileImage()
-//        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-//        let documentsDirectory: AnyObject = paths[0]
-//        let fileName = "profilemage.png"
-//        let imagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
-//        let image = UIImage(contentsOfFile: imagePath)
-//        if image != nil {
-//            profilePicture.image = image
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -234,12 +226,15 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return Countries.count
     }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Countries[row]
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.nationalityLabel.text = Countries[row]
     }

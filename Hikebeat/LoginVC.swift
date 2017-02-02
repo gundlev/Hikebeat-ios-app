@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireImage
 import SwiftyJSON
 import RealmSwift
+import SwiftyDrop
 
 class LoginVC: UIViewController, UITextFieldDelegate {
 
@@ -91,155 +92,48 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
     
     @IBAction func showRegister(_ sender: AnyObject) {
-        
         performSegue(withIdentifier: "showRegister", sender: self)
-        
     }
     
     @IBAction func login(_ sender: AnyObject) {
         print("logging in now")
+        
+        guard usernameField.text != "" && passwordField.text != nil else {
+            Drop.down("Email and password can not be empty.", state: .error, duration: 20, action: nil)
+            return
+        }
+        self.view.endEditing(true)
         /** Parameters to send to the API.*/
         let parameters = ["username": usernameField.text!, "password": passwordField.text!]
-        
-//        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            // do some task
-
-            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                print("This is run on the main queue, after the previous code in outer block")
-//            })
-        
-        
+        showActivity()
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
         Alamofire.request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
             print("Raw: ", response)
 
             if response.response?.statusCode == 200 {
 //                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
-//                let json = JSON(response.result.value!)
-                
-                
-                
-                
-                
-                
-                let createdMediaFolder = self.createMediaFolder()
-//                print("value: ", response.result.value)
-                let firstJson = JSON(response.result.value!)
-                let user = firstJson["data"]["user"]
-                let token = firstJson["data"]["token"].stringValue
-                self.userDefaults.set(token, forKey: "token")
-                print("Responsio: ", firstJson)
-                print("setting user")
-                self.userDefaults.set(user["username"].stringValue, forKey: "username")
-                var optionsDictionary = [String:String]()
-                for (key, value) in user["options"].dictionaryValue {
-                    optionsDictionary[key] = value.stringValue
-                }
-                //                let options = user["options"].dictionaryValue
-                //                print("Options: ", options)
-                var journeyIdsArray = [String]()
-                for (value) in user["journeyIds"].arrayValue {
-                    journeyIdsArray.append(value.stringValue)
-                }
-                
-                var followingArray = [String]()
-                for (value) in user["following"].arrayValue {
-                    followingArray.append(value.stringValue)
-                }
-                
-                var deviceTokensArray = [String]()
-                for (value) in user["deviceTokens"].arrayValue {
-                    deviceTokensArray.append(value.stringValue)
-                }
-                var permittedPhoneNumbersArray = [String]()
-                for (value) in user["permittedPhoneNumbers"].arrayValue {
-                    permittedPhoneNumbersArray.append(value.stringValue)
-                }
-                
-                self.userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
-                self.userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
-                
-                self.userDefaults.set(optionsDictionary, forKey: "options")
-                self.userDefaults.set(journeyIdsArray, forKey: "journeyIds")
-                self.userDefaults.set(followingArray, forKey: "following")
-                self.userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
-                self.userDefaults.set(user["_id"].stringValue, forKey: "_id")
-                self.userDefaults.set(user["username"].stringValue, forKey: "username")
-                self.userDefaults.set(user["email"].stringValue, forKey: "email")
-                print("Numberoo: ", user["simCard"]["phoneNumber"].stringValue)
-                self.userDefaults.set(user["simCard"]["phoneNumber"].stringValue, forKey: "hikebeat_phoneNumber")
-                let phoneNumber = self.userDefaults.string(forKey: "hikebeat_phoneNumber")!
-                print("Number: ", phoneNumber)
-                //self.userDefaults.setObject(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
-                self.userDefaults.set(true, forKey: "loggedIn")
-                let t = String(Date().timeIntervalSince1970)
-                let e = t.range(of: ".")
-                let timestamp = t.substring(to: (e?.lowerBound)!)
-                self.userDefaults.set(timestamp, forKey: "lastSync")
-                let numbers = user["options"]["permittedPhoneNumbers"].arrayValue
-                print("numbers: ", numbers)
-                if !numbers.isEmpty {
-                    let number = numbers[0].stringValue
-                    print("number: ", number)
-                    self.userDefaults.set(number, forKey: "permittedPhoneNumbers")
+                if response.result.value != nil {
+                    let json = JSON(response.result.value!)
+                    handleUserAfterLogin(json: json)
+                    .onSuccess(callback: { (success) in
+                        self.performSegue(withIdentifier: "justLoggedIn", sender: self)
+                        hideActivity()
+                    }).onFailure(callback: { (error) in
+                        print("Error: ", error)
+                        hideActivity()
+                    })
                 } else {
-                    self.userDefaults.set("", forKey: "permittedPhoneNumbers")
+                    SCLAlertView().showError("No such user", subTitle: "The username and password you have provided does not match any users in our database.")
+                    hideActivity()
                 }
-                
-                self.userDefaults.set((user["options"]["notifications"].boolValue), forKey: "notifications")
-                self.userDefaults.set((user["options"]["name"].stringValue), forKey: "name")
-                self.userDefaults.set((user["options"]["gender"].stringValue), forKey: "gender")
-                self.userDefaults.set((user["options"]["nationality"].stringValue), forKey: "nationality")
-                self.userDefaults.set(true, forKey: "GPS-check")
-                
-                // handling profileImage
-                let profilePhotoUrl = user["options"]["profilePhoto"].stringValue
-                self.userDefaults.set(profilePhotoUrl, forKey: "profilePhotoUrl")
-                
-                if profilePhotoUrl != "" {
-                    print("There's a profile image!")
-                    
-//                    Request.addAcceptableImageContentTypes(["image/jpg"])
-                    Alamofire.request(profilePhotoUrl).responseImage {
-                        response in
-                            
-                        print("Statuscoode: ", response.response?.statusCode)
-                        if let image = response.result.value {
-                            
-                            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-                            let documentsDirectory: AnyObject = paths[0] as AnyObject
-                            let fileName = "/media/profile_image.jpg"
-                            let dataPath = documentsDirectory.appending(fileName)
-                            let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
-                            print("The image download and save was: ", success)
-                        } else {
-                            print("could not resolve to image")
-                            print(response)
-                        }
-                    }
-                }
-                
-                /* Get all the journeys*/
-                print("Getting the journeys")
-                
-                let journeysFuture = getJourneysForUser(userId: user["_id"].stringValue)
-                journeysFuture.onSuccess(callback: { (tuple) in
-                    print("FINISHED: ", tuple)
-                })
-                
-                
-                /* Enter the app when logged in*/
-
-                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
                 
             } else if response.response?.statusCode == 401 {
                 // User not authorized
                 print("Not Auth!!")
+                hideActivity()
             } else if response.response?.statusCode == 400 {
                 // Wrong username or password
-                
+                hideActivity()
                 print(response.result.value)
                 let errorJson = JSON(response.result.value!)
                 switch errorJson["msg"].stringValue {
@@ -253,13 +147,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     print("Unknown error")
                 }
             }
-            //first call
-//            })
         }
-        //end of bg thread
-//        }
-        
-        
     }
     
     func createMediaFolder() -> Bool {

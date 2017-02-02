@@ -103,7 +103,7 @@ func uploadToS3(signedUrl: String, path: URL, type: String, progressCallback: @e
         case MediaType.audio: header = MediaUploadHeader.audio
         default: header = MediaUploadHeader.image
         }
-        let headers = ["Content-type": header, "cache-control": "no-cache"]
+        let headers = ["Content-type": header, "Cache-Control": "max-age=31536000"]
         Alamofire.upload(path, to: signedUrl, method: .put, headers: headers).uploadProgress { uploadProg in
             let fraction = uploadProg.fractionCompleted
             progressCallback(Float(fraction))
