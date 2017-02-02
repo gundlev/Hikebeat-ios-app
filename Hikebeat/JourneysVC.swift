@@ -27,6 +27,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let yellowColor = UIColor.yellow//UIColor(colorLiteralRed: 254/255, green: 237/255, blue: 9, alpha: 1)
     
     let darkGreen = UIColor(hexString: "#15676C")
+    let highlightColor = UIColor(hexString: "#157578")
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -170,7 +171,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor.clear
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = darkGreen
+        bgColorView.backgroundColor = highlightColor
         cell.selectedBackgroundView = bgColorView
         
         return cell
