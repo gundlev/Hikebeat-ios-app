@@ -121,10 +121,10 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 let emotionName = beat.emotion!.lowercased()
                 cell.profilePicture.image = UIImage(named: emotionName+"_selected")
             } else {
-                cell.profilePicture.image = UIImage(named: "ContactImage")
+                cell.profilePicture.image = UIImage(named: "missingMoodIcon")
             }
         } else {
-            cell.profilePicture.image = UIImage(named: "ContactImage")
+            cell.profilePicture.image = UIImage(named: "missingMoodIcon")
         }
 //        let dataPath = getImagePath("profile_image.jpg")
 //        let image = UIImage(contentsOfFile: dataPath)
