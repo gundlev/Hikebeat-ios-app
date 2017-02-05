@@ -20,11 +20,14 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("RELOAD TABLEVIEW")
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectJourneyCell") as! SelectJourneyCell
         let journey = journeys![indexPath.row]
         if journey.active {
             cell.checkImage.image = UIImage(named: "following_icon")
             self.activeIndexpath = indexPath
+        } else {
+            cell.checkImage.image = UIImage()
         }
         cell.journeyTitle.text = journey.headline
         return cell
@@ -43,13 +46,8 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
             self.activeJourney!.active = true
             self.activeJourneyButton.setTitle(selectedJourney.headline, for: .normal)
         }
-//        self.journeys = realm.objects(Journey.self)
         tableView.reloadData()
         let center = self.tableViewSelectJourney.center
-//        self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
-//        UIView.animate(withDuration: 0.5, animations: {
-//            self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height*2)
-//        })
         animateSelectJourneyUp(animated: true)
         self.showingJourneySelect = false
     }
@@ -68,6 +66,7 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func animateSelectJourneyDown(animated: Bool) {
+//        self.tableViewSelectJourney.reloadData()
         var duration: TimeInterval = 0
         if animated {
             duration = 0.5

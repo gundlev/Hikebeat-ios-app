@@ -17,10 +17,10 @@ import SwiftyJSON
 //TODO: Implement onError and completeWithFail
 
 
-func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Results<Change>) -> Future<Bool, SyncError> {
+func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Results<Change>) -> Future<Bool, HikebeatError> {
     
     let sortedChanges = changes.sorted()
-    let promise = Promise<Bool, SyncError>()
+    let promise = Promise<Bool, HikebeatError>()
 //    if changes != nil {
 //        if changes?.count > 0 {
             let future = asyncFunc(sortedChanges, progressView: progressView, increase: increase)
@@ -52,8 +52,8 @@ private func asyncFunc(_ changesConst: [Change], progressView: UIProgressView, i
         let change = changes.first
         
         // Creating json changes object
-        var jsonChangesBool = [String: [String: Bool]]()
-        var jsonChangesString = [String: [String: String]]()
+        var jsonChangesBool = [String: Bool]()
+        var jsonChangesString = [String: String]()
         var parameters:[String: AnyObject]?
         
         if change?.changeAction != ChangeAction.delete && change?.instanceType != InstanceType.profileImage {
@@ -61,10 +61,10 @@ private func asyncFunc(_ changesConst: [Change], progressView: UIProgressView, i
             let property = change?.property!
             if change!.stringValue == nil {
                 let boolValue = change!.boolValue
-                jsonChangesBool["options"] = [property! : boolValue]
+                jsonChangesBool[property!] = boolValue
             } else {
                 let stringValue = change!.stringValue
-                jsonChangesString["options"] = [property! : stringValue!]
+                jsonChangesString[property!] = stringValue!
             }
         }
         
@@ -105,7 +105,7 @@ private func asyncFunc(_ changesConst: [Change], progressView: UIProgressView, i
         // Sending change
         
         if change?.instanceType == InstanceType.profileImage {
-            var customHeader = Headers
+            var customHeader = getHeader()
             customHeader["x-hikebeat-format"] = "jpg"
             print("imagePath")
             print((change?.stringValue!)!)
@@ -144,7 +144,7 @@ private func asyncFunc(_ changesConst: [Change], progressView: UIProgressView, i
             } else {
                 jsonChanges = jsonChangesString as [String: AnyObject]
             }
-            Alamofire.request(url, method: method, parameters: jsonChanges, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: method, parameters: jsonChanges, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
                 if response.response?.statusCode == 200 {
                     print(response.result.value)
                     let removed = changes.removeFirst()

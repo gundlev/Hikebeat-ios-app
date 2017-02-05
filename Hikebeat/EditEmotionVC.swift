@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class EditEmotionVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var emotion: String?
     var selectedIndexpath: IndexPath?
@@ -146,7 +146,7 @@ class EditTitleVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 vc.editEmotionButton.image = UIImage(named: emotionString)
             } else {
                 vc.removeGreenBorder(vc.editEmotionButton)
-                vc.editEmotionButton.image = UIImage(named: "ComposeMessage")
+                vc.editEmotionButton.image = UIImage(named: "EmotionIcon")
             }
 //        }
     }

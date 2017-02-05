@@ -18,7 +18,7 @@ func getFeaturedJourneys(nextPage: String) -> Future<[Journey], NoError> {
         print("requestin featured")
         let url = "\(IPAddress)search/journeys/featured\(nextPage)"
         print("Url: ", url)
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
 //            print(response)
             let json = JSON(response.result.value)
             let jsonJourneys = json["data"]["docs"]
@@ -26,7 +26,7 @@ func getFeaturedJourneys(nextPage: String) -> Future<[Journey], NoError> {
             if jsonJourneys != nil {
                 for (_, jsonJourney) in jsonJourneys {
                     let journey = Journey()
-                    journey.headline = jsonJourney["options"]["headline"].stringValue
+                    journey.headline = jsonJourney["headline"].stringValue
                     journey.journeyId = jsonJourney["_id"].stringValue
                     journey.numberOfBeats = jsonJourney["messageCount"].intValue
                     journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
@@ -44,7 +44,7 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
         print("requestin featured")
         let url = "\(IPAddress)search/users/featured\(nextPage)"
         print("Url: ", url)
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print("userResponse: ", response)
             let json = JSON(response.result.value)
             let jsonUsers = json["data"]["docs"]
@@ -59,7 +59,7 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
                         numberOfBeats: jsonUser["_id"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
-                        profilePhotoUrl: jsonUser["options"]["profilePhoto"].stringValue
+                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue
                     ))
                 }
             }
@@ -68,12 +68,12 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
     }
 }
 
-func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?), SearchError> {
+func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
     return Future { complete in
 //        print("QueryString: ", queryString)
         let url = "\(IPAddress)search/users\(queryString)"
 //        print("Url: ", url)
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
 //            print("UserResponse: ", response)
             guard response.response?.statusCode == 200 else {complete(.failure(.userSearch)); return}
             let json = JSON(response.result.value as Any)
@@ -89,7 +89,7 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
                         numberOfBeats: jsonUser["_id"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
-                        profilePhotoUrl: jsonUser["options"]["profilePhoto"].stringValue
+                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue
                     ))
                 }
             }
@@ -104,12 +104,12 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
     }
 }
 
-func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage: String?), SearchError> {
+func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage: String?), HikebeatError> {
     return Future { complete in
         let url = "\(IPAddress)search/journeys\(queryString)"
         
         print("Url: ", url)
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             let json = JSON(response.result.value as Any)
             guard response.response?.statusCode == 200 else {print(response.response?.statusCode); complete(.failure(.journeySearch)); return}
             let jsonJourneys = json["data"]["docs"]
@@ -117,10 +117,11 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
             if jsonJourneys != nil {
                 for (_, jsonJourney) in jsonJourneys {
                     let journey = Journey()
-                    journey.headline = jsonJourney["options"]["headline"].stringValue
+                    journey.headline = jsonJourney["headline"].stringValue
                     journey.journeyId = jsonJourney["_id"].stringValue
                     journey.numberOfBeats = jsonJourney["messageCount"].intValue
                     journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
+                    journey.userId = jsonJourney["userId"].stringValue
                     journeys.append(journey)
                 }
             }
@@ -132,6 +133,24 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
             }
             let tuple = (journeys: journeys, nextPage: nextPage)
             complete(.success(tuple))
+        }
+    }
+}
+
+func getBeatsForJourney(userId: String, journeyId: String) -> Future<JSON, HikebeatError> {
+    return Future { complete in
+        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"
+        print(urlJourney)
+        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                if response.result.value != nil {
+                    let rawJson = JSON(response.result.value!)
+                    let messages = rawJson["data"]["messages"]
+                    complete(.success(messages))
+                }
+            } else {
+                complete(.failure(.getJourneyWithId))
+            }
         }
     }
 }

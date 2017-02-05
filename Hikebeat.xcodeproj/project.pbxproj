@@ -90,6 +90,8 @@
 		85F2B4751CC4EF6A004704F3 /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2B4741CC4EF6A004704F3 /* Change.swift */; };
 		85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAEB7E1CE48D1A00887039 /* BeatPolyline.swift */; };
 		85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */; };
+		85FBDA4F1E469DA300A1DF3A /* PaginatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FBDA4E1E469DA300A1DF3A /* PaginatingVC.swift */; };
+		85FBDA511E46A13B00A1DF3A /* TableViewPaginationFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FBDA501E46A13B00A1DF3A /* TableViewPaginationFooter.swift */; };
 		E111B0791CD0318800915401 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E111B0781CD0318800915401 /* LoginVC.swift */; };
 		E11E373A1CCBCE0000EBB467 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E11E37391CCBCE0000EBB467 /* Loading.storyboard */; };
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
@@ -111,7 +113,7 @@
 		E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA1A301CD173A200C79B91 /* SettingsVC.swift */; };
 		E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */; };
 		E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B413891CCE864F00B8768B /* ModalVC.swift */; };
-		E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */; };
+		E1B4138C1CCE9B4700B8768B /* EditEmotionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4138B1CCE9B4700B8768B /* EditEmotionVC.swift */; };
 		E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B84AB91CD246080047BD5A /* ProfileVC.swift */; };
 		E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */; };
 		E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */; };
@@ -229,6 +231,8 @@
 		85F2B4741CC4EF6A004704F3 /* Change.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
 		85FAEB7E1CE48D1A00887039 /* BeatPolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatPolyline.swift; sourceTree = "<group>"; };
 		85FAEB801CE48E3000887039 /* JourneyContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyContainerVC.swift; sourceTree = "<group>"; };
+		85FBDA4E1E469DA300A1DF3A /* PaginatingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginatingVC.swift; sourceTree = "<group>"; };
+		85FBDA501E46A13B00A1DF3A /* TableViewPaginationFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewPaginationFooter.swift; sourceTree = "<group>"; };
 		E111B0781CD0318800915401 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E11E37391CCBCE0000EBB467 /* Loading.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
@@ -249,7 +253,7 @@
 		E1AA1A301CD173A200C79B91 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1B012021CD6595C000AB2F9 /* NewJourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewJourneyVC.swift; sourceTree = "<group>"; };
 		E1B413891CCE864F00B8768B /* ModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
-		E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTitleVC.swift; sourceTree = "<group>"; };
+		E1B4138B1CCE9B4700B8768B /* EditEmotionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEmotionVC.swift; sourceTree = "<group>"; };
 		E1B84AB91CD246080047BD5A /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneysVC.swift; sourceTree = "<group>"; };
 		E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
@@ -434,6 +438,8 @@
 				8593DB121DFC188A00604BFA /* SearchUserCell.swift */,
 				85562F5C1E2BFFA30078CC51 /* TableViewSectionHeader.swift */,
 				85562F651E2C3C250078CC51 /* TableViewSectionFooter.swift */,
+				85FBDA4E1E469DA300A1DF3A /* PaginatingVC.swift */,
+				85FBDA501E46A13B00A1DF3A /* TableViewPaginationFooter.swift */,
 			);
 			name = Social;
 			sourceTree = "<group>";
@@ -444,7 +450,7 @@
 				E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */,
 				85CA7DC21CD4D59500A4F249 /* ImageVideoExt.swift */,
 				8593DB0A1DFB618900604BFA /* SelectJourneyExt.swift */,
-				E1B4138B1CCE9B4700B8768B /* EditTitleVC.swift */,
+				E1B4138B1CCE9B4700B8768B /* EditEmotionVC.swift */,
 				E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */,
 				858EFEFF1D19874700C50771 /* RecordAudioVC.swift */,
 				858EFF031D19897100C50771 /* MemoExt.swift */,
@@ -853,6 +859,7 @@
 				85562F5D1E2BFFA30078CC51 /* TableViewSectionHeader.swift in Sources */,
 				8593DAAF1DF325C500604BFA /* Save.swift in Sources */,
 				858EFF151D19BDDA00C50771 /* JTSAnimatedGIFUtility.m in Sources */,
+				85FBDA4F1E469DA300A1DF3A /* PaginatingVC.swift in Sources */,
 				8593DB0F1DFC10EC00604BFA /* SearchVC.swift in Sources */,
 				8593DB0B1DFB618900604BFA /* SelectJourneyExt.swift in Sources */,
 				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
@@ -877,7 +884,8 @@
 				854D939E1E2D823400FB57F9 /* ComposeCalls.swift in Sources */,
 				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				8593DB131DFC188A00604BFA /* SearchUserCell.swift in Sources */,
-				E1B4138C1CCE9B4700B8768B /* EditTitleVC.swift in Sources */,
+				E1B4138C1CCE9B4700B8768B /* EditEmotionVC.swift in Sources */,
+				85FBDA511E46A13B00A1DF3A /* TableViewPaginationFooter.swift in Sources */,
 				E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
 				85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */,

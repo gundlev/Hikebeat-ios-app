@@ -22,10 +22,11 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     
     var startingIndex: Int!
     var journey: Journey!
-    var beats: Results<Beat>!
+    var beats: [Beat]!
     var player:AVAudioPlayer!
     var playingCell: BeatCollectionViewCell?
     var chosenImage: UIImage?
+    var save = true
 
     
     
@@ -41,8 +42,9 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.beats = self.journey.beats.sorted(byProperty: "timestamp")
+        print("View did load beatsVC")
+        self.beats = self.journey.beats.sorted()//  .sorted(byKeyPath: "timestamp")
+        print("here not")
         // Do any additional setup after loading the view.
         self.pageControl.numberOfPages = beatsCollectionView.numberOfItems(inSection: 0)
         self.pageControl.transform = CGAffineTransform(scaleX: 1.7, y: 1.7)
@@ -107,7 +109,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
             cell.beatContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85);
             cell.beatContainer.transform = cell.beatContainer.transform.translatedBy(x: 0.0, y: -20.0  )
         }
-        
+        cell.save = save
         cell.beatContainer.layer.cornerRadius = 30
         cell.beatContainer.layer.masksToBounds = true
         
@@ -175,36 +177,23 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         
         // setting beat media
-//        if beat.mediaData != nil {
             print("Item :", (indexPath as NSIndexPath).item)
-//            print("Beat Headline: ", beat.title)
-//            print("Mediadata: ", beat.mediaData!)
             switch beat.mediaType! {
             case MediaType.image:
                 print("image")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.beatImage.image = UIImage(named: "picture-btn")
-//                cell.beatImage.isHidden = false
-//                cell.playButton.isHidden = false
                 cell.mediaType.text = "Image"
                 cell.setImage()
             case MediaType.video:
                 print("video")
-//                let image = videoSnapshot(getImagePath(beat.mediaData!) as NSString)
                 cell.beatImage.image = UIImage(named: "video-btn")
-//                cell.beatImage.isHidden = false
-//                cell.playButton.isHidden = false
-//                cell.playButton.imageView?.image = UIImage(named: "play-btn")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Video"
                 cell.setMedia(fileType: "mp4")
             case MediaType.audio:
                 print("audio")
                 cell.beatImage.image = UIImage(named: "memo-btn-passive")
-//                cell.beatImage.isHidden = false
-//                cell.playButton.isHidden = false
-//                cell.playButton.setImage(UIImage(), forState: UIControlState.Normal)
-                //cell.playButton.imageView?.image = UIImage()
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Memo"
                 cell.setMedia(fileType: "m4a")
@@ -214,12 +203,6 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 cell.beatImage.isHidden = true
                 cell.playButton.isHidden = true
             }
-//        } else {
-//            print("MediaData is nil")
-//            cell.mediaType.text = " "
-//            cell.beatImage.isHidden = true
-//            cell.playButton.isHidden = true
-//        }
         return cell
     }
     
@@ -301,8 +284,8 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                     }
                 }
             case MediaType.image:
-                print("image")
-                print()
+                print("imageMEDIA")
+                print(beat.mediaData!)
                 self.chosenImage = UIImage(contentsOfFile: getImagePath(beat.mediaData!))//UIImage(contentsOfFile: self.getImagePath(beat.mediaData!))
                 performSegue(withIdentifier: "showImage", sender: self)
             default:
@@ -333,10 +316,10 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         }
     }
     
-    func getImagePath(_ name: String) -> String {
+    func getImagePath(_ path: String) -> String {
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let documentsDirectory: AnyObject = paths[0] as AnyObject
-        let dataPath = documentsDirectory.appending("/media/"+name)
+        let dataPath = documentsDirectory.appending(path)
         return dataPath
     }
     

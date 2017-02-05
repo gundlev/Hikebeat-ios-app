@@ -13,11 +13,11 @@ import BrightFutures
 import Result
 import FacebookLogin
 
-func getStats() -> Future<[String: String], UserCallError> {
+func getStats() -> Future<[String: String], HikebeatError> {
     return Future { complete in
         let url = "\(IPAddress)stats"
         print("Performing stats check now")
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print(response)
             guard response.response?.statusCode == 200 else {complete(.failure(.statsCall)); return}
             guard response.result.value != nil else {complete(.failure(.statsCall)); return}
@@ -29,10 +29,11 @@ func getStats() -> Future<[String: String], UserCallError> {
     }
 }
 
-func refreshToken() -> Future<String, UserCallError> {
+func refreshToken() -> Future<String, HikebeatError> {
     return Future { complete in
         let url = "\(IPAddress)refresh-token"
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        let headers = getHeader()
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
             print(response)
             guard response.response?.statusCode == 200 else {complete(.failure(.refreshTokenCall)); return}
             guard response.result.value != nil else {complete(.failure(.refreshTokenCall)); return}
@@ -44,7 +45,7 @@ func refreshToken() -> Future<String, UserCallError> {
     }
 }
 
-func loginWithFacebook(viewController: UIViewController) -> Future<Bool, UserCallError> {
+func loginWithFacebook(viewController: UIViewController) -> Future<Bool, HikebeatError> {
     return Future { complete in
         let loginManager = LoginManager()
         loginManager.logOut()
@@ -89,7 +90,7 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, UserCal
     }
 }
 
-func handleUserAfterLogin(json: JSON) -> Future<Bool, UserCallError> {
+func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
     return Future { complete in
         _ = createMediaFolder()
 
@@ -99,10 +100,6 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, UserCallError> {
         print("Responsio: ", json)
         print("setting user")
         userDefaults.set(user["username"].stringValue, forKey: "username")
-        var optionsDictionary = [String:String]()
-        for (key, value) in user["options"].dictionaryValue {
-            optionsDictionary[key] = value.stringValue
-        }
 
         var journeyIdsArray = [String]()
         for (value) in user["journeyIds"].arrayValue {
@@ -126,7 +123,6 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, UserCallError> {
         userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
         userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
         
-        userDefaults.set(optionsDictionary, forKey: "options")
         userDefaults.set(journeyIdsArray, forKey: "journeyIds")
         userDefaults.set(followingArray, forKey: "following")
         userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
@@ -143,7 +139,7 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, UserCallError> {
         let e = t.range(of: ".")
         let timestamp = t.substring(to: (e?.lowerBound)!)
         userDefaults.set(timestamp, forKey: "lastSync")
-        let numbers = user["options"]["permittedPhoneNumbers"].arrayValue
+        let numbers = user["permittedPhoneNumbers"].arrayValue
         print("numbers: ", numbers)
         if !numbers.isEmpty {
             let number = numbers[0].stringValue
@@ -153,14 +149,14 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, UserCallError> {
             userDefaults.set("", forKey: "permittedPhoneNumbers")
         }
         
-        userDefaults.set((user["options"]["notifications"].boolValue), forKey: "notifications")
-        userDefaults.set((user["options"]["name"].stringValue), forKey: "name")
-        userDefaults.set((user["options"]["gender"].stringValue), forKey: "gender") 
-        userDefaults.set((user["options"]["nationality"].stringValue), forKey: "nationality")
+        userDefaults.set((user["notifications"].boolValue), forKey: "notifications")
+        userDefaults.set((user["name"].stringValue), forKey: "name")
+        userDefaults.set((user["gender"].stringValue), forKey: "gender")
+        userDefaults.set((user["nationality"].stringValue), forKey: "nationality")
         userDefaults.set(true, forKey: "GPS-check")
         
         // handling profileImage
-        let profilePhotoUrl = user["options"]["profilePhoto"].stringValue
+        let profilePhotoUrl = user["profilePhoto"].stringValue
         userDefaults.set(profilePhotoUrl, forKey: "profilePhotoUrl")
         
         if profilePhotoUrl != "" {

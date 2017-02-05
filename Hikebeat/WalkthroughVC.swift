@@ -70,6 +70,7 @@ class WalkthroughVC: HikebeatWalkthroughViewController {
     @IBAction func facebookAction(_ sender: AnyObject) {
         loginWithFacebook(viewController: self)
         .onSuccess { (success) in
+            AppEventsLogger.log("Login facebook")
             self.performSegue(withIdentifier: "loggedIn", sender: self)
         }.onFailure { (error) in
             print("Something went wrong in the facebook login")

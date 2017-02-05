@@ -15,7 +15,7 @@ import Result
 import RealmSwift
 import Realm
 
-func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) -> Future<Bool, SyncError> {
+func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) -> Future<Bool, HikebeatError> {
     return Future { complete in
         // Figure increase to use for progressView
         let uploadsToDo = mediaBeats.count + changes.count + messageBeats.count

@@ -15,7 +15,7 @@ import Result
 import RealmSwift
 import SwiftyJSON
 
-func sendMedia(_ mediaBeats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, SyncError> {
+func sendMedia(_ mediaBeats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, HikebeatError> {
     return Future { complete in
         
         guard mediaBeats.count != 0 else {complete(.success(true)); return}

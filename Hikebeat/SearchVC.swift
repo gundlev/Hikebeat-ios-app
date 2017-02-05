@@ -29,13 +29,17 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     var journeySearch: Search? = Search(type: .journey)
     var chosenUser: User!
     var chosenJourney: Journey!
+    var chosenType: SearchType!
     
 //    var featuredJourneys = [Journey]()
 //    var featuredUsers = [User]()
 //    
 //    var currentJourneys = [Journey]()
 //    var currentUsers = [User]()
-
+    
+    @IBAction func backToSearch(_ unwindSegue: UIStoryboardSegue) {
+        
+    }
     override func viewDidLoad() {
         if firstLoad {
             
@@ -104,11 +108,13 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
         print("search was tapped")
         self.view.endEditing(true)
         guard searchTextField.text != nil else {return true}
         userSearch = Search(type: .user)
         journeySearch = Search(type: .journey)
+        guard textField.text! != "" else { return true }
         
         userSearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (users) in
@@ -270,33 +276,43 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        print(indexPath)
         switch indexPath.section {
         case 0:
-            print("show journey")
             switch indexPath.row {
             case 0:
-                print("show all users")
+                self.chosenType = .user
+                self.showAll()
             case 1, 2, 3:
-                guard (self.userSearch?.results.count)! >= indexPath.row else {print("show all users"); return}
+                guard (self.userSearch?.results.count)! >= indexPath.row else {self.chosenType = .user; showAll(); return}
                 self.chosenUser = self.userSearch?.results[indexPath.row - 1] as! User!
                 self.performSegue(withIdentifier: "showUser", sender: self)
             default:
-                print("show all users")
+                self.chosenType = .user
+                self.showAll()
             }
         case 1:
+            print("row: ", indexPath.row)
             switch indexPath.row {
             case 0:
-                print("show all journeys")
+                self.chosenType = .journey
+                self.showAll()
             case 1, 2, 3:
-                guard (self.userSearch?.results.count)! >= indexPath.row else {print("show all journeys"); return}
+                guard (self.journeySearch?.results.count)! >= indexPath.row else {self.chosenType = .journey; showAll(); return}
                 self.chosenJourney = self.journeySearch?.results[indexPath.row - 1] as! Journey!
                 self.performSegue(withIdentifier: "showJourney", sender: self)
             default:
-                print("show all journeys")
+                self.chosenType = .journey
+                showAll()
             }
         default: print("Dammit")
         }
         
+    }
+    
+    func showAll() {
+        self.performSegue(withIdentifier: "showAll", sender: self)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -376,6 +392,15 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             case "showJourney":
                 let vc = segue.destination as! JourneyContainerVC
                 vc.journey = chosenJourney
+                vc.save = false
+            case "showAll":
+                let vc = segue.destination as! PaginatingVC
+                switch self.chosenType! {
+                case .user:
+                    vc.search = userSearch
+                case .journey:
+                    vc.search = journeySearch
+                }
         default: print("what")
         }
     }

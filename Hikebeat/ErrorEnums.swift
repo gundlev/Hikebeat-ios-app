@@ -9,37 +9,53 @@
 import Foundation
 import UIKit
 
-enum MediaUploadError: Swift.Error {
+enum HikebeatError: Swift.Error {
     case signedUrl
     case s3Upload
     case createMedia
-}
-
-enum UserCallError: Swift.Error {
     case statsCall
     case refreshTokenCall
     case getJourneysForUser
     case facebookLogin
-}
-
-enum MediaDownloadError: Swift.Error {
     case profileImage
-}
-
-enum SearchError: Swift.Error {
     case userSearch
     case journeySearch
-}
-
-enum CompressionError: Swift.Error {
+    case getJourneyWithId
     case avAssetExportFail
     case compressionFailed
     case compressionCancelled
-}
-
-enum SyncError: Swift.Error {
     case uploadBeat
     case uploadMedia
     case uploadChange
     case uploadAll
 }
+
+//enum UserCallError: Swift.Error {
+//    case statsCall
+//    case refreshTokenCall
+//    case getJourneysForUser
+//    case facebookLogin
+//}
+//
+//enum MediaDownloadError: Swift.Error {
+//    case profileImage
+//}
+//
+//enum SearchError: Swift.Error {
+//    case userSearch
+//    case journeySearch
+//    case getJourneyWithId
+//}
+//
+//enum CompressionError: Swift.Error {
+//    case avAssetExportFail
+//    case compressionFailed
+//    case compressionCancelled
+//}
+//
+//enum SyncError: Swift.Error {
+//    case uploadBeat
+//    case uploadMedia
+//    case uploadChange
+//    case uploadAll
+//}

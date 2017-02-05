@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RealmSwift
 
 class JourneyVC: UIViewController, MKMapViewDelegate {
 
@@ -24,8 +25,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
+    var save = true
     var pins = [BeatPin]()
     var indexOfChosenPin: Int?
+    var fromVC = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,14 +60,34 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
         setUpPins()
-        if self.pins.count==0{
-            followersLabel.text = "No beats"
-        }else if self.pins.count == 1 {
-            followersLabel.text = String(self.pins.count)+" beat"
-        } else {
-            followersLabel.text = String(self.pins.count)+" beats"
-        }
         
+        if !save {
+            getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
+            .onSuccess(callback: { (beatsJson) in
+                let realm = try! Realm()
+                try! realm.write {
+                    print("here")
+//                    self.journey?.beats = fullJourney.beats
+                    for (_, beatJson) in beatsJson {
+                        print("___________________________")
+                        print(beatJson)
+                        let beat = Beat()
+                        let mediaType = beatJson["media"]["type"].stringValue
+                        let mediaUrl = beatJson["media"]["path"].stringValue
+                        let mediaDataId = beatJson["media"]["_id"].stringValue
+                        beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
+                        self.journey!.beats.append(beat)
+                    }
+                    print("john")
+                    self.setUpPins()
+                }
+            }).onFailure(callback: { (error) in
+                print("problem getting full journey, error: ", error)
+            })
+        } else {
+            setUpPins()
+        }
+
         titleButton.setTitle(journey?.headline, for: UIControlState())
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
@@ -104,16 +127,16 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     func getProfileImagePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let documentsDirectory: AnyObject = paths[0] as AnyObject
-        let fileName = "media/profile_image.jpg"
-        let dataPath = documentsDirectory.appending("/"+fileName)
+        let fileName = "/media/profile_image.jpg"
+        let dataPath = documentsDirectory.appending(fileName)
         return dataPath
     }
     
     func setUpPins() {
-
+        print("Setup pins")
         var pinArr = [BeatPin]()
         
-        print("There are saved parkings")
+        print("There are saved beats")
         for beat in (self.journey?.beats)! {
             var message = ""
             var subtitle = ""
@@ -143,12 +166,20 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         lastElement?.lastPin = true
         self.journeyMap.showAnnotations(self.journeyMap.annotations, animated: true)
         self.createPolyline(self.journeyMap)
+        
+        if self.pins.count==0{
+            followersLabel.text = "No beats"
+        }else if self.pins.count == 1 {
+            followersLabel.text = String(self.pins.count)+" beat"
+        } else {
+            followersLabel.text = String(self.pins.count)+" beats"
+        }
     }
     
     func getImageWithName(_ name: String) -> UIImage? {
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let documentsDirectory: AnyObject = paths[0] as AnyObject
-        let dataPath = documentsDirectory.appending("/media/"+name)
+        let dataPath = documentsDirectory.appending(name)
         return UIImage(contentsOfFile: dataPath)
     }
 
@@ -253,7 +284,17 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func goBack(_ sender: AnyObject) {
+        switch fromVC {
+        case "showAll":
+            self.performSegue(withIdentifier: "journeyToShowAll", sender: self)
+        default: print("nothing here")
+        }
+        guard save else {
+            performSegue(withIdentifier: "journeyToSearch", sender: self)
+            return
+        }
         
         if appDelegate.fastSegueHack=="social"{
             performSegue(withIdentifier: "unwindSocialHack", sender: self)
@@ -292,6 +333,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             let vc = segue.destination as! BeatsVC
             vc.startingIndex = self.indexOfChosenPin!
             vc.journey = self.journey
+            vc.save = save
         }
     }
 

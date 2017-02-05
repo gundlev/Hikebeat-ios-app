@@ -50,7 +50,7 @@ func shouldRefreshToken() -> Bool {
 public func getPathToFileFromName(_ name: String) -> URL? {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentDirectory = paths[0]
-    let pathToFile = URL(fileURLWithPath: documentDirectory).appendingPathComponent("media/"+name)
+    let pathToFile = URL(fileURLWithPath: documentDirectory).appendingPathComponent(name)
     return pathToFile
 }
 
@@ -58,9 +58,11 @@ public func createMediaFolder() -> Bool {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let documentsDirectory: AnyObject = paths[0] as AnyObject
     let dataPath = documentsDirectory.appending("/media")
+    let tempPath = documentsDirectory.appending("/temp")
     
     do {
         try FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: false, attributes: nil)
+        try FileManager.default.createDirectory(atPath: tempPath, withIntermediateDirectories: false, attributes: nil)
         print("Media folder created")
         return true
     } catch let error as NSError {
@@ -91,7 +93,7 @@ public func registerForNotification() {
     }
 }
 
-func covertToMedia(_ pathToInputFile : URL, pathToOuputFile: URL, fileType: String) -> Future<Bool, CompressionError> {
+func covertToMedia(_ pathToInputFile : URL, pathToOuputFile: URL, fileType: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
         print(1)
         let asset = AVAsset(url: pathToInputFile)

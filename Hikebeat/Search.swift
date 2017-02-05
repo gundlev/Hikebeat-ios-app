@@ -17,30 +17,30 @@ class Search: Any {
     
     init(type: SearchType) {
         self.type = type
-        switch self.type {
-        case .user:
-            for var i in 1...2 {
-                self.results.append(User(id: "\(i)", username: "user\(i)", numberOfJourneys: "\(i)", numberOfBeats: "\(i)", followerCount: "\(i)", followsCount: "\(i)", profilePhotoUrl: "https://s3-eu-central-1.amazonaws.com/hikebeat-production/profile-photo/584b11170ea3e40be50ac796_587b81ae64b701001287a5d1.jpg"))
-            }
-        case .journey:
-            for var i in 1...3 {
-                let journey = Journey()
-                journey.headline = "headline \(i)"
-                journey.journeyId = " \(i)"
-                journey.numberOfBeats = i
-                journey.ownerProfilePhotoUrl = "https://s3-eu-central-1.amazonaws.com/hikebeat-production/profile-photo/584b11170ea3e40be50ac796_587b81ae64b701001287a5d1.jpg"
-                self.results.append(journey)
-            }
-        }
+//        switch self.type {
+//        case .user:
+//            for var i in 1...2 {
+//                self.results.append(User(id: "\(i)", username: "user\(i)", numberOfJourneys: "\(i)", numberOfBeats: "\(i)", followerCount: "\(i)", followsCount: "\(i)", profilePhotoUrl: "https://s3-eu-central-1.amazonaws.com/hikebeat-production/profile-photo/584b11170ea3e40be50ac796_587b81ae64b701001287a5d1.jpg"))
+//            }
+//        case .journey:
+//            for var i in 1...3 {
+//                let journey = Journey()
+//                journey.headline = "headline \(i)"
+//                journey.journeyId = " \(i)"
+//                journey.numberOfBeats = i
+//                journey.ownerProfilePhotoUrl = "https://s3-eu-central-1.amazonaws.com/hikebeat-production/profile-photo/584b11170ea3e40be50ac796_587b81ae64b701001287a5d1.jpg"
+//                self.results.append(journey)
+//            }
+//        }
     }
     
-    func startSearch(searchText: String) -> Future<[Any], SearchError> {
+    func startSearch(searchText: String) -> Future<[Any], HikebeatError> {
         return Future { complete in
 //            nextPageString = nil
 //            results = nil
             switch self.type {
             case .user:
-                searchUsers(queryString: "?query=\(searchText)&items=3")
+                searchUsers(queryString: "?query=\(searchText)&items=10")
                 .onSuccess(callback: { (tuple) in
                     self.results = tuple.users
                     self.nextPageString = tuple.nextPage
@@ -50,7 +50,7 @@ class Search: Any {
                     complete(.failure(error))
                 })
             case .journey:
-                searchJourneys(queryString: "?query=\(searchText)&items=3")
+                searchJourneys(queryString: "?query=\(searchText)&items=10")
                 .onSuccess(callback: { (tuple) in
                     self.results = tuple.journeys
                     self.nextPageString = tuple.nextPage
@@ -63,13 +63,16 @@ class Search: Any {
         }
     }
     
-    func nextPage() -> Future<[Any], SearchError> {
+    func nextPage() -> Future<[Any], HikebeatError> {
         return Future { complete in
+            guard self.nextPageString != nil else { complete(.success([Any]())); return }
             switch self.type {
             case .user:
                 searchUsers(queryString: nextPageString!)
                 .onSuccess(callback: { (tuple) in
-                    self.results.append(tuple.users)
+                    for user in tuple.users {
+                        self.results.append(user)
+                    }
                     self.nextPageString = tuple.nextPage
                     complete(.success(tuple.users))
                 }).onFailure(callback: { (error) in
@@ -79,7 +82,9 @@ class Search: Any {
             case .journey:
                 searchJourneys(queryString: nextPageString!)
                 .onSuccess(callback: { (tuple) in
-                    self.results.append(tuple.journeys)
+                    for journey in tuple.journeys {
+                        self.results.append(journey)
+                    }
                     self.nextPageString = tuple.nextPage
                     complete(.success(tuple.journeys))
                 }).onFailure(callback: { (error) in
@@ -88,6 +93,10 @@ class Search: Any {
                 })
             }
         }
+    }
+    
+    func hasNextpage() -> Bool {
+        return self.nextPageString != nil
     }
     
 }

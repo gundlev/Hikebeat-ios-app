@@ -165,7 +165,7 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
     func getPathToFileFromName(_ name: String) -> URL? {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentDirectory = paths[0]
-        let pathToFile = URL(fileURLWithPath: documentDirectory).appendingPathComponent("media/"+name)
+        let pathToFile = URL(fileURLWithPath: documentDirectory).appendingPathComponent(name)
         return pathToFile
     }
     
@@ -218,8 +218,8 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
 
         let documentsDirectory: AnyObject = paths[0] as AnyObject
-        let fileName = "hikebeat_"+journeyId+"_"+timestamp+fileType
-        let dataPath = documentsDirectory.appending("/media/" + fileName)
+        let fileName = "/media/hikebeat_"+journeyId+"_"+timestamp+fileType
+        let dataPath = documentsDirectory.appending(fileName)
         let success = (try? mediaData.write(to: URL(fileURLWithPath: dataPath), options: [])) != nil
         if success {
             print("Saved to Docs with name: ", fileName)

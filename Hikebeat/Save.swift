@@ -18,24 +18,26 @@ func saveImageToDocs(fileName: String, image: UIImage) -> Future<Bool, NoError> 
             let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
             let documentsDirectory: AnyObject = paths[0] as AnyObject
             let dataPath = documentsDirectory.appending(fileName)
-            let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
+            print("Writing to: ", dataPath)
+            let success = (try? UIImageJPEGRepresentation(image, 1)?.write(to: URL(fileURLWithPath: dataPath))) != nil
+//            let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
             // do a complicated task and then hand the result to the promise:
             complete(.success(success))
         }
     }
 }
 
-func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoError> {
+func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Journey, HikebeatError> {
     print("JoruneyJson: ", journeyJson)
     return Future { complete in
         DispatchQueue.global().async {
-            let headline = journeyJson["options"]["headline"].stringValue
+            let headline = journeyJson["headline"].stringValue
             print("journey", journeyJson)
             
             var beats = [Beat]()
             
             let journey = Journey()
-            journey.fill(journeyJson["slug"].stringValue, userId: userId, journeyId: journeyJson["_id"].stringValue, headline: journeyJson["options"]["headline"].stringValue, journeyDescription: journeyJson["options"]["headline"].stringValue, active: false, type: journeyJson["options"]["type"].stringValue, seqNumber: String(journeyJson["seqNumber"].intValue))
+            journey.fill(journeyJson["slug"].stringValue, userId: userId, journeyId: journeyJson["_id"].stringValue, headline: journeyJson["headline"].stringValue, journeyDescription: journeyJson["headline"].stringValue, active: false, type: journeyJson["type"].stringValue, seqNumber: String(journeyJson["seqNumber"].intValue))
             let localRealm = try! Realm()
             print("Saving journey")
             try! localRealm.write() {
@@ -58,7 +60,7 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoE
             var finishedBeats = 0
             var failedBeats = 0
             
-            if journeyJson["messages"] != nil {
+            if journeyJson["messages"] != JSON.null {
                 for (_, message) in journeyJson["messages"]  {
                     print("Slug: ", message["slug"].stringValue, " for journey: ", headline)
                     let mediaType = message["media"]["type"].stringValue
@@ -77,10 +79,9 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoE
                     }
                 }
             }
-            complete(.success(true))
+            complete(.success(journey))
         }
     }
-
 }
 
 //func saveJourney(journey:JSON, userId: String) -> Future<Bool, NoError> {
@@ -88,9 +89,9 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoE
 //        DispatchQueue.global().async {
 //            let headline = journey["options"]["headline"].stringValue
 //            print(headline)
-//            
+//
 //            var beats = [Beat]()
-//            
+//
 //            let dataJourney = Journey()
 //            dataJourney.fill(journey["slug"].stringValue, userId: userId, journeyId: journey["_id"].stringValue, headline: journey["options"]["headline"].stringValue, journeyDescription: journey["options"]["headline"].stringValue, active: false, type: journey["options"]["type"].stringValue, seqNumber: String(journey["seqNumber"].intValue))
 //            let localRealm = try! Realm()
@@ -221,11 +222,20 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Bool, NoE
 //    }
 //}
 
+func fileExist(path: String) -> Bool {
+    let fm = FileManager()
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+    let documentsDirectory: AnyObject = paths[0] as AnyObject
+    let dataPath = documentsDirectory.appending(path)
+    print("Checking path: ", dataPath)
+    return fm.fileExists(atPath: dataPath)
+}
+
 func saveMediaToDocs(fileName: String, data: Data) -> String? {
     print("Image name: ", fileName)
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let documentsDirectory: AnyObject = paths[0] as AnyObject
-    let dataPath = documentsDirectory.appending("/"+fileName)
+    let dataPath = documentsDirectory.appending(fileName)
     print("datapath: ", dataPath)
     let url = Foundation.URL(fileURLWithPath: dataPath)
     let fm = FileManager()

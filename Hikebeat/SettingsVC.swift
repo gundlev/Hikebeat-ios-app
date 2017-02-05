@@ -61,12 +61,10 @@ class SettingsVC: UIViewController {
     @IBAction func notificationChange(_ sender: UISwitch) {
         let reachability = Reachability()
         if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
-            let parameters:[String: Any] = ["options" : [
-                "notifications"  :  sender.isOn
-                ]]
+            let parameters:[String: Any] = ["notifications" : sender.isOn]
             let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
             print(url)
-            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
                 
                 if response.response?.statusCode == 200 {
                     print("It has been changes in the db")

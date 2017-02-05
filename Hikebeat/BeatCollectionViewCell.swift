@@ -25,6 +25,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var beat: Beat!
+    var save = true
     
     override func awakeFromNib() {
         self.scrollView.isScrollEnabled = false
@@ -32,6 +33,11 @@ class BeatCollectionViewCell: UICollectionViewCell {
     }
     
     func setImage() {
+        var filename = "/media/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).jpg"
+        if !self.save {
+            filename = "/temp/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).jpg"
+        }
+        print("fileExists: ", fileExist(path: filename))
         if beat.mediaData != nil {
             // media has been downloaded
             beatImage.isHidden = false
@@ -41,15 +47,16 @@ class BeatCollectionViewCell: UICollectionViewCell {
             spinner.startAnimating()
             beatImage.isHidden = true
             playButton.isHidden = true
-            let downloadFuture = downloadAndStoreImage(mediaUrl: beat.mediaUrl!, fileName: "/media/hikebeat_\(beat.journeyId)_\(beat.timestamp).jpg")
-            downloadFuture.onSuccess(callback: { (image) in
+
+            downloadAndStoreImage(mediaUrl: beat.mediaUrl!, fileName: filename)
+            .onSuccess(callback: { (image) in
                 self.spinner.stopAnimating()
                 if image != nil {
                     let realm = try! Realm()
                     self.beatImage.isHidden = false
                     self.playButton.isHidden = false
                     try! realm.write {
-                        self.beat.mediaData = "hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).jpg"
+                        self.beat.mediaData = filename
                         print("HERE: ",self.beat.mediaData)
                     }
                 } else {
@@ -58,6 +65,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
             })
         }
     }
+    
     
     func setMedia(fileType: String) {
         if beat.mediaData != nil {
@@ -69,7 +77,11 @@ class BeatCollectionViewCell: UICollectionViewCell {
             spinner.startAnimating()
             beatImage.isHidden = true
             playButton.isHidden = true
-            let downloadFuture = downloadAndStoreMedia(url: beat.mediaUrl!, fileName: "/media/hikebeat_\(beat.journeyId)_\(beat.timestamp).\(fileType)")
+            var filename = "/media/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).\(fileType)"
+            if !self.save {
+                filename = "/temp/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).\(fileType)"
+            }
+            let downloadFuture = downloadAndStoreMedia(url: beat.mediaUrl!, fileName: filename)
             downloadFuture.onSuccess(callback: { (success) in
                 self.spinner.stopAnimating()
                 if success {
@@ -77,10 +89,10 @@ class BeatCollectionViewCell: UICollectionViewCell {
                     self.beatImage.isHidden = false
                     self.playButton.isHidden = false
                     try! realm.write {
-                        self.beat.mediaData = "hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).\(fileType)"
+                        self.beat.mediaData = filename
                     }
                 } else {
-                    print("problems getting the image for beat in setImage")
+                    print("problems getting the image for beat in setMedia")
                 }
             })
         }

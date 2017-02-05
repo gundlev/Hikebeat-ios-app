@@ -10,7 +10,7 @@ import Foundation
 import BrightFutures
 import RealmSwift
 
-func sendBeats(_ messageBeats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, SyncError> {
+func sendBeats(_ messageBeats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, HikebeatError> {
     return Future { complete in
         guard messageBeats.count != 0 else {complete(.success(true)); return}
         let total = messageBeats.count

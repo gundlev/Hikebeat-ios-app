@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if shouldRefreshToken() {
             refreshToken()
             .onSuccess { (token) in
-                print("Token refreshed")
+                print("Token refreshed: ", token)
             }.onFailure(callback: { (error) in
                 print("Error: ", error)
             })

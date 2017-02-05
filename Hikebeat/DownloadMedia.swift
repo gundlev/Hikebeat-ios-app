@@ -27,13 +27,16 @@ func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage
     return Future { complete in
         Alamofire.request(mediaUrl).responseImage {
             response in
-            print("Statuscoode: ", response.response?.statusCode)
+            print("Statuscoode image: ", response.response?.statusCode)
+            print(response)
             if let image = response.result.value {
-                let future = saveImageToDocs(fileName: fileName, image: image)
-                future.onSuccess(callback: { (success) in
+                print("Its an image!!!")
+                saveImageToDocs(fileName: fileName, image: image)
+                .onSuccess(callback: { (success) in
                     if success {
                         complete(.success(image))
                     } else {
+                        print("failed at saving")
                         complete(.success(nil))
                     }
                 })
@@ -44,7 +47,7 @@ func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage
     }
 }
 
-func downloadImage(imageUrl: String) -> Future<UIImage, MediaDownloadError> {
+func downloadImage(imageUrl: String) -> Future<UIImage, HikebeatError> {
     return Future { complete in
         Alamofire.request(imageUrl).responseImage {
             response in

@@ -12,6 +12,7 @@ import AlamofireImage
 import SwiftyJSON
 import RealmSwift
 import SwiftyDrop
+import FacebookCore
 
 class LoginVC: UIViewController, UITextFieldDelegate {
 
@@ -78,8 +79,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         passwordField.rightView = paddingView2
         passwordField.rightViewMode = UITextFieldViewMode.always
         
-        usernameField.text = "john1"
-        passwordField.text = "gkBB1991"
+        usernameField.text = "ben"
+        passwordField.text = "ABC123"
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
@@ -106,6 +107,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         /** Parameters to send to the API.*/
         let parameters = ["username": usernameField.text!, "password": passwordField.text!]
         showActivity()
+        self.view.endEditing(true)
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
         Alamofire.request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
             print("Raw: ", response)
@@ -116,6 +118,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     let json = JSON(response.result.value!)
                     handleUserAfterLogin(json: json)
                     .onSuccess(callback: { (success) in
+                        AppEventsLogger.log("Login email")
                         self.performSegue(withIdentifier: "justLoggedIn", sender: self)
                         hideActivity()
                     }).onFailure(callback: { (error) in
@@ -123,7 +126,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                         hideActivity()
                     })
                 } else {
-                    SCLAlertView().showError("No such user", subTitle: "The username and password you have provided does not match any users in our database.")
+                    _ = SCLAlertView().showError("No such user", subTitle: "The username and password you have provided does not match any users in our database.")
                     hideActivity()
                 }
                 
@@ -150,21 +153,23 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func createMediaFolder() -> Bool {
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0] as AnyObject
-        let dataPath = documentsDirectory.appending("/media")
-        
-        do {
-            try FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: false, attributes: nil)
-            print("Media folder created")
-            return true
-        } catch let error as NSError {
-            print("Failed creating the media folder")
-            print(error.localizedDescription);
-            return false
-        }
-    }
+//    func createMediaFolder() -> Bool {
+//        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//        let documentsDirectory: AnyObject = paths[0] as AnyObject
+//        let dataPath = documentsDirectory.appending("/media")
+//        let tempPath = documentsDirectory.appending("/temp")
+//
+//        do {
+//            try FileManager.default.createDirectory(atPath: dataPath, withIntermediateDirectories: false, attributes: nil)
+//            try FileManager.default.createDirectory(atPath: tempPath, withIntermediateDirectories: false, attributes: nil)
+//            print("Media folder created")
+//            return true
+//        } catch let error as NSError {
+//            print("Failed creating the media folder")
+//            print(error.localizedDescription);
+//            return false
+//        }
+//    }
     
     func saveMediaToDocs(_ mediaData: Data, journeyId: String, timestamp: String, fileType: String) -> String? {
         

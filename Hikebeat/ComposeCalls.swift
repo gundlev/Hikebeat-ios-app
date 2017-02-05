@@ -11,7 +11,7 @@ import BrightFutures
 import Alamofire
 import SwiftyJSON
 
-func uploadBeat(beat: Beat) -> Future<String, SyncError> {
+func uploadBeat(beat: Beat) -> Future<String, HikebeatError> {
     return Future { complete in
         let url = IPAddress + "journeys/" + beat.journeyId + "/messages"
         print("url: ", url)
@@ -23,7 +23,7 @@ func uploadBeat(beat: Beat) -> Future<String, SyncError> {
             parameters["text"] = beat.message
         }
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
                 print("The text was send")
 

@@ -14,11 +14,11 @@ import Alamofire
 import AlamofireImage
 import SwiftyJSON
 
-func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failedJourneys: Int)?, UserCallError>{
+func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failedJourneys: Int)?, HikebeatError>{
     return Future { complete in
         let urlJourney = IPAddress + "users/" + userId + "/journeys"
         print(urlJourney)
-        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print("JOURNEY: ", response)
             var finishedJourneys = 0
             var failedJourneys = 0
@@ -29,21 +29,29 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
                     for (_, journey) in json {
                         // saveJourney
                         saveJourneyWithNoData(journeyJson: journey, userId: userId)
-                        .onSuccess(callback: { (success) in
-                            if success {
-                                finishedJourneys += 1
-                                if (finishedJourneys + failedJourneys) == json.count {
-                                    let tuple = (finishedJourneys, failedJourneys)
-                                    complete(.success(tuple))
-                                }
-                            } else {
-                                failedJourneys += 1
-                                if (finishedJourneys + failedJourneys) == json.count {
-                                    let tuple = (finishedJourneys, failedJourneys)
-                                    complete(.success(tuple))
-                                }
+                        .onSuccess(callback: { (journey) in
+                            finishedJourneys += 1
+                            if (finishedJourneys + failedJourneys) == json.count {
+                                let tuple = (finishedJourneys, failedJourneys)
+                                complete(.success(tuple))
+                            }
+                        }).onFailure(callback: { (error) in
+                            failedJourneys += 1
+                            if (finishedJourneys + failedJourneys) == json.count {
+                                let tuple = (finishedJourneys, failedJourneys)
+                                complete(.success(tuple))
                             }
                         })
+//                            if success {
+//
+//                            } else {
+//                                failedJourneys += 1
+//                                if (finishedJourneys + failedJourneys) == json.count {
+//                                    let tuple = (finishedJourneys, failedJourneys)
+//                                    complete(.success(tuple))
+//                                }
+//                            }
+//                        })
                     }
                 }
             } else {
@@ -58,7 +66,7 @@ func deleteJourney(journeyId: String) -> Future<Bool, NoError> {
         let userId = userDefaults.string(forKey: "_id")
         let urlJourney = IPAddress + "users/\(userId!)/journeys/\(journeyId)"
         print(urlJourney)
-        Alamofire.request(urlJourney, method: .delete, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(urlJourney, method: .delete, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print("Delete response: ", response)
             if response.response?.statusCode == 200 {
                 complete(.success(true))
@@ -68,3 +76,27 @@ func deleteJourney(journeyId: String) -> Future<Bool, NoError> {
         }
     }
 }
+
+//func getJourneyWithId(userId: String, journeyId: String) -> Future<Journey, HikebeatError> {
+//    return Future { complete in
+//        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"
+//        print(urlJourney)
+//        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+//            if response.response?.statusCode == 200 {
+//                if response.result.value != nil {
+//                    let rawJson = JSON(response.result.value!)
+//                    let json = rawJson["data"]
+//                    saveJourneyWithNoData(journeyJson: json, userId: userId)
+//                    .onSuccess(callback: { (journey) in
+//                        complete(.success(journey))
+//                    }).onFailure(callback: { (error) in
+//                        complete(.failure(error))
+//                    })
+//                    
+//                }
+//            } else {
+//                complete(.failure(.getJourneyWithId))
+//            }
+//        }
+//    }
+//}

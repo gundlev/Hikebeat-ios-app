@@ -66,40 +66,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func createNewJourney(_ sender: AnyObject) {
-        guard titleField.text != nil else {return}
-        guard titleField.text! != "" else {
-            Drop.down("Journey headline can not be empty.", state: .error)
-//            let banner = Banner(title: nil, subtitle: "Journey headline can not be empty.", image: nil, backgroundColor: .red, didTapBlock: nil)
-//            banner.dismissesOnTap = true
-//            banner.show(duration: 10.0)
-            return
-        }
-        if titleField.text?.characters.count > 1 {
-            let parameters: [String: Any] = ["options": ["headline": titleField.text!]]
-            let url = IPAddress + "users/journeys"
-            print(url)
-            
-            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
-                print(response.result.value)
-                print(response.response?.statusCode)
-                if response.response?.statusCode == 200 {
-                    let rawJson = JSON(response.result.value!)
-                    let json = rawJson["data"]
-                    print(json)
-                    print("Journey Created!")
-                    let realm = try! Realm()
-                    try! realm.write() {
-                        let journey = Journey()
-                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["options"]["headline"].stringValue, journeyDescription: nil, active: self.active.isOn, type: nil, seqNumber: String(json["seqNumber"].intValue))
-                        realm.add(journey)
-                    }
-                    self.performSegue(withIdentifier: "backWhenCreated", sender: self)
-                } else {
-                    print(response)
-                }
-            }
-        }
-
+        createJourney()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -119,7 +86,44 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        createJourney()
         return false
+    }
+    
+    func createJourney() {
+        guard titleField.text != nil else {return}
+        guard titleField.text! != "" else {
+            Drop.down("Journey headline can not be empty.", state: .error)
+            //            let banner = Banner(title: nil, subtitle: "Journey headline can not be empty.", image: nil, backgroundColor: .red, didTapBlock: nil)
+            //            banner.dismissesOnTap = true
+            //            banner.show(duration: 10.0)
+            return
+        }
+        if titleField.text?.characters.count > 1 {
+            let parameters: [String: Any] = ["headline": titleField.text!]
+            let url = IPAddress + "users/journeys"
+            print(url)
+            print("createJourney header: ", getHeader())
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+                print(response.result.value)
+                print(response.response?.statusCode)
+                if response.response?.statusCode == 200 {
+                    let rawJson = JSON(response.result.value!)
+                    let json = rawJson["data"]
+                    print(json)
+                    print("Journey Created!")
+                    let realm = try! Realm()
+                    try! realm.write() {
+                        let journey = Journey()
+                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["headline"].stringValue, journeyDescription: nil, active: self.active.isOn, type: nil, seqNumber: String(json["seqNumber"].intValue))
+                        realm.add(journey)
+                    }
+                    self.performSegue(withIdentifier: "backWhenCreated", sender: self)
+                } else {
+                    print(response)
+                }
+            }
+        }
     }
     
     func keyboardWillShow(_ sender: Foundation.Notification) {

@@ -16,7 +16,7 @@ func updateSimCard() -> Future<Bool, NoError> {
     return Future { complete in
         let url = "\(IPAddress)simcard-check"
         print("Performing cim card check now")
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print(response)
             let json = JSON(response.result.value)
             guard response.response?.statusCode == 200 else {complete(.success(false)); return}

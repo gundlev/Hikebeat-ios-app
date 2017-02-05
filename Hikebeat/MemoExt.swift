@@ -165,11 +165,11 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     
     func setupRecorder() {
-        let currentFileName = "audio-temp.m4a"
+        let currentFileName = "/media/audio-temp.m4a"
         print(currentFileName)
         
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        self.soundFileURL = documentsDirectory.appendingPathComponent("/media/"+currentFileName)
+        self.soundFileURL = documentsDirectory.appendingPathComponent(currentFileName)
         
         if FileManager.default.fileExists(atPath: soundFileURL.absoluteString) {
             // probably won't happen. want to do something about it?

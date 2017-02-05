@@ -70,6 +70,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     @IBOutlet weak var numberOfJourneys: UITextField!
     @IBOutlet weak var nationalityLabel: UITextField!
     @IBOutlet weak var profileContentView: UIView!
+    @IBOutlet weak var numberOfBeats: UITextField!
     
     @IBOutlet weak var infoContainer: UIView!
     
@@ -197,12 +198,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         }
         
         // Settings number of journeys
-        let journeys = realm.objects(Journey.self)
-        if journeys.count == 1 {
-            self.numberOfJourneys.text = String(journeys.count) + " journey created"
-        } else {
-            self.numberOfJourneys.text = String(journeys.count) + " journeys created"
-        }
+        setNumberOfBeatsAndJourneys()
         
         self.followsCountLabel.text = userDefaults.string(forKey: "followsCount")
         self.followersCountLabel.text = userDefaults.string(forKey: "followerCount")
@@ -212,7 +208,25 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         setProfileImage()
     }
     
+    func setNumberOfBeatsAndJourneys() {
+        let journeys = realm.objects(Journey.self)
+        if journeys.count == 1 {
+            self.numberOfJourneys.text = String(journeys.count) + " journey"
+        } else {
+            self.numberOfJourneys.text = String(journeys.count) + " journeys"
+        }
+        
+        let beats = realm.objects(Beat.self)
+        print("beats: ", beats)
+        if beats.count == 1 {
+            self.numberOfBeats.text = String(beats.count) + " beat sent"
+        } else {
+            self.numberOfBeats.text = String(beats.count) + " beats sent"
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
+        setNumberOfBeatsAndJourneys()
         getStats().onSuccess { (dict) in
             self.followsCountLabel.text = dict["followsCount"]
             self.userDefaults.set(dict["followsCount"], forKey: "followsCount")
@@ -398,15 +412,15 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         for tuple in arr {
             var parameters = [String:Any]()
             if tuple.property == UserProperty.permittedPhoneNumbers {
-                parameters["options"] = [tuple.property : [tuple.value]]
+                parameters[tuple.property] = [tuple.value]
             } else {
-                parameters["options"] = [tuple.property : tuple.value]
+                parameters[tuple.property] = tuple.value
             }
 
             let url = IPAddress + "users"
             print(url)
             print(parameters)
-            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
                 
                 if response.response?.statusCode == 200 {
                     print("It has been changed in the db")

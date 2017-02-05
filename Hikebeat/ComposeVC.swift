@@ -54,6 +54,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     @IBOutlet weak var sendBeatButton: UIButton!
     @IBOutlet weak var editMemoButton: UIImageView!
     @IBOutlet weak var editVideoButton: UIImageView!
+    @IBOutlet weak var hikebeatTopLogo: UIImageView!
     
     @IBOutlet weak var rightTree: UIImageView!
     @IBOutlet weak var leftTree: UIImageView!
@@ -212,23 +213,15 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     
     override func viewWillAppear(_ animated: Bool) {
-//        animateSelectJourneyUp(animated: false)
-//        let center = self.tableViewSelectJourney.center
-//        self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
-//        let isActiveJourney = findActiveJourney()
-//        
-//        if isActiveJourney{
-//            print("There is an active journey!")
-//        }
-        
         if !findActiveJourney() {
             composeContainer.isHidden = true
             NoActiveContainer.isHidden = false
-            
         }else{
             composeContainer.isHidden = false
             NoActiveContainer.isHidden = true
         }
+        self.tableViewSelectJourney.reloadData()
+
     }
     
     @IBAction func unwindToCompose(_ sender: UIStoryboardSegue)
@@ -399,10 +392,19 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func findActiveJourney() -> Bool {
         self.journeys = realm.objects(Journey.self)
+        if (self.journeys?.isEmpty)! {
+            hikebeatTopLogo.isHidden = false
+            activeJourneyButton.isHidden = true
+        } else {
+            hikebeatTopLogo.isHidden = true
+            activeJourneyButton.isHidden = false
+        }
 //        print("journeys: ", self.journeys)
         self.tableViewSelectJourney.reloadData()
         let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
+            self.activeJourney = nil
+            self.activeJourneyButton.setTitle("Select journey", for: .normal)
             return false
         } else {
             self.activeJourney = journeys[0]
@@ -465,7 +467,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                             })
                         } else if self.audioHasBeenRecordedForThisBeat {
                             mediaType = MediaType.audio
-                            let pathToAudio = self.getPathToFileFromName("audio-temp.m4a")
+                            let pathToAudio = self.getPathToFileFromName("/media/audio-temp.m4a")
                             let newPath = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".m4a")
                             print("Now converting")
                             covertToMedia(pathToAudio!, pathToOuputFile: newPath, fileType: AVFileTypeMPEG4)
@@ -548,7 +550,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 
                 // Sending beat message
                 performSegue(withIdentifier: "showGreenModal", sender: nil)
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
                     print("The Response")
 //                    print(response.response?.statusCode)
                     print(response)
@@ -883,7 +885,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         case "editEmotionsModal":
             if self.emotion != nil {
                 print(1)
-                let vc = segue.destination as! EditTitleVC
+                let vc = segue.destination as! EditEmotionVC
                 vc.emotion = self.emotion!
                 print(1.1)
             }

@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftyDrop
+import FacebookCore
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -33,6 +34,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         guard emailField.text != "" else {missingValues(); return}
         guard usernameField.text != "" else {missingValues(); return}
         guard passwordField.text == rePasswordField.text else {noneMatchingPasswords(); return}
+        self.view.endEditing(true)
         showActivity()
         let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
         print(parameters)
@@ -40,60 +42,22 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         Alamofire.request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
             print(response)
             if response.response?.statusCode == 200 {
-                print("user has been created")
-                let rawUser = JSON(response.result.value!)
-                let user = rawUser["data"]
-                print("This is the user: ",user)
                 
-                print("setting user")
-                self.userDefaults.set(user["username"].stringValue, forKey: "username")
-                
-                var optionsDictionary = [String:String]()
-                for (key, value) in user["options"].dictionaryValue {
-                    optionsDictionary[key] = value.stringValue
+                if response.result.value != nil {
+                    let json = JSON(response.result.value!)
+                    handleUserAfterLogin(json: json)
+                        .onSuccess(callback: { (success) in
+                            AppEventsLogger.log("Signup email")
+                            self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
+                            hideActivity()
+                        }).onFailure(callback: { (error) in
+                            print("Error: ", error)
+                            hideActivity()
+                        })
+                } else {
+                    _ = SCLAlertView().showError("Ups", subTitle: "Something went wrong, please try again.")
+                    hideActivity()
                 }
-                
-                var journeyIdsArray = [String]()
-                for (value) in user["journeyIds"].arrayValue {
-                    journeyIdsArray.append(value.stringValue)
-                }
-                
-                var followingArray = [String]()
-                for (value) in user["following"].arrayValue {
-                    followingArray.append(value.stringValue)
-                }
-                
-                var deviceTokensArray = [String]()
-                for (value) in user["deviceTokens"].arrayValue {
-                    deviceTokensArray.append(value.stringValue)
-                }
-                
-                var permittedPhoneNumbersArray = [String]()
-                for (value) in user["permittedPhoneNumbers"].arrayValue {
-                    permittedPhoneNumbersArray.append(value.stringValue)
-                }
-                
-                self.userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
-                self.userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
-                
-                self.userDefaults.set(optionsDictionary, forKey: "options")
-                self.userDefaults.set((user["options"]["notifications"].boolValue), forKey: "notifications")
-                self.userDefaults.set((user["options"]["name"].stringValue), forKey: "name")
-                self.userDefaults.set((user["options"]["gender"].stringValue), forKey: "gender")
-                self.userDefaults.set((user["options"]["nationality"].stringValue), forKey: "nationality")
-                self.userDefaults.set(journeyIdsArray, forKey: "journeyIds")
-                self.userDefaults.set(followingArray, forKey: "following")
-                self.userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
-                self.userDefaults.set(user["_id"].stringValue, forKey: "_id")
-                self.userDefaults.set(user["username"].stringValue, forKey: "username")
-                self.userDefaults.set(user["email"].stringValue, forKey: "email")
-                self.userDefaults.set(user["activeJourneyId"].stringValue, forKey: "activeJourneyId")
-                self.userDefaults.set(true, forKey: "loggedIn")
-                self.userDefaults.set(permittedPhoneNumbersArray, forKey: "permittedPhoneNumbers")
-                
-                createMediaFolder()
-                hideActivity()
-                self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
                 
             } else if response.response?.statusCode == 400 {
                 hideActivity()
@@ -111,11 +75,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                         bannerText += "\(errors[i]["friendlyMessage"].stringValue)"
                     }
                     Drop.down(bannerText, state: .error)
-//                        let banner = Banner(title: nil, subtitle: bannerText, image: nil, backgroundColor: .red, didTapBlock: nil)
-//                        banner.dismissesOnTap = true
-//                        banner.show(duration: 10.0)
                 }
-//                    SCLAlertView().showWarning("Sorry", subTitle: "\n" + json["meta"]["message"].stringValue)
             }
         }
 

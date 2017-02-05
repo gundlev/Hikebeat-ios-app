@@ -13,7 +13,7 @@ import RealmSwift
 import BrightFutures
 import Result
 
-func uploadMediaForBeat(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, MediaUploadError> {
+func uploadMediaForBeat(type: String, path: URL, journeyId: String, timeCapture: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<String, HikebeatError> {
     return Future { complete in
         // 1. Get signedUrl and id from API
         getSignedUrlAndId(type: type).onSuccess(callback: { (tuple) in
@@ -34,7 +34,7 @@ func uploadMediaForBeat(type: String, path: URL, journeyId: String, timeCapture:
     }
 }
 
-func uploadProfileImage(path: URL, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<Bool, MediaUploadError> {
+func uploadProfileImage(path: URL, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<Bool, HikebeatError> {
     return Future { complete in
         // 1. Get signedUrl and id from API
         getSignedUrlAndId(type: "profile-photo").onSuccess(callback: { (tuple) in
@@ -55,14 +55,14 @@ func uploadProfileImage(path: URL, progressCallback: @escaping (_ progress: Floa
     }
 }
 
-func createProfilePhotoOnAPI(fileKey: String) -> Future<Bool, MediaUploadError> {
+func createProfilePhotoOnAPI(fileKey: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
         let userId = userDefaults.string(forKey: "_id")
         let url = IPAddress + "users/\(userId!)/profile-photo"
         let parameters = [
             "fileKey" : fileKey
         ]
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
 //                print("create media: ", response.request?.httpBody)
 //                print("response: ", response)
@@ -75,11 +75,11 @@ func createProfilePhotoOnAPI(fileKey: String) -> Future<Bool, MediaUploadError> 
     }
 }
 
-func getSignedUrlAndId(type: String) -> Future<(signedUrl: String, id: String), MediaUploadError> {
+func getSignedUrlAndId(type: String) -> Future<(signedUrl: String, id: String), HikebeatError> {
     return Future { complete in
         let urlJourney = IPAddress + "media/\(type)"
         print("url: ",urlJourney)
-        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print("signedResponse: ", response)
             if response.response?.statusCode == 200 {
                 let json = JSON(response.result.value!)
@@ -94,7 +94,7 @@ func getSignedUrlAndId(type: String) -> Future<(signedUrl: String, id: String), 
     }
 }
 
-func uploadToS3(signedUrl: String, path: URL, type: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<Bool, MediaUploadError> {
+func uploadToS3(signedUrl: String, path: URL, type: String, progressCallback: @escaping (_ progress: Float) -> ()) -> Future<Bool, HikebeatError> {
     return Future { complete in
         var header = ""
         switch type {
@@ -119,14 +119,14 @@ func uploadToS3(signedUrl: String, path: URL, type: String, progressCallback: @e
     }
 }
 
-func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -> Future<Bool, MediaUploadError> {
+func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
         let url = IPAddress + "journeys/\(journeyId)/media"
         let parameters = [
             "timeCapture": timeCapture,
             "fileKey" : fileKey
         ]
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
                 complete(.success(true))
             } else {

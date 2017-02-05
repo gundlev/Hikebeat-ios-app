@@ -51,10 +51,10 @@ class SearchUserCell: UITableViewCell {
         }
     }
     
-    func downloadProfileImage(imageUrl: String) -> Future<UIImage, MediaDownloadError> {
+    func downloadProfileImage(imageUrl: String) -> Future<UIImage, HikebeatError> {
         return Future { complete in
             imageActivity.startAnimating()
-            self.profileImage.image = UIImage(named: "DefaultProfile")
+            self.profileImage.image = UIImage()
             downloadImage(imageUrl: imageUrl)
                 .onSuccess { (image) in
                     self.profileImage.image = image
@@ -62,6 +62,7 @@ class SearchUserCell: UITableViewCell {
                     complete(.success(image))
                 }.onFailure { (error) in
                     print("Error: ", error)
+                    self.profileImage.image = UIImage(named: "DefaultProfile")
                     complete(.failure(error))
             }
         }
