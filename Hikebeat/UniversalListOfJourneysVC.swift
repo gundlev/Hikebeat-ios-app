@@ -21,6 +21,7 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
     var jDates = ["22/4/16","17/3/16","26/2/16","12/2/16","11/1/16","10/10/15","3/7/15"]
 
     let darkGreen = UIColor(hexString: "#15676C")
+    let highlightColor = UIColor(hexString: "#157578")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,7 @@ class UniversalListOfJourneysVC: UIViewController, UITableViewDelegate, UITableV
         cell.backgroundColor = UIColor.clear
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = darkGreen
+        bgColorView.backgroundColor = highlightColor
         cell.selectedBackgroundView = bgColorView
         
         return cell
