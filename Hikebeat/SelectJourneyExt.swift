@@ -61,6 +61,9 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
         UIView.animate(withDuration: duration, animations: {
             self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
         })
+        
+        activeJourneyButton.setImage(UIImage(named: "downArrow"), for: .normal)
+        
         print("Starting y: \(center.y), Ending y: \(center.y-self.tableViewSelectJourney.frame.height)")
         checkForActiveJourney()
     }
@@ -75,6 +78,8 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
         UIView.animate(withDuration: duration, animations: {
             self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y+self.tableViewSelectJourney.frame.height)
         })
+        
+        activeJourneyButton.setImage(UIImage(named: "upArrow"), for: .normal)
     }
     
 }

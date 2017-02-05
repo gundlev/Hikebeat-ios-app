@@ -72,10 +72,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     @IBAction func chooseActiveJourney(_ sender: Any) {
         if showingJourneySelect {
             animateSelectJourneyUp(animated: true)
-//            self.activeJourneyButton.setTitle(self.activeJourney?.headline, for: .normal)
         } else {
             animateSelectJourneyDown(animated: true)
-//            self.activeJourneyButton.setTitle("Done", for: .normal)
         }
         showingJourneySelect = !showingJourneySelect
     }
@@ -101,7 +99,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
+//        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
         self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
@@ -174,6 +172,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
+        activeJourneyButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
         
         editMessageButton.isUserInteractionEnabled = true
         editMemoButton.isUserInteractionEnabled = true
