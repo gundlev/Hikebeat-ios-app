@@ -178,7 +178,15 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         // setting beat media
             print("Item :", (indexPath as NSIndexPath).item)
-            switch beat.mediaType! {
+        
+        guard let mediaType = beat.mediaType else {
+            cell.mediaType.text = " "
+            cell.beatImage.isHidden = true
+            cell.playButton.isHidden = true
+            return cell
+        }
+        
+        switch mediaType {
             case MediaType.image:
                 print("image")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
@@ -202,7 +210,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 cell.mediaType.text = " "
                 cell.beatImage.isHidden = true
                 cell.playButton.isHidden = true
-            }
+        }
         return cell
     }
     
