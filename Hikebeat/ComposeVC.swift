@@ -69,6 +69,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     @IBOutlet weak var noactiveTop: NSLayoutConstraint!
     
+    @IBOutlet weak var noActiveJourneyHouses: UIImageView!
+    @IBOutlet weak var noActiveJourneyButton: UIButton!
+    @IBOutlet weak var noActiveJourneyTitle: UILabel!
+    @IBOutlet weak var noActiveJourneyText: UILabel!
+    @IBOutlet weak var noActiveJourneyImage: UIImageView!
     @IBAction func chooseActiveJourney(_ sender: Any) {
         if showingJourneySelect {
             animateSelectJourneyUp(animated: true)
@@ -191,13 +196,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func checkForActiveJourney() {
-        if !findActiveJourney() {
-            composeContainer.isHidden = true
-            NoActiveContainer.isHidden = false
-        }else{
-            composeContainer.isHidden = false
-            NoActiveContainer.isHidden = true
-        }
+        handleScreenPresentation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -212,15 +211,24 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     
     override func viewWillAppear(_ animated: Bool) {
+        handleScreenPresentation()
+        self.tableViewSelectJourney.reloadData()
+
+    }
+    
+    func handleScreenPresentation(){
         if !findActiveJourney() {
             composeContainer.isHidden = true
             NoActiveContainer.isHidden = false
+            noActiveJourneyText.text = journeys!.isEmpty ? "To get started, please create your first journey." : "Please select a journey from the drop-down above."
+            noActiveJourneyTitle.text = journeys!.isEmpty ? "Welcome to Hikebeat!" : "Select a journey!"
+            noActiveJourneyImage.image = UIImage(named: journeys!.isEmpty ? "welcome_logo" : "NoActiveJourney")
+            noActiveJourneyButton.isHidden = !journeys!.isEmpty
+            noActiveJourneyHouses.isHidden = !journeys!.isEmpty
         }else{
             composeContainer.isHidden = false
             NoActiveContainer.isHidden = true
         }
-        self.tableViewSelectJourney.reloadData()
-
     }
     
     @IBAction func unwindToCompose(_ sender: UIStoryboardSegue)

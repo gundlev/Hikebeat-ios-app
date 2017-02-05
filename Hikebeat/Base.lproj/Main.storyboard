@@ -1493,8 +1493,8 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
                                         <rect key="frame" x="25" y="25" width="333" height="486"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Missing an active journey" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSQ-si-Rgb">
-                                        <rect key="frame" x="79.5" y="248" width="223" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Hikebeat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSQ-si-Rgb">
+                                        <rect key="frame" x="79.5" y="283" width="223" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="223" id="zEl-vs-WtK"/>
                                         </constraints>
@@ -1502,29 +1502,26 @@
                                         <color key="textColor" red="0.96795254945755005" green="0.90675777196884155" blue="0.038608193397521973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveJourney" translatesAutoresizingMaskIntoConstraints="NO" id="o5b-0l-Gkn">
-                                        <rect key="frame" x="98.5" y="70" width="185" height="153"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome_logo" translatesAutoresizingMaskIntoConstraints="NO" id="o5b-0l-Gkn">
+                                        <rect key="frame" x="80.5" y="70" width="221" height="153"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="153" id="rXc-4w-M4e"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kn4-Dq-nuI">
-                                        <rect key="frame" x="69.5" y="269" width="244" height="81.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To get started, please create your first journey." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kn4-Dq-nuI">
+                                        <rect key="frame" x="69.5" y="304" width="244" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="2me-Uq-udP"/>
                                         </constraints>
-                                        <string key="text">You don’t have any active
-journeys. Please go to the
-Journeys screen and activate one.</string>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984109401702881" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowhouses" translatesAutoresizingMaskIntoConstraints="NO" id="34N-q4-NkV">
-                                        <rect key="frame" x="140.5" y="377" width="102" height="31"/>
+                                        <rect key="frame" x="140.5" y="371.5" width="102" height="31"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bux-pj-aPf">
-                                        <rect key="frame" x="50" y="406" width="283" height="46"/>
+                                        <rect key="frame" x="50" y="400.5" width="283" height="46"/>
                                         <color key="backgroundColor" red="0.96795254945755005" green="0.90675777196884155" blue="0.038608193397521973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="283" id="IOX-fs-bD6"/>
@@ -1532,10 +1529,11 @@ Journeys screen and activate one.</string>
                                         </constraints>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="Go to journeys">
+                                                <fragment content="Create a journey">
                                                     <attributes>
                                                         <color key="NSColor" red="0.10588235294117647" green="0.42352941176470588" blue="0.41176470588235292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <font key="NSFont" size="24" name="Helvetica-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -1548,7 +1546,7 @@ Journeys screen and activate one.</string>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Soi-Tr-1wP" secondAttribute="bottom" constant="25" id="2og-pv-kxR"/>
                                     <constraint firstItem="o5b-0l-Gkn" firstAttribute="top" secondItem="dcF-oM-r1p" secondAttribute="top" constant="70" id="5aE-eX-dhi"/>
-                                    <constraint firstItem="fSQ-si-Rgb" firstAttribute="top" secondItem="o5b-0l-Gkn" secondAttribute="bottom" constant="25" id="JR8-dI-Xr2"/>
+                                    <constraint firstItem="fSQ-si-Rgb" firstAttribute="top" secondItem="o5b-0l-Gkn" secondAttribute="bottom" constant="60" id="JR8-dI-Xr2"/>
                                     <constraint firstItem="Bux-pj-aPf" firstAttribute="top" secondItem="kn4-Dq-nuI" secondAttribute="bottom" constant="55.5" id="RQJ-bv-iC6"/>
                                     <constraint firstItem="Bux-pj-aPf" firstAttribute="centerX" secondItem="dcF-oM-r1p" secondAttribute="centerX" id="RSP-4A-iYU"/>
                                     <constraint firstItem="kn4-Dq-nuI" firstAttribute="top" secondItem="fSQ-si-Rgb" secondAttribute="bottom" id="T65-DI-PL2"/>
@@ -1690,6 +1688,11 @@ Journeys screen and activate one.</string>
                         <outlet property="journeysButton" destination="Bux-pj-aPf" id="Ek1-iS-x7q"/>
                         <outlet property="leftTree" destination="wF8-Rd-LWZ" id="EwK-uj-zJg"/>
                         <outlet property="middleHouse" destination="S2K-gl-m7S" id="bKv-bU-xSS"/>
+                        <outlet property="noActiveJourneyButton" destination="Bux-pj-aPf" id="HcE-B8-dJo"/>
+                        <outlet property="noActiveJourneyHouses" destination="34N-q4-NkV" id="xhf-cl-NQb"/>
+                        <outlet property="noActiveJourneyImage" destination="o5b-0l-Gkn" id="6po-hQ-Zyy"/>
+                        <outlet property="noActiveJourneyText" destination="kn4-Dq-nuI" id="0DA-mj-r0h"/>
+                        <outlet property="noActiveJourneyTitle" destination="fSQ-si-Rgb" id="D64-ip-wnl"/>
                         <outlet property="noactiveTop" destination="giZ-FP-1hA" id="Jgx-5Y-zTm"/>
                         <outlet property="rightTree" destination="han-Pg-Vnv" id="67X-34-cdA"/>
                         <outlet property="sendBeatButton" destination="ahQ-bk-OOE" id="EOU-z1-Zds"/>
@@ -3160,7 +3163,7 @@ Journeys screen and activate one.</string>
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8094C299-6EE7-4167-BF4F-4E1A92779DA6" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="42EE2B0F-0658-4AC4-8F96-C1BB2220A9ED" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -4920,7 +4923,7 @@ sync</string>
         </scene>
     </scenes>
     <resources>
-        <image name="8094C299-6EE7-4167-BF4F-4E1A92779DA6" width="24" height="30">
+        <image name="42EE2B0F-0658-4AC4-8F96-C1BB2220A9ED" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5042,7 +5045,6 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="NewIcon" width="33" height="33"/>
         <image name="NewJourney" width="90" height="90"/>
         <image name="NoActiveBG" width="315" height="473"/>
-        <image name="NoActiveJourney" width="185" height="153"/>
         <image name="NoSocial" width="184" height="115"/>
         <image name="NotActivatedBadge" width="39" height="39"/>
         <image name="NotificationIcon" width="27" height="30"/>
