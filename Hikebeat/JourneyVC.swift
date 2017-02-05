@@ -42,7 +42,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         view.layer.addSublayer(bgGradient)
         
         let socialGradient = CAGradientLayer()
-        socialGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: socialContainerView.bounds.size)
+        socialGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: view.bounds.size.width*2, height: socialContainerView.bounds.height))
         socialGradient.colors = [UIColor(hexString: "054D51")!.cgColor, UIColor(hexString: "2E7E5D")!.cgColor]
         socialGradient.zPosition = -1
         socialContainerView.layer.addSublayer(socialGradient)
@@ -67,7 +67,6 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 let realm = try! Realm()
                 try! realm.write {
                     print("here")
-//                    self.journey?.beats = fullJourney.beats
                     for (_, beatJson) in beatsJson {
                         print("___________________________")
                         print(beatJson)
