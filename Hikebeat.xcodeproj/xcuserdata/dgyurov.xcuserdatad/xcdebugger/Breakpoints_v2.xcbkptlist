@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Hikebeat/ProfileVC.swift"
-            timestampString = "496762843.086529"
+            timestampString = "508716958.602002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "checkForChanges()"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "chooseImage()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
