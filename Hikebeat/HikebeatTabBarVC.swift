@@ -92,6 +92,10 @@ class HikebeatTabBarVC: UITabBarController {
         
     }
     
+    func changeToTap(index: Int) {
+        self.selectedIndex = index
+    }
+    
     func deselectCenterButton() {
         centerButton.isSelected = true
     }

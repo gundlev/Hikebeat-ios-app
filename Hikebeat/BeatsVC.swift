@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import RealmSwift
-
+import Regift
 
 class BeatsVC: UIViewController, AVAudioPlayerDelegate {
 
@@ -121,10 +121,10 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 let emotionName = beat.emotion!.lowercased()
                 cell.profilePicture.image = UIImage(named: emotionName+"_selected")
             } else {
-                cell.profilePicture.image = UIImage(named: "ContactImage")
+                cell.profilePicture.image = UIImage(named: "missingMoodIcon")
             }
         } else {
-            cell.profilePicture.image = UIImage(named: "ContactImage")
+            cell.profilePicture.image = UIImage(named: "missingMoodIcon")
         }
 //        let dataPath = getImagePath("profile_image.jpg")
 //        let image = UIImage(contentsOfFile: dataPath)
@@ -178,15 +178,32 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         // setting beat media
             print("Item :", (indexPath as NSIndexPath).item)
-            switch beat.mediaType! {
+        
+        guard let mediaType = beat.mediaType else {
+            cell.mediaType.text = " "
+            cell.beatImage.isHidden = true
+            cell.playButton.isHidden = true
+            return cell
+        }
+        
+        switch mediaType {
             case MediaType.image:
                 print("image")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.beatImage.image = UIImage(named: "picture-btn")
+                cell.beatImage.contentMode = .scaleAspectFill
                 cell.mediaType.text = "Image"
                 cell.setImage()
             case MediaType.video:
                 print("video")
+//                let frameCount = 16
+//                let delayTime  = Float(0.2)
+//                let loopCount  = 0    // 0 means loop forever
+//                let videoURL = getPathToFileFromName(beat.mediaData!)
+//                Regift.createGIFFromSource(videoURL!, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount) { (result) in
+//                    print("Gif saved to \(result)")
+//                }
+
                 cell.beatImage.image = UIImage(named: "video-btn")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Video"
@@ -202,7 +219,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 cell.mediaType.text = " "
                 cell.beatImage.isHidden = true
                 cell.playButton.isHidden = true
-            }
+        }
         return cell
     }
     

@@ -23,6 +23,7 @@
 		8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F31CD4E7520085CE2B /* Structs.swift */; };
 		8512E0F71CD4E7520085CE2B /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F41CD4E7520085CE2B /* utils.swift */; };
 		8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */; };
+		8518F1481E4CDD520084A5FD /* Regift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8518F1471E4CDD520084A5FD /* Regift.framework */; };
 		851A51EE1D9A6C1700CA7EA5 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E71D9A6C1700CA7EA5 /* Alamofire.framework */; };
 		851A51EF1D9A6C1700CA7EA5 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E81D9A6C1700CA7EA5 /* AlamofireImage.framework */; };
 		851A51F01D9A6C1700CA7EA5 /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851A51E91D9A6C1700CA7EA5 /* BrightFutures.framework */; };
@@ -154,6 +155,7 @@
 		8512E0F31CD4E7520085CE2B /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		8512E0F41CD4E7520085CE2B /* utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		8512E0F81CD4E9BD0085CE2B /* SimpleReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleReachability.swift; sourceTree = "<group>"; };
+		8518F1471E4CDD520084A5FD /* Regift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Regift.framework; path = Carthage/Build/iOS/Regift.framework; sourceTree = "<group>"; };
 		851A51E71D9A6C1700CA7EA5 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		851A51E81D9A6C1700CA7EA5 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
 		851A51E91D9A6C1700CA7EA5 /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				85017F0E1E3BEA210054751B /* FBSDKLoginKit.framework in Frameworks */,
 				85017F0F1E3BEA210054751B /* FBSDKShareKit.framework in Frameworks */,
 				85017F141E3BF9240054751B /* NVActivityIndicatorView.framework in Frameworks */,
+				8518F1481E4CDD520084A5FD /* Regift.framework in Frameworks */,
 				85017F101E3BEA210054751B /* JWTDecode.framework in Frameworks */,
 				85017F111E3BEA210054751B /* SwiftyDrop.framework in Frameworks */,
 			);
@@ -351,6 +354,7 @@
 		8549C76E1D89ECFE00313EBB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8518F1471E4CDD520084A5FD /* Regift.framework */,
 				85017F131E3BF9240054751B /* NVActivityIndicatorView.framework */,
 				85017F001E3BEA210054751B /* Bolts.framework */,
 				85017F011E3BEA210054751B /* FacebookCore.framework */,
@@ -438,7 +442,6 @@
 				8593DB121DFC188A00604BFA /* SearchUserCell.swift */,
 				85562F5C1E2BFFA30078CC51 /* TableViewSectionHeader.swift */,
 				85562F651E2C3C250078CC51 /* TableViewSectionFooter.swift */,
-				85FBDA4E1E469DA300A1DF3A /* PaginatingVC.swift */,
 				85FBDA501E46A13B00A1DF3A /* TableViewPaginationFooter.swift */,
 			);
 			name = Social;
@@ -490,6 +493,7 @@
 		85A7D0DD1CEDDCCD00EC9578 /* Universal */ = {
 			isa = PBXGroup;
 			children = (
+				85FBDA4E1E469DA300A1DF3A /* PaginatingVC.swift */,
 				E1B413891CCE864F00B8768B /* ModalVC.swift */,
 				E18991631CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift */,
 				E18991651CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift */,
@@ -791,6 +795,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FacebookShare.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FacebookCore.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/NVActivityIndicatorView.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Regift.framework",
 			);
 			outputPaths = (
 			);

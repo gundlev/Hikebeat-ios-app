@@ -53,6 +53,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
                 self.spinner.stopAnimating()
                 if image != nil {
                     let realm = try! Realm()
+                    self.beatImage.image = image
                     self.beatImage.isHidden = false
                     self.playButton.isHidden = false
                     try! realm.write {

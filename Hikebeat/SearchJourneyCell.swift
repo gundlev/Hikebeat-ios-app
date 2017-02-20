@@ -17,6 +17,7 @@ class SearchJourneyCell: UITableViewCell {
     var followersBeats: UILabel!
     var firstLoad = true
     var imageActivity: UIActivityIndicatorView!
+    var followButton: UIButton!
     
     override func awakeFromNib() {
         if firstLoad {
@@ -33,10 +34,14 @@ class SearchJourneyCell: UITableViewCell {
             followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
             followersBeats.textColor = .white
             followersBeats.font = UIFont.systemFont(ofSize: 13)
+            followButton = UIButton(frame: CGRect(x: width-100, y: 10, width: 90, height: 30))
+            followButton.setTitle("Follow", for: .normal)
+            followButton.setTitle("Unfollow", for: .selected)
             self.addSubview(profileImage)
             self.addSubview(imageActivity)
             self.addSubview(headline)
             self.addSubview(followersBeats)
+            self.addSubview(followButton)
             self.firstLoad = false
         }
     }

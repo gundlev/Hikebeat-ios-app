@@ -18,6 +18,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     
     var journeysButton: UIButton!
     var usersButton: UIButton!
+    var activityIndicator: UIActivityIndicatorView!
     var currentPage:CGFloat = 0
     var firstLoad = true
 //    var journeyTableView: UITableView!
@@ -31,18 +32,13 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     var chosenJourney: Journey!
     var chosenType: SearchType!
     
-//    var featuredJourneys = [Journey]()
-//    var featuredUsers = [User]()
-//    
-//    var currentJourneys = [Journey]()
-//    var currentUsers = [User]()
-    
     @IBAction func backToSearch(_ unwindSegue: UIStoryboardSegue) {
         
     }
     override func viewDidLoad() {
         if firstLoad {
-            
+            let width = UIScreen.main.bounds.width
+            let height = UIScreen.main.bounds.height
             self.serachBar.backgroundColor = standardGreen
             self.serachBar.barTintColor = standardGreen
             searchTextField.leftViewMode = .always
@@ -103,12 +99,16 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
 //            scrollView.addSubview(searchTableView)
 //            scrollView.addSubview(usersTableView)
             
+            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: height/2-25, width: width, height: 50))
+            activityIndicator.hidesWhenStopped = true
+            self.view.addSubview(activityIndicator)
+            
             firstLoad = false
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+        activityIndicator.startAnimating()
         print("search was tapped")
         self.view.endEditing(true)
         guard searchTextField.text != nil else {return true}
@@ -119,17 +119,20 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         userSearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (users) in
             self.searchTableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
             print("ERROR: ", error)
+            self.activityIndicator.stopAnimating()
         })
         
         
         journeySearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (journeys) in
             self.searchTableView.reloadData()
-            print("journeys: ", journeys)
+            self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
             print("ERROR: ", error)
+            self.activityIndicator.stopAnimating()
         })
         
         return true
@@ -160,15 +163,6 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
 //            self.usersTableView.reloadData()
 //        }
     }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let fractionalPage = self.scrollView.contentOffset.x/scrollViewWidth
-//        if round(fractionalPage) != currentPage {
-//            print("Page change")
-//            self.currentPage = round(fractionalPage)
-//            changePage(round(fractionalPage))
-//        }
-//    }
     
     func changePage(_ index: CGFloat) {
         self.currentPage = index
@@ -206,10 +200,12 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         switch section {
         case 0:
             guard self.userSearch != nil else {return 0}
+            guard self.userSearch?.results.count != 0 else {print("usersearch 0"); return 0}
             guard (self.userSearch?.results.count)! < 4 else {return 5}
             return (self.userSearch?.results.count)! + 2
         case 1:
             guard self.journeySearch != nil else {return 0}
+            guard self.journeySearch?.results.count != 0 else {print("journeysearch 0");return 0}
             guard (self.journeySearch?.results.count)! < 4 else {return 5}
             return (self.journeySearch?.results.count)! + 2
         default:
@@ -225,6 +221,18 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+//        var count = 0
+//        if self.userSearch?.results != nil {
+//            if (self.userSearch?.results.count)! > 0 {
+//                count += 1
+//            }
+//        }
+//        if self.journeySearch?.results != nil {
+//            if (self.journeySearch?.results.count)! > 0 {
+//                count += 1
+//            }
+//        }
+//        print("Number of sections: ", count)
         return 2
     }
     

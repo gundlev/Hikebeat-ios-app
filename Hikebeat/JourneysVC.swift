@@ -101,6 +101,9 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.journeys = self.realm.objects(Journey.self).reversed()
         self.activeJourneysCollectionView.reloadData()
         self.journeysTableView.reloadData()
+        print("Setting tabbar")
+        let tabVC = self.tabBarController as! HikebeatTabBarVC
+        tabVC.changeToTap(index: 2)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,29 +146,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let journey = journeys[(indexPath as NSIndexPath).row]
         
-        let beats = journey.beats.sorted(byProperty: "timestamp")
+        let beats = journey.beats.sorted(byKeyPath: "timestamp")
 
-        
-        
-        if beats.isEmpty {
-            cell.journeyDateLabel.text = "No beats"
-        } else {
-//            let beat = beats.first
-//            let formatter = NSDateFormatter()
-//            let date = NSDate(timeIntervalSince1970: NSTimeInterval(Int(beat!.timestamp)!))
-//            formatter.dateFormat = "d/M/YY"
-//            let timeString = formatter.stringFromDate(date)
-            cell.journeyDateLabel.text = String(beats.count) + " beats"
-        }
-        
-        var statusLabel = ""
-        if journey.active {
-            statusLabel = "Active journey"
-        } else {
-            statusLabel = "Inactive journey"
-        }
-        
-        cell.journeyStatusLabel.text = statusLabel
         cell.journeyTitleLabel.text = journey.headline!
         
         cell.backgroundColor = UIColor.clear
@@ -174,12 +156,32 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         bgColorView.backgroundColor = highlightColor
         cell.selectedBackgroundView = bgColorView
         
-        return cell
+        cell.journeyDateLabel.text = String(beats.count) + " beats"
         
+        if beats.isEmpty {
+            cell.journeyStatusLabel.text = "No updates"
+            cell.journeyDateLabel.text = "No beats"
+        } else {
+            guard let beat = journey.beats.last, let timeInterval = TimeInterval(beat.timestamp) else {
+                cell.journeyStatusLabel.text = "No beats"
+                return cell
+            }
+            
+            let formatter = DateFormatter()
+            let date = NSDate(timeIntervalSince1970: timeInterval)
+            formatter.locale = NSLocale.current
+            formatter.dateStyle = .medium
+            
+            let timeString = formatter.string(from: date as Date)
+
+            let statusLabel = "Updated on \(timeString)"
+            cell.journeyStatusLabel.text = statusLabel
+        }
+        
+        return cell
     }
     
     @IBAction func showNewJourneyVC(_ sender: AnyObject) {
-        
         performSegue(withIdentifier: "showNewJourney", sender: self)
         
     }

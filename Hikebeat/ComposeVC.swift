@@ -33,6 +33,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userDefaults = UserDefaults.standard
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+    var memoButtonCenterX: CGFloat = 0.0
+    var imageButtonCenterX: CGFloat = 0.0
+    
     var beatPromise: Promise<Bool, NoError>!
     var showingJourneySelect = false
     var firstLoad = true
@@ -56,6 +59,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     @IBOutlet weak var editVideoButton: UIImageView!
     @IBOutlet weak var hikebeatTopLogo: UIImageView!
     
+    @IBOutlet weak var editVideoText: UILabel!
+    @IBOutlet weak var editMemoText: UILabel!
+    @IBOutlet weak var editImageText: UILabel!
+    
+    @IBOutlet weak var mediaAdded: UILabel!
+    
     @IBOutlet weak var rightTree: UIImageView!
     @IBOutlet weak var leftTree: UIImageView!
     @IBOutlet weak var middleHouse: UIImageView!
@@ -69,13 +78,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     @IBOutlet weak var noactiveTop: NSLayoutConstraint!
     
+    @IBOutlet weak var noActiveJourneyHouses: UIImageView!
+    @IBOutlet weak var noActiveJourneyButton: UIButton!
+    @IBOutlet weak var noActiveJourneyTitle: UILabel!
+    @IBOutlet weak var noActiveJourneyText: UILabel!
+    @IBOutlet weak var noActiveJourneyImage: UIImageView!
     @IBAction func chooseActiveJourney(_ sender: Any) {
         if showingJourneySelect {
             animateSelectJourneyUp(animated: true)
-//            self.activeJourneyButton.setTitle(self.activeJourney?.headline, for: .normal)
         } else {
             animateSelectJourneyDown(animated: true)
-//            self.activeJourneyButton.setTitle("Done", for: .normal)
         }
         showingJourneySelect = !showingJourneySelect
     }
@@ -101,8 +113,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
+//        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
         self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
+        memoButtonCenterX = editMemoButton.center.x
+        imageButtonCenterX = editImageButton.center.x
+        mediaAdded.isHidden = true
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
             composeContainer.transform = CGAffineTransform.identity.scaledBy(x: 0.80, y: 0.80);
@@ -174,6 +189,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
+        activeJourneyButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0)
         
         editMessageButton.isUserInteractionEnabled = true
         editMemoButton.isUserInteractionEnabled = true
@@ -192,13 +208,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func checkForActiveJourney() {
-        if !findActiveJourney() {
-            composeContainer.isHidden = true
-            NoActiveContainer.isHidden = false
-        }else{
-            composeContainer.isHidden = false
-            NoActiveContainer.isHidden = true
-        }
+        handleScreenPresentation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -213,15 +223,24 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     
     override func viewWillAppear(_ animated: Bool) {
+        handleScreenPresentation()
+        self.tableViewSelectJourney.reloadData()
+
+    }
+    
+    func handleScreenPresentation(){
         if !findActiveJourney() {
             composeContainer.isHidden = true
             NoActiveContainer.isHidden = false
+            noActiveJourneyText.text = journeys!.isEmpty ? "To get started, please create your first journey." : "Please select a journey from the drop-down above."
+            noActiveJourneyTitle.text = journeys!.isEmpty ? "Welcome to Hikebeat!" : "Select a journey!"
+            noActiveJourneyImage.image = UIImage(named: journeys!.isEmpty ? "welcome_logo" : "NoActiveJourney")
+            noActiveJourneyButton.isHidden = !journeys!.isEmpty
+            noActiveJourneyHouses.isHidden = !journeys!.isEmpty
         }else{
             composeContainer.isHidden = false
             NoActiveContainer.isHidden = true
         }
-        self.tableViewSelectJourney.reloadData()
-
     }
     
     @IBAction func unwindToCompose(_ sender: UIStoryboardSegue)
@@ -310,7 +329,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     func applyGreenBorder(_ view :UIImageView) {
         filledin += 1
         view.layer.borderWidth = 4
-        view.layer.borderColor = greenColor.cgColor
+        view.layer.borderColor = self.greenColor.cgColor
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            view.center.x = self.editVideoButton.center.x
+        })
     }
     
     func removeGreenBorder(_ view: UIImageView) {
@@ -340,28 +363,45 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         self.audioHasBeenRecordedForThisBeat = false
         filledin = 0
         hideClearButton()
-        enableMediaView(self.editMemoButton)
-        enableMediaView(self.editImageButton)
-        enableMediaView(self.editVideoButton)
+        enableMediaView(self.editMemoButton, type: "memo")
+        enableMediaView(self.editImageButton, type: "image")
+        enableMediaView(self.editVideoButton, type: "video")
         editEmotionButton.image = UIImage(named: "ComposeMessage")
+        editImageText.isHidden = false
+        editVideoText.isHidden = false
+        editMemoText.isHidden = false
+        mediaAdded.isHidden = true
     }
     
     func disableMediaView(_ view :UIImageView) {
         view.isUserInteractionEnabled = false
-        view.alpha = 0.4
+        UIView.animate(withDuration: 0.5, animations: {
+            view.alpha = 0.0
+            view.center.x = self.editVideoButton.center.x
+        })
     }
     
-    func enableMediaView(_ view :UIImageView) {
+    func enableMediaView(_ view :UIImageView, type: String) {
         view.isUserInteractionEnabled = true
-        view.alpha = 1
+        UIView.animate(withDuration: 0.5, animations: {
+            view.alpha = 1
+            switch type {
+                case "memo":
+                    view.center.x = self.memoButtonCenterX
+                case "image":
+                    view.center.x = self.imageButtonCenterX
+                case "video":
+                    view.center.x = self.editVideoButton.center.x
+                default:
+                    break
+            }
+        })
     }
-
     
     @IBAction func gotoJourneys(_ sender: AnyObject) {
         self.tabBarController?.selectedIndex = 0
         let tabVC = self.tabBarController as! HikebeatTabBarVC
         tabVC.deselectCenterButton()
-        
     }
     
     func mediaChosen(_ type: String) {
@@ -383,6 +423,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 showClearButton()
         default: print("Type not matching: ", type)
         }
+        
+        editImageText.isHidden = true
+        editVideoText.isHidden = true
+        editMemoText.isHidden = true
+        mediaAdded.isHidden = false
     }
     
     
