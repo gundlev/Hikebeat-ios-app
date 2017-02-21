@@ -74,9 +74,16 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     
     @IBOutlet weak var infoContainer: UIView!
     
-    
-    
     @IBOutlet weak var blurryBG: UIImageView!
+    
+    @IBAction func phoneNumberInfoPressed(_ sender: Any) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        _ = alertView.addButton("Okay") {}
+        _ = alertView.showNotice("Phone Number", subTitle: "Add your phone number to prevent other phones from sending SMS to Hikebeat pretending to be you. This is an extra security feature.")
+    }
     
     @IBAction func editProfileImageTapped(_ sender: AnyObject) {
         chooseImage()

@@ -33,7 +33,9 @@ extension ComposeVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                 self.imagePicker.mediaTypes = [kUTTypeImage as String]
                 self.imagePicker.allowsEditing = false
                 
+                self.modalTransitionStyle = .crossDissolve
                 self.present(self.imagePicker, animated: true, completion: nil)
+                
             }
         })
         let takePhoto = UIAlertAction(title: "Camera", style: .default, handler: {

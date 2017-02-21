@@ -44,6 +44,34 @@ class SettingsVC: UIViewController {
     
     var animationInitialised: Bool!
     
+    @IBAction func notificationsInfoPressed(_ sender: Any) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        _ = alertView.addButton("Okay") {}
+        _ = alertView.showNotice("Notifications", subTitle: "Enable to get push notifications when the hikers you follow send new beats.")
+    }
+    
+    @IBAction func gpsCheckInfoPressed(_ sender: Any) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        _ = alertView.addButton("Okay") {}
+        _ = alertView.showNotice("GPS check", subTitle: "Enable to get warnings if the GPS signal is poor when sending a beat.")
+    }
+    
+    @IBAction func smsFunctionalityInfoPressed(_ sender: Any) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        _ = alertView.addButton("Okay") {}
+        _ = alertView.showNotice("SMS Functionality", subTitle: "Enable to automatically generate a SMS for a beat if you have no data connection. Alternatively, your beat is stored on the phone and synced later.")
+    }
+    
+    
     @IBAction func logoutAction(_ sender: AnyObject) {
 
         let appearance = SCLAlertView.SCLAppearance(

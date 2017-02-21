@@ -330,14 +330,16 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         filledin += 1
         view.layer.borderWidth = 4
         view.layer.borderColor = self.greenColor.cgColor
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            view.center.x = self.editVideoButton.center.x
-        })
     }
     
     func removeGreenBorder(_ view: UIImageView) {
         view.layer.borderWidth = 0
+    }
+    
+    func moveViewToCenter(_ view: UIImageView) {
+        UIView.animate(withDuration: 0.5, animations: {
+            view.center.x = self.editVideoButton.center.x
+        })
     }
     
     func showClearButton(){
@@ -407,16 +409,19 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     func mediaChosen(_ type: String) {
         switch type {
             case "video":
+                moveViewToCenter(editVideoButton)
                 applyGreenBorder(editVideoButton)
                 disableMediaView(editMemoButton)
                 disableMediaView(editImageButton)
                 showClearButton()
             case "image":
+                moveViewToCenter(editImageButton)
                 applyGreenBorder(editImageButton)
                 disableMediaView(editMemoButton)
                 disableMediaView(editVideoButton)
                 showClearButton()
             case "audio":
+                moveViewToCenter(editMemoButton)
                 applyGreenBorder(editMemoButton)
                 disableMediaView(editVideoButton)
                 disableMediaView(editImageButton)
