@@ -31,7 +31,7 @@ class LFTPulseAnimation: CALayer {
         super.init()
         self.contentsScale = UIScreen.main.scale
         self.opacity = 0.0
-        self.backgroundColor = UIColor.blue.cgColor
+        self.backgroundColor = UIColor(hexString: "#15676C")?.cgColor
         self.radius = radius;
         self.repetitions = repeatCount;
         self.position = position
