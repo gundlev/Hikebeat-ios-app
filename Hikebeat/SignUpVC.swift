@@ -65,17 +65,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 print("email or username has been used")
 //                    print(response.result.value)
                 let json = JSON(response.result.value)
-                if let errors = json["errors"].array {
-                    var bannerText = ""
-                    for var i in 0...errors.count-1 {
-                        print(errors[i])
-                        if i != 0 {
-                            bannerText += "\n\n"
-                        }
-                        bannerText += "\(errors[i]["friendlyMessage"].stringValue)"
-                    }
-                    Drop.down(bannerText, state: .error)
-                }
+                showCallErrors(json: json)
             }
         }
 

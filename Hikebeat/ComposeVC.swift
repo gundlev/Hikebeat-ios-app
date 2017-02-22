@@ -449,8 +449,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             hikebeatTopLogo.isHidden = true
             activeJourneyButton.isHidden = false
         }
-//        print("journeys: ", self.journeys)
-        self.tableViewSelectJourney.reloadData()
+        print("journeys: ", self.journeys)
         let journeys = realm.objects(Journey.self).filter("active = \(true)")
         if journeys.isEmpty {
             self.activeJourney = nil
@@ -461,6 +460,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             self.activeJourneyButton.setTitle(self.activeJourney!.headline, for: .normal)
             return true
         }
+        self.tableViewSelectJourney.reloadData()
 
     }
     

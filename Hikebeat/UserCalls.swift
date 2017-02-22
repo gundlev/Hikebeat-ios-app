@@ -82,6 +82,7 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
                             })
                     } else {
                         print("response: ", response)
+                        showCallErrors(json: JSON(response.result.value))
                         complete(.failure(.facebookLogin))
                     }
                 }

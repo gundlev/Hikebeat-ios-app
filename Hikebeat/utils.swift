@@ -13,6 +13,8 @@ import UserNotifications
 import BrightFutures
 import JWTDecode
 import NVActivityIndicatorView
+import SwiftyDrop
+import SwiftyJSON
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
@@ -26,6 +28,22 @@ func showActivity() {
 
 func hideActivity() {
     NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+}
+
+func showCallErrors(json: JSON) {
+    if let errors = json["errors"].array {
+        var bannerText = ""
+        for var i in 0...errors.count-1 {
+            print(errors[i])
+            if i != 0 {
+                bannerText += "\n\n"
+            }
+            bannerText += "\(errors[i]["friendlyMessage"].stringValue)"
+        }
+        Drop.down(bannerText, state: .error)
+    } else {
+        Drop.down("Something went wrong", state: .error)
+    }
 }
 
 func shouldRefreshToken() -> Bool {

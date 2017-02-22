@@ -120,6 +120,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
                     }
                     self.performSegue(withIdentifier: "backWhenCreated", sender: self)
                 } else {
+                    showCallErrors(json: JSON(response.result.value))
                     print(response)
                 }
             }

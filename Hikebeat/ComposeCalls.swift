@@ -31,6 +31,7 @@ func uploadBeat(beat: Beat) -> Future<String, HikebeatError> {
                 let messageJson = rawMessageJson["data"][0]
                 complete(.success(messageJson["_id"].stringValue))
             } else {
+                showCallErrors(json: JSON(response.result.value))
                 complete(.failure(.uploadBeat))
             }
         }

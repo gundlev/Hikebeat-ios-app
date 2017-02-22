@@ -82,10 +82,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if self.activeIndexpath != nil {
-            let indexpath = IndexPath(item: self.activeIndexpath!, section: 0)
-            self.activeJourneysCollectionView.scrollToItem(at: indexpath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
-        }
+//        if self.activeIndexpath != nil {
+//            let indexpath = IndexPath(item: self.activeIndexpath!, section: 0)
+//            self.activeJourneysCollectionView.scrollToItem(at: indexpath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,7 +99,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func unwindWhenCreatedJourney(_ unwindSegue: UIStoryboardSegue) {
         self.journeys = self.realm.objects(Journey.self).reversed()
-        self.activeJourneysCollectionView.reloadData()
+//        self.activeJourneysCollectionView.reloadData()
         self.journeysTableView.reloadData()
         print("Setting tabbar")
         let tabVC = self.tabBarController as! HikebeatTabBarVC
@@ -129,6 +129,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if success {
                     try! self.realm.write {
                         self.realm.delete(journey)
+                        print("Journey deleted")
                     }
                 } else {
                     //TODO: save deletion in changes.
