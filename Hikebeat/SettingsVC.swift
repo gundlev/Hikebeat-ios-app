@@ -347,6 +347,11 @@ class SettingsVC: UIViewController {
             self.numbers.audio = 0
         }
         
+        syncMessagesBadge.text = "?"
+        syncPicturesBadge.text = "\(self.numbers.image)"
+        syncVideosBadge.text = "\(self.numbers.video)"
+        syncMemosBadge.text = "\(self.numbers.audio)"
+        
         setBorderAccordingToStatus(self.syncPictures, mediaType: MediaType.image)
         setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
         setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)
@@ -361,7 +366,7 @@ class SettingsVC: UIViewController {
     }
     
     func setBorderAccordingToStatus(_ view: UIImageView, mediaType: String) {
-        view.layer.borderWidth = 4
+        view.layer.borderWidth = 3
         var color:UIColor = greenColor
         switch mediaType {
             case MediaType.image:
