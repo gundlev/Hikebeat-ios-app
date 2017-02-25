@@ -2496,8 +2496,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVo-RF-Rk1">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVo-RF-Rk1">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="82"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gV-4q-h1i">
                                         <rect key="frame" x="20" y="26" width="115" height="34"/>
@@ -2510,38 +2510,51 @@
                                             <segue destination="le5-b6-Ri6" kind="unwind" unwindAction="unwindToJourney:" id="ISc-wq-6AS"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="CPN-58-kdG">
-                                        <rect key="frame" x="227" y="26" width="146" height="34"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HikebeatTypo" translatesAutoresizingMaskIntoConstraints="NO" id="CPN-58-kdG">
+                                        <rect key="frame" x="118.5" y="26" width="146" height="34"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tf5-1B-iNE">
+                                        <rect key="frame" x="304" y="20.5" width="59" height="49"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="49" id="an0-y2-LQp"/>
+                                            <constraint firstAttribute="width" constant="59" id="uay-x4-30k"/>
+                                        </constraints>
+                                        <state key="normal" image="TrashIcon"/>
+                                        <connections>
+                                            <action selector="clearButtonTapped:" destination="jTg-CM-etK" eventType="touchUpInside" id="TpL-5r-bz6"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.08235294118" green="0.4039215686" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="3pG-aS-RLW"/>
                                     <constraint firstItem="CPN-58-kdG" firstAttribute="centerX" secondItem="vVo-RF-Rk1" secondAttribute="centerX" id="Gq8-3D-4zY"/>
+                                    <constraint firstAttribute="trailing" secondItem="Tf5-1B-iNE" secondAttribute="trailing" constant="20" id="NZ0-Ik-qg0"/>
                                     <constraint firstItem="8gV-4q-h1i" firstAttribute="leading" secondItem="vVo-RF-Rk1" secondAttribute="leading" constant="20" id="UyG-KD-xTz"/>
                                     <constraint firstItem="CPN-58-kdG" firstAttribute="centerY" secondItem="8gV-4q-h1i" secondAttribute="centerY" id="aS1-vZ-WlD"/>
                                     <constraint firstItem="CPN-58-kdG" firstAttribute="top" secondItem="vVo-RF-Rk1" secondAttribute="top" constant="26" id="iVO-l3-y7Q"/>
+                                    <constraint firstItem="Tf5-1B-iNE" firstAttribute="centerY" secondItem="8gV-4q-h1i" secondAttribute="centerY" constant="2" id="zRJ-73-Hj3"/>
                                 </constraints>
                             </view>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a6w-5x-gRn">
-                                <rect key="frame" x="0.0" y="82" width="600" height="518"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a6w-5x-gRn">
+                                <rect key="frame" x="-4" y="82" width="383" height="585"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="a77-j8-CwZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="518"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="585"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
-                                            <rect key="frame" x="297" y="398" width="7" height="37"/>
+                                        <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="IP1-Ki-95A">
+                                            <rect key="frame" x="188.5" y="465" width="7" height="37"/>
                                             <color key="pageIndicatorTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="currentPageIndicatorTintColor" red="0.69063067436218262" green="0.97938668727874756" blue="0.034069672226905823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </pageControl>
-                                        <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="roS-nl-PvL">
-                                            <rect key="frame" x="250" y="406" width="100" height="23"/>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roS-nl-PvL">
+                                            <rect key="frame" x="141.5" y="473" width="100" height="23"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ListPin" translatesAutoresizingMaskIntoConstraints="NO" id="hYt-Wi-iKg">
                                                     <rect key="frame" x="7" y="0.0" width="30" height="21"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="7/49" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgk-h1-D1d">
-                                                    <rect key="frame" x="58" y="-2" width="42" height="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/49" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgk-h1-D1d">
+                                                    <rect key="frame" x="58" y="-1.5" width="42" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                                     <color key="textColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984109401702881" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2556,8 +2569,8 @@
                                                 <constraint firstAttribute="width" constant="100" id="xh5-xc-cHo"/>
                                             </constraints>
                                         </view>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="il6-8V-iJa">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="438"/>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="il6-8V-iJa">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="505"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="WRG-dW-Fc4" customClass="CenterCellCollectionViewFlowLayout" customModule="Hikebeat" customModuleProvider="target">
                                                 <size key="itemSize" width="292" height="426"/>
@@ -2567,7 +2580,7 @@
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BeatCell" id="Pdd-qJ-giq" customClass="BeatCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="6" width="292" height="426"/>
+                                                    <rect key="frame" x="0.0" y="40" width="292" height="426"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                         <rect key="frame" x="0.0" y="0.0" width="292" height="426"/>
@@ -3176,7 +3189,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AE5333A7-77A9-4B3B-A120-D52AA39B57B7" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DCC37806-BF60-4F2C-A2E3-CC615530035A" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -5048,7 +5061,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AE5333A7-77A9-4B3B-A120-D52AA39B57B7" width="24" height="30">
+        <image name="ActivedIcon" width="32" height="32"/>
+        <image name="BackArrow" width="15" height="20"/>
+        <image name="BlurryBG" width="375" height="190"/>
+        <image name="CloseIcon" width="23" height="23"/>
+        <image name="ComposeBG" width="330" height="473"/>
+        <image name="ComposeMemo" width="24" height="37"/>
+        <image name="ComposePhoto" width="40" height="31"/>
+        <image name="ComposeTitle" width="37" height="35"/>
+        <image name="ComposeVideo" width="39" height="31"/>
+        <image name="DCC37806-BF60-4F2C-A2E3-CC615530035A" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5147,15 +5169,6 @@ AMIA2QDbAN0UvxTEFM8U2BTrFO8U+hUDFQgVEBUTFRgVJxUrFTIVOhVHFUwVThVQFVUVXRVgFWUVbRVw
 FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
 </mutableData>
         </image>
-        <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="15" height="20"/>
-        <image name="BlurryBG" width="375" height="190"/>
-        <image name="CloseIcon" width="23" height="23"/>
-        <image name="ComposeBG" width="330" height="473"/>
-        <image name="ComposeMemo" width="24" height="37"/>
-        <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="37" height="35"/>
-        <image name="ComposeVideo" width="39" height="31"/>
         <image name="DefaultProfile" width="106" height="106"/>
         <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditTitle" width="112" height="103"/>
@@ -5216,10 +5229,10 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8bj-j3-9e2"/>
-        <segue reference="qjl-8s-Y35"/>
+        <segue reference="Ry1-QN-lGj"/>
+        <segue reference="udg-Np-fqg"/>
         <segue reference="dg6-j1-ehS"/>
-        <segue reference="9B6-dr-Cd4"/>
-        <segue reference="3bh-zK-U8D"/>
+        <segue reference="3h1-ov-ahR"/>
+        <segue reference="abJ-vT-9Ah"/>
     </inferredMetricsTieBreakers>
 </document>
