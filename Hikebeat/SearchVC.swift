@@ -147,11 +147,11 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         let reachability = Reachability()
         
         if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
-            placeholderNoConnection.isHidden = true
-            searchTableView.isHidden = false
-        } else {
             placeholderNoConnection.isHidden = false
             searchTableView.isHidden = true
+        } else {
+            placeholderNoConnection.isHidden = true
+            searchTableView.isHidden = false
         }
     }
     
