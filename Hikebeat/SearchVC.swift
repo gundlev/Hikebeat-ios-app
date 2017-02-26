@@ -17,6 +17,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     @IBOutlet weak var searchTableView: UITableView!
     
     @IBOutlet weak var placeholderNoConnection: UIView!
+    @IBOutlet weak var placeholderInitial: UIView!
+    @IBOutlet weak var placeholderNoResults: UIView!
     
     var journeysButton: UIButton!
     var usersButton: UIButton!
@@ -117,6 +119,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             self.view.addSubview(activityIndicator)
             
             firstLoad = false
+            
+            setControlerState(to: .initial)
         }
     }
     
@@ -127,7 +131,11 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         guard searchTextField.text != nil else {return true}
         userSearch = Search(type: .user)
         journeySearch = Search(type: .journey)
-        guard textField.text! != "" else { return true }
+        guard textField.text! != "" else {
+            activityIndicator.stopAnimating()
+            setControlerState(to: .initial)
+            return true
+        }
         
         userSearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (users) in
@@ -148,6 +156,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             self.activityIndicator.stopAnimating()
         })
         
+        setControlerState(to: .resultsFound)
         return true
     }
     
@@ -155,11 +164,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         let reachability = Reachability()
         
         if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
-            placeholderNoConnection.isHidden = false
-            searchTableView.isHidden = true
-        } else {
-            placeholderNoConnection.isHidden = true
-            searchTableView.isHidden = false
+            setControlerState(to: .noConnection)
         }
     }
     
@@ -442,5 +447,37 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         }
     }
 
+    enum controllerState {
+        case noConnection
+        case resultsFound
+        case noResults
+        case initial
+    }
+    
+    func setControlerState(to: controllerState) {
+        switch to {
+        case .noConnection:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = false
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = true
+        case .resultsFound:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = false
+        case .noResults:
+            placeholderNoResults.isHidden = false
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = true
+        case.initial:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = false
+            searchTableView.isHidden = true
+        }
+    }
     
 }
+
