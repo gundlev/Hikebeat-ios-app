@@ -39,3 +39,12 @@ extension UInt {
         return self.toUIColor().cgColor
     }
 }
+
+extension SCLAlertView {
+    func addOkayButton() -> SCLButton {
+        let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+        let darkColor = UIColor(hexString: "15676C")
+        
+        return addButton("Okay", backgroundColor: greenColor, textColor: darkColor, showDurationStatus: true) {}
+    }
+}

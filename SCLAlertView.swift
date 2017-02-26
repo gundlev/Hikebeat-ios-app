@@ -40,7 +40,7 @@ public enum SCLAlertViewStyle {
         case .error:
             return 0xC1272D
         case .notice:
-            return 0x727375
+            return 0x15676C
         case .warning:
             return 0xFFD110
         case .info:
@@ -626,7 +626,7 @@ open class SCLAlertView: UIViewController {
             
         case .notice:
             
-            iconImage = checkCircleIconImage(circleIconImage, defaultImage:SCLAlertViewStyleKit.imageOfNotice)
+            iconImage = checkCircleIconImage(circleIconImage, defaultImage:SCLAlertViewStyleKit.imageOfInfo)
             
         case .warning:
             
@@ -932,7 +932,7 @@ class SCLAlertViewStyleKit : NSObject {
         noticeShapePath.close()
         noticeShapePath.miterLimit = 4;
         
-        UIColor.white.setFill()
+        UIColor(hexString: "BDF400")!.setFill()
         noticeShapePath.fill()
     }
     
@@ -981,8 +981,8 @@ class SCLAlertViewStyleKit : NSObject {
     
     class func drawInfo() {
         // Color Declarations
-        let color0 = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
-        
+        let color0 = UIColor(hexString: "BDF400")!
+
         // Info Shape Drawing
         let infoShapePath = UIBezierPath()
         infoShapePath.move(to: CGPoint(x: 45.66, y: 15.96))

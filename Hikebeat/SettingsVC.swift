@@ -51,7 +51,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("Notifications", subTitle: "Enable to get push notifications when the hikers you follow send new beats.")
     }
     
@@ -60,7 +60,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("GPS check", subTitle: "Enable to get warnings if the GPS signal is poor when sending a beat.")
     }
     
@@ -69,7 +69,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("SMS Functionality", subTitle: "Enable to automatically generate a SMS for a beat if you have no data connection. Alternatively, your beat is stored on the phone and synced later.")
     }
 
@@ -78,7 +78,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("Show/hide lines", subTitle: "Enable to show supporting lines between every two beats on the map view. They might be helpful for giving a sence of direction on the map.")
     }
     
