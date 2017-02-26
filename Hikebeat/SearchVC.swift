@@ -90,7 +90,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             searchTableView.separatorStyle = .singleLine
             searchTableView.separatorColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
             
-            searchTableView.contentSize.height += 200
+            searchTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 30.0, right: 0.0)
 //            usersTableView = UITableView(frame: CGRect(x: scrollViewWidth, y: 0, width: scrollViewWidth, height: scrollViewHeight))
 //            usersTableView.delegate = self
 //            usersTableView.dataSource = self
@@ -348,6 +348,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 cell.awakeFromNib()
                 cell.headerTitle.text = "Users"
                 cell.icon.image = UIImage(named: "SexProfileIcon")
+                cell.isUserInteractionEnabled = false
                 return cell
             }
             if indexPath.row == 4 || (self.userSearch?.results.count)! + 1 == indexPath.row {
@@ -379,6 +380,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 cell.awakeFromNib()
                 cell.headerTitle.text = "Journeys"
                 cell.icon.image = UIImage(named: "backpack")
+                cell.isUserInteractionEnabled = false
                 return cell
             }
             if indexPath.row == 4 || (self.journeySearch?.results.count)! + 1 == indexPath.row {

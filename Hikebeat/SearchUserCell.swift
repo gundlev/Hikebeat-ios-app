@@ -20,6 +20,14 @@ class SearchUserCell: UITableViewCell {
     var firstLoad = true
     var imageActivity: UIActivityIndicatorView!
     
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if highlighted {
+            self.backgroundColor = UIColor(hexString: "157578")
+        } else {
+            self.backgroundColor = .clear
+        }
+    }
+    
     override func awakeFromNib() {
         if firstLoad {
             let width = UIScreen.main.bounds.width
