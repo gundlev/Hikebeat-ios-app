@@ -39,6 +39,14 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     override func viewDidLoad() {
         if firstLoad {
+            
+            let bgGradient = CAGradientLayer()
+            bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+            bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
+            bgGradient.zPosition = -1
+            view.layer.addSublayer(bgGradient)
+            
+            
             let width = UIScreen.main.bounds.width
             let height = UIScreen.main.bounds.height
             self.serachBar.backgroundColor = standardGreen
