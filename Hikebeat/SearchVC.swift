@@ -139,6 +139,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
         userSearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (users) in
+            if !users.isEmpty {
+                self.setControlerState(to: .resultsFound)
+            }
             self.searchTableView.reloadData()
             self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
@@ -149,6 +152,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
         journeySearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (journeys) in
+            if !journeys.isEmpty {
+                self.setControlerState(to: .resultsFound)
+            }
             self.searchTableView.reloadData()
             self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
@@ -156,7 +162,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             self.activityIndicator.stopAnimating()
         })
         
-        setControlerState(to: .resultsFound)
+        setControlerState(to: .noResults)
         return true
     }
     
