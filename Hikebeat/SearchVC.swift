@@ -144,8 +144,15 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        placeholderNoConnection.isHidden = true
-//        searchTableView.isHidden = true
+        let reachability = Reachability()
+        
+        if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
+            placeholderNoConnection.isHidden = true
+            searchTableView.isHidden = false
+        } else {
+            placeholderNoConnection.isHidden = false
+            searchTableView.isHidden = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
