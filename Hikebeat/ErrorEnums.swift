@@ -28,6 +28,10 @@ enum HikebeatError: Swift.Error {
     case uploadMedia
     case uploadChange
     case uploadAll
+    case createNewJourneyCall
+    case noNetworkConnection
+    case updateUserCall
+    case updateUserWithPermittedPhoneNumber
 }
 
 //enum UserCallError: Swift.Error {

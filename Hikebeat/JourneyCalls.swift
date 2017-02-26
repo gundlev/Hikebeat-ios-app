@@ -77,6 +77,32 @@ func deleteJourney(journeyId: String) -> Future<Bool, NoError> {
     }
 }
 
+func createNewJourneyCall(headline: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let parameters: [String: Any] = ["headline": headline]
+        let url = IPAddress + "users/journeys"
+        guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                let rawJson = JSON(response.result.value!)
+                let json = rawJson["data"]
+                print(json)
+                let realm = try! Realm()
+                try! realm.write() {
+                    let journey = Journey()
+                    journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["headline"].stringValue, journeyDescription: nil, active: false, type: nil, seqNumber: String(json["seqNumber"].intValue))
+                    realm.add(journey)
+                    complete(.success(true))
+                }
+            } else {
+                showCallErrors(json: JSON(response.result.value!))
+                complete(.failure(.createNewJourneyCall))
+            }
+        }
+
+    }
+}
+
 //func getJourneyWithId(userId: String, journeyId: String) -> Future<Journey, HikebeatError> {
 //    return Future { complete in
 //        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"

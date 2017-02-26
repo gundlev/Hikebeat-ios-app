@@ -12,6 +12,8 @@ import Alamofire
 import BrightFutures
 import Result
 import FacebookLogin
+import ContactsUI
+
 
 func getStats() -> Future<[String: String], HikebeatError> {
     return Future { complete in
@@ -47,6 +49,7 @@ func refreshToken() -> Future<String, HikebeatError> {
 
 func loginWithFacebook(viewController: UIViewController) -> Future<Bool, HikebeatError> {
     return Future { complete in
+        guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         let loginManager = LoginManager()
         loginManager.logOut()
         loginManager.logIn([ .publicProfile, .email, .userFriends ], viewController: viewController) { loginResult in
@@ -116,10 +119,9 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         for (value) in user["deviceTokens"].arrayValue {
             deviceTokensArray.append(value.stringValue)
         }
-        var permittedPhoneNumbersArray = [String]()
-        for (value) in user["permittedPhoneNumbers"].arrayValue {
-            permittedPhoneNumbersArray.append(value.stringValue)
-        }
+
+        userDefaults.set(user["permittedPhoneNumber"].stringValue, forKey: "permittedPhoneNumber")
+
         
         userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
         userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
@@ -140,15 +142,15 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         let e = t.range(of: ".")
         let timestamp = t.substring(to: (e?.lowerBound)!)
         userDefaults.set(timestamp, forKey: "lastSync")
-        let numbers = user["permittedPhoneNumbers"].arrayValue
-        print("numbers: ", numbers)
-        if !numbers.isEmpty {
-            let number = numbers[0].stringValue
-            print("number: ", number)
-            userDefaults.set(number, forKey: "permittedPhoneNumbers")
-        } else {
-            userDefaults.set("", forKey: "permittedPhoneNumbers")
-        }
+//        let numbers = user["permittedPhoneNumbers"].arrayValue
+//        print("numbers: ", numbers)
+//        if !numbers.isEmpty {
+//            let number = numbers[0].stringValue
+//            print("number: ", number)
+//            userDefaults.set(number, forKey: "permittedPhoneNumbers")
+//        } else {
+//            userDefaults.set("", forKey: "permittedPhoneNumbers")
+//        }
         
         userDefaults.set((user["notifications"].boolValue), forKey: "notifications")
         userDefaults.set((user["name"].stringValue), forKey: "name")
@@ -197,5 +199,33 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
             complete(.success(true))
         }
 
+    }
+}
+// arr: [(property: String, value: String)]
+func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        print("Starting user update")
+        guard hasNetworkConnection(show: false) else { print("No network");complete(.failure(.noNetworkConnection)); return }
+        var parameters = [String:Any]()
+        for change in changes {
+            print(change)
+            print("Values: ", change.values)
+            print("changeType: ", change.changeType)
+            let values = change.values.first!
+            if values.value != nil {
+                parameters[values.key!] = values.value!
+            } else {
+                parameters[values.key!] = values.valueBool
+            }
+        }
+        let url = IPAddress + "users"
+        Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                print("update user response: ", response)
+                complete(.success(true))
+            } else {
+                complete(.failure(.updateUserCall))
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import RealmSwift
 import Result
 import BrightFutures
 import Alamofire
+import SwiftyDrop
 
 class SettingsVC: UIViewController {
     
@@ -87,42 +88,14 @@ class SettingsVC: UIViewController {
     
     
     @IBAction func notificationChange(_ sender: UISwitch) {
-        let reachability = Reachability()
-        if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
-            let parameters:[String: Any] = ["notifications" : sender.isOn]
-            let url = IPAddress + "users/" + userDefaults.string(forKey: "_id")!
-            print(url)
-            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-                
-                if response.response?.statusCode == 200 {
-                    print("It has been changes in the db")
-//                    ChangeAction.update
-                } else {
-                    print("No connection or fail, saving change")
-                    let realm = try! Realm()
-                    try! realm.write() {
-                        let change = Change()
-                        let t = String(Date().timeIntervalSince1970)
-                        let e = t.range(of: ".")
-                        let timestamp = t.substring(to: (e?.lowerBound)!)
-                        change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.isOn, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-                        realm.add(change)
-                    }
-                }
-            }
-        } else {
-            // Save to changes data structure when created.
-            let realm = try! Realm()
-            try! realm.write() {
-                let change = Change()
-                let t = String(Date().timeIntervalSince1970)
-                let e = t.range(of: ".")
-                let timestamp = t.substring(to: (e?.lowerBound)!)
-                change.fill(InstanceType.user, timeCommitted: timestamp, stringValue: nil, boolValue: sender.isOn, property: UserProperty.notifications, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-                realm.add(change)
-            }
+        let change = createSimpleChange(type: .notifications, key: ChangeType.notifications.rawValue, value: nil, valueBool: sender.isOn)
+        updateUser([change])
+        .onSuccess { (success) in
+            Drop.down("Your profile information was successfully updated!", state: .success)
+        }.onFailure { (error) in
+            Drop.down("Your changes will be updated the next time you sync", state: .info)
+            saveChange(change: change)
         }
-
     }
     
     @IBAction func GPSCheckChange(_ sender: UISwitch) {
@@ -303,13 +276,10 @@ class SettingsVC: UIViewController {
     }
     
     func checkSync() -> Bool {
-        print(1)
         let synced = appDelegate.synced()
         if !synced.synced {
-            print(2)
             self.toUpload = synced
             if !synced.mediaBeats.isEmpty {
-                print(3)
                 self.numbers = (image: 0, video: 0, audio: 0)
                 for beat in self.toUpload!.mediaBeats {
 //                    print(4)
@@ -323,7 +293,6 @@ class SettingsVC: UIViewController {
                     case MediaType.audio: self.numbers.audio += 1
                     default: print("wrong")
                     }
-                    print(4.5)
                 }
             }
         } else {

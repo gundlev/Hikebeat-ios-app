@@ -49,7 +49,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                         print("Error: ", error)
                     })
                 } else {
-                    footer.footerTitle.text = "There are no more results"
+                    footer.footerTitle.text = "No more results"
                 }
             }
             return footer

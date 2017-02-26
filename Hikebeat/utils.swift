@@ -30,6 +30,18 @@ func hideActivity() {
     NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
 }
 
+func hasNetworkConnection(show: Bool) -> Bool {
+    let reachability = Reachability()
+    if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
+        if show {
+            Drop.down("No network connection", state: .error)
+        }
+        return false
+    } else {
+        return true
+    }
+}
+
 func showCallErrors(json: JSON) {
     if let errors = json["errors"].array {
         var bannerText = ""

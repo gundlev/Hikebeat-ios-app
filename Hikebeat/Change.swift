@@ -12,49 +12,75 @@ import Realm
 
 class Change: Object, Comparable {
     
-    dynamic var instanceType: String = ""
     dynamic var timeCommitted: String = ""
-    dynamic var stringValue: String? = nil
-    dynamic var boolValue: Bool = false
-    dynamic var property: String? = nil
-    dynamic var instanceId: String? = nil
-    dynamic var changeAction: String = ""
-    dynamic var timestamp: String? = nil
-    dynamic var uploaded: Bool = false
+    dynamic var changeType: String?
+    var values = List<Pair>()
     
     func fill(
-        _ instanceType: String,
-        timeCommitted: String,
-        stringValue: String?,
-        boolValue: Bool,
-        property: String?,
-        instanceId: String?,
-        changeAction: String,
-        timestamp: String?) {
+        _ changeType: ChangeType,
+        values: Pair...) {
         
-        self.instanceType = instanceType
-        self.timeCommitted = timeCommitted
-        self.stringValue = stringValue
-        self.boolValue = boolValue
-        self.property = property
-        self.instanceId = instanceId
-        self.changeAction = changeAction
-        self.timestamp = timestamp
-
+        self.timeCommitted = getTimeCommitted()
+        self.changeType = changeType.rawValue
+        for pair in values {
+            self.values.append(pair)
+        }
     }
-    
-//    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-//        super.init()
-//    }
-//    
-//    required init(value: AnyObject, schema: RLMSchema) {
-//        super.init()
-//    }
-//    
-//    required init() {
-//        super.init()
-//    }
+}
 
+func createSimpleChange(type: ChangeType, key: String, value: String?, valueBool: Bool?) -> Change {
+    let change = Change()
+    let pair = Pair()
+    pair.fill(key: key, value: value, valueBool: valueBool, valuePair: nil)
+    change.fill(type, values: pair)
+    return change
+}
+
+func saveChange(change: Change) {
+    let realm = try! Realm()
+    guard shouldNotBeDouplicate(change: change) else {
+        try! realm.write {
+//            if change.values != nil {
+//                realm.add(change.values!)
+//            }
+            realm.add(change)
+        }
+        return
+    }
+    let changes = realm.objects(Change.self).filter(NSPredicate(format: "changeType == %@", change.changeType!))
+    if !changes.isEmpty {
+        let oldChange = changes[0]
+        try! realm.write {
+            realm.delete(oldChange)
+            realm.add(change)
+        }
+    } else {
+        try! realm.write {
+            realm.add(change)
+        }
+    }
+}
+
+func shouldNotBeDouplicate(change: Change) -> Bool {
+    guard change.changeType != ChangeType.deleteJourney.rawValue else {return false}
+    guard change.changeType != ChangeType.deleteBeat.rawValue else {return false}
+    return true
+}
+
+func getTimeCommitted() -> String {
+    let t = String(Date().timeIntervalSince1970)
+    let e = t.range(of: ".")
+    let timestamp = t.substring(to: (e?.lowerBound)!)
+    return timestamp
+}
+
+enum ChangeType: String {
+    case profileImage
+    case name
+    case permittedPhoneNumber
+    case deleteJourney
+    case deleteBeat
+    case notifications
 }
 
 func <(lhs: Change, rhs: Change) -> Bool {

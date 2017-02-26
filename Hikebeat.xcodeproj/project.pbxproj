@@ -46,6 +46,8 @@
 		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
 		8525E7D61CF2F92600D87BB5 /* SendMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D11CF2F92600D87BB5 /* SendMedia.swift */; };
 		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
+		853DD11A1E5F26970038663B /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD1191E5F26970038663B /* Pair.swift */; };
+		853DD11C1E5F30730038663B /* ContactManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD11B1E5F30730038663B /* ContactManipulation.swift */; };
 		854D939C1E2D81A400FB57F9 /* SendBeats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D939B1E2D81A400FB57F9 /* SendBeats.swift */; };
 		854D939E1E2D823400FB57F9 /* ComposeCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D939D1E2D823400FB57F9 /* ComposeCalls.swift */; };
 		85562F3F1E2AE5170078CC51 /* UserCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85562F3E1E2AE5170078CC51 /* UserCalls.swift */; };
@@ -174,6 +176,8 @@
 		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
 		8525E7D11CF2F92600D87BB5 /* SendMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMedia.swift; sourceTree = "<group>"; };
 		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
+		853DD1191E5F26970038663B /* Pair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
+		853DD11B1E5F30730038663B /* ContactManipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManipulation.swift; sourceTree = "<group>"; };
 		854D93991E2D559F00FB57F9 /* BRYXBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BRYXBanner.framework; path = Carthage/Build/iOS/BRYXBanner.framework; sourceTree = "<group>"; };
 		854D939B1E2D81A400FB57F9 /* SendBeats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBeats.swift; sourceTree = "<group>"; };
 		854D939D1E2D823400FB57F9 /* ComposeCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeCalls.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 				8512E0F31CD4E7520085CE2B /* Structs.swift */,
 				8512E0F41CD4E7520085CE2B /* utils.swift */,
 				852469CE1E204EEE0074F831 /* ErrorEnums.swift */,
+				853DD11B1E5F30730038663B /* ContactManipulation.swift */,
 			);
 			name = "Config and Utils";
 			sourceTree = "<group>";
@@ -596,6 +601,7 @@
 				859EB30A1CDB6A88005353C0 /* Follower.swift */,
 				85A067A51DFC4486006431E5 /* User.swift */,
 				85562F5E1E2C025F0078CC51 /* Search.swift */,
+				853DD1191E5F26970038663B /* Pair.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -870,6 +876,7 @@
 				85FAEB811CE48E3000887039 /* JourneyContainerVC.swift in Sources */,
 				85562F661E2C3C250078CC51 /* TableViewSectionFooter.swift in Sources */,
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
+				853DD11A1E5F26970038663B /* Pair.swift in Sources */,
 				E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */,
 				8593DAAD1DF3248500604BFA /* JourneyCalls.swift in Sources */,
 				851A51F81D9A6DB700CA7EA5 /* Reachability.swift in Sources */,
@@ -896,6 +903,7 @@
 				85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */,
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
 				8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */,
+				853DD11C1E5F30730038663B /* ContactManipulation.swift in Sources */,
 				8593DB0D1DFB6BC400604BFA /* SelectJourneyCell.swift in Sources */,
 				85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,

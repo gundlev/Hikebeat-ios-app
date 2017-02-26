@@ -100,30 +100,12 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
             return
         }
         if titleField.text?.characters.count > 1 {
-            let parameters: [String: Any] = ["headline": titleField.text!]
-            let url = IPAddress + "users/journeys"
-            print(url)
-            print("createJourney header: ", getHeader())
-            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-                print(response.result.value)
-                print(response.response?.statusCode)
-                if response.response?.statusCode == 200 {
-                    let rawJson = JSON(response.result.value!)
-                    let json = rawJson["data"]
-                    print(json)
-                    print("Journey Created!")
-                    let realm = try! Realm()
-                    try! realm.write() {
-                        let journey = Journey()
-                        journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["headline"].stringValue, journeyDescription: nil, active: self.active.isOn, type: nil, seqNumber: String(json["seqNumber"].intValue))
-                        realm.add(journey)
-                    }
-                    self.performSegue(withIdentifier: "backWhenCreated", sender: self)
-                } else {
-                    showCallErrors(json: JSON(response.result.value))
-                    print(response)
-                }
-            }
+            createNewJourneyCall(headline: titleField.text!)
+            .onSuccess(callback: { (success) in
+                self.performSegue(withIdentifier: "backWhenCreated", sender: self)
+            }).onFailure(callback: { (error) in
+                print("Failed in creating new journey")
+            })
         }
     }
     

@@ -123,9 +123,17 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let journey = self.journeys[indexPath.row]
+            try! self.realm.write {
+                self.realm.delete(journey)
+                print("Journey deleted")
+            }
             self.journeys.remove(at: indexPath.row)
-            let future = deleteJourney(journeyId: journey.journeyId)
-            future.onSuccess(callback: { (success) in
+            try! self.realm.write {
+                self.realm.delete(journey)
+                print("Journey deleted")
+            }
+            deleteJourney(journeyId: journey.journeyId)
+            .onSuccess(callback: { (success) in
                 if success {
                     try! self.realm.write {
                         self.realm.delete(journey)
@@ -133,6 +141,8 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     }
                 } else {
                     //TODO: save deletion in changes.
+                    let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
+                    saveChange(change: change)
                 }
             })
             tableView.deleteRows(at: [indexPath], with: .fade)

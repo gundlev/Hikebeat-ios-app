@@ -11,6 +11,8 @@ import RealmSwift
 import Alamofire
 import SwiftyJSON
 import ContactsUI
+import SwiftyDrop
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -31,8 +33,6 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-
 class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let userDefaults = UserDefaults.standard
@@ -50,7 +50,6 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         "Finland"
     ]
     
-
     @IBOutlet weak var followsCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var editProfileImageButton: UIButton!
@@ -198,7 +197,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         self.nameLabel.text = userDefaults.string(forKey: "name")!
         self.emailLabel.text = userDefaults.string(forKey: "email")!
         self.nationalityLabel.text = userDefaults.string(forKey: "nationality")!
-        if let phoneNumber = userDefaults.string(forKey: "permittedPhoneNumbers") {
+        if let phoneNumber = userDefaults.string(forKey: "permittedPhoneNumber") {
             self.phoneNoLabel.text = phoneNumber
         } else {
             self.phoneNoLabel.placeholder = "Phone no."
@@ -357,39 +356,39 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
 */
     
     func checkForChanges() {
-        var changesArr = [(property: String,value: String)]()
+//        var changesArr = [(property: String,value: String)]()
+        var changes = [Change]()
         
         if self.nameLabel.text != userDefaults.string(forKey: "name")! {
-            changesArr.append((UserProperty.name, self.nameLabel.text!))
+            changes.append(createSimpleChange(type: .name, key: ChangeType.name.rawValue, value: self.nameLabel.text!, valueBool: nil))
             userDefaults.set(self.nameLabel.text, forKey: "name")
         }
         //SimpleReachability.isConnectedToNetwork()
-        if self.phoneNoLabel.text != userDefaults.string(forKey: "permittedPhoneNumbers")! {
+        if self.phoneNoLabel.text != userDefaults.string(forKey: "permittedPhoneNumber")! {
             let reachability = Reachability()
             if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
                 if self.phoneNoLabel.text?.characters.count >= 2 {
                     if wrongCountryCode(self.phoneNoLabel.text!) {
                         SCLAlertView().showWarning("Missing country code!", subTitle: "Your phone number was not changed as you didn't add a country code.")
-                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
+                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
                     } else {
-                        changesArr.append((UserProperty.permittedPhoneNumbers, self.phoneNoLabel.text!))
+                        changes.append(createSimpleChange(type: .permittedPhoneNumber, key: ChangeType.permittedPhoneNumber.rawValue, value: self.phoneNoLabel.text!, valueBool: nil))
                     }
                 }
                 
             } else {
                 SCLAlertView().showWarning("Missing connection!", subTitle: "You need to have network connection to change or set your phone number")
-                self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
+                self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
             }
         }
-        if self.nationalityLabel.text != userDefaults.string(forKey: "nationality")! {
-            changesArr.append((UserProperty.nationality, self.nationalityLabel.text!))
-            userDefaults.set(self.nationalityLabel.text, forKey: "nationality")
-        }
+//        if self.nationalityLabel.text != userDefaults.string(forKey: "nationality")! {
+//            changesArr.append((UserProperty.nationality, self.nationalityLabel.text!))
+//            userDefaults.set(self.nationalityLabel.text, forKey: "nationality")
+//        }
         
-        if !changesArr.isEmpty {
+        if !changes.isEmpty {
             print("There are changes")
-            print(changesArr)
-            sendTextChanges(changesArr)
+            sendTextChanges(changes)
         }
         
         if self.newImage {
@@ -408,74 +407,84 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             let localRealm = try! Realm()
             try! localRealm.write() {
                 let change = Change()
-                change.fill(InstanceType.profileImage, timeCommitted: self.getTimeCommitted(), stringValue: "profile_image.jpg", boolValue: false, property: nil, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-                localRealm.add(change)
+                change.fill(.profileImage)
+                saveChange(change: change)
             }
         }
     }
-    
-    func sendTextChanges(_ arr: [(property: String,value: String)]) {
-        
-        for tuple in arr {
-            var parameters = [String:Any]()
-            if tuple.property == UserProperty.permittedPhoneNumbers {
-                parameters[tuple.property] = [tuple.value]
-            } else {
-                parameters[tuple.property] = tuple.value
-            }
-
-            let url = IPAddress + "users"
-            print(url)
-            print(parameters)
-            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-                
-                if response.response?.statusCode == 200 {
-                    print("It has been changed in the db")
-                    if tuple.property == UserProperty.permittedPhoneNumbers {
-                        self.userDefaults.set(self.phoneNoLabel.text!, forKey: "permittedPhoneNumbers")
-                        
-                        switch CNContactStore.authorizationStatus(for: .contacts){
-                        case .authorized:
-                            print("should check for hikebeat contact")
-                            self.checkIfHikbeatContactExist()
-                            //TODO: check if hikebeat contact is created.
-                        case .notDetermined:
-                            let appearance = SCLAlertView.SCLAppearance(
-                                showCloseButton: false
-                            )
-                            let alertView = SCLAlertView(appearance: appearance)
-                            alertView.addButton("Yes") {
-                                print("Yes")
-                                self.store.requestAccess(for: .contacts){succeeded, err in
-                                    guard err == nil && succeeded else{
-                                        return
-                                    }
-                                    self.addHikebeatContact()
-                                }
-                            }
-                            alertView.addButton("No") {
-                                print("No")
-                            }
-                            alertView.showWarning("Add hikebeat contact?", subTitle: "In order to create a Hikebeat contact on you phone and make it easier for you to know what you have send to Hikebeat, we need permission to access your contacts, would you like to grant permission?")
-                        default:
-                            print("Haven't got permission to access contacts")
-                        }
-                    }
-                } else {
-                    if tuple.property == UserProperty.permittedPhoneNumbers {
-                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumbers")
-                    }
-                    print("No connection or fail, saving change")
-                    print(response)
-                    let localRealm = try! Realm()
-                    try! localRealm.write() {
-                        let change = Change()
-                        change.fill(InstanceType.user, timeCommitted: self.getTimeCommitted(), stringValue: tuple.value, boolValue: false, property: tuple.property, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-                        localRealm.add(change)
-                    }
-                }
+    //
+    func sendTextChanges(_ changes: [Change]) {        
+        updateUser(changes)
+        .onSuccess { (hasPermittedPhoneNumber) in
+            Drop.down("Your profile information was successfully updated!", state: .success)
+        }.onFailure { (error) in
+            Drop.down("Your changes will be updated the next time you sync.", state: .info)
+            for change in changes {
+                saveChange(change: change)
             }
         }
+
+        
+//        for tuple in arr {
+//            var parameters = [String:Any]()
+//            if tuple.property == UserProperty.permittedPhoneNumber {
+//                parameters[tuple.property] = [tuple.value]
+//            } else {
+//                parameters[tuple.property] = tuple.value
+//            }
+//
+//            let url = IPAddress + "users"
+//            print(url)
+//            print(parameters)
+//            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+//                
+//                if response.response?.statusCode == 200 {
+//                    print("It has been changed in the db")
+//                    if tuple.property == UserProperty.permittedPhoneNumber {
+//                        self.userDefaults.set(self.phoneNoLabel.text!, forKey: "permittedPhoneNumber")
+//                        
+//                        switch CNContactStore.authorizationStatus(for: .contacts){
+//                        case .authorized:
+//                            print("should check for hikebeat contact")
+//                            self.checkIfHikbeatContactExist()
+//                            //TODO: check if hikebeat contact is created.
+//                        case .notDetermined:
+//                            let appearance = SCLAlertView.SCLAppearance(
+//                                showCloseButton: false
+//                            )
+//                            let alertView = SCLAlertView(appearance: appearance)
+//                            alertView.addButton("Yes") {
+//                                print("Yes")
+//                                self.store.requestAccess(for: .contacts){succeeded, err in
+//                                    guard err == nil && succeeded else{
+//                                        return
+//                                    }
+//                                    self.addHikebeatContact()
+//                                }
+//                            }
+//                            alertView.addButton("No") {
+//                                print("No")
+//                            }
+//                            alertView.showWarning("Add hikebeat contact?", subTitle: "In order to create a Hikebeat contact on you phone and make it easier for you to know what you have send to Hikebeat, we need permission to access your contacts, would you like to grant permission?")
+//                        default:
+//                            print("Haven't got permission to access contacts")
+//                        }
+//                    }
+//                } else {
+//                    if tuple.property == UserProperty.permittedPhoneNumber {
+//                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
+//                    }
+//                    print("No connection or fail, saving change")
+//                    print(response)
+//                    let localRealm = try! Realm()
+//                    try! localRealm.write() {
+//                        let change = Change()
+//                        change.fill(InstanceType.user, timeCommitted: self.getTimeCommitted(), stringValue: tuple.value, boolValue: false, property: tuple.property, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
+//                        localRealm.add(change)
+//                    }
+//                }
+//            }
+//        }
     }
     
     func checkIfHikbeatContactExist() {
@@ -519,13 +528,6 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         } catch let err{
             print("Failed to save the contact. \(err)")
         }
-    }
-    
-    func getTimeCommitted() -> String {
-        let t = String(Date().timeIntervalSince1970)
-        let e = t.range(of: ".")
-        let timestamp = t.substring(to: (e?.lowerBound)!)
-        return timestamp
     }
     
     func wrongCountryCode(_ number: String) -> Bool {

@@ -726,7 +726,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func sendTextMessage() {
-//        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumbers") else {
+//        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumber") else {
 //            presentMissingPhoneNumberAlert()
 //            return
 //        }
