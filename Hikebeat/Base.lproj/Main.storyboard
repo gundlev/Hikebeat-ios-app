@@ -3192,7 +3192,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="98D6D88C-5119-4A28-AC8D-68176396D533" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ADEC585A-7E8F-49C3-B46E-E34A400FC8FD" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -3741,8 +3741,8 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncronization status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btv-wu-B6d">
-                                        <rect key="frame" x="99" y="256" width="187" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toggle map lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btv-wu-B6d">
+                                        <rect key="frame" x="99" y="256" width="147.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -4003,17 +4003,37 @@
                                             <action selector="GPSCheckChange:" destination="5TD-rD-hXk" eventType="valueChanged" id="tGN-Q5-iA0"/>
                                         </connections>
                                     </switch>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SyncIcon" translatesAutoresizingMaskIntoConstraints="NO" id="nPJ-li-j4n">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktw-Cv-7rz">
+                                        <rect key="frame" x="298" y="252.5" width="51" height="31"/>
+                                        <color key="onTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="thumbTintColor" red="0.2666666667" green="0.85882352939999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="GPSCheckChange:" destination="5TD-rD-hXk" eventType="valueChanged" id="uSG-4j-PWK"/>
+                                        </connections>
+                                    </switch>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toggle-lines" translatesAutoresizingMaskIntoConstraints="NO" id="nPJ-li-j4n">
                                         <rect key="frame" x="36" y="250" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="1dJ-KV-gRM"/>
                                             <constraint firstAttribute="width" constant="36" id="C9i-95-oab"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="95t-Oz-HQC">
+                                        <rect key="frame" x="246.5" y="253" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="95t-Oz-HQC" secondAttribute="height" multiplier="1:1" id="MeO-hQ-xtG"/>
+                                            <constraint firstAttribute="width" constant="30" id="lUA-AJ-gXA"/>
+                                        </constraints>
+                                        <state key="normal" image="detailsIcon"/>
+                                        <connections>
+                                            <action selector="toggleLinesInfoPressed:" destination="5TD-rD-hXk" eventType="touchUpInside" id="FZi-kn-Xo6"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="xFw-Ce-hdz" firstAttribute="centerY" secondItem="JTf-tb-moJ" secondAttribute="centerY" id="0XT-JR-IhY"/>
                                     <constraint firstItem="btv-wu-B6d" firstAttribute="leading" secondItem="nPJ-li-j4n" secondAttribute="trailing" constant="27" id="1gh-on-RxS"/>
+                                    <constraint firstItem="95t-Oz-HQC" firstAttribute="width" secondItem="95t-Oz-HQC" secondAttribute="height" multiplier="1:1" id="1mM-Zz-GT3"/>
                                     <constraint firstItem="hXp-Vj-M5E" firstAttribute="centerX" secondItem="jd0-Xj-PFb" secondAttribute="centerX" id="1q7-xo-Fsu"/>
                                     <constraint firstItem="hXp-Vj-M5E" firstAttribute="leading" secondItem="jd0-Xj-PFb" secondAttribute="leading" id="23w-0u-aTl"/>
                                     <constraint firstItem="0u7-cU-1u7" firstAttribute="top" secondItem="jd0-Xj-PFb" secondAttribute="top" constant="36" id="4E8-sx-XSR"/>
@@ -4026,6 +4046,7 @@
                                     <constraint firstItem="dZa-wt-ulW" firstAttribute="centerY" secondItem="PEv-h3-SCB" secondAttribute="centerY" id="ET4-XC-0Dm"/>
                                     <constraint firstItem="Ohc-II-4Ae" firstAttribute="centerY" secondItem="PEv-h3-SCB" secondAttribute="centerY" id="F2B-QL-cFx"/>
                                     <constraint firstItem="8hA-B5-nQy" firstAttribute="top" secondItem="N1X-DI-dLk" secondAttribute="bottom" constant="10" id="GLk-S8-565"/>
+                                    <constraint firstAttribute="trailing" secondItem="ktw-Cv-7rz" secondAttribute="trailing" constant="36" id="HH9-1W-hhW"/>
                                     <constraint firstItem="xFw-Ce-hdz" firstAttribute="leading" secondItem="JTf-tb-moJ" secondAttribute="trailing" id="Iiq-ao-evt"/>
                                     <constraint firstItem="JTf-tb-moJ" firstAttribute="leading" secondItem="0u7-cU-1u7" secondAttribute="trailing" constant="27" id="Niz-yz-vm0"/>
                                     <constraint firstItem="nPJ-li-j4n" firstAttribute="leading" secondItem="jd0-Xj-PFb" secondAttribute="leading" constant="36" id="QhW-9d-ucg"/>
@@ -4035,9 +4056,11 @@
                                     <constraint firstItem="Y9U-QM-XDA" firstAttribute="centerY" secondItem="EvS-Zd-u1o" secondAttribute="centerY" id="cRF-Jd-fXe"/>
                                     <constraint firstItem="8hA-B5-nQy" firstAttribute="centerX" secondItem="jd0-Xj-PFb" secondAttribute="centerX" id="daV-Gl-PxT"/>
                                     <constraint firstItem="MWS-Yz-f6I" firstAttribute="centerY" secondItem="JTf-tb-moJ" secondAttribute="centerY" id="daq-7A-9Fr"/>
+                                    <constraint firstItem="ktw-Cv-7rz" firstAttribute="centerY" secondItem="btv-wu-B6d" secondAttribute="centerY" id="eO4-9l-gBh"/>
                                     <constraint firstItem="btv-wu-B6d" firstAttribute="centerY" secondItem="nPJ-li-j4n" secondAttribute="centerY" id="ePx-L3-7p0"/>
                                     <constraint firstItem="N1X-DI-dLk" firstAttribute="centerX" secondItem="jd0-Xj-PFb" secondAttribute="centerX" id="eQC-Hu-gqC"/>
                                     <constraint firstItem="0u7-cU-1u7" firstAttribute="leading" secondItem="jd0-Xj-PFb" secondAttribute="leading" constant="36" id="gE9-R5-glt"/>
+                                    <constraint firstItem="95t-Oz-HQC" firstAttribute="leading" secondItem="btv-wu-B6d" secondAttribute="trailing" id="hrp-vE-ypF"/>
                                     <constraint firstItem="x2R-8Z-dxw" firstAttribute="top" secondItem="N1X-DI-dLk" secondAttribute="bottom" constant="-38" id="j6L-Ng-hnD"/>
                                     <constraint firstItem="EvS-Zd-u1o" firstAttribute="leading" secondItem="jd0-Xj-PFb" secondAttribute="leading" constant="36" id="jx1-9f-itQ"/>
                                     <constraint firstItem="4xV-F4-PQI" firstAttribute="leading" secondItem="Y9U-QM-XDA" secondAttribute="trailing" id="kII-wt-UZJ"/>
@@ -4046,6 +4069,7 @@
                                     <constraint firstItem="4xV-F4-PQI" firstAttribute="centerY" secondItem="Y9U-QM-XDA" secondAttribute="centerY" id="lAM-Ps-oi3"/>
                                     <constraint firstItem="Ohc-II-4Ae" firstAttribute="leading" secondItem="PEv-h3-SCB" secondAttribute="trailing" id="rNc-JK-g3N"/>
                                     <constraint firstItem="N1X-DI-dLk" firstAttribute="top" secondItem="hXp-Vj-M5E" secondAttribute="bottom" constant="20" id="sGR-de-4M9"/>
+                                    <constraint firstItem="95t-Oz-HQC" firstAttribute="centerY" secondItem="btv-wu-B6d" secondAttribute="centerY" id="t7u-sS-pe1"/>
                                     <constraint firstAttribute="trailing" secondItem="bBD-ob-llA" secondAttribute="trailing" constant="36" id="te7-TS-UWO"/>
                                     <constraint firstItem="hXp-Vj-M5E" firstAttribute="top" secondItem="nPJ-li-j4n" secondAttribute="bottom" constant="24" id="wzY-l8-m2R"/>
                                     <constraint firstItem="PEv-h3-SCB" firstAttribute="centerY" secondItem="kMc-xK-sXb" secondAttribute="centerY" id="yXN-PQ-tgj"/>
@@ -5064,7 +5088,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="98D6D88C-5119-4A28-AC8D-68176396D533" width="24" height="30">
+        <image name="ADEC585A-7E8F-49C3-B46E-E34A400FC8FD" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5197,7 +5221,6 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="SendHome" width="31" height="30"/>
         <image name="SendTree" width="22" height="26"/>
         <image name="ShareIcon" width="30" height="19"/>
-        <image name="SyncIcon" width="36" height="24"/>
         <image name="TestImage" width="375" height="131"/>
         <image name="TrashIcon" width="23" height="29"/>
         <image name="backpack" width="21" height="25"/>
@@ -5217,6 +5240,7 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="sync-messages" width="35" height="33"/>
         <image name="sync-videos" width="34" height="27"/>
         <image name="tiny_pin" width="16" height="12"/>
+        <image name="toggle-lines" width="26" height="36"/>
         <image name="trees" width="270" height="270"/>
         <image name="welcome_logo" width="221" height="196"/>
         <image name="welcome_step_1_bg" width="375" height="667"/>
