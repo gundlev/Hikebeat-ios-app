@@ -16,6 +16,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchTableView: UITableView!
     
+    @IBOutlet weak var placeholderNoConnection: UIView!
+    
     var journeysButton: UIButton!
     var usersButton: UIButton!
     var activityIndicator: UIActivityIndicatorView!
@@ -80,11 +82,13 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             searchTableView.register(SearchUserCell.self, forCellReuseIdentifier: "userCell")
             searchTableView.register(TableViewSectionHeader.self, forCellReuseIdentifier: "customHeader")
             searchTableView.register(TableViewSectionFooter.self, forCellReuseIdentifier: "customFooter")
-            searchTableView.backgroundColor = .lightGray
+            searchTableView.backgroundColor = .clear
             searchTableView.rowHeight = 90
             searchTableView.tag = 1
             searchTableView.delaysContentTouches = false
             searchTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            searchTableView.separatorStyle = .singleLine
+            searchTableView.separatorColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
             
 //            usersTableView = UITableView(frame: CGRect(x: scrollViewWidth, y: 0, width: scrollViewWidth, height: scrollViewHeight))
 //            usersTableView.delegate = self
@@ -138,7 +142,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         return true
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        placeholderNoConnection.isHidden = true
+//        searchTableView.isHidden = true
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -362,7 +369,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customHeader") as! TableViewSectionHeader
                 cell.awakeFromNib()
                 cell.headerTitle.text = "Journeys"
-                cell.icon.image = UIImage(named: "tiny_backpack")
+                cell.icon.image = UIImage(named: "backpack")
                 return cell
             }
             if indexPath.row == 4 || (self.journeySearch?.results.count)! + 1 == indexPath.row {
@@ -390,11 +397,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             return cell
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
-    }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
             case "showJourney":

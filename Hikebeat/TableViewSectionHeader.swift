@@ -19,7 +19,7 @@ class TableViewSectionHeader: UITableViewCell {
         if firstLoad {
             print("const header")
             icon = UIImageView(frame: CGRect(x: 33, y: 10, width: 24, height: 24))
-            icon.contentMode = .scaleAspectFit
+            icon.contentMode = .center
             headerTitle = UILabel(frame: CGRect(x: 70, y: 10, width: UIScreen.main.bounds.width-20, height: 24))
             headerTitle.adjustsFontSizeToFitWidth = true
             headerTitle.textColor = lightGreen

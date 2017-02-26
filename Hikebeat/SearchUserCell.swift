@@ -33,8 +33,8 @@ class SearchUserCell: UITableViewCell {
             username.textColor = .white
             username.adjustsFontSizeToFitWidth = true
             journeyIcon = UIImageView(frame: CGRect(x: width-60, y: 15, width: 20, height: 25))
-            journeyIcon.contentMode = .scaleAspectFit
-            journeyIcon.image = UIImage(named: "tiny_backpack")
+            journeyIcon.contentMode = .center
+            journeyIcon.image = UIImage(named: "backpack")
             numberOfJourneys = UILabel(frame: CGRect(x: width-100, y: 40, width: 100, height: 20))
             numberOfJourneys.textColor = .white
             numberOfJourneys.textAlignment = .center
