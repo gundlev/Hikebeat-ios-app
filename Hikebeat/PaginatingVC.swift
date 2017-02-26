@@ -25,13 +25,25 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     override func viewDidLoad() {
-        tableView.backgroundColor = .lightGray
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.register(SearchJourneyCell.self, forCellReuseIdentifier: "journeyCell")
         tableView.register(SearchUserCell.self, forCellReuseIdentifier: "userCell")
         tableView.register(TableViewPaginationFooter.self, forCellReuseIdentifier: "footer")
-    }
+
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
         
+        tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 40.0, right: 0.0)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard indexPath.row != search?.results.count else {
             let footer = tableView.dequeueReusableCell(withIdentifier: "footer") as! TableViewPaginationFooter

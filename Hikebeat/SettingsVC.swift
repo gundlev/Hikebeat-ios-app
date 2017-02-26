@@ -28,10 +28,12 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var syncPictures: UIImageView!
     @IBOutlet weak var syncMemos: UIImageView!
     @IBOutlet weak var syncVideos: UIImageView!
+    @IBOutlet weak var syncMessages: UIImageView!
     
-    @IBOutlet weak var imageLabel: UILabel!
-    @IBOutlet weak var videoLabel: UILabel!
-    @IBOutlet weak var memoLabel: UILabel!
+    @IBOutlet weak var syncMessagesBadge: UILabel!
+    @IBOutlet weak var syncPicturesBadge: UILabel!
+    @IBOutlet weak var syncVideosBadge: UILabel!
+    @IBOutlet weak var syncMemosBadge: UILabel!
     
     @IBOutlet weak var lastSyncLabel: UILabel!
     @IBOutlet weak var settingsContainer: aCustomView!
@@ -50,7 +52,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("Notifications", subTitle: "Enable to get push notifications when the hikers you follow send new beats.")
     }
     
@@ -59,7 +61,7 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("GPS check", subTitle: "Enable to get warnings if the GPS signal is poor when sending a beat.")
     }
     
@@ -68,10 +70,18 @@ class SettingsVC: UIViewController {
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("SMS Functionality", subTitle: "Enable to automatically generate a SMS for a beat if you have no data connection. Alternatively, your beat is stored on the phone and synced later.")
     }
-    
+
+    @IBAction func toggleLinesInfoPressed(_ sender: Any) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        _ = alertView.addOkayButton()
+        _ = alertView.showNotice("Show/hide lines", subTitle: "Enable to show supporting lines between every two beats on the map view. They might be helpful for giving a sence of direction on the map.")
+    }
     
     @IBAction func logoutAction(_ sender: AnyObject) {
 
@@ -171,11 +181,24 @@ class SettingsVC: UIViewController {
         syncMemos.layer.cornerRadius = syncMemos.bounds.width/2
         syncVideos.layer.cornerRadius = syncVideos.bounds.width/2
         syncButton.layer.cornerRadius = syncButton.bounds.height/2
+        syncMessages.layer.cornerRadius = syncMessages.bounds.width/2
+        
+        syncPicturesBadge.layer.cornerRadius = syncPicturesBadge.bounds.width/2
+        syncMemosBadge.layer.cornerRadius = syncMemosBadge.bounds.width/2
+        syncVideosBadge.layer.cornerRadius = syncVideosBadge.bounds.width/2
+        syncMessagesBadge.layer.cornerRadius = syncMessagesBadge.bounds.width/2
+
         
         syncPictures.layer.masksToBounds = true
         syncMemos.layer.masksToBounds = true
         syncVideos.layer.masksToBounds = true
         syncButton.layer.masksToBounds = true
+        syncMessages.layer.masksToBounds = true
+        
+        syncPicturesBadge.layer.masksToBounds = true
+        syncMemosBadge.layer.masksToBounds = true
+        syncVideosBadge.layer.masksToBounds = true
+        syncMessagesBadge.layer.masksToBounds = true
         
         syncButton.backgroundColor = yellowColor
         
@@ -301,28 +324,16 @@ class SettingsVC: UIViewController {
             self.numbers.audio = 0
         }
         
-        if numbers.image==1{
-            self.imageLabel.text = String(numbers.image) + " picture\nawaiting\nsync"
-        }else{
-            self.imageLabel.text = String(numbers.image) + " pictures\nawaiting\nsync"
-        }
-
-        if numbers.video==1{
-            self.videoLabel.text = String(numbers.video) + " video\nawaiting\nsync"
-        }else{
-            self.videoLabel.text = String(numbers.video) + " videos\nawaiting\nsync"
-        }
-        
-        if numbers.audio==1{
-            self.memoLabel.text = String(numbers.audio) + " memo\nawaiting\nsync"
-        }else{
-            self.memoLabel.text = String(numbers.audio) + " memos\nawaiting\nsync"
-        }
-
+        syncMessagesBadge.text = "?"
+        syncPicturesBadge.text = "\(self.numbers.image)"
+        syncVideosBadge.text = "\(self.numbers.video)"
+        syncMemosBadge.text = "\(self.numbers.audio)"
         
         setBorderAccordingToStatus(self.syncPictures, mediaType: MediaType.image)
         setBorderAccordingToStatus(self.syncVideos, mediaType: MediaType.video)
         setBorderAccordingToStatus(self.syncMemos, mediaType: MediaType.audio)
+        setBorderAccordingToStatus(self.syncMessages, mediaType: MediaType.none)
+        
         print(5)
         if synced.synced {
             return true
@@ -332,7 +343,7 @@ class SettingsVC: UIViewController {
     }
     
     func setBorderAccordingToStatus(_ view: UIImageView, mediaType: String) {
-        view.layer.borderWidth = 4
+        view.layer.borderWidth = 3
         var color:UIColor = greenColor
         switch mediaType {
             case MediaType.image:
@@ -347,6 +358,8 @@ class SettingsVC: UIViewController {
                 if self.numbers.audio > 0 {
                     color = yellowColor
             }
+            case MediaType.none:
+                color = greenColor
             default: print("wrong")
         }
         view.layer.borderColor = color.cgColor

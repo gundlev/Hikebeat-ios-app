@@ -19,6 +19,14 @@ class SearchJourneyCell: UITableViewCell {
     var imageActivity: UIActivityIndicatorView!
     var followButton: UIButton!
     
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if highlighted {
+            self.backgroundColor = UIColor(hexString: "157578")
+        } else {
+            self.backgroundColor = .clear
+        }
+    }
+    
     override func awakeFromNib() {
         if firstLoad {
             let width = UIScreen.main.bounds.width
@@ -34,9 +42,14 @@ class SearchJourneyCell: UITableViewCell {
             followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
             followersBeats.textColor = .white
             followersBeats.font = UIFont.systemFont(ofSize: 13)
-            followButton = UIButton(frame: CGRect(x: width-100, y: 10, width: 90, height: 30))
-            followButton.setTitle("Follow", for: .normal)
-            followButton.setTitle("Unfollow", for: .selected)
+            followButton = UIButton(frame: CGRect(x: width-64, y: height/2-31/2, width: 31, height: 31))
+            
+            let followImage = UIImage(named: "follow_icon")
+            let followingImage = UIImage(named: "following_icon")
+            
+            followButton.setImage(followImage, for: .normal)
+            followButton.setImage(followingImage, for: .highlighted)
+            
             self.addSubview(profileImage)
             self.addSubview(imageActivity)
             self.addSubview(headline)

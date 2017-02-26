@@ -19,6 +19,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userDefaults = UserDefaults.standard
@@ -134,7 +135,6 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     func setUpPins() {
         print("Setup pins")
         var pinArr = [BeatPin]()
-        
         print("There are saved beats")
         for beat in (self.journey?.beats)! {
             var message = ""

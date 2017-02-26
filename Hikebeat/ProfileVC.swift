@@ -80,7 +80,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             showCloseButton: false
         )
         let alertView = SCLAlertView(appearance: appearance)
-        _ = alertView.addButton("Okay") {}
+        _ = alertView.addOkayButton()
         _ = alertView.showNotice("Phone Number", subTitle: "Add your phone number to prevent other phones from sending SMS to Hikebeat pretending to be you. This is an extra security feature.")
     }
     

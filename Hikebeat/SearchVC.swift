@@ -16,6 +16,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchTableView: UITableView!
     
+    @IBOutlet weak var placeholderNoConnection: UIView!
+    @IBOutlet weak var placeholderInitial: UIView!
+    @IBOutlet weak var placeholderNoResults: UIView!
+    
     var journeysButton: UIButton!
     var usersButton: UIButton!
     var activityIndicator: UIActivityIndicatorView!
@@ -37,6 +41,14 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     override func viewDidLoad() {
         if firstLoad {
+            
+            let bgGradient = CAGradientLayer()
+            bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+            bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
+            bgGradient.zPosition = -1
+            view.layer.addSublayer(bgGradient)
+            
+            
             let width = UIScreen.main.bounds.width
             let height = UIScreen.main.bounds.height
             self.serachBar.backgroundColor = standardGreen
@@ -80,12 +92,15 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             searchTableView.register(SearchUserCell.self, forCellReuseIdentifier: "userCell")
             searchTableView.register(TableViewSectionHeader.self, forCellReuseIdentifier: "customHeader")
             searchTableView.register(TableViewSectionFooter.self, forCellReuseIdentifier: "customFooter")
-            searchTableView.backgroundColor = .lightGray
+            searchTableView.backgroundColor = .clear
             searchTableView.rowHeight = 90
             searchTableView.tag = 1
             searchTableView.delaysContentTouches = false
             searchTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            searchTableView.separatorStyle = .singleLine
+            searchTableView.separatorColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
             
+            searchTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 30.0, right: 0.0)
 //            usersTableView = UITableView(frame: CGRect(x: scrollViewWidth, y: 0, width: scrollViewWidth, height: scrollViewHeight))
 //            usersTableView.delegate = self
 //            usersTableView.dataSource = self
@@ -104,6 +119,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             self.view.addSubview(activityIndicator)
             
             firstLoad = false
+            
+            setControlerState(to: .initial)
         }
     }
     
@@ -114,10 +131,17 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         guard searchTextField.text != nil else {return true}
         userSearch = Search(type: .user)
         journeySearch = Search(type: .journey)
-        guard textField.text! != "" else { return true }
+        guard textField.text! != "" else {
+            activityIndicator.stopAnimating()
+            setControlerState(to: .initial)
+            return true
+        }
         
         userSearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (users) in
+            if !users.isEmpty {
+                self.setControlerState(to: .resultsFound)
+            }
             self.searchTableView.reloadData()
             self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
@@ -128,6 +152,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
         journeySearch?.startSearch(searchText: searchTextField.text!)
         .onSuccess(callback: { (journeys) in
+            if !journeys.isEmpty {
+                self.setControlerState(to: .resultsFound)
+            }
             self.searchTableView.reloadData()
             self.activityIndicator.stopAnimating()
         }).onFailure(callback: { (error) in
@@ -135,10 +162,17 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             self.activityIndicator.stopAnimating()
         })
         
+        setControlerState(to: .noResults)
         return true
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        let reachability = Reachability()
+        
+        if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
+            setControlerState(to: .noConnection)
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -234,6 +268,14 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
 //        }
 //        print("Number of sections: ", count)
         return 2
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -332,6 +374,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 cell.awakeFromNib()
                 cell.headerTitle.text = "Users"
                 cell.icon.image = UIImage(named: "SexProfileIcon")
+                cell.isUserInteractionEnabled = false
                 return cell
             }
             if indexPath.row == 4 || (self.userSearch?.results.count)! + 1 == indexPath.row {
@@ -362,7 +405,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customHeader") as! TableViewSectionHeader
                 cell.awakeFromNib()
                 cell.headerTitle.text = "Journeys"
-                cell.icon.image = UIImage(named: "tiny_backpack")
+                cell.icon.image = UIImage(named: "backpack")
+                cell.isUserInteractionEnabled = false
                 return cell
             }
             if indexPath.row == 4 || (self.journeySearch?.results.count)! + 1 == indexPath.row {
@@ -390,11 +434,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             return cell
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
-    }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
             case "showJourney":
@@ -413,5 +453,37 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         }
     }
 
+    enum controllerState {
+        case noConnection
+        case resultsFound
+        case noResults
+        case initial
+    }
+    
+    func setControlerState(to: controllerState) {
+        switch to {
+        case .noConnection:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = false
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = true
+        case .resultsFound:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = false
+        case .noResults:
+            placeholderNoResults.isHidden = false
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = true
+            searchTableView.isHidden = true
+        case.initial:
+            placeholderNoResults.isHidden = true
+            placeholderNoConnection.isHidden = true
+            placeholderInitial.isHidden = false
+            searchTableView.isHidden = true
+        }
+    }
     
 }
+

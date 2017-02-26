@@ -58,7 +58,7 @@ public struct Property {
     public static let type = "options.type"
 }
 
-public struct UserProperty{
+public struct UserProperty {
     public static let username = "username"
     public static let email = "email"
     public static let password = "password"
@@ -79,4 +79,3 @@ public struct JourneyProperty {
     public static let active = "options.active"
     public static let type = "options.type"
 }
-
