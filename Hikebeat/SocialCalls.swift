@@ -154,7 +154,3 @@ func getBeatsForJourney(userId: String, journeyId: String) -> Future<JSON, Hikeb
         }
     }
 }
-
-//func searchUsers(searchString: String?, nextpage: String?) -> Future< {
-//
-//}
