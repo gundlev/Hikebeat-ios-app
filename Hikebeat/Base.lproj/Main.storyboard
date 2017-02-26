@@ -2106,7 +2106,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.24313725490196078" green="0.60784313725490191" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="un1-mj-ApT" firstAttribute="top" secondItem="fQI-mx-mrp" secondAttribute="bottom" id="0UH-vU-0Pr"/>
                             <constraint firstItem="fQI-mx-mrp" firstAttribute="leading" secondItem="aN1-AS-9TY" secondAttribute="leadingMargin" constant="-20" id="Cg0-Ys-Xly"/>
@@ -3192,7 +3192,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="44456D38-4AC3-48B9-9402-CD6717747CC9" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CA9158ED-0D1F-40A3-A028-06DE50099497" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -5157,7 +5157,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="44456D38-4AC3-48B9-9402-CD6717747CC9" width="24" height="30">
+        <image name="ActivedIcon" width="32" height="32"/>
+        <image name="BackArrow" width="15" height="20"/>
+        <image name="BlurryBG" width="375" height="190"/>
+        <image name="CA9158ED-0D1F-40A3-A028-06DE50099497" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5256,9 +5259,6 @@ AMIA2QDbAN0UvxTEFM8U2BTrFO8U+hUDFQgVEBUTFRgVJxUrFTIVOhVHFUwVThVQFVUVXRVgFWUVbRVw
 FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
 </mutableData>
         </image>
-        <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="15" height="20"/>
-        <image name="BlurryBG" width="375" height="190"/>
         <image name="CloseIcon" width="23" height="23"/>
         <image name="ComposeBG" width="330" height="473"/>
         <image name="ComposeMemo" width="24" height="37"/>
@@ -5329,7 +5329,7 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <segue reference="Ry1-QN-lGj"/>
         <segue reference="qjl-8s-Y35"/>
         <segue reference="CbR-7C-QI3"/>
-        <segue reference="9B6-dr-Cd4"/>
         <segue reference="3h1-ov-ahR"/>
+        <segue reference="L6C-E0-xD3"/>
     </inferredMetricsTieBreakers>
 </document>
