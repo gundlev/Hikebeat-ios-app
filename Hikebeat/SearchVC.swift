@@ -90,6 +90,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             searchTableView.separatorStyle = .singleLine
             searchTableView.separatorColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
             
+            searchTableView.contentSize.height += 200
 //            usersTableView = UITableView(frame: CGRect(x: scrollViewWidth, y: 0, width: scrollViewWidth, height: scrollViewHeight))
 //            usersTableView.delegate = self
 //            usersTableView.dataSource = self
@@ -241,6 +242,14 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
 //        }
 //        print("Number of sections: ", count)
         return 2
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
