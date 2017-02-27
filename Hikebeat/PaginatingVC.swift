@@ -73,6 +73,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 print("User")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
                 cell.awakeFromNib()
+                cell.selectionStyle = .none
                 let user = search?.results[indexPath.row] as! User
                 print("Creating cell for user: ", user.username)
                 if user.profilePhoto != nil {
@@ -93,6 +94,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 let journey = self.search?.results[indexPath.row] as! Journey
 //                print("Creating cell for journey: ", journey.headline)
                 cell.awakeFromNib()
+                cell.selectionStyle = .none
                 cell.headline.text = journey.headline
                 cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
                 if journey.ownerProfilePhoto != nil {

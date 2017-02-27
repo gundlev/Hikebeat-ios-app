@@ -288,8 +288,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         switch fromVC {
         case "showAll":
             self.performSegue(withIdentifier: "journeyToShowAll", sender: self)
+            return
         default: print("nothing here")
         }
+        
         guard save else {
             performSegue(withIdentifier: "journeyToSearch", sender: self)
             return

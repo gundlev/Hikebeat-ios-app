@@ -41,13 +41,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Hikebeat/BeatsVC.swift"
-            timestampString = "509838009.420269"
+            filePath = "Hikebeat/PaginatingVC.swift"
+            timestampString = "509928301.53673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "showImage(_:)"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "back(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hikebeat/PaginatingVC.swift"
+            timestampString = "509928325.643483"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "backToShowAll(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

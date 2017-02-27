@@ -386,12 +386,14 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             if indexPath.row == 4 || (self.userSearch?.results.count)! + 1 == indexPath.row {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customFooter") as! TableViewSectionFooter
                 cell.awakeFromNib()
+                cell.selectionStyle = .none
                 cell.headerTitle.text = "See all"
                 return cell
             }
             print("UserCell")
             let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
             cell.awakeFromNib()
+            cell.selectionStyle = .none
             let user = self.userSearch?.results[indexPath.row-1] as! User
             print("Creating cell for user: ", user.username)
             if user.profilePhoto != nil {
@@ -419,6 +421,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customFooter") as! TableViewSectionFooter
                 cell.awakeFromNib()
                 cell.headerTitle.text = "See all"
+                cell.selectionStyle = .none
                 return cell
             }
             print("JourneyCell")
@@ -426,6 +429,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             let journey = self.journeySearch?.results[indexPath.row-1] as! Journey
             print("Creating cell for journey: ", journey.headline)
             cell.awakeFromNib()
+            cell.selectionStyle = .none
             cell.headline.text = journey.headline
             cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
             if journey.ownerProfilePhoto != nil {
