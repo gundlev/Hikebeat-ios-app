@@ -3191,7 +3191,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ACC045A6-1A3F-4748-AEB9-06FF9846EBD4" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3B3D2D4A-4907-42D9-9B83-D182441303EE" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -3708,7 +3708,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-Xj-PFb" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
                                 <rect key="frame" x="-4" y="82" width="383" height="585"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">
                                         <rect key="frame" x="36" y="36" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="4FW-UG-7t8"/>
@@ -3955,7 +3955,7 @@
                                             <constraint firstItem="eBe-MS-evO" firstAttribute="leading" secondItem="SZd-RL-CZv" secondAttribute="trailing" constant="10" id="u4X-aS-Cga"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GPSIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kMc-xK-sXb">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GPSIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kMc-xK-sXb">
                                         <rect key="frame" x="36" y="108" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="SKi-6k-kIQ"/>
@@ -5281,7 +5281,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ACC045A6-1A3F-4748-AEB9-06FF9846EBD4" width="24" height="30">
+        <image name="3B3D2D4A-4907-42D9-9B83-D182441303EE" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
