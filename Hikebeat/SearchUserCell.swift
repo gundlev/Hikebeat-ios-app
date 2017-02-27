@@ -36,6 +36,7 @@ class SearchUserCell: UITableViewCell {
             profileImage = UIImageView(frame: CGRect(x: 20, y: 10, width: 50, height: 50))
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
+            profileImage.contentMode = .scaleAspectFill
             imageActivity = UIActivityIndicatorView(frame: CGRect(x: 20, y: 10, width: 50, height: 50))
             username = UILabel(frame: CGRect(x: 80, y: 15, width: width-160, height: 30))
             username.textColor = .white
