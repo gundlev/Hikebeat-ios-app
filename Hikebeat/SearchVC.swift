@@ -125,14 +125,16 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
+        showActivity()
         print("search was tapped")
         self.view.endEditing(true)
         guard searchTextField.text != nil else {return true}
         userSearch = Search(type: .user)
         journeySearch = Search(type: .journey)
         guard textField.text! != "" else {
-            activityIndicator.stopAnimating()
+//            activityIndicator.stopAnimating()
+            hideActivity()
             setControlerState(to: .initial)
             return true
         }
@@ -143,10 +145,12 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 self.setControlerState(to: .resultsFound)
             }
             self.searchTableView.reloadData()
-            self.activityIndicator.stopAnimating()
+//            self.activityIndicator.stopAnimating()
+            hideActivity()
         }).onFailure(callback: { (error) in
             print("ERROR: ", error)
-            self.activityIndicator.stopAnimating()
+//            self.activityIndicator.stopAnimating()
+            hideActivity()
         })
         
         
@@ -156,10 +160,12 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 self.setControlerState(to: .resultsFound)
             }
             self.searchTableView.reloadData()
-            self.activityIndicator.stopAnimating()
+//            self.activityIndicator.stopAnimating()
+            hideActivity()
         }).onFailure(callback: { (error) in
             print("ERROR: ", error)
-            self.activityIndicator.stopAnimating()
+//            self.activityIndicator.stopAnimating()
+            hideActivity()
         })
         
         setControlerState(to: .noResults)
