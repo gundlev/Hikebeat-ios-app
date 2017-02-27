@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 import AVKit
 import RealmSwift
-import Regift
 
 class BeatsVC: UIViewController, AVAudioPlayerDelegate {
 
@@ -76,13 +75,6 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         // Close the modal before you leave
         self.dismiss(animated: false, completion: nil)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showImage" {
-            let vc = segue.destination as! ShowImageModalVC
-            vc.image = self.chosenImage!
-        }
     }
 }
 
@@ -301,14 +293,21 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                     }
                 }
             case MediaType.image:
-                print("imageMEDIA")
-                print(beat.mediaData!)
-                self.chosenImage = UIImage(contentsOfFile: getImagePath(beat.mediaData!))//UIImage(contentsOfFile: self.getImagePath(beat.mediaData!))
-                performSegue(withIdentifier: "showImage", sender: self)
+               showImage(UIImage(contentsOfFile: getImagePath(beat.mediaData!)))
             default:
                 print("default")
             }
         }
+    }
+    
+    func showImage(_ image: UIImage?){
+        guard let image = image else {
+            return
+        }
+        
+        let agrume = Agrume(image: image, backgroundColor: .black)
+        agrume.hideStatusBar = true
+        agrume.showFrom(self)
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

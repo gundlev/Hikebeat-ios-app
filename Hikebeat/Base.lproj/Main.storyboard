@@ -1948,7 +1948,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h40-2U-0WV" id="2yI-yd-ir0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finished Journey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-YG-eKg">
@@ -2583,7 +2583,7 @@
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BeatCell" id="Pdd-qJ-giq" customClass="BeatCollectionViewCell" customModule="Hikebeat" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="39.5" width="292" height="426"/>
+                                                    <rect key="frame" x="0.0" y="40" width="292" height="426"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                         <rect key="frame" x="0.0" y="0.0" width="292" height="426"/>
@@ -2773,7 +2773,6 @@
                         <outlet property="beatsCollectionView" destination="il6-8V-iJa" id="3UM-zg-WFx"/>
                         <outlet property="pageControl" destination="IP1-Ki-95A" id="9kE-Ee-l7f"/>
                         <outlet property="pageCtrlLabel" destination="bgk-h1-D1d" id="ZrH-pn-n1b"/>
-                        <segue destination="7Ro-TB-tMY" kind="presentation" identifier="showImage" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="hM5-y2-nzI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhY-dn-iVU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3192,7 +3191,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A69EC835-0890-4EFF-888D-E1443D5A272E" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AAAE8621-6CE7-4E0F-BFB5-ECE04F30F454" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -4896,9 +4895,9 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="tfB-mw-jpb"/>
-                                        <exclude reference="raH-lX-OYz"/>
                                         <exclude reference="kII-70-IM6"/>
+                                        <exclude reference="raH-lX-OYz"/>
+                                        <exclude reference="tfB-mw-jpb"/>
                                         <exclude reference="GiJ-zd-wCw"/>
                                     </mask>
                                 </variation>
@@ -4953,9 +4952,9 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Ono-qm-8fm"/>
                                         <exclude reference="DGE-fe-95F"/>
                                         <exclude reference="HXA-3A-g4r"/>
+                                        <exclude reference="Ono-qm-8fm"/>
                                         <exclude reference="RbF-A3-tFn"/>
                                     </mask>
                                 </variation>
@@ -5010,8 +5009,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="TMd-1r-GzF"/>
                                         <exclude reference="6gT-Wy-I3i"/>
+                                        <exclude reference="TMd-1r-GzF"/>
                                         <exclude reference="rNi-WY-aAK"/>
                                         <exclude reference="5kP-ts-L2H"/>
                                     </mask>
@@ -5282,7 +5281,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="A69EC835-0890-4EFF-888D-E1443D5A272E" width="24" height="30">
+        <image name="AAAE8621-6CE7-4E0F-BFB5-ECE04F30F454" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

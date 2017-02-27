@@ -121,6 +121,11 @@
 		E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */; };
 		E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */; };
 		E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */; };
+		E1CD74061E637F460049899B /* Agrume.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD74011E637F460049899B /* Agrume.swift */; };
+		E1CD74071E637F460049899B /* AgrumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD74021E637F460049899B /* AgrumeCell.swift */; };
+		E1CD74081E637F460049899B /* AgrumeServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD74031E637F460049899B /* AgrumeServiceLocator.swift */; };
+		E1CD74091E637F460049899B /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD74041E637F460049899B /* ImageDownloader.swift */; };
+		E1CD740A1E637F460049899B /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD74051E637F460049899B /* UIViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +269,12 @@
 		E1B84ABB1CD26AB10047BD5A /* JourneysVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneysVC.swift; sourceTree = "<group>"; };
 		E1B84ABD1CD26ABE0047BD5A /* SocialVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
 		E1BC81C21CCEEB55008A4518 /* EditMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMessageVC.swift; sourceTree = "<group>"; };
+		E1CD74001E637F460049899B /* Agrume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Agrume.h; path = Agrume/Agrume.h; sourceTree = "<group>"; };
+		E1CD74011E637F460049899B /* Agrume.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Agrume.swift; path = Agrume/Agrume.swift; sourceTree = "<group>"; };
+		E1CD74021E637F460049899B /* AgrumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgrumeCell.swift; path = Agrume/AgrumeCell.swift; sourceTree = "<group>"; };
+		E1CD74031E637F460049899B /* AgrumeServiceLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgrumeServiceLocator.swift; path = Agrume/AgrumeServiceLocator.swift; sourceTree = "<group>"; };
+		E1CD74041E637F460049899B /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Agrume/ImageDownloader.swift; sourceTree = "<group>"; };
+		E1CD74051E637F460049899B /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Agrume/UIViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,6 +591,7 @@
 		85F2B46C1CC4E353004704F3 /* Frameworks and Libs */ = {
 			isa = PBXGroup;
 			children = (
+				E1CD73FF1E637F370049899B /* Agrume */,
 				85AC906D1CE487AE007BE5C2 /* Hikebeat-Bridging-Header.h */,
 				858EFF051D19BDCD00C50771 /* ImageEnlargement */,
 				858EFEF61D186C8B00C50771 /* SCLAlertView */,
@@ -635,6 +647,19 @@
 				E18A06E21DFE03E10087A23E /* HikebeatWalkthroughFramework.swift */,
 			);
 			name = Walkthrough;
+			sourceTree = "<group>";
+		};
+		E1CD73FF1E637F370049899B /* Agrume */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD74001E637F460049899B /* Agrume.h */,
+				E1CD74011E637F460049899B /* Agrume.swift */,
+				E1CD74021E637F460049899B /* AgrumeCell.swift */,
+				E1CD74031E637F460049899B /* AgrumeServiceLocator.swift */,
+				E1CD74041E637F460049899B /* ImageDownloader.swift */,
+				E1CD74051E637F460049899B /* UIViewExtensions.swift */,
+			);
+			name = Agrume;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -830,6 +855,7 @@
 				85B890E61D59EB16009589E6 /* DownloadMedia.swift in Sources */,
 				858EFF141D19BDDA00C50771 /* JTSSimpleImageDownloader.m in Sources */,
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
+				E1CD74071E637F460049899B /* AgrumeCell.swift in Sources */,
 				8593DB111DFC187E00604BFA /* SearchJourneyCell.swift in Sources */,
 				858D263C1D8AE11300019E8F /* SCLAlertView.swift in Sources */,
 				E1B84ABE1CD26ABE0047BD5A /* SocialVC.swift in Sources */,
@@ -839,6 +865,7 @@
 				858EFF191D19C26B00C50771 /* ShowImageModalVC.swift in Sources */,
 				8512E0F61CD4E7520085CE2B /* Structs.swift in Sources */,
 				858EFF041D19897100C50771 /* MemoExt.swift in Sources */,
+				E1CD74081E637F460049899B /* AgrumeServiceLocator.swift in Sources */,
 				85F2B4711CC4E3D2004704F3 /* Journey.swift in Sources */,
 				E18991641CD3A27A00EC46B2 /* ActiveJourneyCollectionViewCell.swift in Sources */,
 				85562F3F1E2AE5170078CC51 /* UserCalls.swift in Sources */,
@@ -846,6 +873,7 @@
 				E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */,
 				E17F5B2E1DFDC99800C1A2B0 /* WalkthroughVC.swift in Sources */,
 				E1BC81C31CCEEB55008A4518 /* EditMessageVC.swift in Sources */,
+				E1CD740A1E637F460049899B /* UIViewExtensions.swift in Sources */,
 				851A51F61D9A6CAB00CA7EA5 /* Async.swift in Sources */,
 				858EFF121D19BDDA00C50771 /* JTSImageViewController.m in Sources */,
 				858EFF161D19BDDA00C50771 /* UIImage+JTSImageEffects.m in Sources */,
@@ -878,6 +906,7 @@
 				859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */,
 				853DD11A1E5F26970038663B /* Pair.swift in Sources */,
 				E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */,
+				E1CD74091E637F460049899B /* ImageDownloader.swift in Sources */,
 				8593DAAD1DF3248500604BFA /* JourneyCalls.swift in Sources */,
 				851A51F81D9A6DB700CA7EA5 /* Reachability.swift in Sources */,
 				8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */,
@@ -904,6 +933,7 @@
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,
 				8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */,
 				853DD11C1E5F30730038663B /* ContactManipulation.swift in Sources */,
+				E1CD74061E637F460049899B /* Agrume.swift in Sources */,
 				8593DB0D1DFB6BC400604BFA /* SelectJourneyCell.swift in Sources */,
 				85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
