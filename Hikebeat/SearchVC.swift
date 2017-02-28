@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import BrightFutures
 
 class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -140,37 +141,57 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         }
         let searchText = (searchTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
         
-        userSearch?.startSearch(searchText: searchText)
-        .onSuccess(callback: { (users) in
-            if !users.isEmpty {
-                self.setControlerState(to: .resultsFound)
-            }
-            self.searchTableView.reloadData()
-//            self.activityIndicator.stopAnimating()
-            hideActivity()
-        }).onFailure(callback: { (error) in
-            print("ERROR: ", error)
-//            self.activityIndicator.stopAnimating()
-            hideActivity()
-        })
-        
-        
-        journeySearch?.startSearch(searchText: searchText)
-        .onSuccess(callback: { (journeys) in
-            if !journeys.isEmpty {
-                self.setControlerState(to: .resultsFound)
-            }
-            self.searchTableView.reloadData()
-//            self.activityIndicator.stopAnimating()
-            hideActivity()
-        }).onFailure(callback: { (error) in
-            print("ERROR: ", error)
-//            self.activityIndicator.stopAnimating()
-            hideActivity()
-        })
-        
-        setControlerState(to: .noResults)
+        search(for: searchText)
+        .onSuccess { (state) in
+            self.setControlerState(to: state)
+        }
         return true
+    }
+    
+    func search(for searchText: String) -> Future<controllerState, HikebeatError> {
+        return Future { complete in
+            var state: controllerState = .noResults
+            var returnedCount = 0
+            
+            func returnCall() {
+                if returnedCount == 2 {
+                    complete(.success(state))
+                }
+            }
+            
+            userSearch?.startSearch(searchText: searchText)
+            .onSuccess(callback: { (users) in
+                if !users.isEmpty {
+                    state = .resultsFound
+                }
+                returnedCount += 1
+                self.searchTableView.reloadData()
+                hideActivity()
+                returnCall()
+            }).onFailure(callback: { (error) in
+                print("ERROR: ", error)
+                hideActivity()
+                returnedCount += 1
+                returnCall()
+            })
+            
+            
+            journeySearch?.startSearch(searchText: searchText)
+            .onSuccess(callback: { (journeys) in
+                if !journeys.isEmpty {
+                    state = .resultsFound
+                }
+                self.searchTableView.reloadData()
+                hideActivity()
+                returnedCount += 1
+                returnCall()
+            }).onFailure(callback: { (error) in
+                print("ERROR: ", error)
+                hideActivity()
+                returnedCount += 1
+                returnCall()
+            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
