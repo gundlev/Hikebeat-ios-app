@@ -14,6 +14,7 @@ class Journey: Object {
     
     dynamic var slug: String? = nil
     dynamic var userId: String = ""
+    dynamic var username: String? = nil
     dynamic var journeyId: String = ""
     dynamic var headline: String? = nil
     dynamic var numberOfBeats: Int = 0
