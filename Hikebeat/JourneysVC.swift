@@ -315,6 +315,7 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
         if segue.identifier == "showJourney" {
             let vc = segue.destination as! JourneyContainerVC
             vc.journey = self.journeys[((selectedIndexPath as NSIndexPath?)?.row)!]
+            vc.fromVC = "journeys"
         }
     }
     

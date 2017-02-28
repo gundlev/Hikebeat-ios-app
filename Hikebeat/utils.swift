@@ -77,6 +77,20 @@ func shouldRefreshToken() -> Bool {
     return true
 }
 
+func downloadImage(imageUrl: String, activityIndicator: UIActivityIndicatorView) -> Future<UIImage, HikebeatError> {
+    return Future { complete in
+        activityIndicator.startAnimating()
+        downloadImage(imageUrl: imageUrl)
+        .onSuccess { (image) in
+            activityIndicator.stopAnimating()
+            complete(.success(image))
+        }.onFailure { (error) in
+            print("Error: ", error)
+            complete(.failure(error))
+        }
+    }
+}
+
 public func getPathToFileFromName(_ name: String) -> URL? {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentDirectory = paths[0]

@@ -451,6 +451,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 let vc = segue.destination as! JourneyContainerVC
                 vc.journey = chosenJourney
                 vc.save = false
+                vc.fromVC = "search"
             case "showAll":
                 let vc = segue.destination as! PaginatingVC
                 switch self.chosenType! {

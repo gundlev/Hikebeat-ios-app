@@ -31,7 +31,7 @@ class JourneyContainerVC: UIViewController {
         if segue.identifier == "instantiateContainer" {
             let vc = segue.destination as! JourneyVC
             vc.journey = self.journey
-            vc.save = save
+//            vc.save = save
             vc.fromVC = fromVC
         }
     }

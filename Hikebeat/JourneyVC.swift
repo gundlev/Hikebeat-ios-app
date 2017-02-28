@@ -26,7 +26,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
-    var save = true
+//    var save = true
     var pins = [BeatPin]()
     var indexOfChosenPin: Int?
     var fromVC = ""
@@ -62,7 +62,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         profileImage.layer.masksToBounds = true
         setUpPins()
         
-        if !save {
+        if fromVC != "journeys" {
             getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
             .onSuccess(callback: { (beatsJson) in
                 let realm = try! Realm()
@@ -107,16 +107,29 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     }
     
     func setProfileImage() {
-        let dataPath = getProfileImagePath()
-        let image = UIImage(contentsOfFile: dataPath)
-        if image != nil {
-            self.profileImage.image = image
+        if fromVC == "journeys" {
+            let dataPath = getProfileImagePath()
+            let image = UIImage(contentsOfFile: dataPath)
+            if image != nil {
+                self.profileImage.image = image
+            } else {
+                self.profileImage.image = UIImage(named: "DefaultProfile")
+            }
+            let tabGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
+            self.profileImage.addGestureRecognizer(tabGesture)
+            self.profileImage.isUserInteractionEnabled = true
         } else {
-            self.profileImage.image = UIImage(named: "DefaultProfile")
+            if self.journey?.ownerProfilePhoto != nil {
+                self.profileImage.image = UIImage(data: (self.journey?.ownerProfilePhoto!)!)
+            } else {
+                downloadImage(imageUrl: (self.journey?.ownerProfilePhotoUrl)!)
+                .onSuccess(callback: { (image) in
+                    self.profileImage.image = image
+                }).onFailure(callback: { (error) in
+                    self.profileImage.image = UIImage(named: "DefaultProfile")
+                })
+            }
         }
-        let tabGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
-        self.profileImage.addGestureRecognizer(tabGesture)
-        self.profileImage.isUserInteractionEnabled = true
     }
     
     func goToProfile() {
@@ -291,13 +304,16 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         case "showAll":
             self.performSegue(withIdentifier: "journeyToShowAll", sender: self)
             return
+        case "search":
+            performSegue(withIdentifier: "journeyToSearch", sender: self)
+            return
         default: print("nothing here")
         }
         
-        guard save else {
-            performSegue(withIdentifier: "journeyToSearch", sender: self)
-            return
-        }
+//        guard save else {
+//            performSegue(withIdentifier: "journeyToSearch", sender: self)
+//            return
+//        }
         
         if appDelegate.fastSegueHack=="social"{
             performSegue(withIdentifier: "unwindSocialHack", sender: self)
@@ -333,15 +349,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showBeat" {
-            print(1)
             let vc = segue.destination as! BeatsVC
-            print(2)
             vc.startingIndex = self.indexOfChosenPin!
-            print(3)
             vc.journey = self.journey
-            print(4)
-            vc.save = save
-            print(5)
+            vc.save = self.fromVC == "journeys"
         }
     }
 
