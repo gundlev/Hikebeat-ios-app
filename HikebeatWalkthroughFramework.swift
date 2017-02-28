@@ -107,9 +107,6 @@ import UIKit
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[scrollview]-0-|", options:[], metrics: nil, views: ["scrollview":scrollview] as [String: UIView]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[scrollview]-0-|", options:[], metrics: nil, views: ["scrollview":scrollview] as [String: UIView]))
         
-        pageControl?.numberOfPages = controllers.count-1
-        pageControl?.currentPage = 0
-        
         if shouldAutoSlideshow {
             startSlideshowTimer()
         }
@@ -141,6 +138,11 @@ import UIKit
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
+        
+        pageControl?.numberOfPages = controllers.count-1
+        pageControl?.currentPage = 0
+        pageControl?.isUserInteractionEnabled = false
+        
         updateUI()
     }
     

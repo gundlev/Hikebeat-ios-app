@@ -238,6 +238,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="qL1-oF-368">
+                                <rect key="frame" x="0.0" y="450" width="375" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="A4Z-CB-F47"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?            " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwI-Hb-xgY">
                                 <rect key="frame" x="56" y="600.5" width="263" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -286,17 +294,10 @@
                                     <action selector="sendBeat:" destination="jTg-CM-etK" eventType="touchUpInside" id="PS1-IU-bum"/>
                                 </connections>
                             </button>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="qL1-oF-368">
-                                <rect key="frame" x="152" y="450" width="71" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="A4Z-CB-F47"/>
-                                </constraints>
-                                <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="currentPageIndicatorTintColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="qL1-oF-368" firstAttribute="width" secondItem="ktf-RI-WFt" secondAttribute="width" id="1Un-fp-67E"/>
                             <constraint firstItem="7V4-22-wbm" firstAttribute="top" secondItem="fwI-Hb-xgY" secondAttribute="bottom" constant="45" id="4fH-y6-70X"/>
                             <constraint firstItem="Kg6-WP-QTm" firstAttribute="leading" secondItem="fwI-Hb-xgY" secondAttribute="leading" id="Dn8-vX-qPC"/>
                             <constraint firstItem="Kg6-WP-QTm" firstAttribute="top" secondItem="qL1-oF-368" secondAttribute="bottom" constant="72" id="FJr-JB-0NH"/>
@@ -3191,7 +3192,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AAAE8621-6CE7-4E0F-BFB5-ECE04F30F454" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="216E7175-90D1-4F4A-A251-EF6CA5E8627C" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -3708,7 +3709,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-Xj-PFb" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
                                 <rect key="frame" x="-4" y="82" width="383" height="585"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">
                                         <rect key="frame" x="36" y="36" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="4FW-UG-7t8"/>
@@ -3740,8 +3741,8 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Toggle map lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btv-wu-B6d">
-                                        <rect key="frame" x="99" y="256" width="147.5" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable map lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btv-wu-B6d">
+                                        <rect key="frame" x="99" y="256" width="148" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3955,7 +3956,7 @@
                                             <constraint firstItem="eBe-MS-evO" firstAttribute="leading" secondItem="SZd-RL-CZv" secondAttribute="trailing" constant="10" id="u4X-aS-Cga"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GPSIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kMc-xK-sXb">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GPSIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kMc-xK-sXb">
                                         <rect key="frame" x="36" y="108" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="SKi-6k-kIQ"/>
@@ -4019,7 +4020,7 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="95t-Oz-HQC">
-                                        <rect key="frame" x="246.5" y="253" width="30" height="30"/>
+                                        <rect key="frame" x="247" y="253" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="95t-Oz-HQC" secondAttribute="height" multiplier="1:1" id="MeO-hQ-xtG"/>
                                             <constraint firstAttribute="width" constant="30" id="lUA-AJ-gXA"/>
@@ -4852,7 +4853,7 @@
                                         <rect key="frame" x="25" y="17" width="333" height="473"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2M-2A-Vcf">
-                                        <rect key="frame" x="70" y="286" width="244" height="21"/>
+                                        <rect key="frame" x="70" y="281" width="244" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="g4g-z9-lgD"/>
                                         </constraints>
@@ -4861,13 +4862,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-internet" translatesAutoresizingMaskIntoConstraints="NO" id="MhI-mm-cCr">
-                                        <rect key="frame" x="99" y="160" width="185" height="101"/>
+                                        <rect key="frame" x="99" y="155" width="185" height="101"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="185" id="SP9-lA-G2E"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The social functionality needs internet connection. Please try again later." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYA-eL-gzM">
-                                        <rect key="frame" x="69" y="307" width="244" height="61"/>
+                                        <rect key="frame" x="69" y="302" width="244" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="uaU-4V-JB5"/>
                                         </constraints>
@@ -4890,7 +4891,7 @@
                                     <constraint firstItem="Oje-oR-5WQ" firstAttribute="top" secondItem="F9D-ql-Vc6" secondAttribute="top" id="tfB-mw-jpb"/>
                                     <constraint firstItem="MhI-mm-cCr" firstAttribute="centerX" secondItem="F9D-ql-Vc6" secondAttribute="centerX" id="u4T-hx-dnX"/>
                                     <constraint firstAttribute="trailing" secondItem="Oje-oR-5WQ" secondAttribute="trailing" constant="25" id="udg-PV-bqz"/>
-                                    <constraint firstItem="MhI-mm-cCr" firstAttribute="top" secondItem="F9D-ql-Vc6" secondAttribute="top" constant="160" id="vp3-jt-Hex"/>
+                                    <constraint firstItem="MhI-mm-cCr" firstAttribute="top" secondItem="F9D-ql-Vc6" secondAttribute="top" constant="155" id="vp3-jt-Hex"/>
                                     <constraint firstItem="Oje-oR-5WQ" firstAttribute="leading" secondItem="F9D-ql-Vc6" secondAttribute="leading" constant="25" id="y00-3V-S9r"/>
                                 </constraints>
                                 <variation key="default">
@@ -4909,7 +4910,7 @@
                                         <rect key="frame" x="25" y="17" width="333" height="473"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search on Hikebeat" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRY-n8-vjg">
-                                        <rect key="frame" x="70" y="321" width="244" height="21"/>
+                                        <rect key="frame" x="70" y="281" width="244" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="K7z-Ge-skr"/>
                                         </constraints>
@@ -4918,13 +4919,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search-now" translatesAutoresizingMaskIntoConstraints="NO" id="q2O-zc-q7h">
-                                        <rect key="frame" x="99" y="160" width="185" height="136"/>
+                                        <rect key="frame" x="99" y="120" width="185" height="136"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="185" id="82h-Wk-C0n"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please use the search field above to find exciting journeys and brave users in our ecosystem." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TgB-jq-pyr">
-                                        <rect key="frame" x="69" y="342" width="244" height="81.5"/>
+                                        <rect key="frame" x="69" y="302" width="244" height="81.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="wBS-eP-fcC"/>
                                         </constraints>
@@ -4945,7 +4946,7 @@
                                     <constraint firstItem="cRY-n8-vjg" firstAttribute="top" secondItem="fWs-3S-QWD" secondAttribute="bottom" constant="-162" id="RbF-A3-tFn"/>
                                     <constraint firstItem="TgB-jq-pyr" firstAttribute="centerX" secondItem="gXC-hz-ZbM" secondAttribute="centerX" id="U8C-b3-Mof"/>
                                     <constraint firstItem="cRY-n8-vjg" firstAttribute="centerX" secondItem="gXC-hz-ZbM" secondAttribute="centerX" id="adk-Y2-dns"/>
-                                    <constraint firstItem="q2O-zc-q7h" firstAttribute="top" secondItem="gXC-hz-ZbM" secondAttribute="top" constant="160" id="iCq-Sy-MHf"/>
+                                    <constraint firstItem="q2O-zc-q7h" firstAttribute="top" secondItem="gXC-hz-ZbM" secondAttribute="top" constant="120" id="iCq-Sy-MHf"/>
                                     <constraint firstAttribute="trailing" secondItem="fWs-3S-QWD" secondAttribute="trailing" constant="25" id="pPA-ks-iTB"/>
                                     <constraint firstItem="cRY-n8-vjg" firstAttribute="top" secondItem="q2O-zc-q7h" secondAttribute="bottom" constant="25" id="zS1-HL-a4C"/>
                                     <constraint firstItem="TgB-jq-pyr" firstAttribute="top" secondItem="cRY-n8-vjg" secondAttribute="bottom" id="zjq-Ft-cwO"/>
@@ -4966,7 +4967,7 @@
                                         <rect key="frame" x="25" y="17" width="333" height="473"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing to show" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cp-B3-0b7">
-                                        <rect key="frame" x="70" y="321" width="244" height="21"/>
+                                        <rect key="frame" x="70" y="281" width="244" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="hFK-Uk-rvs"/>
                                         </constraints>
@@ -4975,13 +4976,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-results" translatesAutoresizingMaskIntoConstraints="NO" id="88q-vI-73t">
-                                        <rect key="frame" x="99" y="160" width="185" height="136"/>
+                                        <rect key="frame" x="99" y="120" width="185" height="136"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="185" id="Vtf-gL-P8l"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry but nothing was found. Try to search with different keywords." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qng-mb-rKf">
-                                        <rect key="frame" x="69" y="342" width="244" height="61"/>
+                                        <rect key="frame" x="69" y="302" width="244" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="244" id="tRB-ug-RYr"/>
                                         </constraints>
@@ -4999,7 +5000,7 @@
                                     <constraint firstItem="6Cp-B3-0b7" firstAttribute="top" secondItem="88q-vI-73t" secondAttribute="bottom" constant="25" id="Ou7-2n-yFs"/>
                                     <constraint firstItem="Uzc-xU-qZr" firstAttribute="top" secondItem="cm5-H3-HyH" secondAttribute="top" id="TMd-1r-GzF"/>
                                     <constraint firstAttribute="bottom" secondItem="Uzc-xU-qZr" secondAttribute="bottom" constant="40" id="URi-Et-mbo"/>
-                                    <constraint firstItem="88q-vI-73t" firstAttribute="top" secondItem="cm5-H3-HyH" secondAttribute="top" constant="160" id="YvL-tU-LMr"/>
+                                    <constraint firstItem="88q-vI-73t" firstAttribute="top" secondItem="cm5-H3-HyH" secondAttribute="top" constant="120" id="YvL-tU-LMr"/>
                                     <constraint firstItem="Qng-mb-rKf" firstAttribute="top" secondItem="6Cp-B3-0b7" secondAttribute="bottom" id="bSg-Fy-h4f"/>
                                     <constraint firstItem="88q-vI-73t" firstAttribute="centerX" secondItem="cm5-H3-HyH" secondAttribute="centerX" id="bsK-Xo-vy8"/>
                                     <constraint firstItem="88q-vI-73t" firstAttribute="centerX" secondItem="cm5-H3-HyH" secondAttribute="centerX" id="deV-wP-Myz"/>
@@ -5281,7 +5282,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AAAE8621-6CE7-4E0F-BFB5-ECE04F30F454" width="24" height="30">
+        <image name="216E7175-90D1-4F4A-A251-EF6CA5E8627C" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5452,10 +5453,10 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ry1-QN-lGj"/>
+        <segue reference="8bj-j3-9e2"/>
         <segue reference="qjl-8s-Y35"/>
-        <segue reference="CbR-7C-QI3"/>
-        <segue reference="9B6-dr-Cd4"/>
+        <segue reference="dg6-j1-ehS"/>
         <segue reference="3h1-ov-ahR"/>
+        <segue reference="9B6-dr-Cd4"/>
     </inferredMetricsTieBreakers>
 </document>
