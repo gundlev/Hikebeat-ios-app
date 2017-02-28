@@ -138,8 +138,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             setControlerState(to: .initial)
             return true
         }
+        let searchText = (searchTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
         
-        userSearch?.startSearch(searchText: searchTextField.text!)
+        userSearch?.startSearch(searchText: searchText)
         .onSuccess(callback: { (users) in
             if !users.isEmpty {
                 self.setControlerState(to: .resultsFound)
@@ -154,7 +155,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         })
         
         
-        journeySearch?.startSearch(searchText: searchTextField.text!)
+        journeySearch?.startSearch(searchText: searchText)
         .onSuccess(callback: { (journeys) in
             if !journeys.isEmpty {
                 self.setControlerState(to: .resultsFound)
