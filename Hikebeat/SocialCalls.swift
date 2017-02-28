@@ -122,6 +122,7 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
                     journey.numberOfBeats = jsonJourney["messageCount"].intValue
                     journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
                     journey.userId = jsonJourney["userId"].stringValue
+                    journey.slug = jsonJourney["slug"].stringValue
                     journeys.append(journey)
                 }
             }
