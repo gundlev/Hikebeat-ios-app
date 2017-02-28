@@ -477,12 +477,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             let locationTupleFuture = self.getTimeAndLocation()
             locationTupleFuture.onSuccess { (locationTuple) in
                 if locationTuple != nil {
-                    if ((self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
+                    if ((self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil && self.audioHasBeenRecordedForThisBeat == false) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
                         print(0.3)
                         // Give a warning that there is not text or no active journey.
                         print("Something is missing")
                         print("Text: ", self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil)
-                        print("Journey: ", self.activeJourney == nil)
+                        print("Journey: ", self.activeJourney != nil)
                         print("Lat: ", locationTuple!.latitude)
                         print("Lng: ", locationTuple!.longitude)
                         

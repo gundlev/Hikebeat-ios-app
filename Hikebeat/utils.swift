@@ -84,6 +84,13 @@ public func getPathToFileFromName(_ name: String) -> URL? {
     return pathToFile
 }
 
+func getImagePath(_ path: String) -> String {
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+    let documentsDirectory: AnyObject = paths[0] as AnyObject
+    let dataPath = documentsDirectory.appending(path)
+    return dataPath
+}
+
 public func createMediaFolder() -> Bool {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let documentsDirectory: AnyObject = paths[0] as AnyObject

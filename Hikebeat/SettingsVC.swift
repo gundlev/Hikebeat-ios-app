@@ -18,7 +18,7 @@ class SettingsVC: UIViewController {
     let userDefaults = UserDefaults.standard
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var toUpload: (synced:Bool, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>)? = nil
-    var numbers = (image: 0, video: 0, audio: 0)
+    var numbers = (image: 0, video: 0, audio: 0, message: 0)
     let realm = try! Realm()
 
     @IBOutlet weak var gpsSwitch: UISwitch!
@@ -303,7 +303,7 @@ class SettingsVC: UIViewController {
         if !synced.synced {
             self.toUpload = synced
             if !synced.mediaBeats.isEmpty {
-                self.numbers = (image: 0, video: 0, audio: 0)
+                self.numbers = (image: 0, video: 0, audio: 0, message: 0)
                 for beat in self.toUpload!.mediaBeats {
 //                    print(4)
 //                    print(beat.message)
@@ -317,14 +317,16 @@ class SettingsVC: UIViewController {
                     default: print("wrong")
                     }
                 }
+                self.numbers.message = (self.toUpload?.messageBeats.count)!
             }
         } else {
+            self.numbers.message = 0
             self.numbers.image = 0
             self.numbers.video = 0
             self.numbers.audio = 0
         }
         
-        syncMessagesBadge.text = "?"
+        syncMessagesBadge.text = "\(self.numbers.message)"
         syncPicturesBadge.text = "\(self.numbers.image)"
         syncVideosBadge.text = "\(self.numbers.video)"
         syncMemosBadge.text = "\(self.numbers.audio)"
@@ -357,9 +359,11 @@ class SettingsVC: UIViewController {
             case MediaType.audio:
                 if self.numbers.audio > 0 {
                     color = yellowColor
-            }
+                }
             case MediaType.none:
-                color = greenColor
+                if self.numbers.message > 0 {
+                    color = yellowColor
+                }
             default: print("wrong")
         }
         view.layer.borderColor = color.cgColor

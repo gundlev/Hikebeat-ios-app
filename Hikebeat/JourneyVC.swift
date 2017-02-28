@@ -257,8 +257,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("pressed an annotation")
-        self.indexOfChosenPin = pins.index(of: view.annotation as! BeatPin)
-        performSegue(withIdentifier: "showBeat", sender: self)
+        if let index = pins.index(of: view.annotation as! BeatPin) {
+            self.indexOfChosenPin = index
+            performSegue(withIdentifier: "showBeat", sender: self)
+        }
     }
     
     func createPolyline(_ mapView: MKMapView) {
@@ -331,10 +333,15 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showBeat" {
+            print(1)
             let vc = segue.destination as! BeatsVC
+            print(2)
             vc.startingIndex = self.indexOfChosenPin!
+            print(3)
             vc.journey = self.journey
+            print(4)
             vc.save = save
+            print(5)
         }
     }
 

@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     internal func synced() -> (synced:Bool, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) {
         let realmLocal = try! Realm()
-        print("starting sync method")
+        print("starting sync method now")
         let mediaQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded == %@", false as CVarArg), NSPredicate(format: "mediaData != %@", "")])
         let beatQuery = NSPredicate(format: "messageUploaded == %@", false as CVarArg)
 //        let changeQuery = NSPredicate(format: "uploaded = %@", false as CVarArg)

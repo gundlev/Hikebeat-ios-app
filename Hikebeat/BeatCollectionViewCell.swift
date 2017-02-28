@@ -42,6 +42,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
             // media has been downloaded
             beatImage.isHidden = false
             playButton.isHidden = false
+            beatImage.image = UIImage(contentsOfFile: getImagePath(beat.mediaData!))
         } else {
             // Media has to be downloaded first
             spinner.startAnimating()

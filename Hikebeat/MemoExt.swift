@@ -216,16 +216,12 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     }
     
     func recordWithPermission(_ setup:Bool) {
-        print(1)
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         // ios 8 and later
-        print(2)
         if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
-            print(3)
             checkForMicPermission()
             
             session.requestRecordPermission({(granted: Bool)-> Void in
-                print(4)
                 if granted {
                     print("Permission to record granted")
                     self.setSessionPlayAndRecord()

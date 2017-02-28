@@ -42,6 +42,7 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("View did load beatsVC")
+        print(self.journey.beats)
         self.beats = self.journey.beats.sorted()//  .sorted(byKeyPath: "timestamp")
         print("here not")
         // Do any additional setup after loading the view.
@@ -80,10 +81,12 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
 
 extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("num items")
         return self.beats.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        print("Num sections")
         return 1
     }
     
