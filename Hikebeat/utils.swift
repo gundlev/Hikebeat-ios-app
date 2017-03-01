@@ -91,6 +91,71 @@ func downloadImage(imageUrl: String, activityIndicator: UIActivityIndicatorView)
     }
 }
 
+public func getTimeSince(date: Date) -> String {
+    //    let date = Date(timeIntervalSince1970: TimeInterval(Double(timestamp)!/1000))
+    print("Time since date: ", date)
+    let now = Date()
+    print("Date now: ", now)
+    let cal = Calendar.current
+    let secComponents = (cal as NSCalendar).components(.second, from: date, to: now, options: [])
+    let minComponents = (cal as NSCalendar).components(.minute, from: date, to: now, options: [])
+    let hourComponents = (cal as NSCalendar).components(.hour, from: date, to: now, options: [])
+    let dayComponents = (cal as NSCalendar).components(.day, from: date, to: now, options: [])
+    let monthComponents = (cal as NSCalendar).components(.month, from: date, to: now, options: [])
+    let yearComponents = (cal as NSCalendar).components(.year, from: date, to: now, options: [])
+    let seconds = abs(secComponents.second!)
+    let minutes = abs(minComponents.minute!)
+    let hours = abs(hourComponents.hour!)
+    let days = abs(dayComponents.day!)
+    let weeks = days/7
+    let months = abs(monthComponents.month!)
+    let years = abs(yearComponents.year!)
+
+    if seconds < 60 {
+        var element = " second"
+        if seconds > 1 {
+            element = " seconds"
+        }
+        return String(describing: hours) + element
+    } else if minutes < 60 {
+        var element = " minute"
+        if minutes > 1 {
+            element = " minutes"
+        }
+        return String(describing: hours) + element
+    } else if hours < 24 {
+        var element = " hour"
+        if hours > 1 {
+            element = " hours"
+        }
+        return String(describing: hours) + element
+    } else if days < 7 {
+        var element = " day"
+        if days > 1 {
+            element = " days"
+        }
+        return String(describing: days) + element
+    } else if weeks < 4 {
+        var element = " week"
+        if weeks > 1 {
+            element = " weeks"
+        }
+        return String(describing: weeks) + element
+    } else if months < 12 {
+        var element = " month"
+        if months > 1 {
+            element = " months"
+        }
+        return String(describing: months) + element
+    } else {
+        var element = " year"
+        if years > 1 {
+            element = " years"
+        }
+        return String(describing: years) + element
+    }
+}
+
 public func getPathToFileFromName(_ name: String) -> URL? {
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentDirectory = paths[0]

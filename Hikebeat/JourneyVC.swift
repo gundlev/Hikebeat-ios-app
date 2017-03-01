@@ -99,6 +99,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         followersLabel.isUserInteractionEnabled = true
         
         self.setProfileImage()
+        self.setUsername()
     }
     
     func showLatestBeat() {
@@ -130,6 +131,11 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 })
             }
         }
+    }
+    
+    func setUsername() {
+        print(self.journey)
+        self.usernameLabel.text = "by \((self.journey?.username)!)"
     }
     
     func goToProfile() {
@@ -337,7 +343,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBAction func shareButton(_ sender: AnyObject) {
         
         let slug = journey?.slug
-        let user = userDefaults.string(forKey: "username")
+        let user = journey?.username
         let base = "https://hikebeat.io/"
         let shareString = base+user!+"/"+slug!
         let objectsToShare = [shareString]

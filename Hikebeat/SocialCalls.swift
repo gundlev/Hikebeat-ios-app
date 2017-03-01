@@ -59,7 +59,8 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
                         numberOfBeats: jsonUser["_id"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
-                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue
+                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
+                        latestBeat: Date(timeIntervalSince1970: (jsonUsers["latestBeat"].doubleValue/1000))
                     ))
                 }
             }
@@ -82,6 +83,8 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
             if jsonUsers != nil {
                 for (_, jsonUser) in jsonUsers {
 //                    print("User: ", jsonUser)
+                    let d = Date(timeIntervalSince1970: (jsonUser["latestBeat"].doubleValue/1000))
+                    print("DATE: ", d)
                     users.append(User(
                         id: jsonUser["_id"].stringValue,
                         username: jsonUser["username"].stringValue,
@@ -89,7 +92,8 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
                         numberOfBeats: jsonUser["_id"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
-                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue
+                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
+                        latestBeat: d
                     ))
                 }
             }
@@ -113,6 +117,7 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
             let json = JSON(response.result.value as Any)
             guard response.response?.statusCode == 200 else {print(response.response?.statusCode); complete(.failure(.journeySearch)); return}
             let jsonJourneys = json["data"]["docs"]
+            print("search journey: ", jsonJourneys)
             var journeys = [Journey]()
             if jsonJourneys != nil {
                 for (_, jsonJourney) in jsonJourneys {
@@ -123,6 +128,7 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
                     journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
                     journey.userId = jsonJourney["userId"].stringValue
                     journey.slug = jsonJourney["slug"].stringValue
+                    journey.username = jsonJourney["username"].stringValue
                     journeys.append(journey)
                 }
             }

@@ -33,12 +33,12 @@ class SearchUserCell: UITableViewCell {
             let width = UIScreen.main.bounds.width
             let height: CGFloat = 70
             self.backgroundColor = standardGreen
-            profileImage = UIImageView(frame: CGRect(x: 20, y: 10, width: 50, height: 50))
+            profileImage = UIImageView(frame: CGRect(x: 15, y: 10, width: 50, height: 50))
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
             profileImage.contentMode = .scaleAspectFill
             imageActivity = UIActivityIndicatorView(frame: CGRect(x: 20, y: 10, width: 50, height: 50))
-            username = UILabel(frame: CGRect(x: 80, y: 15, width: width-160, height: 30))
+            username = UILabel(frame: CGRect(x: 80, y: 15, width: width-160, height: 25))
             username.textColor = .white
             username.adjustsFontSizeToFitWidth = true
             journeyIcon = UIImageView(frame: CGRect(x: width-60, y: 15, width: 20, height: 25))
@@ -48,7 +48,7 @@ class SearchUserCell: UITableViewCell {
             numberOfJourneys.textColor = .white
             numberOfJourneys.textAlignment = .center
             numberOfJourneys.font = UIFont.systemFont(ofSize: 13)
-            followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 14))
             followersBeats.textColor = .white
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)
@@ -56,6 +56,7 @@ class SearchUserCell: UITableViewCell {
             self.addSubview(imageActivity)
             self.addSubview(journeyIcon)
             self.addSubview(numberOfJourneys)
+            self.addSubview(followersBeats)
             self.firstLoad = false
         }
     }

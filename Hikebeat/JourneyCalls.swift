@@ -91,6 +91,7 @@ func createNewJourneyCall(headline: String) -> Future<Bool, HikebeatError> {
                 try! realm.write() {
                     let journey = Journey()
                     journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["headline"].stringValue, journeyDescription: nil, active: false, type: nil, seqNumber: String(json["seqNumber"].intValue))
+                    journey.username = json["username"].stringValue
                     realm.add(journey)
                     complete(.success(true))
                 }

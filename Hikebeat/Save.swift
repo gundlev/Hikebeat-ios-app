@@ -38,6 +38,7 @@ func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Journey, 
             
             let journey = Journey()
             journey.fill(journeyJson["slug"].stringValue, userId: userId, journeyId: journeyJson["_id"].stringValue, headline: journeyJson["headline"].stringValue, journeyDescription: journeyJson["headline"].stringValue, active: false, type: journeyJson["type"].stringValue, seqNumber: String(journeyJson["seqNumber"].intValue))
+            journey.username = journeyJson["username"].stringValue
             let localRealm = try! Realm()
             print("Saving journey")
             try! localRealm.write() {

@@ -17,6 +17,7 @@ class User: Any {
     var followsCount: String
     var profilePhoto: UIImage?
     var profilePhotoUrl: String
+    var latestBeat: Date
     
     init(id: String,
         username: String,
@@ -24,7 +25,8 @@ class User: Any {
         numberOfBeats: String,
         followerCount: String,
         followsCount: String,
-        profilePhotoUrl: String) {
+        profilePhotoUrl: String,
+        latestBeat: Date) {
         self.id = id
         self.username = username
         self.numberOfBeats = numberOfBeats
@@ -32,5 +34,6 @@ class User: Any {
         self.followerCount = followerCount
         self.followsCount = followsCount
         self.profilePhotoUrl = profilePhotoUrl
+        self.latestBeat = latestBeat
     }
 }
