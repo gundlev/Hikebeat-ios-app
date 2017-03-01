@@ -143,6 +143,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
         search(for: searchText)
         .onSuccess { (state) in
+            hideActivity()
             self.setControlerState(to: state)
         }
         return true
@@ -166,11 +167,9 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 }
                 returnedCount += 1
                 self.searchTableView.reloadData()
-                hideActivity()
                 returnCall()
             }).onFailure(callback: { (error) in
                 print("ERROR: ", error)
-                hideActivity()
                 returnedCount += 1
                 returnCall()
             })
@@ -182,12 +181,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                     state = .resultsFound
                 }
                 self.searchTableView.reloadData()
-                hideActivity()
                 returnedCount += 1
                 returnCall()
             }).onFailure(callback: { (error) in
                 print("ERROR: ", error)
-                hideActivity()
                 returnedCount += 1
                 returnCall()
             })
