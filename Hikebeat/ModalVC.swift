@@ -12,28 +12,38 @@ import BrightFutures
 
 class ModalVC: UIViewController {
     
-    var future: Future<Bool, NoError>!
+    var future: Future<String, NoError>!
+    var text = "Sending beat"
     var progressBar: UIProgressView?
     var progressBarTitle: UILabel?
     let screenSize: CGRect = UIScreen.main.bounds
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
 
+    @IBOutlet weak var explainText: UILabel!
     @IBOutlet weak var infoContainer: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.explainText.text = text
         infoContainer.layer.cornerRadius = infoContainer.bounds.height/6
         infoContainer.layer.masksToBounds = true
        
-        self.future.onSuccess { (success) in
-            _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
-            self.infoContainer.image = UIImage(named: "Checkcheck")
+        self.future.onSuccess { (returnVC) in
+            switch returnVC {
+            case "compose":
+                _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
+                self.infoContainer.image = UIImage(named: "Checkcheck")
+            case "settings":
+                _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.backToSettings), userInfo: nil, repeats: false)
+                self.infoContainer.image = UIImage(named: "Checkcheck")
+            default:
+                print("Don't know where to go?")
+            }
         }
     }
     
-    func addProgressBar(_ titleText: String) -> UIProgressView{
+    func addProgressBar(_ titleText: String) -> UIProgressView {
         progressBar = UIProgressView(frame: CGRect(x: 20, y: ((screenSize.height/3)*2)+20, width: screenSize.width-40, height: 20))
         progressBar?.progressTintColor = greenColor
         progressBar?.trackTintColor = UIColor.white
@@ -84,6 +94,10 @@ class ModalVC: UIViewController {
     
     func backToCompose(){
         performSegue(withIdentifier: "goBackToCompose", sender: self)
+    }
+    
+    func backToSettings(){
+        performSegue(withIdentifier: "backToSettings", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

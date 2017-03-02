@@ -16,7 +16,7 @@ import SwiftyJSON
 //TODO: Implement onError and completeWithFail
 
 
-func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Results<Change>) -> Future<Bool, HikebeatError> {
+func sendChanges(_ changes: Results<Change>) -> Future<Bool, HikebeatError> {
     return Future { complete in
         guard changes.count != 0 else {complete(.success(true)); return}
         var numberOfFails = 0

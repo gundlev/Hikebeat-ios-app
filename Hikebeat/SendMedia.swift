@@ -14,28 +14,34 @@ import Result
 import RealmSwift
 import SwiftyJSON
 
-func sendMedia(_ mediaBeats: Results<Beat>, progressView: UIProgressView, increase: Float) -> Future<Bool, HikebeatError> {
+func sendMedia(_ mediaBeats: Results<Beat>, progressView: UIProgressView) -> Future<Bool, HikebeatError> {
     return Future { complete in
         
         guard mediaBeats.count != 0 else {complete(.success(true)); return}
         let total = mediaBeats.count
+//        let increasePerMedia = Float((100/Float(total))/100)
         var count = 0
         var numberOfFails = 0
         for beat in mediaBeats {
             print(beat.mediaUploaded)
             let filePath = getPathToFileFromName(beat.mediaData!)!
+            var lastProgress:Float = 0
             uploadMediaForBeat(type: beat.mediaType!, path: filePath, journeyId: beat.journeyId, timeCapture: beat.timestamp, progressCallback: { (progress) in
-                print("Progress: ", progress)
+                let increment = (progress - lastProgress) / Float(total)
+//                print("Progress: ", progress/Float(total))
+                progressView.progress += increment
+                lastProgress = progress
+                print("Progress: ", progressView.progress)
             }).onSuccess(callback: { (fileKey) in
                 let realm = try! Realm()
-                print("Before: \(mediaBeats.count)")
+//                print("Before: \(mediaBeats.count)")
                 try! realm.write() {
                     beat.mediaDataId = fileKey
                     beat.mediaUploaded = true
                 }
-                print("After: \(mediaBeats.count)")
+//                print("After: \(mediaBeats.count)")
                 count += 1
-                print("Media: count \(count), total \(mediaBeats.count)")
+                print("Media: count \(count), total \(total)")
                 if mediaBeats.count == 0 {
                     print("Done uploading media with no fails")
                     complete(.success(true))

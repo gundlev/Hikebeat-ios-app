@@ -37,7 +37,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var memoButtonCenterX: CGFloat = 0.0
     var imageButtonCenterX: CGFloat = 0.0
     
-    var beatPromise: Promise<Bool, NoError>!
+    var beatPromise: Promise<String, NoError>!
     var showingJourneySelect = false
     var firstLoad = true
     var currentModal: ModalVC?
@@ -97,7 +97,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         print("up")
         rightTree.stopAnimating()
         stopSendAnimation()
-        self.beatPromise = Promise<Bool, NoError>()
+        self.beatPromise = Promise<String, NoError>()
         checkForCorrectInput()
     }
     
@@ -640,7 +640,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                         self.activeJourney?.beats.append(self.currentBeat!)
                                     }
                                     self.clearAllForNewBeat(beatSend: true)
-                                    self.beatPromise.success(true)
+                                    self.beatPromise.success("compose")
                                 }).onFailure(callback: { (error) in
                                     print("Error uploading media: ", error)
                                     // TODO: handle error by saving correctly
@@ -649,7 +649,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                         self.activeJourney?.beats.append(self.currentBeat!)
                                     }
                                     self.clearAllForNewBeat(beatSend: true)
-                                    self.beatPromise.success(true)
+                                    self.beatPromise.success("compose")
                                 })
                             } else {
                                 print("Could not resolve filepath")
@@ -662,7 +662,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
                             self.clearAllForNewBeat(beatSend: true)
-                            self.beatPromise.success(true)
+                            self.beatPromise.success("compose")
                         }
                         
                     } else {

@@ -20,6 +20,8 @@ class SettingsVC: UIViewController {
     var toUpload: (synced:Bool, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>)? = nil
     var numbers = (image: 0, video: 0, audio: 0, message: 0)
     let realm = try! Realm()
+    var modalPromise: Promise<String, NoError>!
+    var currentModal: ModalVC?
 
     @IBOutlet weak var gpsSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
@@ -48,6 +50,10 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var dot3: UIImageView!
     
     var animationInitialised: Bool!
+    
+    @IBAction func backToSettings(_ sender: UIStoryboardSegue) {
+        
+    }
     
     @IBAction func notificationsInfoPressed(_ sender: Any) {
         let appearance = SCLAlertView.SCLAppearance(
@@ -125,13 +131,19 @@ class SettingsVC: UIViewController {
         print("Syncbutton pressed")
         guard hasNetworkConnection(show: true) else { return }
         if toUpload != nil {
-            showDots()
+            // showModal
+            print(1)
+            self.modalPromise = Promise<String, NoError>()
+            print(2)
+            self.performSegue(withIdentifier: "showModal", sender: self)
+//            showDots()
             print("toUpload is not nil")
-            syncAll(UIProgressView(), changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
+            syncAll((self.currentModal?.progressBar)!, changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
             .onSuccess(callback: { (Bool) in
                 let synced = self.checkSync()
                 print("In callback")
-                self.hideDots()
+//                self.hideDots()
+                self.modalPromise.success("settings")
                 
                 if synced {
                     let t = String(Date().timeIntervalSince1970)
@@ -384,6 +396,22 @@ class SettingsVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier != nil else {return}
+        switch segue.identifier! {
+        case "showModal":
+            let vc = segue.destination as! ModalVC
+            vc.future = self.modalPromise.future
+            print("lool")
+            vc.text = "Synchronizing"
+            if !((toUpload?.mediaBeats.isEmpty)!) {
+                _ = vc.addProgressBar("Uploading local data")
+            }
+            self.currentModal = vc
+        default: print("unknown segue from settings")
+        }
     }
     
 

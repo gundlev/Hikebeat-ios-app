@@ -16,14 +16,12 @@ import Realm
 
 func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) -> Future<Bool, HikebeatError> {
     return Future { complete in
-        // Figure increase to use for progressView
-        let uploadsToDo = mediaBeats.count + changes.count + messageBeats.count
-        let increase = Float((100/Float(uploadsToDo))/100)
+        
         var succeeded = 0
         var failed = 0
         let total = 3
         
-        sendChanges(progressView, increase: increase, changes: changes)
+        sendChanges(changes)
         .onSuccess(callback: { (success) in
             print("Success on changes")
             succeeded += 1
@@ -40,7 +38,7 @@ func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBe
             }
         })
         
-        sendMedia(mediaBeats, progressView: progressView, increase: increase)
+        sendMedia(mediaBeats, progressView: progressView)
         .onSuccess(callback: { (success) in
             print("Success on media")
             succeeded += 1
@@ -57,7 +55,7 @@ func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBe
             }
         })
         
-        sendBeats(messageBeats, progressView: progressView, increase: increase)
+        sendBeats(messageBeats)
         .onSuccess(callback: { (success) in
             print("Success on beats")
             succeeded += 1
