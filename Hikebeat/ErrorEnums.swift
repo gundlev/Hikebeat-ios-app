@@ -35,6 +35,8 @@ enum HikebeatError: Swift.Error {
     case callFailed
     case imageDownload
     case imageSave
+    case getUsers
+    case noSuchListType
 }
 
 //enum UserCallError: Swift.Error {

@@ -101,6 +101,8 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         let user = json["data"]["user"]
         let token = json["data"]["token"].stringValue
         userDefaults.set(token, forKey: "token")
+        userDefaults.set(true, forKey: "sms")
+
         print("Responsio: ", json)
         print("setting user")
         userDefaults.set(user["username"].stringValue, forKey: "username")
@@ -109,26 +111,24 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         for (value) in user["journeyIds"].arrayValue {
             journeyIdsArray.append(value.stringValue)
         }
+        userDefaults.set(journeyIdsArray, forKey: "journeyIds")
         
         var followingArray = [String]()
         for (value) in user["following"].arrayValue {
             followingArray.append(value.stringValue)
         }
+        userDefaults.set(followingArray, forKey: "following")
         
         var deviceTokensArray = [String]()
         for (value) in user["deviceTokens"].arrayValue {
             deviceTokensArray.append(value.stringValue)
         }
+        userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
 
         userDefaults.set(user["permittedPhoneNumber"].stringValue, forKey: "permittedPhoneNumber")
-
-        
         userDefaults.set(user["followerCount"].stringValue, forKey: "followerCount")
         userDefaults.set(user["followsCount"].stringValue, forKey: "followsCount")
         
-        userDefaults.set(journeyIdsArray, forKey: "journeyIds")
-        userDefaults.set(followingArray, forKey: "following")
-        userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
         userDefaults.set(user["_id"].stringValue, forKey: "_id")
         userDefaults.set(user["username"].stringValue, forKey: "username")
         userDefaults.set(user["email"].stringValue, forKey: "email")
@@ -227,5 +227,56 @@ func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
                 complete(.failure(.updateUserCall))
             }
         }
+    }
+}
+
+func getUsers(from path: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
+    return Future { complete in
+        
+        let url = "\(IPAddress)user/\(path)"
+        getCall(url: url, headers: getHeader())
+        .onSuccess(callback: { (response) in
+            guard response.response?.statusCode == 200 else {
+                showCallErrors(json: JSON(response.result.value!))
+                complete(.failure(.getUsers));
+                return
+            }
+            guard response.result.value != nil else { complete(.failure(.getUsers)); return }
+            
+            let json = JSON(response.result.value!)
+            let jsonUsers = json["data"]
+            var users = [User]()
+            if jsonUsers != JSON.null {
+                for (_, jsonUser) in jsonUsers {
+                    let latestBeat = jsonUser["latestBeat"].doubleValue
+                    var latestBeatDate: Date? = nil
+                    if latestBeat != 0.0 {
+                        latestBeatDate = Date(timeIntervalSince1970: (latestBeat/1000))
+                    }
+                    
+                    users.append(User(
+                        id: jsonUser["_id"].stringValue,
+                        username: jsonUser["username"].stringValue,
+                        numberOfJourneys: String(jsonUser["journeyIds"].arrayValue.count),
+                        numberOfBeats: jsonUser["_id"].stringValue,
+                        followerCount: jsonUser["followerCount"].stringValue,
+                        followsCount: jsonUser["followsCount"].stringValue,
+                        profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
+                        latestBeat: latestBeatDate
+                    ))
+                }
+            }
+            let nextPageString = json["data"]["nextPageQueryString"].stringValue
+            var nextPage: String?
+            if nextPageString != "" {
+                nextPage = nextPageString
+            }
+            let tuple = (users: users, nextPage: nextPage)
+            complete(.success(tuple))
+
+            
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
     }
 }

@@ -35,7 +35,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     var journeySearch: Search? = Search(type: .journey)
     var chosenUser: User!
     var chosenJourney: Journey!
-    var chosenType: SearchType!
+    var chosenType: ListType!
     
     @IBAction func backToSearch(_ unwindSegue: UIStoryboardSegue) {
         
@@ -424,7 +424,11 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                     print(error)
                 })
             }
-            cell.numberOfJourneys.text = "\(user.numberOfJourneys) Journeys"
+            var journeyString = "journeys"
+            if Int(user.numberOfJourneys) == 1 {
+                journeyString = "journey"
+            }
+            cell.numberOfJourneys.text = "\(user.numberOfJourneys) \(journeyString)"
             cell.username.text = user.username
             if user.latestBeat != nil {
                 cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat!)) ago"
@@ -480,9 +484,11 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 let vc = segue.destination as! PaginatingVC
                 switch self.chosenType! {
                 case .user:
-                    vc.search = userSearch
+                    vc.list = userSearch
                 case .journey:
-                    vc.search = journeySearch
+                    vc.list = journeySearch
+                default:
+                    print("Unknown search type")
                 }
         default: print("what")
         }

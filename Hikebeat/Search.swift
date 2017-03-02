@@ -9,13 +9,13 @@
 import Foundation
 import BrightFutures
 // users?query=\(searchString)&items=1000
-class Search: Any {
+class Search: Any, PaginatingList {
     var searchString: String? = nil
     var nextPageString: String? = nil
-    let type: SearchType
+    var type: ListType
     var results = [Any]()
     
-    init(type: SearchType) {
+    init(type: ListType) {
         self.type = type
 //        switch self.type {
 //        case .user:
@@ -59,6 +59,7 @@ class Search: Any {
                     print("startSearch: ", error)
                     complete(.failure(error))
                 })
+            default: complete(.failure(.noSuchListType))
             }
         }
     }
@@ -91,6 +92,7 @@ class Search: Any {
                     print("Error")
                     complete(.failure(error))
                 })
+            default: complete(.failure(.noSuchListType))
             }
         }
     }
@@ -99,9 +101,4 @@ class Search: Any {
         return self.nextPageString != nil
     }
     
-}
-
-enum SearchType: String {
-    case user
-    case journey
 }

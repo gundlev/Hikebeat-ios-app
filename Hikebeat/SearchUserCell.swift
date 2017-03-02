@@ -38,7 +38,7 @@ class SearchUserCell: UITableViewCell {
             profileImage.layer.masksToBounds = true
             profileImage.contentMode = .scaleAspectFill
             imageActivity = UIActivityIndicatorView(frame: CGRect(x: 20, y: 10, width: 50, height: 50))
-            username = UILabel(frame: CGRect(x: 80, y: 15, width: width-160, height: 25))
+            username = UILabel(frame: CGRect(x: 80, y: 16, width: width-160, height: 20))
             username.textColor = .white
             username.adjustsFontSizeToFitWidth = true
             journeyIcon = UIImageView(frame: CGRect(x: width-60, y: 15, width: 20, height: 25))
@@ -48,7 +48,7 @@ class SearchUserCell: UITableViewCell {
             numberOfJourneys.textColor = .white
             numberOfJourneys.textAlignment = .center
             numberOfJourneys.font = UIFont.systemFont(ofSize: 13)
-            followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 14))
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 34, width: width-100, height: 20))
             followersBeats.textColor = lightGreen
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)

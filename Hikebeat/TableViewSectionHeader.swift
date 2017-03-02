@@ -26,9 +26,10 @@ class TableViewSectionHeader: UITableViewCell {
     override func awakeFromNib() {
         if firstLoad {
             print("const header")
-            icon = UIImageView(frame: CGRect(x: 33, y: 10, width: 24, height: 24))
+            icon = UIImageView(frame: CGRect(x: 20, y: 2, width: 40, height: 40))
+            icon.contentMode = .scaleAspectFit
             icon.contentMode = .center
-            headerTitle = UILabel(frame: CGRect(x: 70, y: 10, width: UIScreen.main.bounds.width-20, height: 24))
+            headerTitle = UILabel(frame: CGRect(x: 80, y: 10, width: UIScreen.main.bounds.width-20, height: 24))
             headerTitle.adjustsFontSizeToFitWidth = true
             headerTitle.textColor = lightGreen
             self.backgroundColor = standardGreen

@@ -36,10 +36,10 @@ class SearchJourneyCell: UITableViewCell {
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
             imageActivity = UIActivityIndicatorView(frame: CGRect(x: 15, y: 10, width: 50, height: 50))
-            headline = UILabel(frame: CGRect(x: 80, y: 15, width: width-100, height: 25))
+            headline = UILabel(frame: CGRect(x: 80, y: 16, width: width-100, height: 20))
             headline.textColor = .white
             headline.adjustsFontSizeToFitWidth = true
-            followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
+            followersBeats = UILabel(frame: CGRect(x: 80, y: 34, width: width-100, height: 20))
             followersBeats.textColor = lightGreen
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             followButton = UIButton(frame: CGRect(x: width-64, y: height/2-31/2, width: 31, height: 31))

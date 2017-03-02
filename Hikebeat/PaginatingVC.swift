@@ -11,7 +11,7 @@ import UIKit
 
 class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var search: Search?
+    var list: PaginatingList?
     var chosenJourney: Journey?
     
     @IBOutlet weak var tableView: UITableView!
@@ -45,14 +45,14 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.row != search?.results.count else {
+        guard indexPath.row != list?.results.count else {
             let footer = tableView.dequeueReusableCell(withIdentifier: "footer") as! TableViewPaginationFooter
             footer.awakeFromNib()
             footer.footerTitle.text = "Load more"
-            if search != nil {
-                if search!.hasNextpage() {
+            if list != nil {
+                if list!.hasNextpage() {
                     footer.startActivity()
-                    search!.nextPage()
+                    list!.nextPage()
                     .onSuccess(callback: { (newLoad) in
                         footer.stopActivity()
                         self.tableView.reloadData()
@@ -68,62 +68,82 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
             return footer
         }
         
-        if search != nil {
-            switch search!.type {
+        if list != nil {
+            switch list!.type {
             case .user:
                 print("User")
-                let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
-                cell.awakeFromNib()
-                cell.selectionStyle = .none
-                let user = search?.results[indexPath.row] as! User
-                print("Creating cell for user: ", user.username)
-                if user.profilePhoto != nil {
-                    cell.profileImage.image = user.profilePhoto!
-                } else {
-                    cell.downloadProfileImage(imageUrl: user.profilePhotoUrl).onSuccess(callback: { (image) in
-                        user.profilePhoto = image
-                    }).onFailure(callback: { (error) in
-                        print(error)
-                    })
-                }
-                cell.numberOfJourneys.text = "\(user.numberOfJourneys) Journeys"
-                cell.username.text = user.username
-                if user.latestBeat != nil {
-                    cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat!)) ago"
-                } else {
-                    cell.followersBeats.text = "No beats yet"
-                }
-                return cell
+                let user = list?.results[indexPath.row] as! User
+                return getUserCell(user: user, tableView: tableView)
             case .journey:
                 print("Journey")
-                let cell = tableView.dequeueReusableCell(withIdentifier: "journeyCell") as! SearchJourneyCell
-                let journey = self.search?.results[indexPath.row] as! Journey
-//                print("Creating cell for journey: ", journey.headline)
-                cell.awakeFromNib()
-                cell.selectionStyle = .none
-                cell.headline.text = journey.headline
-                cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
-                if journey.ownerProfilePhoto != nil {
-                    cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
-                } else {
-                    cell.downloadProfileImage(imageUrl: journey.ownerProfilePhotoUrl!).onSuccess(callback: { (image) in
-                        journey.ownerProfilePhoto = UIImageJPEGRepresentation(image, 1)
-                    }).onFailure(callback: { (error) in
-                        print(error)
-                    })
-                }
-                return cell
+                let journey = self.list?.results[indexPath.row] as! Journey
+                return getJourneyCell(journey: journey, tableView: tableView)
+            case .follower:
+                print("follower")
+                let user = list?.results[indexPath.row] as! User
+                return getUserCell(user: user, tableView: tableView)
+            case .following:
+                print("following")
+                let journey = self.list?.results[indexPath.row] as! Journey
+                return getJourneyCell(journey: journey, tableView: tableView)
             }
         } else { return UITableViewCell() }
     }
     
+    func getUserCell(user: User, tableView: UITableView) -> SearchUserCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! SearchUserCell
+        cell.awakeFromNib()
+        cell.selectionStyle = .none
+        print("Creating cell for user: ", user.username)
+        if user.profilePhoto != nil {
+            cell.profileImage.image = user.profilePhoto!
+        } else {
+            cell.downloadProfileImage(imageUrl: user.profilePhotoUrl).onSuccess(callback: { (image) in
+                user.profilePhoto = image
+            }).onFailure(callback: { (error) in
+                print(error)
+            })
+        }
+        var journeyString = "journeys"
+        if Int(user.numberOfJourneys) == 1 {
+            journeyString = "journey"
+        }
+        cell.numberOfJourneys.text = "\(user.numberOfJourneys) \(journeyString)"
+        cell.username.text = user.username
+        if user.latestBeat != nil {
+            cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat!)) ago"
+        } else {
+            cell.followersBeats.text = "No beats yet"
+        }
+        return cell
+    }
+    
+    func getJourneyCell(journey: Journey, tableView: UITableView) -> SearchJourneyCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "journeyCell") as! SearchJourneyCell
+        //                print("Creating cell for journey: ", journey.headline)
+        cell.awakeFromNib()
+        cell.selectionStyle = .none
+        cell.headline.text = journey.headline
+        cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
+        if journey.ownerProfilePhoto != nil {
+            cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
+        } else {
+            cell.downloadProfileImage(imageUrl: journey.ownerProfilePhotoUrl!).onSuccess(callback: { (image) in
+                journey.ownerProfilePhoto = UIImageJPEGRepresentation(image, 1)
+            }).onFailure(callback: { (error) in
+                print(error)
+            })
+        }
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if search != nil {
-            guard indexPath.row != search?.results.count else {
+        if list != nil {
+            guard indexPath.row != list?.results.count else {
                 let footer = tableView.cellForRow(at: indexPath) as! TableViewPaginationFooter
                 footer.startActivity()
-                search!.nextPage()
+                list!.nextPage()
                 .onSuccess(callback: { (newLoad) in
                     footer.stopActivity()
                     self.tableView.reloadData()
@@ -134,24 +154,26 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 return
             }
             
-            switch search!.type{
+            switch list!.type{
             case .user:
                 print("tapped user")
             case .journey:
-                self.chosenJourney = search?.results[indexPath.row] as! Journey?
+                self.chosenJourney = list?.results[indexPath.row] as! Journey?
                 performSegue(withIdentifier: "showJourney", sender: self)
+            default:
+                print("unknown type")
             }
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard indexPath.row != search?.results.count else {return 44}
+        guard indexPath.row != list?.results.count else {return 44}
         return 70
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if search != nil {
-            return (search?.results.count)! + 1
+        if list != nil {
+            return (list?.results.count)! + 1
         } else { return 0 }
     }
     

@@ -131,7 +131,7 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
         print("Url: ", url)
         getSessionManager().request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             let json = JSON(response.result.value as Any)
-            guard response.response?.statusCode == 200 else {print(response.response?.statusCode); complete(.failure(.journeySearch)); return}
+            guard response.response?.statusCode == 200 else {print(response); complete(.failure(.journeySearch)); return}
             let jsonJourneys = json["data"]["docs"]
             print("search journey: ", jsonJourneys)
             var journeys = [Journey]()
