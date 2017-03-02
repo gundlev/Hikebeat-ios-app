@@ -92,7 +92,7 @@ class ModalVC: UIViewController {
         
         case "goBackToCompose":
             let vc = segue.destination as! ComposeVC
-            vc.clearAllForNewBeat()
+//            vc.clearAllForNewBeat()
         
         default:
             break

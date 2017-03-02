@@ -19,7 +19,7 @@ func getStats() -> Future<[String: String], HikebeatError> {
     return Future { complete in
         let url = "\(IPAddress)stats"
         print("Performing stats check now")
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(url, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print(response)
             guard response.response?.statusCode == 200 else {complete(.failure(.statsCall)); return}
             guard response.result.value != nil else {complete(.failure(.statsCall)); return}
@@ -35,7 +35,7 @@ func refreshToken() -> Future<String, HikebeatError> {
     return Future { complete in
         let url = "\(IPAddress)refresh-token"
         let headers = getHeader()
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
+        getSessionManager().request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
             print(response)
             guard response.response?.statusCode == 200 else {complete(.failure(.refreshTokenCall)); return}
             guard response.result.value != nil else {complete(.failure(.refreshTokenCall)); return}
@@ -68,7 +68,7 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
                 let url = IPAddress + "auth/facebook"
                 let parameters = ["access_token": accessToken.authenticationToken]
                 showActivity()
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
+                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
                     response in
                     if response.response?.statusCode == 200 {
                         print("Facebook Respose: ", response)
@@ -165,7 +165,7 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         if profilePhotoUrl != "" {
             print("There's a profile image!")
             
-            Alamofire.request(profilePhotoUrl).responseImage {
+            getSessionManager().request(profilePhotoUrl).responseImage {
                 response in
                 let priority = DispatchQueue.GlobalQueuePriority.default
                 DispatchQueue.global(priority: priority).async {
@@ -219,7 +219,7 @@ func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
             }
         }
         let url = IPAddress + "users"
-        Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
                 print("update user response: ", response)
                 complete(.success(true))

@@ -49,7 +49,7 @@ class SearchUserCell: UITableViewCell {
             numberOfJourneys.textAlignment = .center
             numberOfJourneys.font = UIFont.systemFont(ofSize: 13)
             followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 14))
-            followersBeats.textColor = .white
+            followersBeats.textColor = lightGreen
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             self.addSubview(profileImage)
             self.addSubview(username)
@@ -66,14 +66,14 @@ class SearchUserCell: UITableViewCell {
             imageActivity.startAnimating()
             self.profileImage.image = UIImage()
             downloadImage(imageUrl: imageUrl)
-                .onSuccess { (image) in
-                    self.profileImage.image = image
-                    self.imageActivity.stopAnimating()
-                    complete(.success(image))
-                }.onFailure { (error) in
-                    print("Error: ", error)
-                    self.profileImage.image = UIImage(named: "DefaultProfile")
-                    complete(.failure(error))
+            .onSuccess { (image) in
+                self.profileImage.image = image
+                self.imageActivity.stopAnimating()
+                complete(.success(image))
+            }.onFailure { (error) in
+                print("Error: ", error)
+                self.profileImage.image = UIImage(named: "DefaultProfile")
+                complete(.failure(error))
             }
         }
     }

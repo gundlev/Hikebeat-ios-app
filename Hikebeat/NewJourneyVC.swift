@@ -94,13 +94,11 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         guard titleField.text != nil else {return}
         guard titleField.text! != "" else {
             Drop.down("Journey headline can not be empty.", state: .error)
-            //            let banner = Banner(title: nil, subtitle: "Journey headline can not be empty.", image: nil, backgroundColor: .red, didTapBlock: nil)
-            //            banner.dismissesOnTap = true
-            //            banner.show(duration: 10.0)
             return
         }
         if titleField.text?.characters.count > 1 {
-            createNewJourneyCall(headline: titleField.text!)
+            let journeyTitle = (titleField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
+            createNewJourneyCall(headline: journeyTitle)
             .onSuccess(callback: { (success) in
                 self.performSegue(withIdentifier: "backWhenCreated", sender: self)
             }).onFailure(callback: { (error) in

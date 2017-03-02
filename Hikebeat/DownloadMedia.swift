@@ -23,36 +23,49 @@ func downloadMediaForJourney(_ journey: Journey) {
     }
 }
 
-func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage?, NoError> {
+func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage?, HikebeatError> {
     return Future { complete in
-        Alamofire.request(mediaUrl).responseImage {
-            response in
-            print("Statuscoode image: ", response.response?.statusCode)
-            print(response)
+        getImageCall(url: mediaUrl)
+        .onSuccess(callback: { (response) in
             if let image = response.result.value {
-                print("Its an image!!!")
                 saveImageToDocs(fileName: fileName, image: image)
-                .onSuccess(callback: { (success) in
-                    if success {
-                        complete(.success(image))
-                    } else {
-                        print("failed at saving")
-                        complete(.success(nil))
-                    }
-                })
+                    .onSuccess(callback: { (success) in
+                        if success {
+                            complete(.success(image))
+                        } else {
+                            complete(.failure(.imageSave))
+                        }
+                    })
             } else {
-                complete(.success(nil))
+                complete(.failure(.imageDownload))
             }
-        }
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
+//        getSessionManager().request(mediaUrl).responseImage {
+//            response in
+//            if let image = response.result.value {
+//                print("Its an image!!!")
+//                saveImageToDocs(fileName: fileName, image: image)
+//                .onSuccess(callback: { (success) in
+//                    if success {
+//                        complete(.success(image))
+//                    } else {
+//                        print("failed at saving")
+//                        complete(.failure(.imageSave))
+//                    }
+//                })
+//            } else {
+//                complete(.failure(.imageDownload))
+//            }
+//        }
     }
 }
 
 func downloadImage(imageUrl: String) -> Future<UIImage, HikebeatError> {
     return Future { complete in
-        Alamofire.request(imageUrl).responseImage {
-            response in
-            print("response: ", response)
-            print("Statuscoode: ", response.response?.statusCode as Any)
+        getImageCall(url: imageUrl)
+        .onSuccess(callback: { (response) in
             if let image = response.result.value {
                 complete(.success(image))
             } else {
@@ -61,36 +74,69 @@ func downloadImage(imageUrl: String) -> Future<UIImage, HikebeatError> {
                 print("image: ", response.result.value)
                 complete(.failure(.profileImage))
             }
-        }
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
+//        getSessionManager().request(imageUrl).responseImage {
+//            response in
+//            print("response: ", response)
+//            print("Statuscoode: ", response.response?.statusCode as Any)
+//            if let image = response.result.value {
+//                complete(.success(image))
+//            } else {
+//                print("Downloading image from url failed: ", imageUrl)
+//                print("Failed getting image")
+//                print("image: ", response.result.value)
+//                complete(.failure(.profileImage))
+//            }
+//        }
     }
 }
 
 
-func downloadAndStoreMedia(url: String, fileName: String) -> Future<Bool, NoError> {
-
-    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-    let fm = FileManager()
-    
-    let documentsDirectory: AnyObject = paths[0] as AnyObject
-    let dataPath = documentsDirectory.appending(fileName)
-    
-    let pathURL = URL(fileURLWithPath: dataPath)
-    let destination = DownloadRequest.suggestedDownloadDestination(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)
-
-    let promise = Promise<Bool, NoError>()
-    print("urlHere: ", url)
-    Alamofire.request(url).responseData { response in
-        print("value: ", response)
-        if let data = response.result.value {
-            if let _ = saveMediaToDocs(fileName: fileName, data: data) {
-                promise.success(true)
+func downloadAndStoreMedia(url: String, fileName: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        getDataCall(url: url)
+        .onSuccess(callback: { (response) in
+            if let data = response.result.value {
+                if let _ = saveMediaToDocs(fileName: fileName, data: data) {
+                    complete(.success(true))
+                } else {
+                    complete(.success(false))
+                }
             } else {
-                promise.success(false)
+                complete(.success(false))
+                print("Failed to get data")
             }
-        } else {
-            promise.success(false)
-            print("Failed to get data")
-        }
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
     }
-    return promise.future
+//    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//    let fm = FileManager()
+//    
+//    let documentsDirectory: AnyObject = paths[0] as AnyObject
+//    let dataPath = documentsDirectory.appending(fileName)
+//    
+//    let pathURL = URL(fileURLWithPath: dataPath)
+//    let destination = DownloadRequest.suggestedDownloadDestination(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)
+//
+//    let promise = Promise<Bool, HikebeatError>()
+//    print("urlHere: ", url)
+//    
+//    getSessionManager().request(url).responseData { response in
+//        
+//        print("value: ", response)
+//        if let data = response.result.value {
+//            if let _ = saveMediaToDocs(fileName: fileName, data: data) {
+//                promise.success(true)
+//            } else {
+//                promise.success(false)
+//            }
+//        } else {
+//            promise.success(false)
+//            print("Failed to get data")
+//        }
+//    }
+//    return promise.future
 }

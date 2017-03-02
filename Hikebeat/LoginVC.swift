@@ -79,8 +79,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         passwordField.rightView = paddingView2
         passwordField.rightViewMode = UITextFieldViewMode.always
         
-        usernameField.text = "ben"
-        passwordField.text = "ABC123"
+        usernameField.text = ""//"ben"
+        passwordField.text = ""//"ABC123"
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(LoginVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
@@ -109,7 +109,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         showActivity()
         self.view.endEditing(true)
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
-        Alamofire.request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+        getSessionManager().request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
             print("Raw: ", response)
 
             if response.response?.statusCode == 200 {
@@ -130,26 +130,29 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     hideActivity()
                 }
                 
-            } else if response.response?.statusCode == 401 {
+            } else  {
                 // User not authorized
                 print("Not Auth!!")
                 hideActivity()
-            } else if response.response?.statusCode == 400 {
-                // Wrong username or password
-                hideActivity()
-                print(response.result.value)
-                let errorJson = JSON(response.result.value!)
-                switch errorJson["msg"].stringValue {
-                case "User not authenticated":
-                    print("Wrong username or password")
-                    SCLAlertView().showError("Wrong credentials!", subTitle: "Your username or password does not match any user in our database.")
-                case "User email has not been verified":
-                    print("Email has not been verified")
-                    SCLAlertView().showWarning("Missing email verification", subTitle: "Your have not verified your email address. Please check your email and follow the verification instructions.")
-                default:
-                    print("Unknown error")
-                }
+                let json = JSON(response.result.value)
+                showCallErrors(json: json)
             }
+//            else if response.response?.statusCode == 400 {
+//                // Wrong username or password
+//                hideActivity()
+//                print(response.result.value)
+//                let errorJson = JSON(response.result.value!)
+//                switch errorJson["msg"].stringValue {
+//                case "User not authenticated":
+//                    print("Wrong username or password")
+//                    SCLAlertView().showError("Wrong credentials!", subTitle: "Your username or password does not match any user in our database.")
+//                case "User email has not been verified":
+//                    print("Email has not been verified")
+//                    SCLAlertView().showWarning("Missing email verification", subTitle: "Your have not verified your email address. Please check your email and follow the verification instructions.")
+//                default:
+//                    print("Unknown error")
+//                }
+//            }
         }
     }
     

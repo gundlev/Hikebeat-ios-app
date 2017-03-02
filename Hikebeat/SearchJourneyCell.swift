@@ -40,7 +40,7 @@ class SearchJourneyCell: UITableViewCell {
             headline.textColor = .white
             headline.adjustsFontSizeToFitWidth = true
             followersBeats = UILabel(frame: CGRect(x: 80, y: 40, width: width-100, height: 10))
-            followersBeats.textColor = .white
+            followersBeats.textColor = lightGreen
             followersBeats.font = UIFont.systemFont(ofSize: 13)
             followButton = UIButton(frame: CGRect(x: width-64, y: height/2-31/2, width: 31, height: 31))
             

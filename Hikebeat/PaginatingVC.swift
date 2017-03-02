@@ -62,6 +62,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                     })
                 } else {
                     footer.footerTitle.text = "No more results"
+                    footer.selectionStyle = .none
                 }
             }
             return footer
@@ -87,6 +88,11 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 }
                 cell.numberOfJourneys.text = "\(user.numberOfJourneys) Journeys"
                 cell.username.text = user.username
+                if user.latestBeat != nil {
+                    cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat!)) ago"
+                } else {
+                    cell.followersBeats.text = "No beats yet"
+                }
                 return cell
             case .journey:
                 print("Journey")

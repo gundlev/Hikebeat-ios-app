@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import UIKit
 import BrightFutures
 import RealmSwift
@@ -224,7 +223,7 @@ func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Resul
 //            print("imagePath")
 //            print((change?.stringValue!)!)
 //            var path = getProfileImagePath()
-//            Alamofire.upload(URL(fileURLWithPath: path), to: url,headers: customHeader).responseJSON { mediaResponse in
+//            getSessionManager().upload(URL(fileURLWithPath: path), to: url,headers: customHeader).responseJSON { mediaResponse in
 //                if mediaResponse.response?.statusCode == 200 {
 //                    let rawImageJson = JSON(mediaResponse.result.value!)
 //                    let mediaJson = rawImageJson["data"][0]
@@ -258,7 +257,7 @@ func sendChanges(_ progressView: UIProgressView, increase: Float, changes: Resul
 //            } else {
 //                jsonChanges = jsonChangesString as [String: AnyObject]
 //            }
-//            Alamofire.request(url, method: method, parameters: jsonChanges, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+//            getSessionManager().request(url, method: method, parameters: jsonChanges, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
 //                if response.response?.statusCode == 200 {
 //                    print(response.result.value)
 //                    let removed = changes.removeFirst()

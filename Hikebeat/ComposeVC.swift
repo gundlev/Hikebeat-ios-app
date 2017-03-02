@@ -30,6 +30,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var currentMediaURL:URL?
     var currentImage:UIImage?
     var currentBeat: Beat?
+    var currentBeatDate: Date?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userDefaults = UserDefaults.standard
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
@@ -304,7 +305,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         let alertView = SCLAlertView(appearance: appearance)
         
         _ = alertView.addButton("Clear it!") {
-            self.clearAllForNewBeat()
+            self.clearAllForNewBeat(beatSend: false)
         }
         _ = alertView.addButton("Cancel") {}
         
@@ -350,7 +351,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         clearButton.isHidden = true
     }
     
-    func clearAllForNewBeat() {
+    func clearAllForNewBeat(beatSend: Bool) {
+        if beatSend {
+            try! realm.write {
+                self.activeJourney?.latestBeat = self.currentBeatDate
+            }
+        }
         print("Clearing for new beat")
         removeGreenBorder(self.editMessageButton)
         removeGreenBorder(self.editEmotionButton)
@@ -362,6 +368,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         self.currentBeat = nil
         self.currentImage = nil
         self.currentMediaURL = nil
+        self.currentBeatDate = nil
         self.audioHasBeenRecordedForThisBeat = false
         filledin = 0
         hideClearButton()
@@ -478,7 +485,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             locationTupleFuture.onSuccess { (locationTuple) in
                 if locationTuple != nil {
                     if ((self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil && self.audioHasBeenRecordedForThisBeat == false) || self.activeJourney == nil || locationTuple!.latitude == "" || locationTuple!.longitude == "" || locationTuple!.altitude == "") {
-                        print(0.3)
                         // Give a warning that there is not text or no active journey.
                         print("Something is missing")
                         print("Text: ", self.messageText == nil && self.emotion == nil && self.currentImage == nil && self.currentMediaURL == nil)
@@ -487,11 +493,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         print("Lng: ", locationTuple!.longitude)
                         
                     } else {
-                        
-                        print(0.4)
+                        self.currentBeatDate = locationTuple?.date
                         var mediaData: String? = nil
                         var mediaType: String? = nil
-                        print(0.7)
                         if self.currentImage != nil {
                             //print(1)
                             let imageData = UIImageJPEGRepresentation(self.currentImage!, 0.4)
@@ -562,7 +566,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         }
     }
     
-    func completedCheck(locationTuple: (timestamp: String, latitude: String, longitude: String, altitude: String), mediaData: String?, mediaType: String?) {
+    func completedCheck(locationTuple: (date: Date, timestamp: String, latitude: String, longitude: String, altitude: String), mediaData: String?, mediaType: String?) {
         self.currentBeat = Beat()
         self.currentBeat!.fill( self.emotion, journeyId: self.activeJourney!.journeyId, message: self.messageText, latitude: locationTuple.latitude, longitude: locationTuple.longitude, altitude: locationTuple.altitude, timestamp: locationTuple.timestamp, mediaType: mediaType, mediaData: mediaData, mediaDataId: nil, mediaUrl: nil, messageId: nil, mediaUploaded: false, messageUploaded: false, journey: self.activeJourney!)
         self.currentBeat!.journey = self.activeJourney
@@ -600,7 +604,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 
                 // Sending beat message
                 performSegue(withIdentifier: "showGreenModal", sender: nil)
-                Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
                     print("The Response")
 //                    print(response.response?.statusCode)
                     print(response)
@@ -635,7 +639,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                         self.currentBeat?.mediaUploaded = true
                                         self.activeJourney?.beats.append(self.currentBeat!)
                                     }
-                                    self.clearAllForNewBeat()
+                                    self.clearAllForNewBeat(beatSend: true)
                                     self.beatPromise.success(true)
                                 }).onFailure(callback: { (error) in
                                     print("Error uploading media: ", error)
@@ -644,7 +648,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                         self.currentBeat?.mediaUploaded = false
                                         self.activeJourney?.beats.append(self.currentBeat!)
                                     }
-                                    self.clearAllForNewBeat()
+                                    self.clearAllForNewBeat(beatSend: true)
                                     self.beatPromise.success(true)
                                 })
                             } else {
@@ -657,7 +661,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                 self.currentBeat?.mediaUploaded = true
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
-                            self.clearAllForNewBeat()
+                            self.clearAllForNewBeat(beatSend: true)
                             self.beatPromise.success(true)
                         }
                         
@@ -701,28 +705,29 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             } else {
                 // check for permitted phoneNumber
                 //                }
-                try! self.realm.write {
-                    if self.currentBeat?.mediaData != nil {
-                        print("There's media")
-                        self.currentBeat?.mediaUploaded = false
-                    } else {
-                        self.currentBeat?.mediaUploaded = true
+                if userDefaults.bool(forKey: "sms") {
+                    sendTextMessage()
+                } else {
+//                    self.performSegue(withIdentifier: "showGreenModal", sender: self)
+                    try! self.realm.write {
+                        if self.currentBeat?.mediaData != nil {
+                            print("There's media")
+                            self.currentBeat?.mediaUploaded = false
+                        } else {
+                            self.currentBeat?.mediaUploaded = true
+                        }
+                        if self.currentBeat?.message != nil {
+                            print("There's text!")
+                            self.currentBeat?.messageUploaded = false
+                        } else {
+                            self.currentBeat?.messageUploaded = true
+                        }
+                        self.activeJourney?.beats.append(self.currentBeat!)
                     }
-                    if self.currentBeat?.message != nil {
-                        print("There's text!")
-                        self.currentBeat?.messageUploaded = false
-                    } else {
-                        self.currentBeat?.messageUploaded = true
-                    }
-                    self.activeJourney?.beats.append(self.currentBeat!)
+                    self.clearAllForNewBeat(beatSend: true)
+//                    self.beatPromise.success(true)
                 }
-                self.clearAllForNewBeat()
-
-//                sendTextMessage()
-                // The save and setInitial is done in the message methods as it knows whether it fails.
             }
-        
-            // TODO: save
     }
     
     func sendTextMessage() {
@@ -828,7 +833,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 self.currentBeat?.messageUploaded = true
                 self.activeJourney?.beats.append(self.currentBeat!)
             }
-            self.clearAllForNewBeat()
+            self.clearAllForNewBeat(beatSend: true)
             self.dismiss(animated: true, completion: nil)
         default:
             break;
@@ -873,14 +878,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
      
      - returns: Bundle with 4 strings: timestamp, latitude, longitude, altitude.
      */
-    func getTimeAndLocation() -> Future<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError> {
-        let t = String(Date().timeIntervalSince1970)
+    func getTimeAndLocation() -> Future<(date: Date, timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError> {
+        let date = Date()
+        let t = String(date.timeIntervalSince1970)
         let e = t.range(of: ".")
         let timestamp = t.substring(to: (e?.lowerBound)!)
-        let promise = Promise<(timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError>()
-        //        let timeStamp = NSDateFormatter()
-        //        timeStamp.dateFormat = "yyyyMMddHHmmss"
-        //        let timeCapture = timeStamp.stringFromDate(currentDate)
+        let promise = Promise<(date: Date, timestamp: String, latitude: String, longitude: String, altitude: String)?, NoError>()
         
         var longitude = ""
         var latitude = ""
@@ -902,7 +905,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         latitude = String(location.coordinate.latitude)
                         altitude = String(round(location.altitude))
                         print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-                        promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
+                        promise.success((date, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
                     }
                     _ = alertView.addButton("No") {
                         promise.success(nil)
@@ -914,14 +917,14 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                     latitude = String(location.coordinate.latitude)
                     altitude = String(round(location.altitude))
                     print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-                    promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
+                    promise.success((date, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
                 }
             } else {
                 longitude = String(location.coordinate.longitude)
                 latitude = String(location.coordinate.latitude)
                 altitude = String(round(location.altitude))
                 print("location 4. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
-                promise.success((timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
+                promise.success((date, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
             }
         } else {
             print("why here")

@@ -23,7 +23,7 @@ func uploadBeat(beat: Beat) -> Future<String, HikebeatError> {
             parameters["text"] = beat.message
         }
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
                 print("The text was send")
 

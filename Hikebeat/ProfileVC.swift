@@ -81,7 +81,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         )
         let alertView = SCLAlertView(appearance: appearance)
         _ = alertView.addOkayButton()
-        _ = alertView.showNotice("Phone Number", subTitle: "Add your phone number to prevent other phones from sending SMS to Hikebeat pretending to be you. This is an extra security feature.")
+        _ = alertView.showNotice("Phone Number", subTitle: "Add your phone number to prevent other phones from sending SMS to Hikebeat pretending to be you. This is an optional security feature.")
     }
     
     @IBAction func editProfileImageTapped(_ sender: AnyObject) {
@@ -363,24 +363,30 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
             changes.append(createSimpleChange(type: .name, key: ChangeType.name.rawValue, value: self.nameLabel.text!, valueBool: nil))
             userDefaults.set(self.nameLabel.text, forKey: "name")
         }
-        //SimpleReachability.isConnectedToNetwork()
         if self.phoneNoLabel.text != userDefaults.string(forKey: "permittedPhoneNumber")! {
-            let reachability = Reachability()
-            if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
-                if self.phoneNoLabel.text?.characters.count >= 2 {
-                    if wrongCountryCode(self.phoneNoLabel.text!) {
-                        SCLAlertView().showWarning("Missing country code!", subTitle: "Your phone number was not changed as you didn't add a country code.")
-                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
-                    } else {
-                        changes.append(createSimpleChange(type: .permittedPhoneNumber, key: ChangeType.permittedPhoneNumber.rawValue, value: self.phoneNoLabel.text!, valueBool: nil))
-                    }
-                }
-                
-            } else {
-                SCLAlertView().showWarning("Missing connection!", subTitle: "You need to have network connection to change or set your phone number")
-                self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
-            }
+            changes.append(createSimpleChange(type: .permittedPhoneNumber, key: ChangeType.permittedPhoneNumber.rawValue, value: self.phoneNoLabel.text!, valueBool: nil))
         }
+        
+        
+        // contrycode and connection check for åermitted phonenumber.
+        
+//        if self.phoneNoLabel.text != userDefaults.string(forKey: "permittedPhoneNumber")! {
+//            let reachability = Reachability()
+//            if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
+//                if self.phoneNoLabel.text?.characters.count >= 2 {
+//                    if wrongCountryCode(self.phoneNoLabel.text!) {
+//                        SCLAlertView().showWarning("Missing country code!", subTitle: "Your phone number was not changed as you didn't add a country code.")
+//                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
+//                    } else {
+//                        changes.append(createSimpleChange(type: .permittedPhoneNumber, key: ChangeType.permittedPhoneNumber.rawValue, value: self.phoneNoLabel.text!, valueBool: nil))
+//                    }
+//                }
+//                
+//            } else {
+//                SCLAlertView().showWarning("Missing connection!", subTitle: "You need to have network connection to change or set your phone number")
+//                self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
+//            }
+//        }
 //        if self.nationalityLabel.text != userDefaults.string(forKey: "nationality")! {
 //            changesArr.append((UserProperty.nationality, self.nationalityLabel.text!))
 //            userDefaults.set(self.nationalityLabel.text, forKey: "nationality")
@@ -423,68 +429,6 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
                 saveChange(change: change)
             }
         }
-
-        
-//        for tuple in arr {
-//            var parameters = [String:Any]()
-//            if tuple.property == UserProperty.permittedPhoneNumber {
-//                parameters[tuple.property] = [tuple.value]
-//            } else {
-//                parameters[tuple.property] = tuple.value
-//            }
-//
-//            let url = IPAddress + "users"
-//            print(url)
-//            print(parameters)
-//            Alamofire.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-//                
-//                if response.response?.statusCode == 200 {
-//                    print("It has been changed in the db")
-//                    if tuple.property == UserProperty.permittedPhoneNumber {
-//                        self.userDefaults.set(self.phoneNoLabel.text!, forKey: "permittedPhoneNumber")
-//                        
-//                        switch CNContactStore.authorizationStatus(for: .contacts){
-//                        case .authorized:
-//                            print("should check for hikebeat contact")
-//                            self.checkIfHikbeatContactExist()
-//                            //TODO: check if hikebeat contact is created.
-//                        case .notDetermined:
-//                            let appearance = SCLAlertView.SCLAppearance(
-//                                showCloseButton: false
-//                            )
-//                            let alertView = SCLAlertView(appearance: appearance)
-//                            alertView.addButton("Yes") {
-//                                print("Yes")
-//                                self.store.requestAccess(for: .contacts){succeeded, err in
-//                                    guard err == nil && succeeded else{
-//                                        return
-//                                    }
-//                                    self.addHikebeatContact()
-//                                }
-//                            }
-//                            alertView.addButton("No") {
-//                                print("No")
-//                            }
-//                            alertView.showWarning("Add hikebeat contact?", subTitle: "In order to create a Hikebeat contact on you phone and make it easier for you to know what you have send to Hikebeat, we need permission to access your contacts, would you like to grant permission?")
-//                        default:
-//                            print("Haven't got permission to access contacts")
-//                        }
-//                    }
-//                } else {
-//                    if tuple.property == UserProperty.permittedPhoneNumber {
-//                        self.phoneNoLabel.text = self.userDefaults.string(forKey: "permittedPhoneNumber")
-//                    }
-//                    print("No connection or fail, saving change")
-//                    print(response)
-//                    let localRealm = try! Realm()
-//                    try! localRealm.write() {
-//                        let change = Change()
-//                        change.fill(InstanceType.user, timeCommitted: self.getTimeCommitted(), stringValue: tuple.value, boolValue: false, property: tuple.property, instanceId: nil, changeAction: ChangeAction.update, timestamp: nil)
-//                        localRealm.add(change)
-//                    }
-//                }
-//            }
-//        }
     }
     
     func checkIfHikbeatContactExist() {

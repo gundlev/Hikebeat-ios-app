@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Alamofire
 import CoreData
 import BrightFutures
 import Result

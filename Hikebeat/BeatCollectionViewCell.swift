@@ -64,6 +64,8 @@ class BeatCollectionViewCell: UICollectionViewCell {
                 } else {
                     print("problems getting the image for beat in setImage")
                 }
+            }).onFailure(callback: { (error) in
+                print("problems getting the image for beat in setImage")
             })
         }
     }

@@ -25,6 +25,7 @@ class Journey: Object {
     dynamic var seqNumber: String? = nil
     dynamic var ownerProfilePhotoUrl: String? = nil
     dynamic var ownerProfilePhoto: Data? = nil
+    dynamic var latestBeat: Date? = nil
     var followers = List<Follower>()
     var beats = List<Beat>()
     
@@ -37,7 +38,9 @@ class Journey: Object {
     journeyDescription: String?,
     active: Bool,
     type: String?,
-    seqNumber: String?) {
+    seqNumber: String?,
+    latestBeat: Date?,
+    username: String?) {
     
         self.slug = slug
         self.userId = userId
@@ -47,6 +50,8 @@ class Journey: Object {
         self.active = active
         self.type = type
         self.seqNumber = seqNumber
+        self.latestBeat = latestBeat
+        self.username = username
     }
     
     //dynamic var activeString: String

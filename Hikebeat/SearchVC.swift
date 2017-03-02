@@ -426,9 +426,11 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             }
             cell.numberOfJourneys.text = "\(user.numberOfJourneys) Journeys"
             cell.username.text = user.username
-            print(1)
-            cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat)) ago"
-            print(2)
+            if user.latestBeat != nil {
+                cell.followersBeats.text = "Last beat \(getTimeSince(date: user.latestBeat!)) ago"
+            } else {
+                cell.followersBeats.text = "No beats yet"
+            }
             return cell
         default:
             if indexPath.row == 0 {

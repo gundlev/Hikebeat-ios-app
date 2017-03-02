@@ -24,6 +24,8 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var gpsSwitch: UISwitch!
     @IBOutlet weak var notificationSwitch: UISwitch!
     @IBOutlet weak var syncButton: UIButton!
+    @IBOutlet weak var smsSwitch: UISwitch!
+    @IBOutlet weak var mapLinesSwitch: UISwitch!
     
     @IBOutlet weak var syncPictures: UIImageView!
     @IBOutlet weak var syncMemos: UIImageView!
@@ -96,6 +98,13 @@ class SettingsVC: UIViewController {
         _ = alertView.showNotice("Logout", subTitle: "Are you sure you want to logout? All local data will be deleted.")
     }
     
+    @IBAction func smsChange(_ sender: UISwitch) {
+        self.userDefaults.set(sender.isOn, forKey: "sms")
+    }
+    
+    @IBAction func mapLinesChange(_ sender: UISwitch) {
+        self.userDefaults.set(sender.isOn, forKey: "mapLines")
+    }
     
     @IBAction func notificationChange(_ sender: UISwitch) {
         let change = createSimpleChange(type: .notifications, key: ChangeType.notifications.rawValue, value: nil, valueBool: sender.isOn)
@@ -114,6 +123,7 @@ class SettingsVC: UIViewController {
     
     @IBAction func startSync(_ sender: AnyObject) {
         print("Syncbutton pressed")
+        guard hasNetworkConnection(show: true) else { return }
         if toUpload != nil {
             showDots()
             print("toUpload is not nil")
@@ -208,6 +218,8 @@ class SettingsVC: UIViewController {
         
         gpsSwitch.isOn = userDefaults.bool(forKey: "GPS-check")
         notificationSwitch.isOn = userDefaults.bool(forKey: "notifications")
+        smsSwitch.isOn = userDefaults.bool(forKey: "sms")
+        mapLinesSwitch.isOn = userDefaults.bool(forKey: "mapLines")
         let timestamp = userDefaults.string(forKey: "lastSync")
         let firstDate: Date!
         if timestamp == nil {

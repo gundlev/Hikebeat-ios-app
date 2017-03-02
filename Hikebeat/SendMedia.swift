@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import Alamofire
 import BrightFutures
 import UIKit
 import Result
@@ -70,7 +69,7 @@ func sendMedia(_ mediaBeats: Results<Beat>, progressView: UIProgressView, increa
 //        /** The URL for the post*/
 //        let url = IPAddress + "journeys/" + beat.journeyId + "/media"
 //        
-//        Alamofire.upload(filePath, to: url, headers: customHeader).uploadProgress { progress in
+//        getSessionManager().upload(filePath, to: url, headers: customHeader).uploadProgress { progress in
 //            //print(totalBytesWritten)
 //            
 //            // This closure is NOT called on the main queue for performance

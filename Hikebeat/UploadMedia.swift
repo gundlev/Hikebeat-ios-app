@@ -62,7 +62,7 @@ func createProfilePhotoOnAPI(fileKey: String) -> Future<Bool, HikebeatError> {
         let parameters = [
             "fileKey" : fileKey
         ]
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
 //                print("create media: ", response.request?.httpBody)
 //                print("response: ", response)
@@ -79,7 +79,7 @@ func getSignedUrlAndId(type: String) -> Future<(signedUrl: String, id: String), 
     return Future { complete in
         let urlJourney = IPAddress + "media/\(type)"
         print("url: ",urlJourney)
-        Alamofire.request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             print("signedResponse: ", response)
             if response.response?.statusCode == 200 {
                 let json = JSON(response.result.value!)
@@ -104,7 +104,7 @@ func uploadToS3(signedUrl: String, path: URL, type: String, progressCallback: @e
         default: header = MediaUploadHeader.image
         }
         let headers = ["Content-type": header, "Cache-Control": "max-age=31536000"]
-        Alamofire.upload(path, to: signedUrl, method: .put, headers: headers).uploadProgress { uploadProg in
+        getSessionManager().upload(path, to: signedUrl, method: .put, headers: headers).uploadProgress { uploadProg in
             let fraction = uploadProg.fractionCompleted
             progressCallback(Float(fraction))
         }.responseJSON { mediaResponse in
@@ -126,7 +126,7 @@ func createMediaOnAPI(journeyId: String, fileKey: String, timeCapture: String) -
             "timeCapture": timeCapture,
             "fileKey" : fileKey
         ]
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
             if response.response?.statusCode == 200 {
                 complete(.success(true))
             } else {

@@ -170,22 +170,26 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.journeyDateLabel.text = String(beats.count) + " beats"
         
         if beats.isEmpty {
-            cell.journeyStatusLabel.text = "No updates"
+            cell.journeyStatusLabel.text = "Not yet started"
             cell.journeyDateLabel.text = "No beats"
         } else {
-            guard let beat = journey.beats.last, let timeInterval = TimeInterval(beat.timestamp) else {
-                cell.journeyStatusLabel.text = "No beats"
-                return cell
+//            guard let beat = journey.beats.last, let timeInterval = TimeInterval(beat.timestamp) else {
+//                cell.journeyStatusLabel.text = "No beats"
+//                return cell
+//            }
+            
+//            let formatter = DateFormatter()
+//            let date = NSDate(timeIntervalSince1970: timeInterval)
+//            formatter.locale = NSLocale.current
+//            formatter.dateStyle = .medium
+//            
+//            let timeString = formatter.string(from: date as Date)
+//            print("LatestBeat:  ", journey.latestBeat!)
+//            print("time since: ", getTimeSince(date: journey.latestBeat!))
+            var statusLabel = "Not yet started"
+            if journey.latestBeat != nil {
+                statusLabel = "Last beat \(getTimeSince(date: journey.latestBeat!)) ago"
             }
-            
-            let formatter = DateFormatter()
-            let date = NSDate(timeIntervalSince1970: timeInterval)
-            formatter.locale = NSLocale.current
-            formatter.dateStyle = .medium
-            
-            let timeString = formatter.string(from: date as Date)
-
-            let statusLabel = "Updated on \(timeString)"
             cell.journeyStatusLabel.text = statusLabel
         }
         

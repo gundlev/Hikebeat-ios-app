@@ -15,6 +15,7 @@ import JWTDecode
 import NVActivityIndicatorView
 import SwiftyDrop
 import SwiftyJSON
+import Alamofire
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
@@ -93,9 +94,9 @@ func downloadImage(imageUrl: String, activityIndicator: UIActivityIndicatorView)
 
 public func getTimeSince(date: Date) -> String {
     //    let date = Date(timeIntervalSince1970: TimeInterval(Double(timestamp)!/1000))
-    print("Time since date: ", date)
+//    print("Time since date: ", date)
     let now = Date()
-    print("Date now: ", now)
+//    print("Date now: ", now)
     let cal = Calendar.current
     let secComponents = (cal as NSCalendar).components(.second, from: date, to: now, options: [])
     let minComponents = (cal as NSCalendar).components(.minute, from: date, to: now, options: [])
@@ -110,19 +111,28 @@ public func getTimeSince(date: Date) -> String {
     let weeks = days/7
     let months = abs(monthComponents.month!)
     let years = abs(yearComponents.year!)
-
+//
+//    print("---------------------------------")
+//    print(seconds)
+//    print(minutes)
+//    print(hours)
+//    print(days)
+//    print(weeks)
+//    print(months)
+//    print("---------------------------------")
+    
     if seconds < 60 {
         var element = " second"
         if seconds > 1 {
             element = " seconds"
         }
-        return String(describing: hours) + element
+        return String(describing: seconds) + element
     } else if minutes < 60 {
         var element = " minute"
         if minutes > 1 {
             element = " minutes"
         }
-        return String(describing: hours) + element
+        return String(describing: minutes) + element
     } else if hours < 24 {
         var element = " hour"
         if hours > 1 {

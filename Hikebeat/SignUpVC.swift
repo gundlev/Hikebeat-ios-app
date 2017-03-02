@@ -39,7 +39,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
         print(parameters)
         
-        Alamofire.request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+        getSessionManager().request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
             print(response)
             if response.response?.statusCode == 200 {
                 
@@ -59,7 +59,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     hideActivity()
                 }
                 
-            } else if response.response?.statusCode == 400 {
+            } else {
                 hideActivity()
                 // email or username has been uses
                 print("email or username has been used")
