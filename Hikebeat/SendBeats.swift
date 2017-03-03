@@ -17,13 +17,14 @@ func sendBeats(_ messageBeats: Results<Beat>) -> Future<Bool, HikebeatError> {
         var count = 0
         var numberOfFails = 0
         for beat in messageBeats {
-            uploadBeat(beat: beat)
-            .onSuccess(callback: { (messageId) in
+            sendTextBeat(beat: beat)
+            .onSuccess(callback: { (json) in
+                let id = json["data"]["_id"].stringValue
                 let realm = try! Realm()
 //                print("Before2: \(messageBeats.count)")
 
                 try! realm.write() {
-                    beat.messageId = messageId
+                    beat.messageId = id
                     beat.messageUploaded = true
                 }
 //                print("After2: \(messageBeats.count)")

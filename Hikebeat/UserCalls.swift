@@ -13,6 +13,7 @@ import BrightFutures
 import Result
 import FacebookLogin
 import ContactsUI
+import SwiftyDrop
 
 
 func getStats() -> Future<[String: String], HikebeatError> {
@@ -44,6 +45,78 @@ func refreshToken() -> Future<String, HikebeatError> {
             userDefaults.set(newToken, forKey: "token")
             complete(.success(newToken))
         }
+    }
+}
+
+func loginUsername(username: String, password: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let parameters = ["username": username, "password": password]
+        let url = IPAddress + "auth"
+        postCall(url: url, parameters: parameters, headers: LoginHeaders)
+        .onSuccess(callback: { (response) in
+            handleSignupAndLogin(response: response)
+            .onSuccess(callback: { (success) in
+                complete(.success(success))
+            }).onFailure(callback: { (error) in
+                print("Error: ", error)
+                complete(.failure(.loginError))
+            })
+        }).onFailure(callback: { (error) in
+            print("Error: ", error)
+            Drop.down("Sorry! Something went wrong, please try again later.", state: .error)
+            complete(.failure(.loginError))
+        })
+    }
+}
+
+func signupUsername(username: String, password: String, email: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let parameters = ["username": username, "password": password, "email": email]
+        let url = IPAddress + "signup"
+        postCall(url: url, parameters: parameters, headers: LoginHeaders)
+        .onSuccess(callback: { (response) in
+            handleSignupAndLogin(response: response)
+            .onSuccess(callback: { (success) in
+                complete(.success(success))
+            }).onFailure(callback: { (error) in
+                print("Error: ", error)
+                complete(.failure(.signupError))
+            })
+        }).onFailure(callback: { (error) in
+            print("Error: ", error)
+            Drop.down("Sorry! Something went wrong, please try again later.", state: .error)
+            complete(.failure(.signupError))
+        })
+    }
+}
+
+func handleSignupAndLogin(response: DataResponse<Any>) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        if response.response?.statusCode == 200 {
+            if response.result.value != nil {
+                let json = JSON(response.result.value!)
+                handleUserAfterLogin(json: json)
+                .onSuccess(callback: { (success) in
+                    hideActivity()
+                    complete(.success(true))
+                }).onFailure(callback: { (error) in
+                    print("Error: ", error)
+                    hideActivity()
+                    Drop.down("Could not get the journeys for this user.", state: .error)
+                    complete(.failure(error))
+                })
+            } else {
+                complete(.failure(.handleUserSignupLogin))
+            }
+        } else  {
+            // User not authorized
+            print("Not Auth!!")
+            hideActivity()
+            let json = JSON(response.result.value!)
+            showCallErrors(json: json)
+            complete(.failure(.handleUserSignupLogin))
+        }
+
     }
 }
 

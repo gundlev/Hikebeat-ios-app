@@ -586,168 +586,100 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func sendBeat() {
         print("sending beat start")
-            // Check if there is any network connection and send via the appropriate means.
-        let reachability = Reachability()
-            if reachability?.currentReachabilityStatus != Reachability.NetworkStatus.notReachable {
-                // TODO: send via alamofire
-                let url = IPAddress + "journeys/" + (activeJourney?.journeyId)! + "/messages"
-                print("url: ", url)
-
-                // "headline": localTitle, "text": localMessage,
-                var parameters: [String: Any] = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
-                if currentBeat!.emotion != nil {
-                    parameters["emotion"] = emotionToNumber((currentBeat?.emotion)!)
-                }
-                if currentBeat!.message != nil {
-                    parameters["text"] = currentBeat?.message
-                }
-
-                // Sending beat message
-                performSegue(withIdentifier: "showGreenModal", sender: nil)
-                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-                    print("The Response")
-//                    print(response.response?.statusCode)
-                    print(response)
+        // Check if there is any network connection and send via the appropriate means.
+        if hasNetworkConnection(show: false) {
+            // Sending text beat
+            performSegue(withIdentifier: "showGreenModal", sender: nil)
+            sendTextBeat(beat: self.currentBeat!)
+            .onSuccess(callback: { (json) in
+                
+                let messageJson = json["data"]
+                //try! self.realm.write() {
+                self.currentBeat?.messageUploaded = true
+                self.currentBeat?.messageId = messageJson["_id"].stringValue
+                //}
+                
+                
+                // If the is an image in the currentBeat, send the image.
+                if self.currentBeat?.mediaData != nil {
+                    print("There is an image or video")
+                    // Send Image
                     
-                    // if response is 200 OK from server go on.
-                    if response.response?.statusCode == 200 {
-                        print("The text was send")
-                        
-                        
-                        // Save the messageId to the currentBeat
-                        let rawMessageJson = JSON(response.result.value!)
-                        let messageJson = rawMessageJson["data"][0]
-                        //try! self.realm.write() {
-                            self.currentBeat?.messageUploaded = true
-                            self.currentBeat?.messageId = messageJson["_id"].stringValue
-                        //}
- 
-                        
-                        // If the is an image in the currentBeat, send the image.
-                        if self.currentBeat?.mediaData != nil {
-                            print("There is an image or video")
-                            // Send Image
-                            
-                            let filePath = self.getPathToFileFromName((self.currentBeat?.mediaData)!)
-                            if filePath != nil {
-                                print("Upload starting")
-                                _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
-                                uploadMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
-                                    print("Upload succeeded with id: ", id)
-                                    try! self.realm.write {
-                                        self.currentBeat?.mediaDataId = id
-                                        self.currentBeat?.mediaUploaded = true
-                                        self.activeJourney?.beats.append(self.currentBeat!)
-                                    }
-                                    self.clearAllForNewBeat(beatSend: true)
-                                    self.beatPromise.success("compose")
-                                }).onFailure(callback: { (error) in
-                                    print("Error uploading media: ", error)
-                                    // TODO: handle error by saving correctly
-                                    try! self.realm.write {
-                                        self.currentBeat?.mediaUploaded = false
-                                        self.activeJourney?.beats.append(self.currentBeat!)
-                                    }
-                                    self.clearAllForNewBeat(beatSend: true)
-                                    self.beatPromise.success("compose")
-                                })
-                            } else {
-                                print("Could not resolve filepath")
-                            }
-                        } else {
-                            print("There's no image")
-                            
+                    let filePath = self.getPathToFileFromName((self.currentBeat?.mediaData)!)
+                    if filePath != nil {
+                        print("Upload starting")
+                        _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
+                        uploadMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
+                            print("Upload succeeded with id: ", id)
                             try! self.realm.write {
+                                self.currentBeat?.mediaDataId = id
                                 self.currentBeat?.mediaUploaded = true
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
                             self.clearAllForNewBeat(beatSend: true)
                             self.beatPromise.success("compose")
-                        }
-                        
-                    } else {
-                        // Response is not 200
-                        print("Error posting the message")
-                        let appearance = SCLAlertView.SCLAppearance(
-                            showCloseButton: false
-                        )
-                        let alertView = SCLAlertView(appearance: appearance)
-                        
-                        _ = alertView.addButton("Yes") {
-                            self.sendTextMessage()
-                        }
-                        _ = alertView.addButton("No thanks") {
+                        }).onFailure(callback: { (error) in
+                            print("Error uploading media: ", error)
+                            // TODO: handle error by saving correctly
                             try! self.realm.write {
-                                if self.currentBeat?.mediaData != nil {
-                                    self.currentBeat?.mediaUploaded = false
-                                } else {
-                                    self.currentBeat?.mediaUploaded = true
-                                }
-                                if self.currentBeat?.message != nil {
-                                    self.currentBeat?.messageUploaded = false
-                                } else {
-                                    self.currentBeat?.messageUploaded = true
-                                }
+                                self.currentBeat?.mediaUploaded = false
                                 self.activeJourney?.beats.append(self.currentBeat!)
                             }
-                        }
-                        
-                        _ = alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
-//                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
-                        
-                        // Is set to true now but should be changed to false
-                        // TODO: This should be uncommented when
-
+                            self.clearAllForNewBeat(beatSend: true)
+                            self.beatPromise.success("compose")
+                        })
+                    } else {
+                        print("Could not resolve filepath")
                     }
-                    
-                }
-
-            } else {
-                // check for permitted phoneNumber
-                //                }
-                if userDefaults.bool(forKey: "sms") {
-                    sendTextMessage()
                 } else {
-//                    self.performSegue(withIdentifier: "showGreenModal", sender: self)
+                    print("There's no image")
+                    
                     try! self.realm.write {
-                        if self.currentBeat?.mediaData != nil {
-                            print("There's media")
-                            self.currentBeat?.mediaUploaded = false
-                        } else {
-                            self.currentBeat?.mediaUploaded = true
-                        }
-                        if self.currentBeat?.message != nil {
-                            print("There's text!")
-                            self.currentBeat?.messageUploaded = false
-                        } else {
-                            self.currentBeat?.messageUploaded = true
-                        }
+                        self.currentBeat?.mediaUploaded = true
                         self.activeJourney?.beats.append(self.currentBeat!)
                     }
                     self.clearAllForNewBeat(beatSend: true)
-//                    self.beatPromise.success(true)
+                    self.beatPromise.success("compose")
                 }
+            }).onFailure(callback: { (error) in
+                self.beatPromise.success("compose")
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton: false
+                )
+                let alertView = SCLAlertView(appearance: appearance)
+                _ = alertView.addOkayButton()
+                _ = alertView.showNotice("Sorry!", subTitle: "\nThere seems to be a problem sending your beat, please try again later.")
+            })
+            
+        } else {
+            // check for permitted phoneNumber
+            //                }
+            if userDefaults.bool(forKey: "sms") {
+                sendTextMessage()
+            } else {
+//                    self.performSegue(withIdentifier: "showGreenModal", sender: self)
+                try! self.realm.write {
+                    if self.currentBeat?.mediaData != nil {
+                        print("There's media")
+                        self.currentBeat?.mediaUploaded = false
+                    } else {
+                        self.currentBeat?.mediaUploaded = true
+                    }
+                    if self.currentBeat?.message != nil {
+                        print("There's text!")
+                        self.currentBeat?.messageUploaded = false
+                    } else {
+                        self.currentBeat?.messageUploaded = true
+                    }
+                    self.activeJourney?.beats.append(self.currentBeat!)
+                }
+                self.clearAllForNewBeat(beatSend: true)
+//                    self.beatPromise.success(true)
             }
+        }
     }
     
     func sendTextMessage() {
-//        guard let phoneNumbers = userDefaults.string(forKey: "permittedPhoneNumber") else {
-//            presentMissingPhoneNumberAlert()
-//            return
-//        }
-        
-//        guard phoneNumbers != "" else {
-//            presentMissingPhoneNumberAlert()
-//            return
-//        }
-        
-        //                if phoneNumbers == "" {
-        //                    presentMissingPhoneNumberAlert()
-        ////                    try! realm.write() {
-        ////                        realm.delete(self.currentBeat!)
-        ////                    }
-        //                } else {
-        // This will send it via SMS.
         print("Not reachable, should send sms")
         var emotionString = ""
         var messageString = ""
@@ -956,3 +888,123 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         }
     }
 }
+
+
+// DO NOT DELETE YET!
+
+//
+//
+//// TODO: send via alamofire
+//let url = IPAddress + "journeys/" + (activeJourney?.journeyId)! + "/messages"
+//print("url: ", url)
+//
+//// "headline": localTitle, "text": localMessage,
+//var parameters: [String: Any] = ["lat": currentBeat!.latitude, "lng": currentBeat!.longitude, "alt": currentBeat!.altitude, "timeCapture": currentBeat!.timestamp]
+//if currentBeat!.emotion != nil {
+//    parameters["emotion"] = emotionToNumber((currentBeat?.emotion)!)
+//}
+//if currentBeat!.message != nil {
+//    parameters["text"] = currentBeat?.message
+//}
+//
+//// Sending beat message
+//performSegue(withIdentifier: "showGreenModal", sender: nil)
+//getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+//    print("The Response")
+//    //                    print(response.response?.statusCode)
+//    print(response)
+//    
+//    // if response is 200 OK from server go on.
+//    if response.response?.statusCode == 200 {
+//        print("The text was send")
+//        
+//        
+//        // Save the messageId to the currentBeat
+//        let rawMessageJson = JSON(response.result.value!)
+//        let messageJson = rawMessageJson["data"][0]
+//        //try! self.realm.write() {
+//        self.currentBeat?.messageUploaded = true
+//        self.currentBeat?.messageId = messageJson["_id"].stringValue
+//        //}
+//        
+//        
+//        // If the is an image in the currentBeat, send the image.
+//        if self.currentBeat?.mediaData != nil {
+//            print("There is an image or video")
+//            // Send Image
+//            
+//            let filePath = self.getPathToFileFromName((self.currentBeat?.mediaData)!)
+//            if filePath != nil {
+//                print("Upload starting")
+//                _ = self.currentModal!.addProgressBar("Uploading " + (self.currentBeat?.mediaType!)!)
+//                uploadMediaForBeat(type: (self.currentBeat?.mediaType)!, path: filePath!, journeyId: (self.currentBeat?.journeyId)!, timeCapture: (self.currentBeat?.timestamp)!, progressCallback: (self.currentModal?.setProgress)!).onSuccess(callback: { (id) in
+//                    print("Upload succeeded with id: ", id)
+//                    try! self.realm.write {
+//                        self.currentBeat?.mediaDataId = id
+//                        self.currentBeat?.mediaUploaded = true
+//                        self.activeJourney?.beats.append(self.currentBeat!)
+//                    }
+//                    self.clearAllForNewBeat(beatSend: true)
+//                    self.beatPromise.success("compose")
+//                }).onFailure(callback: { (error) in
+//                    print("Error uploading media: ", error)
+//                    // TODO: handle error by saving correctly
+//                    try! self.realm.write {
+//                        self.currentBeat?.mediaUploaded = false
+//                        self.activeJourney?.beats.append(self.currentBeat!)
+//                    }
+//                    self.clearAllForNewBeat(beatSend: true)
+//                    self.beatPromise.success("compose")
+//                })
+//            } else {
+//                print("Could not resolve filepath")
+//            }
+//        } else {
+//            print("There's no image")
+//            
+//            try! self.realm.write {
+//                self.currentBeat?.mediaUploaded = true
+//                self.activeJourney?.beats.append(self.currentBeat!)
+//            }
+//            self.clearAllForNewBeat(beatSend: true)
+//            self.beatPromise.success("compose")
+//        }
+//        
+//    } else {
+//        // Response is not 200
+//        print("Error posting the message")
+//        let appearance = SCLAlertView.SCLAppearance(
+//            showCloseButton: false
+//        )
+//        let alertView = SCLAlertView(appearance: appearance)
+//        
+//        _ = alertView.addButton("Yes") {
+//            self.sendTextMessage()
+//        }
+//        _ = alertView.addButton("No thanks") {
+//            try! self.realm.write {
+//                if self.currentBeat?.mediaData != nil {
+//                    self.currentBeat?.mediaUploaded = false
+//                } else {
+//                    self.currentBeat?.mediaUploaded = true
+//                }
+//                if self.currentBeat?.message != nil {
+//                    self.currentBeat?.messageUploaded = false
+//                } else {
+//                    self.currentBeat?.messageUploaded = true
+//                }
+//                self.activeJourney?.beats.append(self.currentBeat!)
+//            }
+//        }
+//        
+//        _ = alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
+//        //                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
+//        
+//        // Is set to true now but should be changed to false
+//        // TODO: This should be uncommented when
+//        
+//    }
+//    
+//}
+
+

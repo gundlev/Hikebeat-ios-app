@@ -36,38 +36,44 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         guard passwordField.text == rePasswordField.text else {noneMatchingPasswords(); return}
         self.view.endEditing(true)
         showActivity()
-        let parameters = ["username": usernameField.text!, "password": passwordField.text!, "email": emailField.text!]
-        print(parameters)
         
-        getSessionManager().request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
-            print(response)
-            if response.response?.statusCode == 200 {
-                
-                if response.result.value != nil {
-                    let json = JSON(response.result.value!)
-                    handleUserAfterLogin(json: json)
-                        .onSuccess(callback: { (success) in
-                            AppEventsLogger.log("Signup email")
-                            self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
-                            hideActivity()
-                        }).onFailure(callback: { (error) in
-                            print("Error: ", error)
-                            hideActivity()
-                        })
-                } else {
-                    _ = SCLAlertView().showError("Ups", subTitle: "Something went wrong, please try again.")
-                    hideActivity()
-                }
-                
-            } else {
-                hideActivity()
-                // email or username has been uses
-                print("email or username has been used")
-//                    print(response.result.value)
-                let json = JSON(response.result.value)
-                showCallErrors(json: json)
-            }
+        signupUsername(username: usernameField.text!, password: passwordField.text!, email: emailField.text!)
+        .onSuccess { (success) in
+            AppEventsLogger.log("Signup email")
+            self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
+        }.onFailure { (error) in
+            // All drops should be handled.
         }
+        
+//        getSessionManager().request((IPAddress + "signup"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+//            print(response)
+//            if response.response?.statusCode == 200 {
+//                
+//                if response.result.value != nil {
+//                    let json = JSON(response.result.value!)
+//                    handleUserAfterLogin(json: json)
+//                    .onSuccess(callback: { (success) in
+//                        AppEventsLogger.log("Signup email")
+//                        self.performSegue(withIdentifier: "showMainAfterRegister", sender: self)
+//                        hideActivity()
+//                    }).onFailure(callback: { (error) in
+//                        print("Error: ", error)
+//                        hideActivity()
+//                    })
+//                } else {
+//                    _ = SCLAlertView().showError("Ups", subTitle: "Something went wrong, please try again.")
+//                    hideActivity()
+//                }
+//                
+//            } else {
+//                hideActivity()
+//                // email or username has been uses
+//                print("email or username has been used")
+////                    print(response.result.value)
+//                let json = JSON(response.result.value)
+//                showCallErrors(json: json)
+//            }
+//        }
 
     }
     

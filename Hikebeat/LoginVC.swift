@@ -103,57 +103,46 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             Drop.down("Email and password can not be empty.", state: .error, duration: 20, action: nil)
             return
         }
-        self.view.endEditing(true)
         /** Parameters to send to the API.*/
-        let parameters = ["username": usernameField.text!, "password": passwordField.text!]
         showActivity()
         self.view.endEditing(true)
+        
+        loginUsername(username: usernameField.text!, password: passwordField.text!)
+        .onSuccess(callback: { (success) in
+            AppEventsLogger.log("Login email")
+            self.performSegue(withIdentifier: "justLoggedIn", sender: self)
+        }).onFailure(callback: { (error) in
+            // Drops should already be handled.
+        })
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/
-        getSessionManager().request((IPAddress + "auth"), method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
-            print("Raw: ", response)
-
-            if response.response?.statusCode == 200 {
-//                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
-                if response.result.value != nil {
-                    let json = JSON(response.result.value!)
-                    handleUserAfterLogin(json: json)
-                    .onSuccess(callback: { (success) in
-                        AppEventsLogger.log("Login email")
-                        self.performSegue(withIdentifier: "justLoggedIn", sender: self)
-                        hideActivity()
-                    }).onFailure(callback: { (error) in
-                        print("Error: ", error)
-                        hideActivity()
-                    })
-                } else {
-                    _ = SCLAlertView().showError("No such user", subTitle: "The username and password you have provided does not match any users in our database.")
-                    hideActivity()
-                }
-                
-            } else  {
-                // User not authorized
-                print("Not Auth!!")
-                hideActivity()
-                let json = JSON(response.result.value)
-                showCallErrors(json: json)
-            }
-//            else if response.response?.statusCode == 400 {
-//                // Wrong username or password
-//                hideActivity()
-//                print(response.result.value)
-//                let errorJson = JSON(response.result.value!)
-//                switch errorJson["msg"].stringValue {
-//                case "User not authenticated":
-//                    print("Wrong username or password")
-//                    SCLAlertView().showError("Wrong credentials!", subTitle: "Your username or password does not match any user in our database.")
-//                case "User email has not been verified":
-//                    print("Email has not been verified")
-//                    SCLAlertView().showWarning("Missing email verification", subTitle: "Your have not verified your email address. Please check your email and follow the verification instructions.")
-//                default:
-//                    print("Unknown error")
+//        getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON { response in
+//            print("Raw: ", response)
+//
+//            if response.response?.statusCode == 200 {
+////                self.performSegue(withIdentifier: "justLoggedIn", sender: self)
+//                if response.result.value != nil {
+//                    let json = JSON(response.result.value!)
+//                    handleUserAfterLogin(json: json)
+//                    .onSuccess(callback: { (success) in
+//
+//                        hideActivity()
+//                    }).onFailure(callback: { (error) in
+//                        print("Error: ", error)
+//                        hideActivity()
+//                    })
+//                } else {
+//                    _ = SCLAlertView().showError("No such user", subTitle: "The username and password you have provided does not match any users in our database.")
+//                    hideActivity()
 //                }
+//                
+//            } else  {
+//                // User not authorized
+//                print("Not Auth!!")
+//                hideActivity()
+//                let json = JSON(response.result.value)
+//                showCallErrors(json: json)
 //            }
-        }
+//        }
     }
     
 //    func createMediaFolder() -> Bool {

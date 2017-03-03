@@ -48,6 +48,7 @@
 		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
 		852C4C681E68756E0086055A /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C671E68756E0086055A /* UserList.swift */; };
 		852C4C6A1E687DC50086055A /* PaginatingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C691E687DC50086055A /* PaginatingList.swift */; };
+		852C4C6C1E6969D20086055A /* BeatCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C6B1E6969D20086055A /* BeatCalls.swift */; };
 		853DD11A1E5F26970038663B /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD1191E5F26970038663B /* Pair.swift */; };
 		853DD11C1E5F30730038663B /* ContactManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD11B1E5F30730038663B /* ContactManipulation.swift */; };
 		854D939C1E2D81A400FB57F9 /* SendBeats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D939B1E2D81A400FB57F9 /* SendBeats.swift */; };
@@ -186,6 +187,7 @@
 		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
 		852C4C671E68756E0086055A /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		852C4C691E687DC50086055A /* PaginatingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginatingList.swift; sourceTree = "<group>"; };
+		852C4C6B1E6969D20086055A /* BeatCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCalls.swift; sourceTree = "<group>"; };
 		853DD1191E5F26970038663B /* Pair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		853DD11B1E5F30730038663B /* ContactManipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManipulation.swift; sourceTree = "<group>"; };
 		854D93991E2D559F00FB57F9 /* BRYXBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BRYXBanner.framework; path = Carthage/Build/iOS/BRYXBanner.framework; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				85575AB51E3BE1A300F316D0 /* Sync */,
 				85B890E51D59EB16009589E6 /* DownloadMedia.swift */,
 				8593DAAC1DF3248500604BFA /* JourneyCalls.swift */,
+				852C4C6B1E6969D20086055A /* BeatCalls.swift */,
 				8593DAAE1DF325C500604BFA /* Save.swift */,
 				85A067A31DFC4227006431E5 /* SocialCalls.swift */,
 				8504199D1E0AC51B0008906A /* SimCardCalls.swift */,
@@ -887,6 +890,7 @@
 				858EFF121D19BDDA00C50771 /* JTSImageViewController.m in Sources */,
 				858EFF161D19BDDA00C50771 /* UIImage+JTSImageEffects.m in Sources */,
 				E18A06E31DFE03E10087A23E /* HikebeatWalkthroughFramework.swift in Sources */,
+				852C4C6C1E6969D20086055A /* BeatCalls.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,
 				858EFF171D19BDDA00C50771 /* UIApplication+JTSImageViewController.m in Sources */,
