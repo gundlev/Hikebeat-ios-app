@@ -1,5 +1,5 @@
 //
-//  UserList.swift
+//  FollowingUserList.swift
 //  Hikebeat
 //
 //  Created by Niklas Gundlev on 02/03/2017.
@@ -8,24 +8,25 @@
 
 import Foundation
 import BrightFutures
-class UserList: Any, PaginatingList {
+class FollowingUsersList: Any, PaginatingList {
     
     var nextPageString: String? = ""
     var type: ListType
     var results = [Any]()
-    var from: String!
     
     init(from: String) {
-        self.from = from
         self.type = .user
     }
     
     func nextPage() -> Future<[Any], HikebeatError> {
         return Future { complete in
             guard nextPageString != nil else { complete(.success([User]())); return }
-            getUsers(from: "\(from)\(nextPageString)")
+            getFollowersForJourney(queryString: "\(nextPageString)")
             .onSuccess(callback: { (tuple) in
                 self.nextPageString = tuple.nextPage
+                for user in tuple.users {
+                    self.results.append(user)
+                }
                 complete(.success(tuple.users))
             }).onFailure(callback: { (error) in
                 complete(.failure(error))

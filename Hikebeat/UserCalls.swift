@@ -303,10 +303,10 @@ func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
     }
 }
 
-func getUsers(from path: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
+func getFollowersForJourney(queryString: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
     return Future { complete in
-        
-        let url = "\(IPAddress)user/\(path)"
+        // NOT THE RIGHT URL!!! Should include specific journey. Call is get followers for journey
+        let url = "\(IPAddress)user/followers\(queryString)"
         getCall(url: url, headers: getHeader())
         .onSuccess(callback: { (response) in
             guard response.response?.statusCode == 200 else {
@@ -351,5 +351,48 @@ func getUsers(from path: String) -> Future<(users:[User], nextPage: String?), Hi
         }).onFailure(callback: { (error) in
             complete(.failure(error))
         })
+    }
+}
+
+func getJourneysFollowing(queryString: String) -> Future<(journeys:[Journey], nextPage: String?), HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)user/following\(queryString)"
+        getCall(url: url, headers: getHeader())
+        .onSuccess(callback: { (response) in
+            guard response.response?.statusCode == 200 && response.result.value != nil else {
+                showCallErrors(json: JSON(response.result.value!))
+                complete(.failure(.getUsers));
+                return
+            }
+            let json = JSON(response.result.value!)
+            let jsonJourneys = json["data"]
+            print("search journey: ", jsonJourneys)
+            var journeys = [Journey]()
+            if jsonJourneys != JSON.null {
+                for (_, jsonJourney) in jsonJourneys {
+                    let journey = Journey()
+                    journey.headline = jsonJourney["headline"].stringValue
+                    journey.journeyId = jsonJourney["_id"].stringValue
+                    journey.numberOfBeats = jsonJourney["messageCount"].intValue
+                    journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
+                    journey.userId = jsonJourney["userId"].stringValue
+                    journey.slug = jsonJourney["slug"].stringValue
+                    journey.username = jsonJourney["username"].stringValue
+                    journeys.append(journey)
+                }
+            }
+            
+            let nextPageString = json["data"]["nextPageQueryString"].stringValue
+            var nextPage: String?
+            if nextPageString != "" {
+                nextPage = nextPageString
+            }
+            let tuple = (journeys: journeys, nextPage: nextPage)
+            complete(.success(tuple))
+
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
+
     }
 }
