@@ -29,16 +29,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let darkGreen = UIColor(hexString: "#15676C")
     let highlightColor = UIColor(hexString: "#157578")
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        var insets = self.activeJourneysCollectionView.contentInset
-        let value = (self.view.frame.size.width - (self.activeJourneysCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
-        insets.left = value
-        insets.right = value
-        self.activeJourneysCollectionView.contentInset = insets
-        self.activeJourneysCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         if journeys.isEmpty {
             performSegue(withIdentifier: "showNewJourney", sender: self)
