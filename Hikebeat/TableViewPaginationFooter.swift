@@ -24,7 +24,7 @@ class TableViewPaginationFooter: UITableViewCell {
             footerTitle.textAlignment = .center
             footerTitle.adjustsFontSizeToFitWidth = true
             footerTitle.textColor = lightGreen
-            self.backgroundColor = standardGreen
+            self.backgroundColor = .clear
             self.addSubview(footerTitle)
             firstLoad = false
         }

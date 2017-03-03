@@ -25,6 +25,13 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     override func viewDidLoad() {
+        
+        let bgGradient = CAGradientLayer()
+        bgGradient.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
+        bgGradient.zPosition = -1
+        view.layer.addSublayer(bgGradient)
+        
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.register(SearchJourneyCell.self, forCellReuseIdentifier: "journeyCell")
         tableView.register(SearchUserCell.self, forCellReuseIdentifier: "userCell")
