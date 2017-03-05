@@ -105,6 +105,7 @@
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1378D801D295E12002E8CD1 /* aCustomView.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
+		E14BCF8B1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */; };
@@ -259,6 +260,7 @@
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E1378D801D295E12002E8CD1 /* aCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aCustomView.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgottenPasswordViewController.swift; sourceTree = "<group>"; };
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
 		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
 				E17F5B2D1DFDC99800C1A2B0 /* WalkthroughVC.swift */,
+				E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */,
 			);
 			name = Starting;
 			sourceTree = "<group>";
@@ -899,6 +902,7 @@
 				858EFF171D19BDDA00C50771 /* UIApplication+JTSImageViewController.m in Sources */,
 				8525E7D61CF2F92600D87BB5 /* SendMedia.swift in Sources */,
 				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				E14BCF8B1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift in Sources */,
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				E1A3F6A21CD570DD005D9775 /* BeatsVC.swift in Sources */,
 				E19A21271D9C1C7F002F9532 /* FeaturedJourneyViewCell.swift in Sources */,
