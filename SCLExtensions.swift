@@ -65,4 +65,8 @@ extension SCLAlertView {
         
         return addButton(msg, backgroundColor: yellowColor, textColor: darkColor, showDurationStatus: true, action: action)
     }
+    
+    func addGreyButton(_ msg: String, action: @escaping () -> Void) -> SCLButton {
+        return addButton(msg, backgroundColor: .darkGray, textColor: .white, showDurationStatus: true, action: action)
+    }
 }
