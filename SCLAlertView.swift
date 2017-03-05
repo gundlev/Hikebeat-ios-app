@@ -42,7 +42,7 @@ public enum SCLAlertViewStyle {
         case .notice:
             return 0x15676C
         case .warning:
-            return 0xFFD110
+            return 0xF8E71C
         case .info:
             return 0x2866BF
         case .edit:
@@ -938,7 +938,7 @@ class SCLAlertViewStyleKit : NSObject {
     
     class func drawWarning() {
         // Color Declarations
-        let greyColor = UIColor(red: 0.236, green: 0.236, blue: 0.236, alpha: 1.000)
+        let greyColor = UIColor(hexString: "1B6C69")!
         
         // Warning Group
         // Warning Circle Drawing

@@ -47,4 +47,22 @@ extension SCLAlertView {
         
         return addButton("Okay", backgroundColor: greenColor, textColor: darkColor, showDurationStatus: true) {}
     }
+    
+    func addCancelButton() -> SCLButton {
+        return addButton("Cancel", backgroundColor: .darkGray, textColor: .white, showDurationStatus: true) {}
+    }
+    
+    func addGreenButton(_ msg: String, action: @escaping () -> Void) -> SCLButton {
+        let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
+        let darkColor = UIColor(hexString: "15676C")
+        
+        return addButton(msg, backgroundColor: greenColor, textColor: darkColor, showDurationStatus: true, action: action)
+    }
+    
+    func addYellowButton(_ msg: String, action: @escaping () -> Void) -> SCLButton {
+        let yellowColor = UIColor(hexString: "F8E71C")
+        let darkColor = UIColor(hexString: "15676C")
+        
+        return addButton(msg, backgroundColor: yellowColor, textColor: darkColor, showDurationStatus: true, action: action)
+    }
 }

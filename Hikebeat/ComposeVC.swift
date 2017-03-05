@@ -304,10 +304,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-        _ = alertView.addButton("Clear it!") {
+        _ = alertView.addYellowButton("Clear it!") {
             self.clearAllForNewBeat(beatSend: false)
         }
-        _ = alertView.addButton("Cancel") {}
+        _ = alertView.addCancelButton()
         
         _ = alertView.showWarning("Clear Beat?", subTitle: "\nAre you sure you want to clear what progress you have made on this beat?")
     }

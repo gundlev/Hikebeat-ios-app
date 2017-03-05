@@ -15,7 +15,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var collectionBG: UIImageView!
     @IBOutlet weak var activeJourneysCollectionView: UICollectionView!
     @IBOutlet weak var journeysTableView: UITableView!
-    @IBOutlet weak var activeJourneyButton: UIButton!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var journeys: [Journey]!
     let realm = try! Realm()
@@ -38,15 +37,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if (UIDevice.isIphone5){
-            
-        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            self.activeJourneyButton.transform = activeJourneyButton.transform.translatedBy(x: 0.0, y: 10.0  )
-            
-            // Magic line of code setting the constraints back correctly.
-            journeysTableView.transform = activeJourneyButton.transform.translatedBy(x: 0.0, y: 0.0 )
-        }
 
         let journeysUnsorted = self.realm.objects(Journey.self)
         self.journeys = journeysUnsorted.reversed()
@@ -62,9 +52,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         bgGradient.colors = [UIColor(red: (47/255.0), green: (160/255.0), blue: (165/255.0), alpha: 1).cgColor, UIColor(red: (79/255.0), green: (150/255.0), blue: (68/255.0), alpha: 1).cgColor]
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
-        
-        activeJourneyButton.layer.cornerRadius = activeJourneyButton.bounds.height/2
-        activeJourneyButton.layer.masksToBounds = true
         
         let footer = self.journeysTableView.footerView(forSection: 0)
         footer?.backgroundColor = UIColor.clear
@@ -220,8 +207,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
         if journey.active {
             print(1.1)
             changeSetOfCells((indexPath as NSIndexPath).item, active: false)
-            activeJourneyButton.isHighlighted = false
-            activeJourneyButton.backgroundColor = yellowColor
             try! realm.write() {
                 journey.active = false
                 self.activeJourney = nil
@@ -238,8 +223,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
                     self.activeJourney!.active = false
                 }
             }
-            activeJourneyButton.isHighlighted = true
-            activeJourneyButton.backgroundColor = greenColor
             changeSetOfCells((indexPath as NSIndexPath).item, active: true)
             try! realm.write() {
                 journey.active = true
@@ -297,8 +280,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
             self.activeJourney = journey
             self.activeIndexpath = (indexPath as NSIndexPath).item
             cell.badgeImage.image = UIImage(named: "ActivatedBadge")
-            activeJourneyButton.isHighlighted = true
-            activeJourneyButton.backgroundColor = greenColor
         } else {
             cell.badgeImage.image = UIImage(named: "NotActivatedBadge")
         }
