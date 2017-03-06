@@ -92,6 +92,10 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         performSegue(withIdentifier: "showFollowing", sender: self)
     }
     
+    @IBAction func largeButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "showFollow", sender: self)
+    }
+    
     @IBAction func editButtonTapped(_ sender: AnyObject) {
         currentlyEdditing = !currentlyEdditing
         nameLabel.isEnabled = currentlyEdditing
@@ -523,6 +527,9 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         if segue.identifier == "showFollowing" {
             let vc = segue.destination as! UniversalListOfJourneysVC
             vc.fromVC = "profile"
+        } else if segue.identifier == "showFollow" {
+            let list = FollowingJourneysList()
+            let vc = segue.destination as! PaginatingVC
         }
     }
 }

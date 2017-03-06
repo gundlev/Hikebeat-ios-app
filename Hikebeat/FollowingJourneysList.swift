@@ -9,13 +9,13 @@
 import Foundation
 import Foundation
 import BrightFutures
-class FollowingJourneyssList: Any, PaginatingList {
+class FollowingJourneysList: Any, PaginatingList {
     
     var nextPageString: String? = ""
     var type: ListType
     var results = [Any]()
     
-    init(from: String) {
+    init() {
         self.type = .user
     }
     

@@ -365,7 +365,7 @@ func getJourneysFollowing(queryString: String) -> Future<(journeys:[Journey], ne
                 return
             }
             let json = JSON(response.result.value!)
-            let jsonJourneys = json["data"]
+            let jsonJourneys = json["data"]["followers"]
             print("search journey: ", jsonJourneys)
             var journeys = [Journey]()
             if jsonJourneys != JSON.null {
