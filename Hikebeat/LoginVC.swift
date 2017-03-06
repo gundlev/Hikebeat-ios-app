@@ -96,6 +96,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "showRegister", sender: self)
     }
     
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func login(_ sender: AnyObject) {
         print("logging in now")
         

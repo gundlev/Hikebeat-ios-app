@@ -112,20 +112,24 @@ func createNewJourneyCall(headline: String) -> Future<Bool, HikebeatError> {
         guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON {
             response in
-            
             guard successWith(response: response) else {
                 complete(.failure(.callFailed))
                 return
             }
-            
             if response.response?.statusCode == 200 {
                 let rawJson = JSON(response.result.value!)
                 let json = rawJson["data"]
                 print(json)
                 let realm = try! Realm()
                 try! realm.write() {
+                    let journeys = realm.objects(Journey.self).filter("active = \(true)")
+                    if !(journeys.isEmpty) {
+                        let j = journeys[0]
+                        j.active = false
+                    }
                     let journey = Journey()
                     journey.fill(json["slug"].stringValue, userId: json["userId"].stringValue, journeyId: json["_id"].stringValue, headline: json["headline"].stringValue, journeyDescription: nil, active: false, type: nil, seqNumber: String(json["seqNumber"].intValue), latestBeat: Date(timeIntervalSince1970: (json["latestBeat"].doubleValue/1000)), username: json["username"].stringValue)
+                    journey.active = true
                     realm.add(journey)
                     complete(.success(true))
                 }

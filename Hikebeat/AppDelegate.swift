@@ -40,7 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         registerForNotification()
         
         AppEventsLogger.activate(application)
-
+        
+        if let window = window, let image = UIImage(named: "fakeload") {
+            window.layer.contents = image.cgImage
+        }
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

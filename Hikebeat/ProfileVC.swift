@@ -135,7 +135,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(EditMessageVC.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
         
-        followersButton.isUserInteractionEnabled = false
+        followersButton.isUserInteractionEnabled = true
         editProfileImageButton.isEnabled = false
         editProfileImageButton.isHidden = true
         
@@ -530,6 +530,8 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         } else if segue.identifier == "showFollow" {
             let list = FollowingJourneysList()
             let vc = segue.destination as! PaginatingVC
+            vc.list = list
+            vc.fromVC = "profile"
         }
     }
 }

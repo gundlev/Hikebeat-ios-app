@@ -46,7 +46,7 @@
 		8525E7D51CF2F92600D87BB5 /* SendChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D01CF2F92600D87BB5 /* SendChanges.swift */; };
 		8525E7D61CF2F92600D87BB5 /* SendMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D11CF2F92600D87BB5 /* SendMedia.swift */; };
 		8525E7D71CF2F92600D87BB5 /* SyncAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8525E7D21CF2F92600D87BB5 /* SyncAll.swift */; };
-		852C4C681E68756E0086055A /* FollowingUserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C671E68756E0086055A /* FollowingUserList.swift */; };
+		852C4C681E68756E0086055A /* JourneyFollowersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C671E68756E0086055A /* JourneyFollowersList.swift */; };
 		852C4C6A1E687DC50086055A /* PaginatingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C691E687DC50086055A /* PaginatingList.swift */; };
 		852C4C6C1E6969D20086055A /* BeatCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C4C6B1E6969D20086055A /* BeatCalls.swift */; };
 		853DD11A1E5F26970038663B /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD1191E5F26970038663B /* Pair.swift */; };
@@ -105,6 +105,7 @@
 		E11E373C1CCBDF6A00EBB467 /* ComposeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */; };
 		E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1378D801D295E12002E8CD1 /* aCustomView.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
+		E14BCF8B1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */; };
@@ -186,7 +187,7 @@
 		8525E7D01CF2F92600D87BB5 /* SendChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendChanges.swift; sourceTree = "<group>"; };
 		8525E7D11CF2F92600D87BB5 /* SendMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMedia.swift; sourceTree = "<group>"; };
 		8525E7D21CF2F92600D87BB5 /* SyncAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAll.swift; sourceTree = "<group>"; };
-		852C4C671E68756E0086055A /* FollowingUserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingUserList.swift; sourceTree = "<group>"; };
+		852C4C671E68756E0086055A /* JourneyFollowersList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyFollowersList.swift; sourceTree = "<group>"; };
 		852C4C691E687DC50086055A /* PaginatingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaginatingList.swift; sourceTree = "<group>"; };
 		852C4C6B1E6969D20086055A /* BeatCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCalls.swift; sourceTree = "<group>"; };
 		853DD1191E5F26970038663B /* Pair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
@@ -259,6 +260,7 @@
 		E11E373B1CCBDF6A00EBB467 /* ComposeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeVC.swift; sourceTree = "<group>"; };
 		E1378D801D295E12002E8CD1 /* aCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aCustomView.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgottenPasswordViewController.swift; sourceTree = "<group>"; };
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
 		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				E111B0781CD0318800915401 /* LoginVC.swift */,
 				E1AA1A2E1CD155F100C79B91 /* SignUpVC.swift */,
 				E17F5B2D1DFDC99800C1A2B0 /* WalkthroughVC.swift */,
+				E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */,
 			);
 			name = Starting;
 			sourceTree = "<group>";
@@ -626,7 +629,7 @@
 				85A067A51DFC4486006431E5 /* User.swift */,
 				85562F5E1E2C025F0078CC51 /* Search.swift */,
 				853DD1191E5F26970038663B /* Pair.swift */,
-				852C4C671E68756E0086055A /* FollowingUserList.swift */,
+				852C4C671E68756E0086055A /* JourneyFollowersList.swift */,
 				852C4C691E687DC50086055A /* PaginatingList.swift */,
 				85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */,
 			);
@@ -899,6 +902,7 @@
 				858EFF171D19BDDA00C50771 /* UIApplication+JTSImageViewController.m in Sources */,
 				8525E7D61CF2F92600D87BB5 /* SendMedia.swift in Sources */,
 				E18991661CD3ABD500EC46B2 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				E14BCF8B1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift in Sources */,
 				85CA7DC31CD4D59500A4F249 /* ImageVideoExt.swift in Sources */,
 				E1A3F6A21CD570DD005D9775 /* BeatsVC.swift in Sources */,
 				E19A21271D9C1C7F002F9532 /* FeaturedJourneyViewCell.swift in Sources */,
@@ -932,7 +936,7 @@
 				85FAEB7F1CE48D1A00887039 /* BeatPolyline.swift in Sources */,
 				8512E0F71CD4E7520085CE2B /* utils.swift in Sources */,
 				E1B4138A1CCE864F00B8768B /* ModalVC.swift in Sources */,
-				852C4C681E68756E0086055A /* FollowingUserList.swift in Sources */,
+				852C4C681E68756E0086055A /* JourneyFollowersList.swift in Sources */,
 				85562F5F1E2C025F0078CC51 /* Search.swift in Sources */,
 				85AC90721CE487AF007BE5C2 /* SVPulsingAnnotationView.m in Sources */,
 				852469CC1E2034400074F831 /* UploadMedia.swift in Sources */,

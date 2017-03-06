@@ -16,13 +16,13 @@ class FollowingJourneysList: Any, PaginatingList {
     var results = [Any]()
     
     init() {
-        self.type = .user
+        self.type = .journey
     }
     
     func nextPage() -> Future<[Any], HikebeatError> {
         return Future { complete in
             guard nextPageString != nil else { complete(.success([Journey]())); return }
-            getJourneysFollowing(queryString: "\(nextPageString)")
+            getJourneysFollowing(queryString: "\(nextPageString!)")
             .onSuccess(callback: { (tuple) in
                 self.nextPageString = tuple.nextPage
                 for journey in tuple.journeys {

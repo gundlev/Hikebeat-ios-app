@@ -458,6 +458,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             print("Creating cell for journey: ", journey.headline)
             cell.awakeFromNib()
             cell.selectionStyle = .none
+            cell.followButton.isHighlighted = journey.isFollowed
             cell.headline.text = journey.headline
             cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
             if journey.ownerProfilePhoto != nil {
@@ -482,6 +483,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 vc.fromVC = "search"
             case "showAll":
                 let vc = segue.destination as! PaginatingVC
+                vc.fromVC = "search"
                 switch self.chosenType! {
                 case .user:
                     vc.list = userSearch

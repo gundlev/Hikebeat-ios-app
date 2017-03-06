@@ -341,15 +341,19 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     
     @IBAction func shareButton(_ sender: AnyObject) {
+        // Testing follower for journey
         
-        let slug = journey?.slug
-        let user = journey?.username
-        let base = "https://hikebeat.io/"
-        let shareString = base+user!+"/"+slug!
-        let objectsToShare = [shareString]
-        let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
+        performSegue(withIdentifier: "showFollowers", sender: self)
         
-        present(activityViewController, animated: true, completion: nil)
+        // Real implementation
+//        let slug = journey?.slug
+//        let user = journey?.username
+//        let base = "https://hikebeat.io/"
+//        let shareString = base+user!+"/"+slug!
+//        let objectsToShare = [shareString]
+//        let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
+//        
+//        present(activityViewController, animated: true, completion: nil)
     }
     
     
@@ -359,6 +363,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             vc.startingIndex = self.indexOfChosenPin!
             vc.journey = self.journey
             vc.save = self.fromVC == "journeys"
+        } else if segue.identifier == "showFollowers" {
+            let vc = segue.destination as! PaginatingVC
+            vc.list = JourneyFollowersList(journeyId: (self.journey?.journeyId)!)
+            vc.fromVC = "journey"
         }
     }
 

@@ -39,6 +39,8 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var createButton: UIButton!
     let userDefaults = UserDefaults.standard
+    var journeysVC: JourneysVC!
+    var journeyCreated = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +74,6 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if self.titleField.isFirstResponder {
             view.endEditing(true)
-            
         } else {
             performSegue(withIdentifier: "backToJourneyModelTap", sender: self)
         }
@@ -100,6 +101,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
             let journeyTitle = (titleField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
             createNewJourneyCall(headline: journeyTitle)
             .onSuccess(callback: { (success) in
+                self.journeyCreated = true
                 self.performSegue(withIdentifier: "backWhenCreated", sender: self)
             }).onFailure(callback: { (error) in
                 print("Failed in creating new journey")
@@ -115,12 +117,18 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
         self.view.frame.origin.y = 0
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        if journeyCreated {
+            let tabVC = journeysVC.tabBarController as! HikebeatTabBarVC
+            tabVC.centerButtonPressed()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backWhenCreated" {
             let vc = segue.destination as! JourneysVC
-            if self.active.isOn {
-                vc.removeOldActiveJourney()
-            }
+//            let tabVC = vc.tabBarController as! HikebeatTabBarVC
+//            tabVC.centerButtonPressed()
         }
     }
     

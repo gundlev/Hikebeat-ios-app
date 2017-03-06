@@ -135,7 +135,7 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
             let jsonJourneys = json["data"]["docs"]
             print("search journey: ", jsonJourneys)
             var journeys = [Journey]()
-            if jsonJourneys != nil {
+            if jsonJourneys != JSON.null {
                 for (_, jsonJourney) in jsonJourneys {
                     let journey = Journey()
                     journey.headline = jsonJourney["headline"].stringValue
@@ -145,6 +145,8 @@ func searchJourneys(queryString: String) -> Future<(journeys:[Journey], nextPage
                     journey.userId = jsonJourney["userId"].stringValue
                     journey.slug = jsonJourney["slug"].stringValue
                     journey.username = jsonJourney["username"].stringValue
+                    journey.isFollowed = jsonJourney["isFollowed"].boolValue
+                    journey.numberOfFollowers = jsonJourney["numberOfFollowers"].intValue
                     journeys.append(journey)
                 }
             }

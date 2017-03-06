@@ -15,29 +15,20 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var collectionBG: UIImageView!
     @IBOutlet weak var activeJourneysCollectionView: UICollectionView!
     @IBOutlet weak var journeysTableView: UITableView!
-    @IBOutlet weak var activeJourneyButton: UIButton!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var journeys: [Journey]!
     let realm = try! Realm()
     var activeJourney: Journey?
     var activeIndexpath: Int?
+    var changeToCompose = false
     //var activeIndexpath:NSIndexPath? // selected in the collectionview
     var selectedIndexPath: IndexPath? // selected in the tableview
     let greenColor = UIColor(colorLiteralRed: 198/255, green: 255/255, blue: 0, alpha: 1)
+    
     let yellowColor = UIColor.yellow//UIColor(colorLiteralRed: 254/255, green: 237/255, blue: 9, alpha: 1)
     
     let darkGreen = UIColor(hexString: "#15676C")
     let highlightColor = UIColor(hexString: "#157578")
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        var insets = self.activeJourneysCollectionView.contentInset
-        let value = (self.view.frame.size.width - (self.activeJourneysCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
-        insets.left = value
-        insets.right = value
-        self.activeJourneysCollectionView.contentInset = insets
-        self.activeJourneysCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         if journeys.isEmpty {
@@ -48,15 +39,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if (UIDevice.isIphone5){
-            
-        }else if(UIDevice.isIphone6SPlus||UIDevice.isIphone6Plus){
-            self.activeJourneyButton.transform = activeJourneyButton.transform.translatedBy(x: 0.0, y: 10.0  )
-            
-            // Magic line of code setting the constraints back correctly.
-            journeysTableView.transform = activeJourneyButton.transform.translatedBy(x: 0.0, y: 0.0 )
-        }
 
         let journeysUnsorted = self.realm.objects(Journey.self)
         self.journeys = journeysUnsorted.reversed()
@@ -73,15 +55,19 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         bgGradient.zPosition = -1
         view.layer.addSublayer(bgGradient)
         
-        activeJourneyButton.layer.cornerRadius = activeJourneyButton.bounds.height/2
-        activeJourneyButton.layer.masksToBounds = true
-        
         let footer = self.journeysTableView.footerView(forSection: 0)
         footer?.backgroundColor = UIColor.clear
         footer?.contentView.backgroundColor = UIColor.clear
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("HERE")
+//        if changeToCompose {
+//            print("This is here")
+//            changeToCompose = false
+////            let tabVC = self.tabBarController as! HikebeatTabBarVC
+////            tabVC.centerButtonPressed()
+//        }
 //        if self.activeIndexpath != nil {
 //            let indexpath = IndexPath(item: self.activeIndexpath!, section: 0)
 //            self.activeJourneysCollectionView.scrollToItem(at: indexpath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: false)
@@ -102,8 +88,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        self.activeJourneysCollectionView.reloadData()
         self.journeysTableView.reloadData()
         print("Setting tabbar")
-        let tabVC = self.tabBarController as! HikebeatTabBarVC
-        tabVC.changeToTap(index: 2)
+//        let tabVC = self.tabBarController as! HikebeatTabBarVC
+//        tabVC.changeToTap(index: 2)
+
+//        self.changeToCompose = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,15 +111,7 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let journey = self.journeys[indexPath.row]
-            try! self.realm.write {
-                self.realm.delete(journey)
-                print("Journey deleted")
-            }
             self.journeys.remove(at: indexPath.row)
-            try! self.realm.write {
-                self.realm.delete(journey)
-                print("Journey deleted")
-            }
             deleteJourney(journeyId: journey.journeyId)
             .onSuccess(callback: { (success) in
                 if success {
@@ -198,7 +178,6 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func showNewJourneyVC(_ sender: AnyObject) {
         performSegue(withIdentifier: "showNewJourney", sender: self)
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -230,8 +209,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
         if journey.active {
             print(1.1)
             changeSetOfCells((indexPath as NSIndexPath).item, active: false)
-            activeJourneyButton.isHighlighted = false
-            activeJourneyButton.backgroundColor = yellowColor
             try! realm.write() {
                 journey.active = false
                 self.activeJourney = nil
@@ -248,8 +225,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
                     self.activeJourney!.active = false
                 }
             }
-            activeJourneyButton.isHighlighted = true
-            activeJourneyButton.backgroundColor = greenColor
             changeSetOfCells((indexPath as NSIndexPath).item, active: true)
             try! realm.write() {
                 journey.active = true
@@ -307,8 +282,6 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
             self.activeJourney = journey
             self.activeIndexpath = (indexPath as NSIndexPath).item
             cell.badgeImage.image = UIImage(named: "ActivatedBadge")
-            activeJourneyButton.isHighlighted = true
-            activeJourneyButton.backgroundColor = greenColor
         } else {
             cell.badgeImage.image = UIImage(named: "NotActivatedBadge")
         }
@@ -320,6 +293,9 @@ extension JourneysVC : UICollectionViewDelegate,UICollectionViewDataSource{
             let vc = segue.destination as! JourneyContainerVC
             vc.journey = self.journeys[((selectedIndexPath as NSIndexPath?)?.row)!]
             vc.fromVC = "journeys"
+        } else if segue.identifier == "showNewJourney" {
+            let vc = segue.destination as! NewJourneyVC
+            vc.journeysVC = self
         }
     }
     

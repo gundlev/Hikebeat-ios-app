@@ -22,19 +22,15 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("RELOAD TABLEVIEW")
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectJourneyCell") as! SelectJourneyCell
-        print(1)
         print(self.journeys)
         let journey = journeys![indexPath.row]
-        print(2)
         if journey.active {
             cell.checkImage.image = UIImage(named: "following_icon")
             self.activeIndexpath = indexPath
         } else {
             cell.checkImage.image = UIImage()
         }
-        print(3)
         cell.journeyTitle.text = journey.headline
         return cell
     }

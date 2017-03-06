@@ -221,24 +221,19 @@ public func registerForNotification() {
 
 func covertToMedia(_ pathToInputFile : URL, pathToOuputFile: URL, fileType: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
-        print(1)
         let asset = AVAsset(url: pathToInputFile)
-        print(2)
         let data = NSData(contentsOf: pathToInputFile)!
-        print(3)
         print("File size before compression: \(Double(data.length / 1048)) kb")
         guard let session = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetMediumQuality) else {
             complete(.failure(.avAssetExportFail))
             return
         }
-        print(4)
 //        print(AVAssetExportSession.exportPresets(compatibleWith: asset))
         print("input path: ", pathToInputFile)
         print("output path: ", pathToOuputFile)
         session.outputURL = pathToOuputFile
         session.outputFileType = fileType
         session.shouldOptimizeForNetworkUse = true
-        print(5)
         session.exportAsynchronously(completionHandler: { () -> Void in
             print("The session is done exporting")
             switch session.status {

@@ -303,21 +303,25 @@ func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
     }
 }
 
-func getFollowersForJourney(queryString: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
+func getFollowersForJourney(queryString: String, journeyId: String) -> Future<(users:[User], nextPage: String?), HikebeatError> {
     return Future { complete in
         // NOT THE RIGHT URL!!! Should include specific journey. Call is get followers for journey
-        let url = "\(IPAddress)user/followers\(queryString)"
+        let url = "\(IPAddress)journeys/\(journeyId)/followers\(queryString)"
         getCall(url: url, headers: getHeader())
         .onSuccess(callback: { (response) in
             guard response.response?.statusCode == 200 else {
                 showCallErrors(json: JSON(response.result.value!))
                 complete(.failure(.getUsers));
+                print("Responsio: ", response)
+                print("urlio: ", url)
                 return
             }
+            print("Responsio: ", response)
+            print("urlio: ", url)
             guard response.result.value != nil else { complete(.failure(.getUsers)); return }
             
             let json = JSON(response.result.value!)
-            let jsonUsers = json["data"]
+            let jsonUsers = json["data"]["followers"]
             var users = [User]()
             if jsonUsers != JSON.null {
                 for (_, jsonUser) in jsonUsers {
@@ -344,6 +348,7 @@ func getFollowersForJourney(queryString: String) -> Future<(users:[User], nextPa
             if nextPageString != "" {
                 nextPage = nextPageString
             }
+            print("users: ", users)
             let tuple = (users: users, nextPage: nextPage)
             complete(.success(tuple))
 
@@ -356,16 +361,18 @@ func getFollowersForJourney(queryString: String) -> Future<(users:[User], nextPa
 
 func getJourneysFollowing(queryString: String) -> Future<(journeys:[Journey], nextPage: String?), HikebeatError> {
     return Future { complete in
-        let url = "\(IPAddress)user/following\(queryString)"
+        let url = "\(IPAddress)users/following/journeys\(queryString)"
+        print("URL: ", url)
         getCall(url: url, headers: getHeader())
         .onSuccess(callback: { (response) in
             guard response.response?.statusCode == 200 && response.result.value != nil else {
                 showCallErrors(json: JSON(response.result.value!))
+                print(response)
                 complete(.failure(.getUsers));
                 return
             }
             let json = JSON(response.result.value!)
-            let jsonJourneys = json["data"]["followers"]
+            let jsonJourneys = json["data"]["journeys"]
             print("search journey: ", jsonJourneys)
             var journeys = [Journey]()
             if jsonJourneys != JSON.null {
@@ -378,6 +385,8 @@ func getJourneysFollowing(queryString: String) -> Future<(journeys:[Journey], ne
                     journey.userId = jsonJourney["userId"].stringValue
                     journey.slug = jsonJourney["slug"].stringValue
                     journey.username = jsonJourney["username"].stringValue
+                    journey.isFollowed = true
+                    journey.numberOfFollowers = jsonJourney["numberOfFollowers"].intValue
                     journeys.append(journey)
                 }
             }

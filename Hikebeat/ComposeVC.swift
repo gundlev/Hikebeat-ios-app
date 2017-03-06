@@ -304,10 +304,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         )
         let alertView = SCLAlertView(appearance: appearance)
         
-        _ = alertView.addButton("Clear it!") {
+        _ = alertView.addYellowButton("Clear it!") {
             self.clearAllForNewBeat(beatSend: false)
         }
-        _ = alertView.addButton("Cancel") {}
+        _ = alertView.addCancelButton()
         
         _ = alertView.showWarning("Clear Beat?", subTitle: "\nAre you sure you want to clear what progress you have made on this beat?")
     }
@@ -545,11 +545,11 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             )
             let alertView = SCLAlertView(appearance: appearance)
             
-            _ = alertView.addButton("Yes") {
+            _ = alertView.addGreenButton("Go to settings") {
                 UIApplication.openAppSettings()
             }
-            _ = alertView.addButton("No", action: {})
-            _ = alertView.showInfo("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
+            _ = alertView.addCancelButton()
+            _ = alertView.showNotice("Allow GPS?", subTitle: "\nYou have previously said no to allowing the app access to your location. Would you like to go to settings and change this?")
 
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
             let appearance = SCLAlertView.SCLAppearance(
@@ -557,12 +557,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             )
             let alertView = SCLAlertView(appearance: appearance)
             
-            _ = alertView.addButton("Yes") {
+            _ = alertView.addGreenButton("Allow access") {
                 _ = self.appDelegate.startLocationManager()
             }
-            _ = alertView.addButton("No") {}
+            _ = alertView.addCancelButton()
             
-            _ = alertView.showInfo("Allow GPS?", subTitle: "\nTo be able to show people your awesome journey and place you on a map we need your location. Will you allow the app access to your location?")
+            _ = alertView.showNotice("Allow GPS?", subTitle: "\nTo be able to show people your awesome journey and place you on a map we need your location. Will you allow the app access to your location?")
         }
     }
     
@@ -697,7 +697,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func presentMissingPhoneNumberAlert() {
         let alertView = SCLAlertView()
-        _ = alertView.addButton("Go to profile") {
+        _ = alertView.addYellowButton("Go to profile") {
             print("Second button tapped")
             self.tabBarController?.selectedIndex = 3
             let tabVC = self.tabBarController as! HikebeatTabBarVC
@@ -832,14 +832,14 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                     )
                     let alertView = SCLAlertView(appearance: appearance)
 
-                    _ = alertView.addButton("Yes") {
+                    _ = alertView.addYellowButton("Yes") {
                         longitude = String(location.coordinate.longitude)
                         latitude = String(location.coordinate.latitude)
                         altitude = String(round(location.altitude))
                         print("location 3. lat: ", location.coordinate.latitude, "lng: ", location.coordinate.longitude)
                         promise.success((date, timestamp: timestamp, latitude: latitude, longitude: longitude, altitude: altitude))
                     }
-                    _ = alertView.addButton("No") {
+                    _ = alertView.addGreyButton("No") {
                         promise.success(nil)
                     }
                     
@@ -978,10 +978,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //        )
 //        let alertView = SCLAlertView(appearance: appearance)
 //        
-//        _ = alertView.addButton("Yes") {
+//        _ = alertView.addGreenButton("Yes") {
 //            self.sendTextMessage()
 //        }
-//        _ = alertView.addButton("No thanks") {
+//        _ = alertView.addGreyButton("No thanks") {
 //            try! self.realm.write {
 //                if self.currentBeat?.mediaData != nil {
 //                    self.currentBeat?.mediaUploaded = false
@@ -997,7 +997,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //            }
 //        }
 //        
-//        _ = alertView.showInfo("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
+//        _ = alertView.showNotice("Problem sending", subTitle: "\nSome error has occured when contacting the server, would you like to send a text message instead?")
 //        //                        SCLAlertView().showError("Problem sending", subTitle: "Some error has occured when contacting the server, would you like to send a text message instead?")
 //        
 //        // Is set to true now but should be changed to false

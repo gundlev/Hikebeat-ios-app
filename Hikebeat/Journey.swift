@@ -26,6 +26,7 @@ class Journey: Object {
     dynamic var ownerProfilePhotoUrl: String? = nil
     dynamic var ownerProfilePhoto: Data? = nil
     dynamic var latestBeat: Date? = nil
+    dynamic var isFollowed: Bool = false
     var followers = List<Follower>()
     var beats = List<Beat>()
     

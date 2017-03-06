@@ -116,6 +116,7 @@ func successWithData(response: DataResponse<Data>) -> Bool {
             print("\n\nRequest failed with error:\n \(error)")
         }
         print("\n\nAuth request failed with error:\n \(error)")
+        print("response: ", response)
         return false
     }
 }
@@ -129,6 +130,7 @@ func successWithImage(response: DataResponse<UIImage>) -> Bool {
             print("\n\nRequest failed with error:\n \(error)")
         }
         print("\n\nAuth request failed with error:\n \(error)")
+        print("response: ", response)
         return false
     }
 }
