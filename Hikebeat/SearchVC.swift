@@ -197,6 +197,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         if reachability?.currentReachabilityStatus == Reachability.NetworkStatus.notReachable {
             setControlerState(to: .noConnection)
         }
+        self.searchTableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -459,7 +460,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             cell.journey = journey
             cell.awakeFromNib()
             cell.selectionStyle = .none
-            cell.followButton.isHighlighted = journey.isFollowed
+            cell.followButton.isSelected = journey.isFollowed
             cell.headline.text = journey.headline
             cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
             if journey.ownerProfilePhoto != nil {

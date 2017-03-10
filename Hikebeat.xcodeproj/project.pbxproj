@@ -52,7 +52,6 @@
 		853DD11A1E5F26970038663B /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD1191E5F26970038663B /* Pair.swift */; };
 		853DD11C1E5F30730038663B /* ContactManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DD11B1E5F30730038663B /* ContactManipulation.swift */; };
 		854D939C1E2D81A400FB57F9 /* SendBeats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D939B1E2D81A400FB57F9 /* SendBeats.swift */; };
-		854D939E1E2D823400FB57F9 /* ComposeCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D939D1E2D823400FB57F9 /* ComposeCalls.swift */; };
 		85562F3F1E2AE5170078CC51 /* UserCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85562F3E1E2AE5170078CC51 /* UserCalls.swift */; };
 		85562F5D1E2BFFA30078CC51 /* TableViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85562F5C1E2BFFA30078CC51 /* TableViewSectionHeader.swift */; };
 		85562F5F1E2C025F0078CC51 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85562F5E1E2C025F0078CC51 /* Search.swift */; };
@@ -195,7 +194,6 @@
 		853DD11B1E5F30730038663B /* ContactManipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManipulation.swift; sourceTree = "<group>"; };
 		854D93991E2D559F00FB57F9 /* BRYXBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BRYXBanner.framework; path = Carthage/Build/iOS/BRYXBanner.framework; sourceTree = "<group>"; };
 		854D939B1E2D81A400FB57F9 /* SendBeats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBeats.swift; sourceTree = "<group>"; };
-		854D939D1E2D823400FB57F9 /* ComposeCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeCalls.swift; sourceTree = "<group>"; };
 		85562F3E1E2AE5170078CC51 /* UserCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCalls.swift; sourceTree = "<group>"; };
 		85562F5C1E2BFFA30078CC51 /* TableViewSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeader.swift; sourceTree = "<group>"; };
 		85562F5E1E2C025F0078CC51 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -377,7 +375,6 @@
 				8504199D1E0AC51B0008906A /* SimCardCalls.swift */,
 				852469CB1E2034400074F831 /* UploadMedia.swift */,
 				85562F3E1E2AE5170078CC51 /* UserCalls.swift */,
-				854D939D1E2D823400FB57F9 /* ComposeCalls.swift */,
 				85A7128E1E683642003F9EF0 /* Calls.swift */,
 			);
 			name = Network;
@@ -949,7 +946,6 @@
 				E111B0791CD0318800915401 /* LoginVC.swift in Sources */,
 				8512E0F91CD4E9BD0085CE2B /* SimpleReachability.swift in Sources */,
 				85F2B4311CC4DD33004704F3 /* AppDelegate.swift in Sources */,
-				854D939E1E2D823400FB57F9 /* ComposeCalls.swift in Sources */,
 				E18991621CD380E400EC46B2 /* JourneyViewCell.swift in Sources */,
 				8593DB131DFC188A00604BFA /* SearchUserCell.swift in Sources */,
 				85996DD51E69AE0900B3B45D /* FollowingJourneysList.swift in Sources */,

@@ -141,8 +141,8 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
                 let url = IPAddress + "auth/facebook"
                 let parameters = ["access_token": accessToken.authenticationToken]
                 showActivity()
-                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
-                    response in
+                postCall(url: url, parameters: parameters, headers: LoginHeaders)
+                .onSuccess(callback: { (response) in
                     if response.response?.statusCode == 200 {
                         print("Facebook Respose: ", response)
                         print(response.result.value as Any)
@@ -161,7 +161,31 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
                         showCallErrors(json: JSON(response.result.value))
                         complete(.failure(.facebookLogin))
                     }
-                }
+                }).onFailure(callback: { (error) in
+                    print("Error: ", error)
+                    complete(.failure(.facebookLogin))
+                })
+//                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
+//                    response in
+//                    if response.response?.statusCode == 200 {
+//                        print("Facebook Respose: ", response)
+//                        print(response.result.value as Any)
+//                        let json = JSON(response.result.value!)
+//                        handleUserAfterLogin(json: json)
+//                            .onSuccess(callback: { (success) in
+//                                hideActivity()
+//                                complete(.success(success))
+//                            }).onFailure(callback: { (error) in
+//                                hideActivity()
+//                                complete(.failure(error))
+//                                
+//                            })
+//                    } else {
+//                        print("response: ", response)
+//                        showCallErrors(json: JSON(response.result.value))
+//                        complete(.failure(.facebookLogin))
+//                    }
+//                }
             }
         }
     }
@@ -237,9 +261,8 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         
         if profilePhotoUrl != "" {
             print("There's a profile image!")
-            
-            getSessionManager().request(profilePhotoUrl).responseImage {
-                response in
+            getImageCall(url: profilePhotoUrl)
+            .onSuccess(callback: { (response) in
                 let priority = DispatchQueue.GlobalQueuePriority.default
                 DispatchQueue.global(priority: priority).async {
                     
@@ -256,7 +279,29 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
                         print(response)
                     }
                 }
-            }
+            }).onFailure(callback: { (error) in
+                print("Error: ", error)
+                print("Could not fetch image")
+            })
+//            getSessionManager().request(profilePhotoUrl).responseImage {
+//                response in
+//                let priority = DispatchQueue.GlobalQueuePriority.default
+//                DispatchQueue.global(priority: priority).async {
+//                    
+//                    if let image = response.result.value {
+//                        
+//                        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//                        let documentsDirectory: AnyObject = paths[0] as AnyObject
+//                        let fileName = "/media/profile_image.jpg"
+//                        let dataPath = documentsDirectory.appending(fileName)
+//                        let success = (try? UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: dataPath), options: [.atomic])) != nil
+//                        print("The image download and save was: ", success)
+//                    } else {
+//                        print("could not resolve to image")
+//                        print(response)
+//                    }
+//                }
+//            }
         }
         
         /* Get all the journeys*/
@@ -292,14 +337,21 @@ func updateUser(_ changes: [Change]) -> Future<Bool, HikebeatError> {
             }
         }
         let url = IPAddress + "users"
-        getSessionManager().request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+        putCall(url: url, parameters: parameters, headers: getHeader())
+        .onSuccess(callback: { (response) in
             if response.response?.statusCode == 200 {
                 print("update user response: ", response)
                 complete(.success(true))
             } else {
                 complete(.failure(.updateUserCall))
             }
-        }
+        }).onFailure(callback: { (error) in
+            print("Error: ", error)
+            complete(.failure(.updateUserCall))
+        })
+//        getSessionManager().request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+//
+//        }
     }
 }
 

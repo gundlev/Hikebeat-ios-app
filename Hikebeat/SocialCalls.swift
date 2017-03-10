@@ -179,3 +179,43 @@ func getBeatsForJourney(userId: String, journeyId: String) -> Future<JSON, Hikeb
         }
     }
 }
+
+func followJourney(journeyId: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)journeys/\(journeyId)/follow"
+        followUnfowllowCall(url: url)
+        .onSuccess(callback: { (success) in
+            complete(.success(success))
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
+    }
+}
+
+func unfollowJourney(journeyId: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)journeys/\(journeyId)/unfollow"
+        followUnfowllowCall(url: url)
+            .onSuccess(callback: { (success) in
+                complete(.success(success))
+            }).onFailure(callback: { (error) in
+                complete(.failure(error))
+            })
+    }
+}
+
+func followUnfowllowCall(url: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        postCall(url: url, parameters: [String: String](), headers: getHeader())
+        .onSuccess(callback: { (response) in
+            print("FOLLOW/UNFOLLOW response: ", response)
+            if response.response?.statusCode == 200 {
+                complete(.success(true))
+            } else {
+                let json = JSON(response.result.value!)
+                showCallErrors(json: json)
+                complete(.failure(.followUnfollow))
+            }
+        })
+    }
+}

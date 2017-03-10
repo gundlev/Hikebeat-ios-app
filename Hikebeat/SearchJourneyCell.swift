@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import BrightFutures
+import SwiftyDrop
+import RealmSwift
 
 class SearchJourneyCell: UITableViewCell {
     
@@ -49,7 +51,8 @@ class SearchJourneyCell: UITableViewCell {
             let followingImage = UIImage(named: "following_icon")
             
             followButton.setImage(followImage, for: .normal)
-            followButton.setImage(followingImage, for: .highlighted)
+            followButton.setImage(followingImage, for: .selected)
+            followButton.addTarget(self, action: #selector(self.followOrUnfollow), for: .touchUpInside)
             
             self.addSubview(profileImage)
             self.addSubview(imageActivity)
@@ -61,10 +64,34 @@ class SearchJourneyCell: UITableViewCell {
     }
     
     func followOrUnfollow() {
+        guard hasNetworkConnection(show: true) else { return }
         if journey.isFollowed {
             // call unfollow
+            self.followButton.isSelected = false
+            unfollowJourney(journeyId: journey.journeyId)
+            .onSuccess(callback: { (success) in
+                let realm = try! Realm()
+                try! realm.write {
+                    self.journey.isFollowed = false
+                }
+            }).onFailure(callback: { (error) in
+                Drop.down("Could not unfollow journey, try again later.", state: .error)
+                self.followButton.isSelected = true
+            })
         } else {
             // call follow
+            self.followButton.isSelected = true
+            followJourney(journeyId: journey.journeyId)
+            .onSuccess(callback: { (success) in
+                let realm = try! Realm()
+                try! realm.write {
+                    self.journey.isFollowed = true
+                }
+            }).onFailure(callback: { (error) in
+                // do nothing
+                Drop.down("Could not follow journey, try again later.", state: .error)
+                self.followButton.isSelected = false
+            })
         }
     }
     

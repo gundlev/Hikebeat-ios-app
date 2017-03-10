@@ -33,6 +33,10 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
     override func viewDidLoad() {
         
         let bgGradient = CAGradientLayer()
@@ -140,7 +144,8 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         cell.awakeFromNib()
         cell.selectionStyle = .none
         cell.headline.text = journey.headline
-        cell.followButton.isHighlighted = journey.isFollowed
+        cell.journey = journey
+        cell.followButton.isSelected = journey.isFollowed
         cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
         if journey.ownerProfilePhoto != nil {
             cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
