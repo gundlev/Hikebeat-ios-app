@@ -37,6 +37,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var memoButtonCenterX: CGFloat = 0.0
     var imageButtonCenterX: CGFloat = 0.0
     
+    func r(data: String) {
+        
+    }
+    
     var beatPromise: Promise<String, NoError>!
     var showingJourneySelect = false
     var firstLoad = true
@@ -204,13 +208,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         editVideoButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(videoButtonTapped)))
         editEmotionButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(emotionsButtonTapped)))
         
-        checkForActiveJourney()
-
+        findActiveJourney()
     }
     
-    func checkForActiveJourney() {
-        handleScreenPresentation()
-    }
+//    func checkForActiveJourney() {
+//        handleScreenPresentation()
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
 //        animateSelectJourneyUp(animated: false)
@@ -220,35 +223,125 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             self.tableViewSelectJourney.isHidden = false
             firstLoad = false
         }
+        handleViewPresentation()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
-        handleScreenPresentation()
+        handleViewPresentation()
         self.tableViewSelectJourney.reloadData()
-
     }
     
-    func handleScreenPresentation(){
-        if !findActiveJourney() {
-            composeContainer.isHidden = true
-            NoActiveContainer.isHidden = false
-            noActiveJourneyText.text = journeys!.isEmpty ? "To get started, please create your first journey." : "Please select a journey from the drop-down above."
-            noActiveJourneyTitle.text = journeys!.isEmpty ? "Welcome to Hikebeat!" : "Select a journey!"
-            noActiveJourneyImage.image = UIImage(named: journeys!.isEmpty ? "welcome_logo" : "NoActiveJourney")
-            noActiveJourneyButton.isHidden = !journeys!.isEmpty
-            noActiveJourneyHouses.isHidden = !journeys!.isEmpty
-        }else{
+    func handleViewPresentation() {
+        guard !journeys!.isEmpty else {
+            setViewTo(state: .noJourneys)
+            print("STATE: ", ComposeState.noJourneys)
+            return
+        }
+        
+        guard findActiveJourney() else {
+            setViewTo(state: .noActiveJourney)
+            print("STATE: ", ComposeState.noActiveJourney)
+            return
+        }
+        
+        guard CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse else {
+            setViewTo(state: .noGPS)
+            print("STATE: ", ComposeState.noGPS)
+            return
+        }
+        print("STATE: ", ComposeState.composeBeat)
+        setViewTo(state: .composeBeat)
+    }
+    
+    func setViewTo(state: ComposeState) {
+        switch state {
+        case .noJourneys:
+            hikebeatTopLogo.isHidden = false
+            activeJourneyButton.isHidden = true
+            setPlaceholderScreen(title: "Welcome to Hikebeat!",
+                                 text: "To get started, please create your first journey.",
+                                 image: "welcome_logo",
+                                 selector: #selector(gotoJourneys),
+                                 buttonTitle: "Create a journey",
+                                 showHouses: true)
+        case .noActiveJourney:
+            hikebeatTopLogo.isHidden = true
+            activeJourneyButton.isHidden = false
+            setPlaceholderScreen(title: "Select a journey!",
+                                 text: "Please select a journey from the drop-down above.",
+                                 image: "NoActiveJourney",
+                                 selector: nil,
+                                 buttonTitle: nil,
+                                 showHouses: false)
+        case .noGPS:
+            print("no gps")
+//            setPlaceholderScreen(title: "Almost there!",
+//                                 text: "In order to show the people at home where you are, you have to allow the GPS to be on.",
+//                                 image: "GPSIcon",
+//                                 selector: #selector(askForGPSPermission),
+//                                 buttonTitle: "Allow GPS",
+//                                 showHouses: false)
+        case .composeBeat:
             composeContainer.isHidden = false
             NoActiveContainer.isHidden = true
         }
     }
     
-    @IBAction func unwindToCompose(_ sender: UIStoryboardSegue)
-    {
+    func askForGPSPermission() {
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
+            UIApplication.openAppSettings()
+        }
+        
+        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.notDetermined {
+            let success = self.appDelegate.startLocationManager()
+        }
+    }
+    
+    func setPlaceholderScreen(title: String, text: String, image: String, selector: Selector?, buttonTitle: String?, showHouses: Bool) {
+        composeContainer.isHidden = true
+        NoActiveContainer.isHidden = false
+        noActiveJourneyText.text = text
+        noActiveJourneyTitle.text = title
+        noActiveJourneyImage.image = UIImage(named: image)
+        noActiveJourneyButton.isHidden = selector == nil
+        noActiveJourneyHouses.isHidden = !showHouses
+        if selector != nil {
+            noActiveJourneyButton.removeTarget(self, action: nil, for: .touchUpInside)
+            noActiveJourneyButton.addTarget(self, action: selector!, for: .touchUpInside)
+            noActiveJourneyButton.setTitle(buttonTitle, for: .normal)
+            journeysButton.setTitle(buttonTitle, for: .normal)
+            journeysButton.setTitle(buttonTitle, for: .highlighted)
+            journeysButton.setTitle(buttonTitle, for: .selected)
+            journeysButton.setTitle(buttonTitle, for: .focused)
+
+            journeysButton.addTarget(self, action: selector!, for: .touchUpInside)
+        }
+    }
+    
+//    func handleScreenPresentation(){
+//        if !findActiveJourney() {
+//            composeContainer.isHidden = true
+//            NoActiveContainer.isHidden = false
+//            noActiveJourneyText.text = journeys!.isEmpty ? "To get started, please create your first journey." : "Please select a journey from the drop-down above."
+//            noActiveJourneyTitle.text = journeys!.isEmpty ? "Welcome to Hikebeat!" : "Select a journey!"
+//            noActiveJourneyImage.image = UIImage(named: journeys!.isEmpty ? "welcome_logo" : "NoActiveJourney")
+//            noActiveJourneyButton.isHidden = !journeys!.isEmpty
+//            noActiveJourneyHouses.isHidden = !journeys!.isEmpty
+//        }else{
+//            composeContainer.isHidden = false
+//            NoActiveContainer.isHidden = true
+//        }
+//    }
+    
+    @IBAction func unwindToCompose(_ sender: UIStoryboardSegue) {
 //        let sourceViewController = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
         filledin==0 ? hideClearButton() : showClearButton()
+    }
+    
+    func changeLocationStatus(data: CLAuthorizationStatus) {
+        
     }
     
     func longTap(_ sender : UIGestureRecognizer){
@@ -478,7 +571,6 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     func checkForCorrectInput() {
         print("Now checking")
-        
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse {
             print("has gps permission")
             let locationTupleFuture = self.getTimeAndLocation()
@@ -887,6 +979,13 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             break
         }
     }
+}
+
+enum ComposeState {
+    case noJourneys
+    case noActiveJourney
+    case noGPS
+    case composeBeat
 }
 
 

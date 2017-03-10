@@ -67,7 +67,7 @@ extension ComposeVC: UITableViewDelegate, UITableViewDataSource {
         activeJourneyButton.setImage(UIImage(named: "downArrow"), for: .normal)
         
         print("Starting y: \(center.y), Ending y: \(center.y-self.tableViewSelectJourney.frame.height)")
-        checkForActiveJourney()
+        handleViewPresentation()
     }
     
     func animateSelectJourneyDown(animated: Bool) {

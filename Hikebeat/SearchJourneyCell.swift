@@ -18,6 +18,7 @@ class SearchJourneyCell: UITableViewCell {
     var firstLoad = true
     var imageActivity: UIActivityIndicatorView!
     var followButton: UIButton!
+    var journey: Journey!
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
@@ -56,6 +57,14 @@ class SearchJourneyCell: UITableViewCell {
             self.addSubview(followersBeats)
             self.addSubview(followButton)
             self.firstLoad = false
+        }
+    }
+    
+    func followOrUnfollow() {
+        if journey.isFollowed {
+            // call unfollow
+        } else {
+            // call follow
         }
     }
     

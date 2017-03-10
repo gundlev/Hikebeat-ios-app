@@ -79,6 +79,7 @@
 		8593DB111DFC187E00604BFA /* SearchJourneyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593DB101DFC187E00604BFA /* SearchJourneyCell.swift */; };
 		8593DB131DFC188A00604BFA /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593DB121DFC188A00604BFA /* SearchUserCell.swift */; };
 		85996DD51E69AE0900B3B45D /* FollowingJourneysList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */; };
+		85996DDC1E6EEC2900B3B45D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85996DDB1E6EEC2900B3B45D /* Event.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A31DFC4227006431E5 /* SocialCalls.swift */; };
 		85A067A61DFC4486006431E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A51DFC4486006431E5 /* User.swift */; };
@@ -227,6 +228,7 @@
 		8593DB101DFC187E00604BFA /* SearchJourneyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchJourneyCell.swift; sourceTree = "<group>"; };
 		8593DB121DFC188A00604BFA /* SearchUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
 		85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingJourneysList.swift; sourceTree = "<group>"; };
+		85996DDB1E6EEC2900B3B45D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		85A067A31DFC4227006431E5 /* SocialCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialCalls.swift; sourceTree = "<group>"; };
 		85A067A51DFC4486006431E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				852C4C671E68756E0086055A /* JourneyFollowersList.swift */,
 				852C4C691E687DC50086055A /* PaginatingList.swift */,
 				85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */,
+				85996DDB1E6EEC2900B3B45D /* Event.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -895,6 +898,7 @@
 				851A51F61D9A6CAB00CA7EA5 /* Async.swift in Sources */,
 				858EFF121D19BDDA00C50771 /* JTSImageViewController.m in Sources */,
 				858EFF161D19BDDA00C50771 /* UIImage+JTSImageEffects.m in Sources */,
+				85996DDC1E6EEC2900B3B45D /* Event.swift in Sources */,
 				E18A06E31DFE03E10087A23E /* HikebeatWalkthroughFramework.swift in Sources */,
 				852C4C6C1E6969D20086055A /* BeatCalls.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,

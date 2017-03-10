@@ -10,12 +10,12 @@ import Foundation
 import CoreData
 import UIKit
 import SwiftyJSON
+import CoreLocation
 
 //let phoneNumber = "004530962591"
 
 public let IPAddress = "https://hikebeat-api-production.herokuapp.com/api/v1/" //"http://192.168.1.144:3000/api/v1/"
-
-
+public let locationEvents = Event<String>()
 public let userDefaults = UserDefaults.standard
 
 let MediaPathPrefix = "media/"

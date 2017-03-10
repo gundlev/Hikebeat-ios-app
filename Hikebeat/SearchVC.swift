@@ -456,6 +456,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             let cell = tableView.dequeueReusableCell(withIdentifier: "journeyCell") as! SearchJourneyCell
             let journey = self.journeySearch?.results[indexPath.row-1] as! Journey
             print("Creating cell for journey: ", journey.headline)
+            cell.journey = journey
             cell.awakeFromNib()
             cell.selectionStyle = .none
             cell.followButton.isHighlighted = journey.isFollowed
