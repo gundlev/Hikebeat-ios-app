@@ -110,22 +110,32 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let journey = self.journeys[indexPath.row]
-            self.journeys.remove(at: indexPath.row)
-            deleteJourney(journeyId: journey.journeyId)
-            .onSuccess(callback: { (success) in
-                if success {
-                    try! self.realm.write {
-                        self.realm.delete(journey)
-                        print("Journey deleted")
-                    }
-                } else {
-                    //TODO: save deletion in changes.
-                    let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
-                    saveChange(change: change)
-                }
-            })
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            
+            _ = alertView.addButton("Yes") {
+                let journey = self.journeys[indexPath.row]
+                self.journeys.remove(at: indexPath.row)
+                deleteJourney(journeyId: journey.journeyId)
+                    .onSuccess(callback: { (success) in
+                        if success {
+                            try! self.realm.write {
+                                self.realm.delete(journey)
+                                print("Journey deleted")
+                            }
+                        } else {
+                            //TODO: save deletion in changes.
+                            let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
+                            saveChange(change: change)
+                        }
+                    })
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            _ = alertView.addButton("No") {}
+            _ = alertView.showNotice("Are you sure?", subTitle: "\nAre you sure you want to delete this journey permanently?")
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }

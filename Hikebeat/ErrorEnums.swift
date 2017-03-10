@@ -42,6 +42,7 @@ enum HikebeatError: Swift.Error {
     case handleUserSignupLogin
     case signupError
     case followUnfollow
+    case resetPassword
 }
 
 //enum UserCallError: Swift.Error {

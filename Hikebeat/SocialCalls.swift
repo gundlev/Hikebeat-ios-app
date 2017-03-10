@@ -92,7 +92,7 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
             let json = JSON(response.result.value as Any)
             let jsonUsers = json["data"]["docs"]
             var users = [User]()
-            if jsonUsers != nil {
+            if jsonUsers != JSON.null {
                 for (_, jsonUser) in jsonUsers {
 //                    print("User: ", jsonUser)
                     let latestBeat = jsonUser["latestBeat"].doubleValue

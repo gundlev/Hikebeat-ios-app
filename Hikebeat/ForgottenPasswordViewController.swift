@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyDrop
+import BrightFutures
 
 class ForgottenPasswordViewController: UIViewController, UITextFieldDelegate {
 
@@ -14,6 +16,10 @@ class ForgottenPasswordViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var forgottenContainer: UIView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var usernameField: UITextField!
+    
+    @IBAction func resetPasswordTapped(_ sender: Any) {
+        resetPasswordNow()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +63,7 @@ class ForgottenPasswordViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder();
+        resetPasswordNow()
         return true;
     }
     
@@ -67,6 +73,29 @@ class ForgottenPasswordViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(_ sender: Foundation.Notification) {
         self.view.frame.origin.y = 0
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func resetPasswordNow() {
+        usernameField.resignFirstResponder();
+        guard hasNetworkConnection(show: true) else { return }
+        guard usernameField.text != nil else { pleaseEnterCredentialsDrop(); return }
+        guard usernameField.text! != "" else { pleaseEnterCredentialsDrop(); return }
+        resetPassword(credential: usernameField.text!)
+        .onSuccess { (success) in
+            Drop.down("We have send an email with intructions on how to reset your password. Have a nice day!", state: .success, duration: 20, action: nil)
+        }.onFailure { (error) in
+            if error == HikebeatError.callFailed {
+                Drop.down("A problem occured, please try again later", state: .error)
+            }
+        }
+    }
+    
+    func pleaseEnterCredentialsDrop() {
+        Drop.down("Please enter a username or an email", state: .error)
     }
     
     /*

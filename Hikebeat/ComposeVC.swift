@@ -276,6 +276,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                                  showHouses: false)
         case .noGPS:
             print("no gps")
+            composeContainer.isHidden = false
+            NoActiveContainer.isHidden = true
 //            setPlaceholderScreen(title: "Almost there!",
 //                                 text: "In order to show the people at home where you are, you have to allow the GPS to be on.",
 //                                 image: "GPSIcon",

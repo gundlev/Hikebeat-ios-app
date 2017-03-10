@@ -48,6 +48,27 @@ func refreshToken() -> Future<String, HikebeatError> {
     }
 }
 
+func resetPassword(credential: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)reset-password/email"
+        let parameters = ["credential": credential]
+        postCall(url: url, parameters: parameters, headers: LoginHeaders)
+        .onSuccess(callback: { (response) in
+            print("forgot response: ", response)
+            if response.response?.statusCode == 200 {
+                complete(.success(true))
+            } else {
+                let json = JSON(response.result.value!)
+                showCallErrors(json: json)
+                complete(.failure(.resetPassword))
+            }
+        }).onFailure(callback: { (error) in
+            print("Error: ", error)
+            complete(.failure(error))
+        })
+    }
+}
+
 func loginUsername(username: String, password: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
         let parameters = ["username": username, "password": password]
