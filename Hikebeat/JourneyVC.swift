@@ -20,9 +20,13 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userDefaults = UserDefaults.standard
+    var followersButton: GreenIconButton!
+    var beatsButton: GreenIconButton!
+    var followButton: LargeFollowButton!
     
     @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
@@ -55,8 +59,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         journeyMap.setRegion(coordinateRegion, animated: true)
         journeyMap.showsUserLocation = false
         
-        titleButton.layer.cornerRadius = titleButton.bounds.height/2
-        titleButton.layer.masksToBounds = true
+//        titleButton.layer.cornerRadius = titleButton.bounds.height/2
+//        titleButton.layer.masksToBounds = true
         
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
@@ -88,7 +92,55 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             setUpPins()
         }
 
-        titleButton.setTitle(journey?.headline, for: UIControlState())
+//        titleButton.setTitle(journey?.headline, for: UIControlState())
+        titleLabel.text = journey?.headline
+        let width = UIScreen.main.bounds.width
+        let followerButtonFrame = CGRect(x: (width/6.5)*4, y: 12.5, width: width/6.5, height: 25)
+        followersButton = GreenIconButton(frame: followerButtonFrame,
+                                          icon: UIImage(named: "FollowersIcon")!,
+                                          text: "\(journey!.numberOfFollowers)",
+                                            textColor: .white,
+                                            boldText: false,
+                                            ratio: 0.5,
+                                            onPress: {
+                                                print("follower button tapped")
+                                            })
+        
+        let beatsButtonFrame = CGRect(x: (width/6.5)*5.25, y: 12.5, width: width/6.5, height: 25)
+        beatsButton = GreenIconButton(frame: beatsButtonFrame,
+                                      icon: UIImage(named: "ListPin")!,
+                                      text: "\(journey!.numberOfBeats)",
+                                        textColor: .white,
+                                        boldText: false,
+                                        ratio: 0.5,
+                                        onPress: {
+                                            print("beats button tapped")
+                                        })
+        
+        let followButtonFrame = CGRect(x: (width/6.5)*0.4, y: 12.5, width: width/3, height: 25)
+//        followButton = GreenIconButton(frame: followButtonFrame,
+//                                       icon: UIImage(named: "ListPin")!,
+//                                       text: "Following",
+//                                        textColor: lightGreen,
+//                                        boldText: true,
+//                                        ratio: 0.3,
+//                                        onPress: {
+//                                            print("follow button tapped")
+//                                        })
+        followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: false, onPress: {
+            print("follow button tapped")
+            if self.followButton.isFollowing {
+                self.followButton.setToUnfollowing()
+                self.followButton.isFollowing = !self.followButton.isFollowing
+            } else {
+                self.followButton.setToFollowing()
+                self.followButton.isFollowing = !self.followButton.isFollowing
+            }
+        })
+        
+        self.socialContainerView.addSubview(followersButton)
+        self.socialContainerView.addSubview(beatsButton)
+        self.socialContainerView.addSubview(followButton)
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
@@ -101,6 +153,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         self.setProfileImage()
         self.setUsername()
     }
+    
+//    func genSmallButton() -> GreenIconButton {
+//        
+//    }
     
     func showLatestBeat() {
         self.indexOfChosenPin = pins.count - 1

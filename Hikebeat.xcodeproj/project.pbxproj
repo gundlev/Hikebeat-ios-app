@@ -79,6 +79,8 @@
 		8593DB131DFC188A00604BFA /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593DB121DFC188A00604BFA /* SearchUserCell.swift */; };
 		85996DD51E69AE0900B3B45D /* FollowingJourneysList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */; };
 		85996DDC1E6EEC2900B3B45D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85996DDB1E6EEC2900B3B45D /* Event.swift */; };
+		859A86A71E733BD700C4268A /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A61E733BD700C4268A /* IconButton.swift */; };
+		859A86A91E735A0E00C4268A /* LargeFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A81E735A0E00C4268A /* LargeFollowButton.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A31DFC4227006431E5 /* SocialCalls.swift */; };
 		85A067A61DFC4486006431E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A51DFC4486006431E5 /* User.swift */; };
@@ -227,6 +229,8 @@
 		8593DB121DFC188A00604BFA /* SearchUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
 		85996DD41E69AE0900B3B45D /* FollowingJourneysList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingJourneysList.swift; sourceTree = "<group>"; };
 		85996DDB1E6EEC2900B3B45D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		859A86A61E733BD700C4268A /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		859A86A81E735A0E00C4268A /* LargeFollowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeFollowButton.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		85A067A31DFC4227006431E5 /* SocialCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialCalls.swift; sourceTree = "<group>"; };
 		85A067A51DFC4486006431E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -530,6 +534,8 @@
 				E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */,
 				E1378D801D295E12002E8CD1 /* aCustomView.swift */,
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
+				859A86A61E733BD700C4268A /* IconButton.swift */,
+				859A86A81E735A0E00C4268A /* LargeFollowButton.swift */,
 			);
 			name = Universal;
 			sourceTree = "<group>";
@@ -919,6 +925,7 @@
 				858D263D1D8AE11300019E8F /* SCLExtensions.swift in Sources */,
 				E1B84ABC1CD26AB10047BD5A /* JourneysVC.swift in Sources */,
 				85562F5D1E2BFFA30078CC51 /* TableViewSectionHeader.swift in Sources */,
+				859A86A91E735A0E00C4268A /* LargeFollowButton.swift in Sources */,
 				8593DAAF1DF325C500604BFA /* Save.swift in Sources */,
 				858EFF151D19BDDA00C50771 /* JTSAnimatedGIFUtility.m in Sources */,
 				85FBDA4F1E469DA300A1DF3A /* PaginatingVC.swift in Sources */,
@@ -961,6 +968,7 @@
 				8593DB0D1DFB6BC400604BFA /* SelectJourneyCell.swift in Sources */,
 				85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */,
 				E1AA1A311CD173A200C79B91 /* SettingsVC.swift in Sources */,
+				859A86A71E733BD700C4268A /* IconButton.swift in Sources */,
 				85A067A61DFC4486006431E5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

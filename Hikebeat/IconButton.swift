@@ -1,0 +1,88 @@
+//
+//  IconButton.swift
+//  Hikebeat
+//
+//  Created by Niklas Gundlev on 10/03/2017.
+//  Copyright © 2017 Niklas Gundlev. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class GreenIconButton: UIView {
+    
+    var iconImageView: UIImageView
+    var textLabel: UILabel
+    var button: UIButton
+    var onPress = {}
+    
+    var oldBounds: CGRect?
+    
+    init(frame: CGRect, icon: UIImage, text: String, textColor: UIColor, boldText: Bool, ratio: CGFloat, onPress: @escaping () -> ()) {
+        let ratioDivider = 1/ratio
+        let padding:CGFloat = 5
+        textLabel = UILabel(frame: CGRect(x: frame.width/ratioDivider , y: 0, width: frame.width/ratioDivider, height: frame.height))
+        textLabel.text = text
+        textLabel.textColor = textColor
+        textLabel.textAlignment = .center
+        if boldText {
+            textLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        } else {
+            textLabel.font = UIFont.systemFont(ofSize: 13)
+        }
+        textLabel.adjustsFontSizeToFitWidth = true
+        iconImageView = UIImageView(frame: CGRect(x: padding, y: padding/2, width: frame.width/ratioDivider-padding*2, height: frame.height-padding))
+        iconImageView.image = icon
+        iconImageView.contentMode = .scaleAspectFit
+        button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        super.init(frame: frame)
+        self.backgroundColor = darkGreen
+        self.onPress = onPress
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touchUpOutside), for: .touchUpOutside)
+        button.addTarget(self, action: #selector(touchDownOnButton), for: .touchDown)
+        self.layer.borderWidth = 1
+        self.layer.borderColor = lightGreen.cgColor
+        
+        self.addSubview(textLabel)
+        self.addSubview(iconImageView)
+        self.addSubview(button)
+        self.layer.cornerRadius = 5
+        self.clipsToBounds = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+//    func hideIcon() {
+//        self.iconImageView.isHidden = true
+//        self.oldBounds = textLabel.bounds
+//        self.textLabel.bounds = self.bounds
+//    }
+//    
+//    func showIcon() {
+//        self.iconImageView.isHidden = false
+//        if oldBounds != nil {
+//            self.textLabel.bounds = self.oldBounds!
+//        }
+//    }
+//    
+//    func change(text: String) {
+//        self.textLabel.text = text
+//    }
+    
+    func buttonTapped() {
+        self.alpha = 1
+        self.onPress()
+    }
+    
+    func touchDownOnButton() {
+        self.alpha = 0.5
+    }
+    
+    func touchUpOutside() {
+        self.alpha = 1
+    }
+    
+}
