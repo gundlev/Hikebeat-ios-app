@@ -22,7 +22,7 @@ class RecordAudioVC: UIViewController {
     
     var recorder: AVAudioRecorder!
     var player:AVAudioPlayer!
-    var meterTimer:Timer!
+    var meterTimer:Timer?
     var soundFileURL:URL!
     var audioHasBeenRecordedForThisBeat = false
     
@@ -42,8 +42,15 @@ class RecordAudioVC: UIViewController {
     }
     
     @IBAction func recordAudio(_ sender: AnyObject) {
-        startRecordingAudio()
-        self.recordCircle.image = UIImage(named: "record-btn-active")
+        print("record now")
+        let status = micPermissionStatus()
+        if status == .granted {
+            print("AUTHORIZED FOR MIC")
+            startRecordingAudio()
+            self.recordCircle.image = UIImage(named: "record-btn-active")
+        } else {
+            reactToMicPermission(status: status)
+        }
     }
 
     @IBAction func insideStop(_ sender: AnyObject) {

@@ -3131,7 +3131,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E86B4C50-3078-4436-912D-5C79424E9AE9" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9D423017-5195-4AD2-B072-B802D00D9C57" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -4178,7 +4178,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ak-JR-vR7">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="669"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="600"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="373" id="MQj-C1-ouw"/>
+                                            </constraints>
                                             <connections>
                                                 <action selector="insideStop:" destination="zrz-AL-AUL" eventType="touchUpInside" id="b7F-Cr-wOE"/>
                                                 <action selector="outsideStop:" destination="zrz-AL-AUL" eventType="touchUpOutside" id="NKL-Et-vv1"/>
@@ -4206,8 +4209,8 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstItem="nne-rh-phV" firstAttribute="top" secondItem="1Ak-JR-vR7" secondAttribute="bottom" constant="-281" id="0rZ-td-kuW"/>
-                                        <constraint firstItem="1Ak-JR-vR7" firstAttribute="centerY" secondItem="fMX-2w-tTd" secondAttribute="centerY" constant="81.5" id="0wd-3o-irP"/>
+                                        <constraint firstItem="nne-rh-phV" firstAttribute="top" secondItem="1Ak-JR-vR7" secondAttribute="bottom" constant="-212" id="0rZ-td-kuW"/>
+                                        <constraint firstItem="1Ak-JR-vR7" firstAttribute="centerY" secondItem="fMX-2w-tTd" secondAttribute="centerY" constant="47" id="0wd-3o-irP"/>
                                         <constraint firstItem="nne-rh-phV" firstAttribute="centerX" secondItem="XDI-Ih-hyD" secondAttribute="centerX" id="1zg-bG-6Hh"/>
                                         <constraint firstItem="wyU-I6-QmC" firstAttribute="centerY" secondItem="fMX-2w-tTd" secondAttribute="centerY" id="9s9-LX-q6V"/>
                                         <constraint firstItem="ROE-9x-YzI" firstAttribute="top" secondItem="flm-YW-e9Y" secondAttribute="top" constant="20" id="AJK-aB-voU"/>
@@ -4223,7 +4226,7 @@
                                         <constraint firstItem="fMX-2w-tTd" firstAttribute="centerX" secondItem="flm-YW-e9Y" secondAttribute="centerX" id="cZs-Ra-j9p"/>
                                         <constraint firstItem="wyU-I6-QmC" firstAttribute="centerX" secondItem="fMX-2w-tTd" secondAttribute="centerX" id="fg0-NX-IQq"/>
                                         <constraint firstItem="WKf-K7-cpw" firstAttribute="top" secondItem="flm-YW-e9Y" secondAttribute="top" constant="20" id="fpk-Tu-0wz"/>
-                                        <constraint firstItem="1Ak-JR-vR7" firstAttribute="height" secondItem="fMX-2w-tTd" secondAttribute="height" constant="469" id="hhK-FX-7bU"/>
+                                        <constraint firstItem="1Ak-JR-vR7" firstAttribute="height" secondItem="fMX-2w-tTd" secondAttribute="height" constant="400" id="hhK-FX-7bU"/>
                                         <constraint firstItem="1Ak-JR-vR7" firstAttribute="centerX" secondItem="fMX-2w-tTd" secondAttribute="centerX" constant="-113.5" id="rYh-jp-P40"/>
                                         <constraint firstItem="fMX-2w-tTd" firstAttribute="top" secondItem="flm-YW-e9Y" secondAttribute="top" constant="153" id="sRb-my-bFf"/>
                                         <constraint firstItem="XDI-Ih-hyD" firstAttribute="top" secondItem="fMX-2w-tTd" secondAttribute="bottom" constant="35" id="vAA-oV-FZO"/>
@@ -5389,18 +5392,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="15" height="20"/>
-        <image name="BlurryBG" width="375" height="190"/>
-        <image name="CloseIcon" width="23" height="23"/>
-        <image name="ComposeBG" width="330" height="473"/>
-        <image name="ComposeMemo" width="24" height="37"/>
-        <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="37" height="35"/>
-        <image name="ComposeVideo" width="39" height="31"/>
-        <image name="DefaultProfile" width="106" height="106"/>
-        <image name="DimiInTheHouse" width="106" height="106"/>
-        <image name="E86B4C50-3078-4436-912D-5C79424E9AE9" width="24" height="30">
+        <image name="9D423017-5195-4AD2-B072-B802D00D9C57" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5499,6 +5491,17 @@ AMIA2QDbAN0UvxTEFM8U2BTrFO8U+hUDFQgVEBUTFRgVJxUrFTIVOhVHFUwVThVQFVUVXRVgFWUVbRVw
 FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
 </mutableData>
         </image>
+        <image name="ActivedIcon" width="32" height="32"/>
+        <image name="BackArrow" width="15" height="20"/>
+        <image name="BlurryBG" width="375" height="190"/>
+        <image name="CloseIcon" width="23" height="23"/>
+        <image name="ComposeBG" width="330" height="473"/>
+        <image name="ComposeMemo" width="24" height="37"/>
+        <image name="ComposePhoto" width="40" height="31"/>
+        <image name="ComposeTitle" width="37" height="35"/>
+        <image name="ComposeVideo" width="39" height="31"/>
+        <image name="DefaultProfile" width="106" height="106"/>
+        <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditTitle" width="112" height="103"/>
         <image name="EmotionIcon" width="38" height="33"/>
         <image name="GPSIcon" width="27" height="31"/>

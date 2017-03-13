@@ -103,7 +103,10 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         recorder?.stop()
         player?.stop()
         
-        meterTimer.invalidate()
+        if meterTimer != nil {
+            meterTimer?.invalidate()
+            meterTimer = nil
+        }
         
         let session = AVAudioSession.sharedInstance()
         do {
@@ -196,34 +199,56 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         
     }
     
-    func checkForMicPermission() {
-        let microPhoneStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio)
-        
-        switch microPhoneStatus {
-        case .authorized:
+    func reactToMicPermission(status: AVAudioSessionRecordPermission) {
+        switch status {
+        case AVAudioSessionRecordPermission.granted:
             // Has access
-            print("Authorized")
-        case .denied:
+            print("Authorized, nothing to do here.")
+        case AVAudioSessionRecordPermission.denied:
             // No access granted
             print("Denied")
-        case .restricted:
-            // Microphone disabled in settings
-            print("Restricted")
-        case .notDetermined:
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            _ = alertView.addButton("Yes", action: {
+                UIApplication.openAppSettings()
+            })
+            _ = alertView.addButton("No", action: {})
+            _ = alertView.showNotice("Allow permission?", subTitle: "You have previously said no to microphone permission. If you would like, you can change this in settings. Would you like to go to settings?.")
+        case AVAudioSessionRecordPermission.undetermined:
             // Didn't request access yet
             print("Undetermined")
+            let session:AVAudioSession = AVAudioSession.sharedInstance()
+            if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
+                session.requestRecordPermission({(granted: Bool)-> Void in
+                    if granted {
+                        print("Permission to record granted")
+                    } else {
+                        print("Permission to record not granted")
+                    }
+                })
+            } else {
+                print("requestRecordPermission unrecognized")
+            }
+        default:
+            print("Some other state")
         }
     }
     
+    func micPermissionStatus() -> AVAudioSessionRecordPermission {
+        return AVAudioSession.sharedInstance().recordPermission()
+    }
+    
     func recordWithPermission(_ setup:Bool) {
-        let session:AVAudioSession = AVAudioSession.sharedInstance()
-        // ios 8 and later
-        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
-            checkForMicPermission()
-            
-            session.requestRecordPermission({(granted: Bool)-> Void in
-                if granted {
-                    print("Permission to record granted")
+//        let session:AVAudioSession = AVAudioSession.sharedInstance()
+//        // ios 8 and later
+//        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
+////            checkForMicPermission()
+//            
+//            session.requestRecordPermission({(granted: Bool)-> Void in
+//                if granted {
+                    print("setting up recorder")
                     self.setSessionPlayAndRecord()
                     if setup {
                         self.setupRecorder()
@@ -234,13 +259,13 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
                         selector:#selector(RecordAudioVC.updateAudioMeter(_:)),
                         userInfo:nil,
                         repeats:true)
-                } else {
-                    print("Permission to record not granted")
-                }
-            })
-        } else {
-            print("requestRecordPermission unrecognized")
-        }
+//                } else {
+//                    print("Permission to record not granted")
+//                }
+//            })
+//        } else {
+//            print("requestRecordPermission unrecognized")
+//        }
     }
     
     func setSessionPlayback() {
