@@ -1141,7 +1141,7 @@
                                             <constraint firstAttribute="width" constant="244" id="pas-GS-8v0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" red="0.96795254945755005" green="0.90675777196884155" blue="0.038608193397521973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.96862745098039216" green="0.90588235294117647" blue="0.039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoSocial" translatesAutoresizingMaskIntoConstraints="NO" id="YR0-D0-40W">
@@ -3128,7 +3128,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="99EF8267-F995-41C1-878B-9D4116401066" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="85B3C21B-7E12-481E-B35C-76BE3D435C2D" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -5384,7 +5384,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="99EF8267-F995-41C1-878B-9D4116401066" width="24" height="30">
+        <image name="85B3C21B-7E12-481E-B35C-76BE3D435C2D" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

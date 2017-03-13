@@ -81,6 +81,7 @@
 		85996DDC1E6EEC2900B3B45D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85996DDB1E6EEC2900B3B45D /* Event.swift */; };
 		859A86A71E733BD700C4268A /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A61E733BD700C4268A /* IconButton.swift */; };
 		859A86A91E735A0E00C4268A /* LargeFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A81E735A0E00C4268A /* LargeFollowButton.swift */; };
+		859A86AB1E759A2900C4268A /* LargeSyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86AA1E759A2900C4268A /* LargeSyncButton.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A31DFC4227006431E5 /* SocialCalls.swift */; };
 		85A067A61DFC4486006431E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A51DFC4486006431E5 /* User.swift */; };
@@ -231,6 +232,7 @@
 		85996DDB1E6EEC2900B3B45D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		859A86A61E733BD700C4268A /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		859A86A81E735A0E00C4268A /* LargeFollowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeFollowButton.swift; sourceTree = "<group>"; };
+		859A86AA1E759A2900C4268A /* LargeSyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeSyncButton.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		85A067A31DFC4227006431E5 /* SocialCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialCalls.swift; sourceTree = "<group>"; };
 		85A067A51DFC4486006431E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				859A86A61E733BD700C4268A /* IconButton.swift */,
 				859A86A81E735A0E00C4268A /* LargeFollowButton.swift */,
+				859A86AA1E759A2900C4268A /* LargeSyncButton.swift */,
 			);
 			name = Universal;
 			sourceTree = "<group>";
@@ -959,6 +962,7 @@
 				E1B4138C1CCE9B4700B8768B /* EditEmotionVC.swift in Sources */,
 				85FBDA511E46A13B00A1DF3A /* TableViewPaginationFooter.swift in Sources */,
 				E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */,
+				859A86AB1E759A2900C4268A /* LargeSyncButton.swift in Sources */,
 				E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */,
 				85AC90741CE487AF007BE5C2 /* LFTPulseAnimation.swift in Sources */,
 				E1B012031CD6595C000AB2F9 /* NewJourneyVC.swift in Sources */,

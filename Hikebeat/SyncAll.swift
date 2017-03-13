@@ -71,36 +71,15 @@ func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBe
                 complete(.failure(.uploadAll))
             }
         })
-        
-//        if mediaBeats.count != 0 {
-//            sendMedia(mediaBeats, progressView: progressView, increase: increase)
-//            .onSuccess{ (successBeats) in
-//                    if changes.count > 0 {
-//                        print("SyncAll: syncronizing changes")
-//                        let changeFuture = sendChanges(progressView, increase: increase, changes: changes)
-//                        
-//                        changeFuture.onSuccess{ successChanges in
-//                            print("SyncAll: Success on changes and beats")
-//                            promise.success(successChanges && successBeats)
-//                        }
-//                    } else {
-//                        print("SyncAll: Success on beats alone")
-//                        promise.success(successBeats)
-//                    }
-//            }
-//        } else if mediaBeats.count == 0 && changes.count > 0 {
-//            if changes.count > 0 {
-//                let changeFuture = sendChanges(progressView, increase: increase, changes: changes)
-//                print("SyncAll: syncronizing changes")
-//                changeFuture.onSuccess{ success in
-//                    print("SyncAll: Success on changes")
-//                    promise.success(success)
-//                }
-//            }
-//        } else {
-//            print("r")
-//            promise.success(true)
-//        }
     }
+}
+
+func journeyIsInSync(journeyId: String) -> Bool {
+    let realmLocal = try! Realm()
+    let mediaQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded == %@", false as CVarArg), NSPredicate(format: "mediaData != %@", ""), NSPredicate(format: "journeyId != %@", journeyId)])
+    let beatQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "messageUploaded == %@", false as CVarArg), NSPredicate(format: "journeyId != %@", journeyId)])
+    let media = realmLocal.objects(Beat.self).filter(mediaQuery)
+    let beats = realmLocal.objects(Beat.self).filter(beatQuery)
+    return media.isEmpty && beats.isEmpty
 }
 

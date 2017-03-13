@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import RealmSwift
+import SwiftyDrop
 
 class JourneyVC: UIViewController, MKMapViewDelegate {
 
@@ -27,6 +28,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     var followersButton: GreenIconButton!
     var beatsButton: GreenIconButton!
     var followButton: LargeFollowButton!
+    var syncButton: LargeSyncButton!
     
     @IBOutlet weak var beatIcon: UIImageView!
     var journey: Journey?
@@ -37,7 +39,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let width = UIScreen.main.bounds.width
+
         // Do any additional setup after loading the view.
         
         let bgGradient = CAGradientLayer()
@@ -88,14 +91,37 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             }).onFailure(callback: { (error) in
                 print("problem getting full journey, error: ", error)
             })
+            
+            let followButtonFrame = CGRect(x: width/2 + 40, y: 12.5, width: (width/6.5)*2 + 20, height: 25)
+            followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: false, journey: self.journey!, onPress: {
+                print("follow button tapped")
+                if self.followButton.isFollowing {
+                    self.followButton.setToUnfollowing()
+                    self.followButton.isFollowing = !self.followButton.isFollowing
+                } else {
+                    self.followButton.setToFollowing()
+                    self.followButton.isFollowing = !self.followButton.isFollowing
+                }
+            })
+            self.socialContainerView.addSubview(followButton)
         } else {
             setUpPins()
+            
+            let syncButtonFrame = CGRect(x: width/2 + 40, y: 12.5, width: (width/6.5)*2 + 20, height: 25)
+            let inSync = journeyIsInSync(journeyId: journey!.journeyId)
+            syncButton = LargeSyncButton(frame: syncButtonFrame, inSync: inSync, onPress: {
+                if !self.syncButton.inSync {
+                    self.tabBarController?.selectedIndex = 4
+                } else {
+                    Drop.down("There is no media or any messages to sync. Have an awesome day!", state: .success)
+                }
+            })
+            self.socialContainerView.addSubview(syncButton)
         }
 
 //        titleButton.setTitle(journey?.headline, for: UIControlState())
         titleLabel.text = journey?.headline
-        let width = UIScreen.main.bounds.width
-        let followerButtonFrame = CGRect(x: (width/6.5)*4, y: 12.5, width: width/6.5, height: 25)
+        let followerButtonFrame = CGRect(x: 20, y: 12.5, width: width/6.5, height: 25)
         followersButton = GreenIconButton(frame: followerButtonFrame,
                                           icon: UIImage(named: "FollowersIcon")!,
                                           text: "\(journey!.numberOfFollowers)",
@@ -106,7 +132,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                                                 print("follower button tapped")
                                             })
         
-        let beatsButtonFrame = CGRect(x: (width/6.5)*5.25, y: 12.5, width: width/6.5, height: 25)
+        let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12.5, width: width/6.5, height: 25)
         beatsButton = GreenIconButton(frame: beatsButtonFrame,
                                       icon: UIImage(named: "ListPin")!,
                                       text: "\(journey!.numberOfBeats)",
@@ -117,7 +143,6 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                                             print("beats button tapped")
                                         })
         
-        let followButtonFrame = CGRect(x: (width/6.5)*0.4, y: 12.5, width: width/3, height: 25)
 //        followButton = GreenIconButton(frame: followButtonFrame,
 //                                       icon: UIImage(named: "ListPin")!,
 //                                       text: "Following",
@@ -127,20 +152,9 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
 //                                        onPress: {
 //                                            print("follow button tapped")
 //                                        })
-        followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: false, onPress: {
-            print("follow button tapped")
-            if self.followButton.isFollowing {
-                self.followButton.setToUnfollowing()
-                self.followButton.isFollowing = !self.followButton.isFollowing
-            } else {
-                self.followButton.setToFollowing()
-                self.followButton.isFollowing = !self.followButton.isFollowing
-            }
-        })
         
         self.socialContainerView.addSubview(followersButton)
         self.socialContainerView.addSubview(beatsButton)
-        self.socialContainerView.addSubview(followButton)
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
@@ -152,6 +166,17 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         self.setProfileImage()
         self.setUsername()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if fromVC == "journeys" {
+            let inSync = journeyIsInSync(journeyId: journey!.journeyId)
+            if inSync {
+                self.syncButton.setToInSync()
+            } else {
+                self.syncButton.setToNotInSync()
+            }
+        }
     }
     
 //    func genSmallButton() -> GreenIconButton {
