@@ -36,7 +36,7 @@ class GreenIconButton: UIView {
         iconImageView.contentMode = .scaleAspectFit
         button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         super.init(frame: frame)
-        self.backgroundColor = darkGreen
+        self.backgroundColor = .clear
         self.onPress = onPress
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.addTarget(self, action: #selector(touchUpOutside), for: .touchUpOutside)

@@ -51,13 +51,12 @@ class LargeFollowButton: UIView {
         button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         self.onPress = onPress
         super.init(frame: frame)
-        self.backgroundColor = darkGreen
+        self.backgroundColor = .clear
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.addTarget(self, action: #selector(touchUpOutside), for: .touchUpOutside)
         button.addTarget(self, action: #selector(touchDownOnButton), for: .touchDown)
         self.layer.borderWidth = 1
         self.layer.borderColor = lightGreen.cgColor
-        
         innerView.addSubview(textLabel)
         innerView.addSubview(iconImageView)
         self.addSubview(unFollowingTextLabel)
