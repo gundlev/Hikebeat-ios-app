@@ -14,7 +14,7 @@ import Result
 import RealmSwift
 import Realm
 
-func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) -> Future<Bool, HikebeatError> {
+func syncAll(_ progressView: UIProgressView?, changes: Results<(Change)>, mediaBeats: Results<(Beat)>, messageBeats: Results<(Beat)>) -> Future<Bool, HikebeatError> {
     return Future { complete in
         
         var succeeded = 0
@@ -38,7 +38,7 @@ func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBe
             }
         })
         
-        sendMedia(mediaBeats, progressView: progressView)
+        sendMedia(mediaBeats, progressView: (progressView != nil) ? progressView! : UIProgressView())
         .onSuccess(callback: { (success) in
             print("Success on media")
             succeeded += 1
@@ -76,10 +76,14 @@ func syncAll(_ progressView: UIProgressView, changes: Results<(Change)>, mediaBe
 
 func journeyIsInSync(journeyId: String) -> Bool {
     let realmLocal = try! Realm()
-    let mediaQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded == %@", false as CVarArg), NSPredicate(format: "mediaData != %@", ""), NSPredicate(format: "journeyId != %@", journeyId)])
-    let beatQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "messageUploaded == %@", false as CVarArg), NSPredicate(format: "journeyId != %@", journeyId)])
+    let mediaQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "mediaUploaded == %@", false as CVarArg), NSPredicate(format: "mediaData != %@", ""), NSPredicate(format: "journeyId == %@", journeyId)])
+    let beatQuery = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "messageUploaded == %@", false as CVarArg), NSPredicate(format: "journeyId == %@", journeyId)])
     let media = realmLocal.objects(Beat.self).filter(mediaQuery)
     let beats = realmLocal.objects(Beat.self).filter(beatQuery)
+    
+    print("media: ", media)
+    print("beats: ", beats)
+    print("empty: ", media.isEmpty && beats.isEmpty)
     return media.isEmpty && beats.isEmpty
 }
 

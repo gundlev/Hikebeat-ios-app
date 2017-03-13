@@ -70,40 +70,40 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         setUpPins()
         
         if fromVC != "journeys" {
-            getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
-            .onSuccess(callback: { (beatsJson) in
-                let realm = try! Realm()
-                try! realm.write {
-                    print("here")
-                    for (_, beatJson) in beatsJson {
-                        print("___________________________")
-                        print(beatJson)
-                        let beat = Beat()
-                        let mediaType = beatJson["media"]["type"].stringValue
-                        let mediaUrl = beatJson["media"]["path"].stringValue
-                        let mediaDataId = beatJson["media"]["_id"].stringValue
-                        beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
-                        self.journey!.beats.append(beat)
+            if (journey?.beats.isEmpty)! {
+                getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
+                .onSuccess(callback: { (beatsJson) in
+                    let realm = try! Realm()
+                    try! realm.write {
+                        print("here")
+                        for (_, beatJson) in beatsJson {
+                            print("___________________________")
+                            print(beatJson)
+                            let beat = Beat()
+                            let mediaType = beatJson["media"]["type"].stringValue
+                            let mediaUrl = beatJson["media"]["path"].stringValue
+                            let mediaDataId = beatJson["media"]["_id"].stringValue
+                            beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
+                            self.journey!.beats.append(beat)
+                        }
+//                        self.beatsButton.textLabel.text = self.journey.
+                        print("john")
+                        self.setUpPins()
                     }
-                    print("john")
-                    self.setUpPins()
-                }
-            }).onFailure(callback: { (error) in
-                print("problem getting full journey, error: ", error)
-            })
+                }).onFailure(callback: { (error) in
+                    print("problem getting full journey, error: ", error)
+                })
+            }
             
             let followButtonFrame = CGRect(x: width/2 + 40, y: 12.5, width: (width/6.5)*2 + 20, height: 25)
-            followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: false, journey: self.journey!, onPress: {
-                print("follow button tapped")
-                if self.followButton.isFollowing {
-                    self.followButton.setToUnfollowing()
-                    self.followButton.isFollowing = !self.followButton.isFollowing
-                } else {
-                    self.followButton.setToFollowing()
-                    self.followButton.isFollowing = !self.followButton.isFollowing
+            followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: (journey?.isFollowed)!, journey: self.journey!, onPress: {
+                success in
+                if success {
+                    self.followersButton.textLabel.text = "\((self.journey?.numberOfFollowers)!)"
                 }
             })
             self.socialContainerView.addSubview(followButton)
+            self.setBeatsAndFollowersButtons(numberOfBeats: (journey?.numberOfBeats)!, numberOfFollowers: (journey?.numberOfFollowers)!)
         } else {
             setUpPins()
             
@@ -117,44 +117,21 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 }
             })
             self.socialContainerView.addSubview(syncButton)
+            self.setBeatsAndFollowersButtons(numberOfBeats: (journey?.beats.count)!, numberOfFollowers: (journey?.numberOfFollowers)!)
+            getNumberOfFollowersFor(journeyId: (journey?.journeyId)!)
+            .onSuccess(callback: { (count) in
+                self.followersButton.textLabel.text = "\(count)"
+                let realm = try! Realm()
+                try! realm.write {
+                    self.journey?.numberOfFollowers = count
+                }
+            }).onFailure(callback: { (error) in
+                print("Error getting followers: ", error)
+            })
         }
 
 //        titleButton.setTitle(journey?.headline, for: UIControlState())
         titleLabel.text = journey?.headline
-        let followerButtonFrame = CGRect(x: 20, y: 12.5, width: width/6.5, height: 25)
-        followersButton = GreenIconButton(frame: followerButtonFrame,
-                                          icon: UIImage(named: "FollowersIcon")!,
-                                          text: "\(journey!.numberOfFollowers)",
-                                            textColor: .white,
-                                            boldText: false,
-                                            ratio: 0.5,
-                                            onPress: {
-                                                print("follower button tapped")
-                                            })
-        
-        let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12.5, width: width/6.5, height: 25)
-        beatsButton = GreenIconButton(frame: beatsButtonFrame,
-                                      icon: UIImage(named: "ListPin")!,
-                                      text: "\(journey!.numberOfBeats)",
-                                        textColor: .white,
-                                        boldText: false,
-                                        ratio: 0.5,
-                                        onPress: {
-                                            print("beats button tapped")
-                                        })
-        
-//        followButton = GreenIconButton(frame: followButtonFrame,
-//                                       icon: UIImage(named: "ListPin")!,
-//                                       text: "Following",
-//                                        textColor: lightGreen,
-//                                        boldText: true,
-//                                        ratio: 0.3,
-//                                        onPress: {
-//                                            print("follow button tapped")
-//                                        })
-        
-        self.socialContainerView.addSubview(followersButton)
-        self.socialContainerView.addSubview(beatsButton)
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
@@ -168,6 +145,37 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         self.setUsername()
     }
     
+    func setBeatsAndFollowersButtons(numberOfBeats: Int, numberOfFollowers: Int) {
+        let width = UIScreen.main.bounds.width
+
+        let followerButtonFrame = CGRect(x: 20, y: 12.5, width: width/6.5, height: 25)
+        followersButton = GreenIconButton(frame: followerButtonFrame,
+                                          icon: UIImage(named: "FollowersIcon")!,
+                                          text: "\(numberOfFollowers)",
+                                            textColor: .white,
+                                            boldText: false,
+                                            ratio: 0.5,
+                                            onPress: {
+                                                print("follower button tapped")
+                                                self.performSegue(withIdentifier: "showFollowers", sender: self)
+                                            })
+        
+        let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12.5, width: width/6.5, height: 25)
+        beatsButton = GreenIconButton(frame: beatsButtonFrame,
+                                      icon: UIImage(named: "ListPin")!,
+                                      text: "\(numberOfBeats)",
+                                        textColor: .white,
+                                        boldText: false,
+                                        ratio: 0.5,
+                                        onPress: {
+                                            print("beats button tapped")
+                                            self.showLatestBeat()
+                                        })
+        
+        self.socialContainerView.addSubview(followersButton)
+        self.socialContainerView.addSubview(beatsButton)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         if fromVC == "journeys" {
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
@@ -178,6 +186,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    
     
 //    func genSmallButton() -> GreenIconButton {
 //        
@@ -422,19 +432,15 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     
     @IBAction func shareButton(_ sender: AnyObject) {
-        // Testing follower for journey
-        
-        performSegue(withIdentifier: "showFollowers", sender: self)
-        
         // Real implementation
-//        let slug = journey?.slug
-//        let user = journey?.username
-//        let base = "https://hikebeat.io/"
-//        let shareString = base+user!+"/"+slug!
-//        let objectsToShare = [shareString]
-//        let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
-//        
-//        present(activityViewController, animated: true, completion: nil)
+        let slug = journey?.slug
+        let user = journey?.username
+        let base = "https://hikebeat.io/"
+        let shareString = base+user!+"/"+slug!
+        let objectsToShare = [shareString]
+        let activityViewController = UIActivityViewController(activityItems: objectsToShare as [AnyObject], applicationActivities: nil)
+        
+        present(activityViewController, animated: true, completion: nil)
     }
     
     

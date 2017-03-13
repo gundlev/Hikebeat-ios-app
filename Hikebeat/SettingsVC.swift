@@ -132,13 +132,13 @@ class SettingsVC: UIViewController {
         guard hasNetworkConnection(show: true) else { return }
         if toUpload != nil {
             // showModal
-            print(1)
             self.modalPromise = Promise<String, NoError>()
-            print(2)
             self.performSegue(withIdentifier: "showModal", sender: self)
 //            showDots()
             print("toUpload is not nil")
-            syncAll((self.currentModal?.progressBar)!, changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
+            print("Modal: ", self.currentModal)
+            print("Bar: ", self.currentModal?.progressBar)
+            syncAll(self.currentModal?.progressBar, changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
             .onSuccess(callback: { (Bool) in
                 let synced = self.checkSync()
                 print("In callback")
@@ -341,8 +341,8 @@ class SettingsVC: UIViewController {
                     default: print("wrong")
                     }
                 }
-                self.numbers.message = (self.toUpload?.messageBeats.count)!
             }
+            self.numbers.message = (self.toUpload?.messageBeats.count)!
         } else {
             self.numbers.message = 0
             self.numbers.image = 0

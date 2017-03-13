@@ -82,6 +82,7 @@
 		859A86A71E733BD700C4268A /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A61E733BD700C4268A /* IconButton.swift */; };
 		859A86A91E735A0E00C4268A /* LargeFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86A81E735A0E00C4268A /* LargeFollowButton.swift */; };
 		859A86AB1E759A2900C4268A /* LargeSyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86AA1E759A2900C4268A /* LargeSyncButton.swift */; };
+		859A86AF1E76FEB000C4268A /* SmallFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859A86AE1E76FEB000C4268A /* SmallFollowButton.swift */; };
 		859EB30B1CDB6A88005353C0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EB30A1CDB6A88005353C0 /* Follower.swift */; };
 		85A067A41DFC4227006431E5 /* SocialCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A31DFC4227006431E5 /* SocialCalls.swift */; };
 		85A067A61DFC4486006431E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A067A51DFC4486006431E5 /* User.swift */; };
@@ -233,6 +234,7 @@
 		859A86A61E733BD700C4268A /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		859A86A81E735A0E00C4268A /* LargeFollowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeFollowButton.swift; sourceTree = "<group>"; };
 		859A86AA1E759A2900C4268A /* LargeSyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeSyncButton.swift; sourceTree = "<group>"; };
+		859A86AE1E76FEB000C4268A /* SmallFollowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallFollowButton.swift; sourceTree = "<group>"; };
 		859EB30A1CDB6A88005353C0 /* Follower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		85A067A31DFC4227006431E5 /* SocialCalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialCalls.swift; sourceTree = "<group>"; };
 		85A067A51DFC4486006431E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				85869CD01CCE019A004CFF4F /* HikebeatTabBarVC.swift */,
 				859A86A61E733BD700C4268A /* IconButton.swift */,
 				859A86A81E735A0E00C4268A /* LargeFollowButton.swift */,
+				859A86AE1E76FEB000C4268A /* SmallFollowButton.swift */,
 				859A86AA1E759A2900C4268A /* LargeSyncButton.swift */,
 			);
 			name = Universal;
@@ -882,6 +885,7 @@
 				85B890E61D59EB16009589E6 /* DownloadMedia.swift in Sources */,
 				858EFF141D19BDDA00C50771 /* JTSSimpleImageDownloader.m in Sources */,
 				E1AA1A2F1CD155F100C79B91 /* SignUpVC.swift in Sources */,
+				859A86AF1E76FEB000C4268A /* SmallFollowButton.swift in Sources */,
 				E1CD74071E637F460049899B /* AgrumeCell.swift in Sources */,
 				8593DB111DFC187E00604BFA /* SearchJourneyCell.swift in Sources */,
 				858D263C1D8AE11300019E8F /* SCLAlertView.swift in Sources */,

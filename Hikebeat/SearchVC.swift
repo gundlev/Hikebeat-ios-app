@@ -460,9 +460,8 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
             cell.journey = journey
             cell.awakeFromNib()
             cell.selectionStyle = .none
-            cell.followButton.isSelected = journey.isFollowed
+//            cell.followButton.isSelected = journey.isFollowed
             cell.headline.text = journey.headline
-            cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
             if journey.ownerProfilePhoto != nil {
                 cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
             } else {

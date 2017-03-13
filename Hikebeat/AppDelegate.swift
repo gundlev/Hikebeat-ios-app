@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         let changes = realmLocal.objects(Change.self)
         print("Are there changes? ", !changes.isEmpty)
         print("Are there media? ", !media.isEmpty)
-        print("Are there beats? ", !media.isEmpty)
+        print("Are there beats? ", !beats.isEmpty)
         return ((changes.isEmpty && beats.isEmpty && media.isEmpty), changes, media, beats)
     }
     

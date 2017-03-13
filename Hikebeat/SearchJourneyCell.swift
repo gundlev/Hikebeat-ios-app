@@ -19,7 +19,7 @@ class SearchJourneyCell: UITableViewCell {
     var followersBeats: UILabel!
     var firstLoad = true
     var imageActivity: UIActivityIndicatorView!
-    var followButton: UIButton!
+    var followButton: SmallFollowButton!
     var journey: Journey!
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -45,14 +45,24 @@ class SearchJourneyCell: UITableViewCell {
             followersBeats = UILabel(frame: CGRect(x: 80, y: 34, width: width-100, height: 20))
             followersBeats.textColor = lightGreen
             followersBeats.font = UIFont.systemFont(ofSize: 13)
-            followButton = UIButton(frame: CGRect(x: width-64, y: height/2-31/2, width: 31, height: 31))
+            let followButtonFrame = CGRect(x: width-100, y: 22.5, width: 75, height: 25)
+            self.followersBeats.text = "\(self.journey.numberOfFollowers) followers | \(self.journey.numberOfBeats) beats"
+            followButton = SmallFollowButton(frame: followButtonFrame, isFollowing: journey.isFollowed, journey: journey, onPress: {
+                success in
+                if success {
+                    self.followersBeats.text = "\(self.journey.numberOfFollowers) followers | \(self.journey.numberOfBeats) beats"
+                }
+                print("Taped follow button")
+            })
+//            followButton = UIButton(frame: CGRect(x: width-64, y: height/2-31/2, width: 31, height: 31))
             
-            let followImage = UIImage(named: "follow_icon")
-            let followingImage = UIImage(named: "following_icon")
+//            let followImage = UIImage(named: "follow_icon")
+//            let followingImage = UIImage(named: "following_icon")
+//            
+//            followButton.setImage(followImage, for: .normal)
+//            followButton.setImage(followingImage, for: .selected)
+//            followButton.addTarget(self, action: #selector(self.followOrUnfollow), for: .touchUpInside)
             
-            followButton.setImage(followImage, for: .normal)
-            followButton.setImage(followingImage, for: .selected)
-            followButton.addTarget(self, action: #selector(self.followOrUnfollow), for: .touchUpInside)
             
             self.addSubview(profileImage)
             self.addSubview(imageActivity)
@@ -60,40 +70,43 @@ class SearchJourneyCell: UITableViewCell {
             self.addSubview(followersBeats)
             self.addSubview(followButton)
             self.firstLoad = false
+        } else {
+            self.followButton.changeJourneyTo(journey: journey)
+            self.followersBeats.text = "\(self.journey.numberOfFollowers) followers | \(self.journey.numberOfBeats) beats"
         }
     }
     
-    func followOrUnfollow() {
-        guard hasNetworkConnection(show: true) else { return }
-        if journey.isFollowed {
-            // call unfollow
-            self.followButton.isSelected = false
-            unfollowJourney(journeyId: journey.journeyId)
-            .onSuccess(callback: { (success) in
-                let realm = try! Realm()
-                try! realm.write {
-                    self.journey.isFollowed = false
-                }
-            }).onFailure(callback: { (error) in
-                Drop.down("Could not unfollow journey, try again later.", state: .error)
-                self.followButton.isSelected = true
-            })
-        } else {
-            // call follow
-            self.followButton.isSelected = true
-            followJourney(journeyId: journey.journeyId)
-            .onSuccess(callback: { (success) in
-                let realm = try! Realm()
-                try! realm.write {
-                    self.journey.isFollowed = true
-                }
-            }).onFailure(callback: { (error) in
-                // do nothing
-                Drop.down("Could not follow journey, try again later.", state: .error)
-                self.followButton.isSelected = false
-            })
-        }
-    }
+//    func followOrUnfollow() {
+//        guard hasNetworkConnection(show: true) else { return }
+//        if journey.isFollowed {
+//            // call unfollow
+//            self.followButton.isSelected = false
+//            unfollowJourney(journeyId: journey.journeyId)
+//            .onSuccess(callback: { (success) in
+//                let realm = try! Realm()
+//                try! realm.write {
+//                    self.journey.isFollowed = false
+//                }
+//            }).onFailure(callback: { (error) in
+//                Drop.down("Could not unfollow journey, try again later.", state: .error)
+//                self.followButton.isSelected = true
+//            })
+//        } else {
+//            // call follow
+//            self.followButton.isSelected = true
+//            followJourney(journeyId: journey.journeyId)
+//            .onSuccess(callback: { (success) in
+//                let realm = try! Realm()
+//                try! realm.write {
+//                    self.journey.isFollowed = true
+//                }
+//            }).onFailure(callback: { (error) in
+//                // do nothing
+//                Drop.down("Could not follow journey, try again later.", state: .error)
+//                self.followButton.isSelected = false
+//            })
+//        }
+//    }
     
     func downloadProfileImage(imageUrl: String) -> Future<UIImage, HikebeatError> {
         return Future { complete in

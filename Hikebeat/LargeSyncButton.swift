@@ -57,7 +57,7 @@ class LargeSyncButton: UIView {
     }
     
     func setToNotInSync() {
-        change(text: "Sync now")
+        change(text: "Go to sync")
         self.layer.borderColor = yellowColor.cgColor
         self.textLabel.textColor = yellowColor
     }

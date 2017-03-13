@@ -142,6 +142,30 @@ func createNewJourneyCall(headline: String) -> Future<Bool, HikebeatError> {
     }
 }
 
+func getNumberOfFollowersFor(journeyId: String) -> Future<Int, HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)journeys/\(journeyId)/followers/count"
+        print("URL count: ", url)
+        getCall(url: url, headers: getHeader())
+        .onSuccess(callback: { (response) in
+            print("Followers count response: ", response)
+            if response.response?.statusCode == 200 {
+                if response.result.value != nil {
+                    let json = JSON(response.result.value!)
+                    complete(.success(json["data"]["count"].intValue))
+                } else {
+                    complete(.failure(.followersForJourney))
+                }
+            } else {
+                complete(.failure(.followersForJourney))
+            }
+        }).onFailure(callback: { (error) in
+            print("Error: ", error)
+            complete(.failure(.followersForJourney))
+        })
+    }
+}
+
 //func getJourneyWithId(userId: String, journeyId: String) -> Future<Journey, HikebeatError> {
 //    return Future { complete in
 //        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"

@@ -42,6 +42,7 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
     var journeysVC: JourneysVC!
     var journeyCreated = false
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,14 +98,17 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
             Drop.down("Journey headline can not be empty.", state: .error)
             return
         }
+        showActivity()
         if titleField.text?.characters.count > 1 {
             let journeyTitle = (titleField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
             createNewJourneyCall(headline: journeyTitle)
             .onSuccess(callback: { (success) in
                 self.journeyCreated = true
+                hideActivity()
                 self.performSegue(withIdentifier: "backWhenCreated", sender: self)
             }).onFailure(callback: { (error) in
                 print("Failed in creating new journey")
+                hideActivity()
             })
         }
     }

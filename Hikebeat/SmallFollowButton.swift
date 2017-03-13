@@ -1,8 +1,8 @@
 //
-//  LargeFollowButton.swift
+//  SmallFollowButton.swift
 //  Hikebeat
 //
-//  Created by Niklas Gundlev on 10/03/2017.
+//  Created by Niklas Gundlev on 13/03/2017.
 //  Copyright © 2017 Niklas Gundlev. All rights reserved.
 //
 
@@ -11,59 +11,47 @@ import UIKit
 import RealmSwift
 import SwiftyDrop
 
-class LargeFollowButton: UIView {
+class SmallFollowButton: UIView {
     var iconImageView: UIImageView
     var textLabel: UILabel
-    var unFollowingTextLabel: UILabel
     var button: UIButton
     var onPress: (Bool) -> ()
     var isFollowing = false
     var journey: Journey!
-//    var innerView: UIView
+    //    var innerView: UIView
     
     var oldBounds: CGRect?
     
     init(frame: CGRect, isFollowing: Bool, journey: Journey, onPress: @escaping (Bool) -> ()) {
         self.journey = journey
         self.isFollowing = isFollowing
-        let innerView = UIView(frame: CGRect(x: frame.width/6, y: 0, width: frame.width-frame.width/3, height: frame.height))
-        textLabel = UILabel(frame: CGRect(x: frame.width/5 , y: 0, width: (frame.width/2), height: frame.height))
-        textLabel.text = "Following"
+        self.onPress = onPress
+        textLabel = UILabel(frame: CGRect(x: 0 , y: 0, width: frame.width, height: frame.height))
+        textLabel.text = "Follow"
         textLabel.textColor = lightGreen
-        textLabel.textAlignment = .left
+        textLabel.textAlignment = .center
         textLabel.font = UIFont.boldSystemFont(ofSize: 13)
         textLabel.adjustsFontSizeToFitWidth = true
-        iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width/8, height: frame.height))
-        iconImageView.image = UIImage(named: "profile_followings")
+        iconImageView = UIImageView(frame: CGRect(x: 0, y: frame.height/4, width: frame.width, height: frame.height/2))
+        iconImageView.image = UIImage(named: "follow_button_following")
         iconImageView.contentMode = .scaleAspectFit
-        unFollowingTextLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-        unFollowingTextLabel.text = "Follow"
-        unFollowingTextLabel.textColor = lightGreen
-        unFollowingTextLabel.textAlignment = .center
-        unFollowingTextLabel.font = UIFont.boldSystemFont(ofSize: 13)
-        unFollowingTextLabel.adjustsFontSizeToFitWidth = true
-        if isFollowing {
-            unFollowingTextLabel.isHidden = true
-        } else {
-            textLabel.isHidden = true
-            iconImageView.isHidden = true
-        }
         button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-        self.onPress = onPress
         super.init(frame: frame)
-        self.backgroundColor = darkGreen
+        if isFollowing {
+            self.setToFollowing()
+        } else {
+            self.setToUnfollowing()
+        }
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         button.addTarget(self, action: #selector(touchUpOutside), for: .touchUpOutside)
         button.addTarget(self, action: #selector(touchDownOnButton), for: .touchDown)
         self.layer.borderWidth = 1
         self.layer.borderColor = lightGreen.cgColor
         
-        innerView.addSubview(textLabel)
-        innerView.addSubview(iconImageView)
-        self.addSubview(unFollowingTextLabel)
-        self.addSubview(innerView)
+        self.addSubview(textLabel)
+        self.addSubview(iconImageView)
         self.addSubview(button)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = frame.height/2
         self.clipsToBounds = true
     }
     
@@ -71,18 +59,28 @@ class LargeFollowButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func changeJourneyTo(journey: Journey) {
+        self.journey = journey
+        self.isFollowing = journey.isFollowed
+        if isFollowing {
+            self.setToFollowing()
+        } else {
+            self.setToUnfollowing()
+        }
+    }
+    
     func setToUnfollowing() {
-        self.iconImageView.isHidden = true
-        self.textLabel.isHidden = true
-        self.unFollowingTextLabel.isHidden = false
+        iconImageView.isHidden = true
+        textLabel.isHidden = false
+        self.backgroundColor = .clear
     }
-
+    
     func setToFollowing() {
-        self.iconImageView.isHidden = false
-        self.textLabel.isHidden = false
-        self.unFollowingTextLabel.isHidden = true
+        iconImageView.isHidden = false
+        textLabel.isHidden = true
+        self.backgroundColor = lightGreen
     }
-
+    
     func change(text: String) {
         self.textLabel.text = text
     }
@@ -111,8 +109,8 @@ class LargeFollowButton: UIView {
                 try! realm.write {
                     self.journey.isFollowed = false
                     self.journey.numberOfFollowers -= 1
-                    self.onPress(true)
                 }
+                self.onPress(true)
             }).onFailure(callback: { (error) in
                 Drop.down("Could not unfollow journey, try again later.", state: .error)
                 self.setToFollowing()
@@ -127,8 +125,8 @@ class LargeFollowButton: UIView {
                 try! realm.write {
                     self.journey.isFollowed = true
                     self.journey.numberOfFollowers += 1
-                    self.onPress(true)
                 }
+                self.onPress(true)
             }).onFailure(callback: { (error) in
                 // do nothing
                 Drop.down("Could not follow journey, try again later.", state: .error)
@@ -138,5 +136,5 @@ class LargeFollowButton: UIView {
         }
     }
     
-
+    
 }

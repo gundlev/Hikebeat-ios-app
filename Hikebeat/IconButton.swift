@@ -55,6 +55,10 @@ class GreenIconButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update(text: String) {
+        self.textLabel.text = text
+    }
+    
 //    func hideIcon() {
 //        self.iconImageView.isHidden = true
 //        self.oldBounds = textLabel.bounds

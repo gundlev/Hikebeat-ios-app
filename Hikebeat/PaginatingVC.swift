@@ -34,7 +34,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -141,12 +141,12 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     func getJourneyCell(journey: Journey, tableView: UITableView) -> SearchJourneyCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "journeyCell") as! SearchJourneyCell
         //                print("Creating cell for journey: ", journey.headline)
-        cell.awakeFromNib()
         cell.selectionStyle = .none
-        cell.headline.text = journey.headline
         cell.journey = journey
-        cell.followButton.isSelected = journey.isFollowed
-        cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
+        cell.awakeFromNib()
+        cell.headline.text = journey.headline
+//        cell.followButton.isSelected = journey.isFollowed
+//        cell.followersBeats.text = "\(journey.numberOfFollowers) followers | \(journey.numberOfBeats) beats"
         if journey.ownerProfilePhoto != nil {
             cell.profileImage.image = UIImage(data: journey.ownerProfilePhoto!)
         } else {
