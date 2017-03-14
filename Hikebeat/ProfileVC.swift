@@ -157,6 +157,7 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         nationalityLabel.isEnabled = currentlyEdditing
         
         phoneNoLabel.tag = 1
+        nameLabel.autocapitalizationType = .words
         
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
@@ -498,11 +499,11 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.tag == 1 && textField.text?.characters.count >= 2 {
-            if wrongCountryCode(textField.text!) {
-                SCLAlertView().showWarning("Missing country code!", subTitle: "Please remember to add country code to your phone number.")
-            }
-        }
+//        if textField.tag == 1 && textField.text?.characters.count >= 2 {
+//            if wrongCountryCode(textField.text!) {
+//                SCLAlertView().showWarning("Missing country code!", subTitle: "Please remember to add country code to your phone number.")
+//            }
+//        }
     }
     
     @IBAction func unwindToProfile(_ unwindSegue: UIStoryboardSegue) {

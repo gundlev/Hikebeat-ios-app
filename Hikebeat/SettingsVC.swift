@@ -156,6 +156,7 @@ class SettingsVC: UIViewController {
             })
         } else {
             print("toUpload is nil")
+            Drop.down("There is no media or any messages to sync. Have an awesome day!", state: .success)
         }
     }
     
