@@ -95,7 +95,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 })
             }
             
-            let followButtonFrame = CGRect(x: width/2 + 40, y: 12.5, width: (width/6.5)*2 + 20, height: 25)
+            let followButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
             followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: (journey?.isFollowed)!, journey: self.journey!, onPress: {
                 success in
                 if success {
@@ -107,7 +107,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         } else {
             setUpPins()
             
-            let syncButtonFrame = CGRect(x: width/2 + 40, y: 12.5, width: (width/6.5)*2 + 20, height: 25)
+            let syncButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
             syncButton = LargeSyncButton(frame: syncButtonFrame, inSync: inSync, onPress: {
                 if !self.syncButton.inSync {
@@ -148,9 +148,9 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     func setBeatsAndFollowersButtons(numberOfBeats: Int, numberOfFollowers: Int) {
         let width = UIScreen.main.bounds.width
 
-        let followerButtonFrame = CGRect(x: 20, y: 12.5, width: width/6.5, height: 25)
+        let followerButtonFrame = CGRect(x: 20, y: 12, width: width/6.5, height: 29)
         followersButton = GreenIconButton(frame: followerButtonFrame,
-                                          icon: UIImage(named: "FollowersIcon")!,
+                                          icon: UIImage(named: "Journey_VC_followers")!,
                                           text: "\(numberOfFollowers)",
                                             textColor: .white,
                                             boldText: false,
@@ -160,9 +160,9 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                                                 self.performSegue(withIdentifier: "showFollowers", sender: self)
                                             })
         
-        let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12.5, width: width/6.5, height: 25)
+        let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12, width: width/6.5, height: 29)
         beatsButton = GreenIconButton(frame: beatsButtonFrame,
-                                      icon: UIImage(named: "ListPin")!,
+                                      icon: UIImage(named: "Journey_VC_beats")!,
                                       text: "\(numberOfBeats)",
                                         textColor: .white,
                                         boldText: false,

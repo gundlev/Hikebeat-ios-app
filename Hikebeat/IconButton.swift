@@ -20,18 +20,19 @@ class GreenIconButton: UIView {
     
     init(frame: CGRect, icon: UIImage, text: String, textColor: UIColor, boldText: Bool, ratio: CGFloat, onPress: @escaping () -> ()) {
         let ratioDivider = 1/ratio
-        let padding:CGFloat = 5
+        let padding:CGFloat = 7
         textLabel = UILabel(frame: CGRect(x: frame.width/ratioDivider , y: 0, width: frame.width/ratioDivider, height: frame.height))
         textLabel.text = text
         textLabel.textColor = textColor
         textLabel.textAlignment = .center
         if boldText {
-            textLabel.font = UIFont.boldSystemFont(ofSize: 13)
+            textLabel.font = UIFont.boldSystemFont(ofSize: 14)
         } else {
-            textLabel.font = UIFont.systemFont(ofSize: 13)
+            textLabel.font = UIFont.systemFont(ofSize: 14)
         }
         textLabel.adjustsFontSizeToFitWidth = true
-        iconImageView = UIImageView(frame: CGRect(x: padding, y: padding/2, width: frame.width/ratioDivider-padding*2, height: frame.height-padding))
+        let iconY = (frame.size.height - icon.size.height)/2
+        iconImageView = UIImageView(frame: CGRect(x: padding, y: iconY, width: icon.size.width, height: icon.size.height))
         iconImageView.image = icon
         iconImageView.contentMode = .scaleAspectFit
         button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
@@ -47,7 +48,7 @@ class GreenIconButton: UIView {
         self.addSubview(textLabel)
         self.addSubview(iconImageView)
         self.addSubview(button)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 7
         self.clipsToBounds = true
     }
     

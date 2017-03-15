@@ -23,8 +23,8 @@ class LargeSyncButton: UIView {
         textLabel = UILabel(frame: CGRect(x: 0 , y: 0, width: frame.width, height: frame.height))
         textLabel.textColor = lightGreen
         textLabel.textAlignment = .center
-        textLabel.font = UIFont.boldSystemFont(ofSize: 13)
-        textLabel.adjustsFontSizeToFitWidth = true
+        textLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        textLabel.adjustsFontSizeToFitWidth = false
         button = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -42,7 +42,7 @@ class LargeSyncButton: UIView {
         
         self.addSubview(textLabel)
         self.addSubview(button)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 7
         self.clipsToBounds = true
     }
     

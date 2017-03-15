@@ -26,22 +26,22 @@ class LargeFollowButton: UIView {
     init(frame: CGRect, isFollowing: Bool, journey: Journey, onPress: @escaping (Bool) -> ()) {
         self.journey = journey
         self.isFollowing = isFollowing
-        let innerView = UIView(frame: CGRect(x: frame.width/6, y: 0, width: frame.width-frame.width/3, height: frame.height))
-        textLabel = UILabel(frame: CGRect(x: frame.width/5 , y: 0, width: (frame.width/2), height: frame.height))
+        let innerView = UIView(frame: CGRect(x: floor(frame.width/6), y: 0, width: frame.width-frame.width/3, height: frame.height))
+        textLabel = UILabel(frame: CGRect(x: floor(frame.width/5) , y: 0, width: (frame.width/2), height: frame.height))
         textLabel.text = "Following"
         textLabel.textColor = lightGreen
         textLabel.textAlignment = .left
-        textLabel.font = UIFont.boldSystemFont(ofSize: 13)
-        textLabel.adjustsFontSizeToFitWidth = true
+        textLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        textLabel.adjustsFontSizeToFitWidth = false
         iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width/8, height: frame.height))
-        iconImageView.image = UIImage(named: "profile_followings")
+        iconImageView.image = UIImage(named: "following_checkmark")
         iconImageView.contentMode = .scaleAspectFit
         unFollowingTextLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         unFollowingTextLabel.text = "Follow"
         unFollowingTextLabel.textColor = lightGreen
         unFollowingTextLabel.textAlignment = .center
-        unFollowingTextLabel.font = UIFont.boldSystemFont(ofSize: 13)
-        unFollowingTextLabel.adjustsFontSizeToFitWidth = true
+        unFollowingTextLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        unFollowingTextLabel.adjustsFontSizeToFitWidth = false
         if isFollowing {
             unFollowingTextLabel.isHidden = true
         } else {
@@ -62,7 +62,7 @@ class LargeFollowButton: UIView {
         self.addSubview(unFollowingTextLabel)
         self.addSubview(innerView)
         self.addSubview(button)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 7
         self.clipsToBounds = true
     }
     

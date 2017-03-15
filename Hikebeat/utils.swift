@@ -19,7 +19,7 @@ import Alamofire
 
 public let darkGreen = UIColor(colorLiteralRed: 21/255, green: 103/255, blue: 108/255, alpha: 1)
 public let standardGreen = UIColor(colorLiteralRed: 62/255, green: 155/255, blue: 118/255, alpha: 1)
-public let lightGreen = UIColor(colorLiteralRed: 188/255, green: 246/255, blue: 0, alpha: 1)
+public let lightGreen = UIColor(colorLiteralRed: 189/255, green: 244/255, blue: 0, alpha: 1)
 public let yellowColor = UIColor(hexString: "#F7E70A")!
 
 func showActivity() {
