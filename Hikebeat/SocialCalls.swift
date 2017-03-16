@@ -206,6 +206,10 @@ func unfollowJourney(journeyId: String) -> Future<Bool, HikebeatError> {
 
 func followUnfowllowCall(url: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
+        let token = userDefaults.string(forKey: "device_token")
+        if token == nil {
+            registerForNotification()
+        }
         postCall(url: url, parameters: [String: String](), headers: getHeader())
         .onSuccess(callback: { (response) in
             print("FOLLOW/UNFOLLOW response: ", response)

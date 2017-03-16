@@ -206,10 +206,10 @@ public func registerForNotification() {
             
             // Enable or disable features based on authorization.
             if granted == true {
-                print("Allow")
+                print("Allow for notifications")
                 UIApplication.shared.registerForRemoteNotifications()
             } else {
-                print("Don't Allow")
+                print("Don't Allow for notifications")
             }
         }
     } else {

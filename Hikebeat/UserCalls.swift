@@ -186,29 +186,20 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
                     print("Error: ", error)
                     complete(.failure(.facebookLogin))
                 })
-//                getSessionManager().request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: LoginHeaders).responseJSON {
-//                    response in
-//                    if response.response?.statusCode == 200 {
-//                        print("Facebook Respose: ", response)
-//                        print(response.result.value as Any)
-//                        let json = JSON(response.result.value!)
-//                        handleUserAfterLogin(json: json)
-//                            .onSuccess(callback: { (success) in
-//                                hideActivity()
-//                                complete(.success(success))
-//                            }).onFailure(callback: { (error) in
-//                                hideActivity()
-//                                complete(.failure(error))
-//                                
-//                            })
-//                    } else {
-//                        print("response: ", response)
-//                        showCallErrors(json: JSON(response.result.value))
-//                        complete(.failure(.facebookLogin))
-//                    }
-//                }
             }
         }
+    }
+}
+
+func updateDeviceToken(token: String) {
+    print("UPDATING TOKEN")
+    let url = "\(IPAddress)device-token/add"
+    let params = ["deviceToken": token]
+    postCall(url: url, parameters: params, headers: getHeader())
+    .onSuccess { (response) in
+        print("Device Token Response: ", response)
+    }.onFailure { (error) in
+        print("Failed to update device token: ", error)
     }
 }
 
@@ -240,6 +231,13 @@ func handleUserAfterLogin(json: JSON) -> Future<Bool, HikebeatError> {
         var deviceTokensArray = [String]()
         for (value) in user["deviceTokens"].arrayValue {
             deviceTokensArray.append(value.stringValue)
+        }
+        print("TOKEN: ", userDefaults.string(forKey: "device_token"))
+        if let deviceToken = userDefaults.string(forKey: "device_token") {
+            print("there is a token")
+            updateDeviceToken(token: deviceToken)
+        } else {
+            print("No token")
         }
         userDefaults.set(deviceTokensArray, forKey: "deviceTokens")
 

@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways {
             _ = startLocationManager()
         }
-        registerForNotification()
+//        registerForNotification()
         
         AppEventsLogger.activate(application)
         
@@ -146,54 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             let sync = self.synced()
                 if !sync.synced {
                     print("There are things to be uploaded")
-//                    if !self.currentlyShowingNotie {
-//                        print("There are no current Notie showing")
-//                        
-//                        dispatch_async(dispatch_get_main_queue()) {
-//                            print("Reachable")
-//                            if let topController = UIApplication.sharedApplication().keyWindow?.rootViewController {
-//                                if #available(iOS 9.0, *) {
-//                                    let notie = Notie(view: topController.view, message: "Network connection! Would you like to start syncronizing now?", style: .Confirm)
-//                                    notie.leftButtonAction = {
-//                                        // Add your left button action here
-//                                        notie.dismiss()
-//                                        let progressNotie = Notie(view: topController.view, message: " ", style: .Progress)
-//                                        progressNotie.show()
-//                                        let future = syncAll(progressNotie.progressView, stack: self.stack)
-//                                        
-//                                        if future != nil {
-//                                            future!.onSuccess{ success in
-//                                                progressNotie.dismiss()
-//                                                if success {
-//                                                    print("All is syncronized!")
-//                                                    self.currentlyShowingNotie = false
-//                                                } else {
-//                                                    print("Not everything was syncronized!")
-//                                                }
-//                                            }
-//                                        } else {
-//                                            print("Failed to fetch")
-//                                            progressNotie.dismiss()
-//                                        }
-//                                        //                                        _ = Upload(notie: progressNotie, appDelegate: self)
-//                                    }
-//                                    notie.rightButtonAction = {
-//                                        // Add your right button action here
-//                                        notie.dismiss()
-//                                        self.currentlyShowingNotie = false
-//                                    }
-//                                    notie.show()
-//                                    self.currentlyShowingNotie = true
-//                                    notie.progressView.progress = 0
-//                                    
-//                                } else {
-//                                    // Fallback on earlier versions
-//                                }
-//                            }
-//                        }
-//                    } else {
-//                        print("A notie is already showing!")
-//                    }
                 } else {
                     print("nothing to sync")
                 }
@@ -228,7 +180,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 */
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
-        
+        print("got new notofication settings")
+        print(notificationSettings)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
@@ -249,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         print(devToken)
         userDefaults.set(devToken, forKey: "device_token")
-        
+        updateDeviceToken(token: devToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

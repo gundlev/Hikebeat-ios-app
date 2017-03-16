@@ -308,7 +308,10 @@ class SettingsVC: UIViewController {
     
     func resetUserDefaults() {
         let appDomain = Bundle.main.bundleIdentifier!
+        let deviceToken = userDefaults.string(forKey: "device_token")
         UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        let ud = UserDefaults.standard
+        ud.set(deviceToken, forKey: "device_token")
 //        print("Testing, this chould be nil: ",userDefaults.object(forKey: "_id"))
         print("UserDefaults has been removed")
     }
