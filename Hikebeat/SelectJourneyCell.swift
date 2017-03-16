@@ -17,4 +17,12 @@ class SelectJourneyCell: UITableViewCell {
     override func awakeFromNib() {
         
     }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if highlighted {
+            self.backgroundColor = UIColor(hexString: "157578")
+        } else {
+            self.backgroundColor = .clear
+        }
+    }
 }
