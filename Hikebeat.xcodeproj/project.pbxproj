@@ -110,6 +110,7 @@
 		E1378D811D295E12002E8CD1 /* aCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1378D801D295E12002E8CD1 /* aCustomView.swift */; };
 		E141F5C31CC94AA3004DA5D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E141F5C21CC94AA3004DA5D5 /* Extensions.swift */; };
 		E14BCF8B1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */; };
+		E155AD8F1E79D5F3006ABD70 /* SMSWalkthroughModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155AD8E1E79D5F3006ABD70 /* SMSWalkthroughModalVC.swift */; };
 		E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CF41CD4B0560053496A /* JourneyVC.swift */; };
 		E15A4CFB1CD4EABA0053496A /* BeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */; };
 		E16A510B1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A510A1CD78B3100F335D2 /* UniversalListOfJourneysVC.swift */; };
@@ -269,6 +270,7 @@
 		E1378D801D295E12002E8CD1 /* aCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aCustomView.swift; sourceTree = "<group>"; };
 		E141F5C21CC94AA3004DA5D5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E14BCF8A1E6C6BE400C71DC1 /* ForgottenPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgottenPasswordViewController.swift; sourceTree = "<group>"; };
+		E155AD8E1E79D5F3006ABD70 /* SMSWalkthroughModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSWalkthroughModalVC.swift; sourceTree = "<group>"; };
 		E15A4CF41CD4B0560053496A /* JourneyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		E15A4CF81CD4E6970053496A /* BeatsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatsVC.swift; sourceTree = "<group>"; };
 		E15A4CFA1CD4EABA0053496A /* BeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				858EFF031D19897100C50771 /* MemoExt.swift */,
 				85A580971D4F46EE00B38B1C /* EmotionCell.swift */,
 				8593DB0C1DFB6BC400604BFA /* SelectJourneyCell.swift */,
+				E155AD8E1E79D5F3006ABD70 /* SMSWalkthroughModalVC.swift */,
 			);
 			name = Compose;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				858EFF161D19BDDA00C50771 /* UIImage+JTSImageEffects.m in Sources */,
 				85996DDC1E6EEC2900B3B45D /* Event.swift in Sources */,
 				E18A06E31DFE03E10087A23E /* HikebeatWalkthroughFramework.swift in Sources */,
+				E155AD8F1E79D5F3006ABD70 /* SMSWalkthroughModalVC.swift in Sources */,
 				852C4C6C1E6969D20086055A /* BeatCalls.swift in Sources */,
 				E1B84ABA1CD246080047BD5A /* ProfileVC.swift in Sources */,
 				E15A4CF51CD4B0560053496A /* JourneyVC.swift in Sources */,

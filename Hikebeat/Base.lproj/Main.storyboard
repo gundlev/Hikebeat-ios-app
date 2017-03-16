@@ -1564,6 +1564,15 @@
                                             <action selector="clearButtonTapped:" destination="jTg-CM-etK" eventType="touchUpInside" id="Kyo-5W-eu3"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8l-ug-Z3J">
+                                        <rect key="frame" x="21" y="35" width="32" height="30"/>
+                                        <state key="normal" title="SMS">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="wbB-1i-tZh" kind="show" identifier="smsWalk" id="Ntv-gr-Kh2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.082352941176470587" green="0.40392156862745099" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -1574,7 +1583,9 @@
                                     <constraint firstAttribute="height" constant="82" id="XJ7-bz-fYM"/>
                                     <constraint firstItem="VZy-c4-7Bm" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="33" id="b6w-2E-cKq"/>
                                     <constraint firstAttribute="trailing" secondItem="aB9-x0-cPI" secondAttribute="trailing" constant="8" id="pyX-Hb-pmI"/>
+                                    <constraint firstItem="T8l-ug-Z3J" firstAttribute="top" secondItem="qXy-BD-ZAV" secondAttribute="top" constant="35" id="t8V-FG-Wsb"/>
                                     <constraint firstItem="aB9-x0-cPI" firstAttribute="leading" secondItem="Vma-cn-khS" secondAttribute="trailing" id="w5B-Yd-lA9"/>
+                                    <constraint firstItem="T8l-ug-Z3J" firstAttribute="leading" secondItem="qXy-BD-ZAV" secondAttribute="leading" constant="21" id="wNf-7H-Iln"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -3125,7 +3136,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="941C73AE-1D0F-48D1-8EE1-255D8D91FB59" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3BDC194C-9E1B-4EA7-BB74-CD26ADE930A3" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -5384,9 +5395,317 @@
             </objects>
             <point key="canvasLocation" x="-314.39999999999998" y="989.95502248875573"/>
         </scene>
+        <!--Hikebeat Walkthrough Page View Controller-->
+        <scene sceneID="IOE-FN-oxN">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_step_1" id="OVZ-d7-1rp" customClass="HikebeatWalkthroughPageViewController" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tnK-Bc-x6J"/>
+                        <viewControllerLayoutGuide type="bottom" id="l43-z0-9iU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Joa-PJ-rg3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_bg_1" translatesAutoresizingMaskIntoConstraints="NO" id="kIX-vk-Jhw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBf-cD-c1C">
+                                <rect key="frame" x="51" y="330" width="273" height="107.5"/>
+                                <string key="text">Hikebeat allows you to send text, emotion, location and time via SMS. Now you can update your friends even from the remotes places on Earth.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_step_1_icon" translatesAutoresizingMaskIntoConstraints="NO" id="aDt-ka-9tU">
+                                <rect key="frame" x="130.5" y="145" width="115" height="157"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="kIX-vk-Jhw" secondAttribute="trailing" id="2Mj-w0-D2X"/>
+                            <constraint firstItem="TBf-cD-c1C" firstAttribute="top" secondItem="tnK-Bc-x6J" secondAttribute="bottom" constant="310" id="8Eg-6b-OQb"/>
+                            <constraint firstItem="l43-z0-9iU" firstAttribute="top" secondItem="kIX-vk-Jhw" secondAttribute="bottom" id="Cfv-cB-whv"/>
+                            <constraint firstItem="kIX-vk-Jhw" firstAttribute="leading" secondItem="Joa-PJ-rg3" secondAttribute="leading" id="Uca-wc-7aq"/>
+                            <constraint firstItem="kIX-vk-Jhw" firstAttribute="top" secondItem="Joa-PJ-rg3" secondAttribute="top" id="dG4-04-Qi0"/>
+                            <constraint firstItem="TBf-cD-c1C" firstAttribute="top" secondItem="aDt-ka-9tU" secondAttribute="bottom" constant="28" id="e9Y-Cd-fJj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TBf-cD-c1C" secondAttribute="trailing" constant="35" id="eZt-J6-RoX"/>
+                            <constraint firstItem="TBf-cD-c1C" firstAttribute="leading" secondItem="Joa-PJ-rg3" secondAttribute="leadingMargin" constant="35" id="hKN-Q4-pSv"/>
+                            <constraint firstItem="aDt-ka-9tU" firstAttribute="centerX" secondItem="Joa-PJ-rg3" secondAttribute="centerX" id="yyB-gt-Wtg"/>
+                        </constraints>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Curve"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="animateAlpha" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fAl-nG-g1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1970" y="989"/>
+        </scene>
+        <!--Hikebeat Walkthrough Page View Controller-->
+        <scene sceneID="9Vr-6U-wsd">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_step_2" id="Szr-4T-aAl" customClass="HikebeatWalkthroughPageViewController" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FSa-gW-UPZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nj9-5y-w4y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5Rr-qf-TRd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_bg_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZW2-JB-mZQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The SMS functionality can always be turned on or off in the settings screen of the Hikebeat application." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cDm-Wk-skg">
+                                <rect key="frame" x="51" y="330" width="273" height="86"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_step_2_icon" translatesAutoresizingMaskIntoConstraints="NO" id="2mR-BO-bYu">
+                                <rect key="frame" x="122" y="186" width="131" height="116"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Nj9-5y-w4y" firstAttribute="top" secondItem="ZW2-JB-mZQ" secondAttribute="bottom" id="GGo-Fw-NAb"/>
+                            <constraint firstItem="2mR-BO-bYu" firstAttribute="centerX" secondItem="5Rr-qf-TRd" secondAttribute="centerX" id="Ja2-oq-FdV"/>
+                            <constraint firstItem="cDm-Wk-skg" firstAttribute="top" secondItem="FSa-gW-UPZ" secondAttribute="bottom" constant="310" id="K1g-xZ-fQM"/>
+                            <constraint firstItem="cDm-Wk-skg" firstAttribute="leading" secondItem="5Rr-qf-TRd" secondAttribute="leadingMargin" constant="35" id="LDg-4g-BiR"/>
+                            <constraint firstItem="ZW2-JB-mZQ" firstAttribute="top" secondItem="5Rr-qf-TRd" secondAttribute="top" id="Tv7-Rn-TgT"/>
+                            <constraint firstItem="cDm-Wk-skg" firstAttribute="top" secondItem="2mR-BO-bYu" secondAttribute="bottom" constant="28" id="fBs-OX-OYT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cDm-Wk-skg" secondAttribute="trailing" constant="35" id="nXb-Sy-fED"/>
+                            <constraint firstItem="ZW2-JB-mZQ" firstAttribute="leading" secondItem="5Rr-qf-TRd" secondAttribute="leading" id="r7Y-7y-POz"/>
+                            <constraint firstAttribute="trailing" secondItem="ZW2-JB-mZQ" secondAttribute="trailing" id="x3P-8d-Iyk"/>
+                        </constraints>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Curve"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="animateAlpha" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P5e-3Q-7JD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1970" y="1646"/>
+        </scene>
+        <!--Hikebeat Walkthrough Page View Controller-->
+        <scene sceneID="WFu-Sh-fCb">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_step_3" id="0KT-Me-vog" customClass="HikebeatWalkthroughPageViewController" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DcF-Kx-jEN"/>
+                        <viewControllerLayoutGuide type="bottom" id="xa5-8h-Hkg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dy0-R4-HGf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_bg_3" translatesAutoresizingMaskIntoConstraints="NO" id="zR5-cc-In0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfg-cT-s2g">
+                                <rect key="frame" x="51" y="330" width="273" height="107.5"/>
+                                <string key="text">People will be able to see your text immediately on the Hikebeat app or website. Your followers will also recieve a notification about your adventures!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_step_3_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ynE-iY-uj7">
+                                <rect key="frame" x="108" y="174" width="159" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ynE-iY-uj7" firstAttribute="centerX" secondItem="dy0-R4-HGf" secondAttribute="centerX" id="8Lb-Vc-6NN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Xfg-cT-s2g" secondAttribute="trailing" constant="35" id="HCZ-kH-Upm"/>
+                            <constraint firstItem="xa5-8h-Hkg" firstAttribute="top" secondItem="zR5-cc-In0" secondAttribute="bottom" id="Hq0-3T-6l7"/>
+                            <constraint firstItem="Xfg-cT-s2g" firstAttribute="leading" secondItem="dy0-R4-HGf" secondAttribute="leadingMargin" constant="35" id="M2u-34-ebT"/>
+                            <constraint firstItem="zR5-cc-In0" firstAttribute="top" secondItem="dy0-R4-HGf" secondAttribute="top" id="PEd-cZ-GQF"/>
+                            <constraint firstItem="Xfg-cT-s2g" firstAttribute="top" secondItem="DcF-Kx-jEN" secondAttribute="bottom" constant="310" id="pDo-S8-eme"/>
+                            <constraint firstAttribute="trailing" secondItem="zR5-cc-In0" secondAttribute="trailing" id="pDs-vQ-URq"/>
+                            <constraint firstItem="zR5-cc-In0" firstAttribute="leading" secondItem="dy0-R4-HGf" secondAttribute="leading" id="rbY-FZ-xcG"/>
+                            <constraint firstItem="Xfg-cT-s2g" firstAttribute="top" secondItem="ynE-iY-uj7" secondAttribute="bottom" constant="28" id="xvK-F1-fm6"/>
+                        </constraints>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Curve"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="animateAlpha" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wfp-YN-MVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1970" y="2329"/>
+        </scene>
+        <!--Hikebeat Walkthrough Page View Controller-->
+        <scene sceneID="qZG-0W-ZHR">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_step_4" id="TYk-LN-180" customClass="HikebeatWalkthroughPageViewController" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1fe-x5-0nF"/>
+                        <viewControllerLayoutGuide type="bottom" id="K7V-3r-bzC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y9i-b1-PyC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_bg_4" translatesAutoresizingMaskIntoConstraints="NO" id="qHG-KS-353">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKb-Hw-C7w">
+                                <rect key="frame" x="51" y="330" width="273" height="107.5"/>
+                                <string key="text">Your media will be synchronized to the corresponing beat when you regain internet connection. You can manually sync media from the settings menu.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_step_4_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ivh-CB-Vcn">
+                                <rect key="frame" x="93" y="177" width="189" height="125"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KKb-Hw-C7w" firstAttribute="leading" secondItem="y9i-b1-PyC" secondAttribute="leadingMargin" constant="35" id="DOC-ef-sqi"/>
+                            <constraint firstItem="K7V-3r-bzC" firstAttribute="top" secondItem="qHG-KS-353" secondAttribute="bottom" id="Ekk-Tw-A00"/>
+                            <constraint firstItem="ivh-CB-Vcn" firstAttribute="centerX" secondItem="y9i-b1-PyC" secondAttribute="centerX" id="Pds-KU-Ug0"/>
+                            <constraint firstItem="qHG-KS-353" firstAttribute="top" secondItem="y9i-b1-PyC" secondAttribute="top" id="QRS-0I-rUr"/>
+                            <constraint firstItem="qHG-KS-353" firstAttribute="leading" secondItem="y9i-b1-PyC" secondAttribute="leading" id="Xzk-gx-mTQ"/>
+                            <constraint firstItem="KKb-Hw-C7w" firstAttribute="top" secondItem="1fe-x5-0nF" secondAttribute="bottom" constant="310" id="bRJ-2L-uiZ"/>
+                            <constraint firstItem="KKb-Hw-C7w" firstAttribute="top" secondItem="ivh-CB-Vcn" secondAttribute="bottom" constant="28" id="gkM-dE-ZSU"/>
+                            <constraint firstAttribute="trailing" secondItem="qHG-KS-353" secondAttribute="trailing" id="pu2-5L-XMe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KKb-Hw-C7w" secondAttribute="trailing" constant="35" id="uq4-sw-4kg"/>
+                        </constraints>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Curve"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="animateAlpha" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0bc-8p-Chk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1970" y="3065"/>
+        </scene>
+        <!--Hikebeat Walkthrough Page View Controller-->
+        <scene sceneID="UBY-bY-bnf">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_step_5" id="uze-7Y-kOi" customClass="HikebeatWalkthroughPageViewController" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ol9-CT-jC2"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Lj-g7-wQK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vXc-VX-pru">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_bg_5" translatesAutoresizingMaskIntoConstraints="NO" id="tbb-2d-Rnc">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXQ-gK-WV6">
+                                <rect key="frame" x="51" y="330" width="273" height="107.5"/>
+                                <string key="text">Add Hikebeat as a contact on your address book to be able to find it in your messages and make future beats even easier to complete.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SMS_modal_step_5_icon" translatesAutoresizingMaskIntoConstraints="NO" id="uDV-uf-TEI">
+                                <rect key="frame" x="133.5" y="172" width="108" height="130"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mXQ-gK-WV6" firstAttribute="leading" secondItem="vXc-VX-pru" secondAttribute="leadingMargin" constant="35" id="6fu-vz-8Os"/>
+                            <constraint firstAttribute="trailing" secondItem="tbb-2d-Rnc" secondAttribute="trailing" id="D5x-iv-g43"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mXQ-gK-WV6" secondAttribute="trailing" constant="35" id="Od8-7K-wB2"/>
+                            <constraint firstItem="tbb-2d-Rnc" firstAttribute="top" secondItem="vXc-VX-pru" secondAttribute="top" id="UUA-mt-UKg"/>
+                            <constraint firstItem="tbb-2d-Rnc" firstAttribute="leading" secondItem="vXc-VX-pru" secondAttribute="leading" id="YO6-9f-He3"/>
+                            <constraint firstItem="mXQ-gK-WV6" firstAttribute="top" secondItem="uDV-uf-TEI" secondAttribute="bottom" constant="28" id="eQa-kp-31d"/>
+                            <constraint firstItem="uDV-uf-TEI" firstAttribute="centerX" secondItem="vXc-VX-pru" secondAttribute="centerX" id="hd1-iD-4OZ"/>
+                            <constraint firstItem="mXQ-gK-WV6" firstAttribute="top" secondItem="ol9-CT-jC2" secondAttribute="bottom" constant="310" id="mBr-ad-HEU"/>
+                            <constraint firstItem="9Lj-g7-wQK" firstAttribute="top" secondItem="tbb-2d-Rnc" secondAttribute="bottom" id="wnu-AN-TDw"/>
+                        </constraints>
+                    </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationType" value="Curve"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="animateAlpha" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ht6-7e-39F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1970" y="3739"/>
+        </scene>
+        <!--Walkthrough ModalVC-->
+        <scene sceneID="XBg-ex-15g">
+            <objects>
+                <viewController storyboardIdentifier="SMS_modal_container" id="wbB-1i-tZh" customClass="SMSWalkthroughModalVC" customModule="Hikebeat" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OC7-eR-0KH"/>
+                        <viewControllerLayoutGuide type="bottom" id="1SB-rS-21r"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="Yd0-xK-lLD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="qm3-m5-ELA">
+                                <rect key="frame" x="0.0" y="450" width="375" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="no8-lw-8Pi"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQq-sf-xPQ">
+                                <rect key="frame" x="57" y="537" width="260" height="40"/>
+                                <color key="backgroundColor" red="0.74117647060000003" green="0.95686274510000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="Rcy-0V-qyI"/>
+                                    <constraint firstAttribute="height" constant="40" id="wxC-Oc-XoO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.1058823529" green="0.42352941179999998" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextAction:" destination="wbB-1i-tZh" eventType="touchUpInside" id="ggq-zG-OIb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oz-B8-wFQ">
+                                <rect key="frame" x="26" y="46" width="115" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="p4l-FZ-yLw"/>
+                                    <constraint firstAttribute="width" constant="115" id="yXk-kf-7JL"/>
+                                </constraints>
+                                <state key="normal" image="CloseIcon"/>
+                                <connections>
+                                    <action selector="goBack:" destination="ER6-VT-u8l" eventType="touchUpInside" id="hAJ-kx-Ni1"/>
+                                    <segue destination="Ms6-BA-0TB" kind="unwind" identifier="unwindToCompose" unwindAction="unwindToCompose:" id="eW9-wW-Q84"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9oz-B8-wFQ" firstAttribute="top" secondItem="OC7-eR-0KH" secondAttribute="bottom" constant="26" id="2ZT-bP-peQ"/>
+                            <constraint firstItem="PQq-sf-xPQ" firstAttribute="top" secondItem="qm3-m5-ELA" secondAttribute="bottom" constant="72" id="IQW-G9-3JB"/>
+                            <constraint firstItem="qm3-m5-ELA" firstAttribute="width" secondItem="Yd0-xK-lLD" secondAttribute="width" id="O3C-Sq-CQK"/>
+                            <constraint firstItem="qm3-m5-ELA" firstAttribute="top" secondItem="OC7-eR-0KH" secondAttribute="bottom" constant="430" id="S20-rK-a9j"/>
+                            <constraint firstItem="PQq-sf-xPQ" firstAttribute="centerX" secondItem="Yd0-xK-lLD" secondAttribute="centerX" id="f5a-Nc-8FG"/>
+                            <constraint firstItem="9oz-B8-wFQ" firstAttribute="leading" secondItem="Yd0-xK-lLD" secondAttribute="leading" constant="26" id="iNx-JE-0zp"/>
+                            <constraint firstItem="qm3-m5-ELA" firstAttribute="centerX" secondItem="Yd0-xK-lLD" secondAttribute="centerX" id="rQ9-e1-Kl5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nextStepButton" destination="PQq-sf-xPQ" id="F8i-IJ-JwF"/>
+                        <outlet property="pageControl" destination="qm3-m5-ELA" id="qz5-ft-R8O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="glO-kb-5eJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ms6-BA-0TB" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="273" y="-448"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="941C73AE-1D0F-48D1-8EE1-255D8D91FB59" width="24" height="30">
+        <image name="3BDC194C-9E1B-4EA7-BB74-CD26ADE930A3" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -5512,6 +5831,16 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="NotificationIcon" width="27" height="30"/>
         <image name="PhoneProfileIcon" width="28" height="34"/>
         <image name="PhotoBackground" width="1041" height="701"/>
+        <image name="SMS_modal_bg_1" width="375" height="667"/>
+        <image name="SMS_modal_bg_2" width="375" height="667"/>
+        <image name="SMS_modal_bg_3" width="375" height="667"/>
+        <image name="SMS_modal_bg_4" width="375" height="667"/>
+        <image name="SMS_modal_bg_5" width="375" height="667"/>
+        <image name="SMS_modal_step_1_icon" width="115" height="157"/>
+        <image name="SMS_modal_step_2_icon" width="131" height="116"/>
+        <image name="SMS_modal_step_3_icon" width="159" height="128"/>
+        <image name="SMS_modal_step_4_icon" width="189" height="125"/>
+        <image name="SMS_modal_step_5_icon" width="108" height="130"/>
         <image name="SampleMap" width="97" height="97"/>
         <image name="SearchIcon" width="29" height="29"/>
         <image name="SearchIconiOS" width="23" height="23"/>
@@ -5556,10 +5885,10 @@ FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
         <image name="yellowhouses" width="102" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8bj-j3-9e2"/>
+        <segue reference="Ry1-QN-lGj"/>
         <segue reference="qjl-8s-Y35"/>
-        <segue reference="eF8-gC-w3K"/>
-        <segue reference="dg6-j1-ehS"/>
+        <segue reference="CbR-7C-QI3"/>
+        <segue reference="qIq-DZ-hGv"/>
         <segue reference="abJ-vT-9Ah"/>
         <segue reference="eND-gC-pER"/>
     </inferredMetricsTieBreakers>

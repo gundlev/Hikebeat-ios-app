@@ -977,6 +977,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             let vc = segue.destination as! ModalVC
             vc.future = self.beatPromise.future
             currentModal = vc
+        case "smsWalk":
+            return
         default:
             break
         }
