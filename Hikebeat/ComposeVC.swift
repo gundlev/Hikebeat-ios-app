@@ -42,6 +42,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     var beatPromise: Promise<String, NoError>!
+    var smsPromise: Promise<Bool, HikebeatError>!
     var showingJourneySelect = false
     var firstLoad = true
     var currentModal: ModalVC?
@@ -746,30 +747,42 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             })
             
         } else {
-            // check for permitted phoneNumber
-            //                }
-            if userDefaults.bool(forKey: "sms") {
-                sendTextMessage()
+            if !userDefaults.bool(forKey: "hasShownSmsWalkthrough") {
+                smsPromise = Promise<Bool, HikebeatError>()
+                smsPromise.future.onSuccess(callback: { (success) in
+                    self.handleNoConnection()
+                }).onFailure(callback: { (error) in
+                    self.handleNoConnection()
+                })
+                self.performSegue(withIdentifier: "toSms", sender: self)
             } else {
-//                    self.performSegue(withIdentifier: "showGreenModal", sender: self)
-                try! self.realm.write {
-                    if self.currentBeat?.mediaData != nil {
-                        print("There's media")
-                        self.currentBeat?.mediaUploaded = false
-                    } else {
-                        self.currentBeat?.mediaUploaded = true
-                    }
-                    if self.currentBeat?.message != nil {
-                        print("There's text!")
-                        self.currentBeat?.messageUploaded = false
-                    } else {
-                        self.currentBeat?.messageUploaded = true
-                    }
-                    self.activeJourney?.beats.append(self.currentBeat!)
-                }
-                self.clearAllForNewBeat(beatSend: true)
-//                    self.beatPromise.success(true)
+                handleNoConnection()
             }
+        }
+    }
+    
+    func handleNoConnection() {
+        if userDefaults.bool(forKey: "sms") {
+            sendTextMessage()
+        } else {
+            //                    self.performSegue(withIdentifier: "showGreenModal", sender: self)
+            try! self.realm.write {
+                if self.currentBeat?.mediaData != nil {
+                    print("There's media")
+                    self.currentBeat?.mediaUploaded = false
+                } else {
+                    self.currentBeat?.mediaUploaded = true
+                }
+                if self.currentBeat?.message != nil {
+                    print("There's text!")
+                    self.currentBeat?.messageUploaded = false
+                } else {
+                    self.currentBeat?.messageUploaded = true
+                }
+                self.activeJourney?.beats.append(self.currentBeat!)
+            }
+            self.clearAllForNewBeat(beatSend: true)
+            //                    self.beatPromise.success(true)
         }
     }
     
@@ -979,6 +992,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             currentModal = vc
         case "smsWalk":
             return
+        case "toSms":
+            let vc = segue.destination as! SMSWalkthroughModalVC
+            vc.promise = smsPromise
         default:
             break
         }

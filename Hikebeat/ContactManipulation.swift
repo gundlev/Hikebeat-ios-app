@@ -8,25 +8,47 @@
 
 import Foundation
 import ContactsUI
+import BrightFutures
 
-func createHikebeatContact() {
-    let store = CNContactStore()
-    switch CNContactStore.authorizationStatus(for: .contacts){
-    case .authorized:
-        print("should check for hikebeat contact")
-        if !hikbeatContactExist(store: store) {
-            addHikebeatContact(store: store)
-        }
-    //TODO: check if hikebeat contact is created.
-    case .notDetermined:
-        store.requestAccess(for: .contacts){succeeded, err in
-            guard err == nil && succeeded else{
-                return
+func createHikebeatContact() -> Future<Bool, HikebeatError>  {
+    return Future { complete in
+        let store = CNContactStore()
+        switch CNContactStore.authorizationStatus(for: .contacts){
+        case .authorized:
+            print("should check for hikebeat contact")
+            if !hikbeatContactExist(store: store) {
+                addHikebeatContact(store: store)
+                .onSuccess(callback: { (success) in
+                    complete(.success(success))
+                }).onFailure(callback: { (error) in
+                    print("Error: ", error)
+                    complete(.failure(.createContact))
+                })
+            } else {
+                complete(.success(false))
             }
-            addHikebeatContact(store: store)
+        //TODO: check if hikebeat contact is created.
+        case .notDetermined:
+            store.requestAccess(for: .contacts){succeeded, err in
+                guard err == nil && succeeded else {
+                    complete(.failure(.createContact))
+                    return
+                }
+                addHikebeatContact(store: store)
+                .onSuccess(callback: { (success) in
+                    complete(.success(success))
+                }).onFailure(callback: { (error) in
+                    print("Error: ", error)
+                    complete(.failure(.createContact))
+                })
+            }
+        case .denied:
+            UIApplication.openAppSettings()
+            complete(.failure(.createContact))
+        default:
+            complete(.success(false))
+            print("Haven't got permission to access contacts")
         }
-    default:
-        print("Haven't got permission to access contacts")
     }
 }
 
@@ -47,26 +69,30 @@ func hikbeatContactExist(store: CNContactStore) -> Bool {
     }
 }
 
-func addHikebeatContact(store: CNContactStore) {
-    let contactData = CNMutableContact()
-    contactData.givenName = "Hikebeat"
-    contactData.organizationName = "Hikebeat"
-    let img = UIImage(named: "ContactImage")
-    let phoneNumber = userDefaults.string(forKey: "hikebeat_phoneNumber")!
-    contactData.imageData = UIImagePNGRepresentation(img!)
-    contactData.phoneNumbers = [CNLabeledValue(label: CNLabelWork, value: CNPhoneNumber(stringValue: phoneNumber))]
-    contactData.emailAddresses = [CNLabeledValue(label: CNLabelWork,value: "contact@hikebeat.com")]
-    let facebookProfile = CNLabeledValue(label: "FaceBook", value:
-        CNSocialProfile(urlString: nil, username: "Hikebeat",
-                        userIdentifier: nil, service: CNSocialProfileServiceFacebook))
-    contactData.socialProfiles = [facebookProfile]
-    
-    let request = CNSaveRequest()
-    request.add(contactData, toContainerWithIdentifier: nil)
-    do{
-        try store.execute(request)
-        print("Successfully added the contact")
-    } catch let err{
-        print("Failed to save the contact. \(err)")
+func addHikebeatContact(store: CNContactStore) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        let contactData = CNMutableContact()
+        contactData.givenName = "Hikebeat"
+        contactData.organizationName = "Hikebeat"
+        let img = UIImage(named: "ContactImage")
+        let phoneNumber = userDefaults.string(forKey: "hikebeat_phoneNumber")!
+        contactData.imageData = UIImagePNGRepresentation(img!)
+        contactData.phoneNumbers = [CNLabeledValue(label: CNLabelWork, value: CNPhoneNumber(stringValue: phoneNumber))]
+        contactData.emailAddresses = [CNLabeledValue(label: CNLabelWork,value: "contact@hikebeat.com")]
+        let facebookProfile = CNLabeledValue(label: "FaceBook", value:
+            CNSocialProfile(urlString: nil, username: "Hikebeat",
+                            userIdentifier: nil, service: CNSocialProfileServiceFacebook))
+        contactData.socialProfiles = [facebookProfile]
+        
+        let request = CNSaveRequest()
+        request.add(contactData, toContainerWithIdentifier: nil)
+        do{
+            try store.execute(request)
+            complete(.success(true))
+            print("Successfully added the contact")
+        } catch let err{
+            complete(.failure(.createContact))
+            print("Failed to save the contact. \(err)")
+        }
     }
 }

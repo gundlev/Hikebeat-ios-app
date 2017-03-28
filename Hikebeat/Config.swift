@@ -29,11 +29,13 @@ public let APIPass = "1dfpjdS6gmkDtdQQKbJVy4HezMK4mQYaIWgwyljbdYpMFJO3knQy012Lk2
 //]
 
 public func getHeader() -> [String:String] {
-    return [
+    let token = userDefaults.string(forKey: "token")!
+    let header = [
         "Content-Type": "application/json",
         "Authorization": "Basic YnpiNDJ1dEpVdzFadVdTSlZtcExkd1hNeFNjZ3dYT3U0WnJBb0w4c3BFSnN0eWp1cm9Ubm5JdHMybTVRZ3hvOjFkZnBqZFM2Z21rRHRkUVFLYkpWeTRIZXpNSzRtUVlhSVdnd3lsamJkWXBNRkpPM2tuUXkwMTJMazJ6QlZTMA==",
-        "x-access-token": userDefaults.string(forKey: "token")!
+        "x-access-token": token
     ]
+    return header
 }
 
 public let LoginHeaders = [

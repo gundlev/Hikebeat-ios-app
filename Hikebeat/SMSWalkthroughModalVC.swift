@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import BrightFutures
 
 class SMSWalkthroughModalVC: HikebeatWalkthroughViewController {
     
     @IBOutlet weak var nextStepButton: UIButton!
+    var promise: Promise<Bool, HikebeatError>!
     
     override func viewDidLoad() {
         shouldAutoSlideshow = false
@@ -45,15 +47,29 @@ class SMSWalkthroughModalVC: HikebeatWalkthroughViewController {
         self.modalTransitionStyle = .crossDissolve
     }
     
+    @IBAction func exit(_ sender: Any) {
+        print(1)
+        self.promise.success(true)
+        print(2)
+        _ = self.performSegue(withIdentifier: "unwindToCompose", sender: nil)
+        print(3)
+    }
+    
     @IBAction func nextAction(_ sender: AnyObject) {
         if currentPage == 3 {
-            nextStepButton.setTitle("Close", for: .normal)
+            nextStepButton.setTitle("Add Hikebeat Contact", for: .normal)
         }
         
         if currentPage != 4 {
             nextPage()
         } else {
-            performSegue(withIdentifier: "unwindToCompose", sender: nil)
+            createHikebeatContact()
+            .onSuccess(callback: { (success) in
+                self.promise.success(true)
+                _ = self.performSegue(withIdentifier: "unwindToCompose", sender: nil)
+            }).onFailure(callback: { (error) in
+                print("Problem with error: ", error)
+            })
         }
     }
 }
