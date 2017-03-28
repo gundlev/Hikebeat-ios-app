@@ -32,6 +32,7 @@ class ModalVC: UIViewController {
         self.future.onSuccess { (returnVC) in
             switch returnVC {
             case "compose":
+                print("Going back now")
                 _ = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.backToCompose), userInfo: nil, repeats: false)
                 self.infoContainer.image = UIImage(named: "Checkcheck")
             case "settings":
@@ -93,7 +94,8 @@ class ModalVC: UIViewController {
     }
     
     func backToCompose(){
-        performSegue(withIdentifier: "goBackToCompose", sender: self)
+        let success = performSegue(withIdentifier: "goBackToCompose", sender: self)
+        print("Segue success: ", success)
     }
     
     func backToSettings(){

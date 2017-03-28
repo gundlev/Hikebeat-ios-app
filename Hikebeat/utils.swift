@@ -208,6 +208,7 @@ public func registerForNotification() {
             if granted == true {
                 print("Allow for notifications")
                 UIApplication.shared.registerForRemoteNotifications()
+                userDefaults.set(true, forKey: "notifications")
             } else {
                 print("Don't Allow for notifications")
             }

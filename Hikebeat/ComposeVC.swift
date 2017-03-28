@@ -37,6 +37,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var memoButtonCenterX: CGFloat = 0.0
     var imageButtonCenterX: CGFloat = 0.0
     
+    var holding = false
+    
     func r(data: String) {
         
     }
@@ -46,6 +48,10 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     var showingJourneySelect = false
     var firstLoad = true
     var currentModal: ModalVC?
+    
+    var leftTreeCenter: CGPoint!
+    var rightTreeCenter: CGPoint!
+    var middleHouseCenter: CGPoint!
     
     // Audio variables
     var recorder: AVAudioRecorder!
@@ -100,25 +106,39 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     
     @IBAction func sendBeat(_ sender: AnyObject) {
         print("up")
-        rightTree.stopAnimating()
-        stopSendAnimation()
-        self.beatPromise = Promise<String, NoError>()
-        checkForCorrectInput()
+//        rightTree.stopAnimating()
+//        stopSendAnimation()
+        if holding {
+            stopSendAnimation()
+            holding = false
+        }
+//        checkForCorrectInput()
     }
     
     @IBAction func startHoldingToSend(_ sender: AnyObject) {
         print("down")
-        startSendAnimation()
+        if !holding {
+            print("Not holding")
+            startSendAnimation()
+            holding = true
+            self.beatPromise = Promise<String, NoError>()
+        }
     }
     
     @IBAction func letGoOfHoldingOutside(_ sender: AnyObject) {
         print("up")
-        rightTree.stopAnimating()
-//        stopSendAnimation()
+//        rightTree.stopAnimating()
+        if holding {
+            stopSendAnimation()
+            holding = false
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        leftTreeCenter = leftTree.center
+        rightTreeCenter = rightTree.center
+        middleHouseCenter = middleHouse.center
 //        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
         self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
         tableViewSelectJourney.separatorColor = greenColor
@@ -165,7 +185,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             imageBG.transform = imageBG.transform.translatedBy(x: 0.0, y: +80.0  )
         }
         
-        sendBeatButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(startSendAnimation)))
+//        sendBeatButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(startSendAnimation)))
         
 
         NoActiveContainer.button = journeysButton
@@ -361,22 +381,35 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func startSendAnimation() {
-        print("press")
-//        let width = self.view.frame.width
-//        UIImageView.animateWithDuration(NSTimeInterval(2)) {
-//            self.leftTree.transform = CGAffineTransformTranslate(self.leftTree.transform, -width/5, 0)
-//            self.rightTree.transform = CGAffineTransformTranslate(self.rightTree.transform, width/5, 0)
-//            self.middleHouse.transform = CGAffineTransformTranslate(self.middleHouse.transform, 0, -30)
-//        }
+        print("Out")
+        let width = self.view.frame.width
+        UIView.animate(withDuration: 2, animations: {
+            self.leftTree.center = CGPoint(x: self.leftTree.center.x - width/5, y: self.leftTree.center.y)
+            self.rightTree.center = CGPoint(x: self.rightTree.center.x + width/5, y: self.rightTree.center.y)
+            self.middleHouse.center = CGPoint(x: self.middleHouse.center.x, y: self.leftTree.center.y - 5)
+        }) { (success) in
+            if success {
+                self.checkForCorrectInput()
+            } else {
+                self.leftTree.center = self.leftTreeCenter
+                self.rightTree.center = self.rightTreeCenter
+                self.middleHouse.center = self.middleHouseCenter
+            }
+        }
+    }
+    
+    func setTreesBack() {
+        self.leftTree.center = self.leftTreeCenter
+        self.rightTree.center = self.rightTreeCenter
+        self.middleHouse.center = self.middleHouseCenter
     }
     
     func stopSendAnimation() {
-        UIView.animate(withDuration: Foundation.TimeInterval(2), animations: {
-            self.leftTree.transform = self.leftTree.transform.translatedBy(x: 0, y: 0)
-            self.rightTree.transform = self.rightTree.transform.translatedBy(x: 0, y: 0)
-            self.middleHouse.transform = self.middleHouse.transform.translatedBy(x: 0, y: 0)
-        }) 
-
+        print("In")
+        let width = self.view.frame.width
+        self.leftTree.layer.removeAllAnimations()
+        self.rightTree.layer.removeAllAnimations()
+        self.middleHouse.layer.removeAllAnimations()
     }
 
 
@@ -472,11 +505,12 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         enableMediaView(self.editMemoButton, type: "memo")
         enableMediaView(self.editImageButton, type: "image")
         enableMediaView(self.editVideoButton, type: "video")
-        editEmotionButton.image = UIImage(named: "ComposeMessage")
+        editEmotionButton.image = UIImage(named: "EmotionIcon")
         editImageText.isHidden = false
         editVideoText.isHidden = false
         editMemoText.isHidden = false
         mediaAdded.isHidden = true
+        setTreesBack()
     }
     
     func disableMediaView(_ view :UIImageView) {
@@ -587,7 +621,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         print("Journey: ", self.activeJourney != nil)
                         print("Lat: ", locationTuple!.latitude)
                         print("Lng: ", locationTuple!.longitude)
-                        
+                        self.setTreesBack()
                     } else {
                         self.currentBeatDate = locationTuple?.date
                         var mediaData: String? = nil
@@ -633,6 +667,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 
                 } else {
                     print("location tuple is nil")
+                    self.setTreesBack()
                 }
             }
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
