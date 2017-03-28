@@ -1829,7 +1829,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yk0-RL-cL5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="yzP-KZ-ekm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3628" y="-1187"/>
+            <point key="canvasLocation" x="3546" y="-1187"/>
         </scene>
         <!--Universal List Of JourneysVC-->
         <scene sceneID="dPu-EV-Vlc">
@@ -3137,7 +3137,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="F48EB84C-B0E2-42F8-B1DE-3C6A8838FA5E" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="F2A55F9D-D784-4996-AE59-4412C4FD6C94" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -5719,7 +5719,7 @@
         <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditTitle" width="112" height="103"/>
         <image name="EmotionIcon" width="38" height="33"/>
-        <image name="F48EB84C-B0E2-42F8-B1DE-3C6A8838FA5E" width="24" height="30">
+        <image name="F2A55F9D-D784-4996-AE59-4412C4FD6C94" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

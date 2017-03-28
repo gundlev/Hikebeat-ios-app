@@ -121,6 +121,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         super.viewDidLoad()
 //        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
         self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
+        tableViewSelectJourney.separatorColor = greenColor
         memoButtonCenterX = editMemoButton.center.x
         imageButtonCenterX = editImageButton.center.x
         mediaAdded.isHidden = true
@@ -755,6 +756,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                     self.handleNoConnection()
                 })
                 self.performSegue(withIdentifier: "toSms", sender: self)
+                userDefaults.set(true, forKey: "hasShownSmsWalkthrough")
             } else {
                 handleNoConnection()
             }
