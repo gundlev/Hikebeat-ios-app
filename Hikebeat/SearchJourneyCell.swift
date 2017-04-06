@@ -39,7 +39,7 @@ class SearchJourneyCell: UITableViewCell {
             profileImage.layer.cornerRadius = profileImage.frame.width/2
             profileImage.layer.masksToBounds = true
             imageActivity = UIActivityIndicatorView(frame: CGRect(x: 15, y: 10, width: 50, height: 50))
-            headline = UILabel(frame: CGRect(x: 80, y: 16, width: width-100, height: 20))
+            headline = UILabel(frame: CGRect(x: 80, y: 16, width: width-200, height: 20))
             headline.textColor = .white
             headline.adjustsFontSizeToFitWidth = true
             followersBeats = UILabel(frame: CGRect(x: 80, y: 34, width: width-100, height: 20))
@@ -113,14 +113,14 @@ class SearchJourneyCell: UITableViewCell {
             imageActivity.startAnimating()
             self.profileImage.image = UIImage()
             downloadImage(imageUrl: imageUrl)
-                .onSuccess { (image) in
-                    self.profileImage.image = image
-                    self.imageActivity.stopAnimating()
-                    complete(.success(image))
-                }.onFailure { (error) in
-                    print("Error: ", error)
-                    self.profileImage.image = UIImage(named: "DefaultProfile")
-                    complete(.failure(error))
+            .onSuccess { (image) in
+                self.profileImage.image = image
+                self.imageActivity.stopAnimating()
+                complete(.success(image))
+            }.onFailure { (error) in
+                print("Error: ", error)
+                self.profileImage.image = UIImage(named: "DefaultProfile")
+                complete(.failure(error))
             }
         }
     }

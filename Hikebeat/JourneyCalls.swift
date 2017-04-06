@@ -29,19 +29,19 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
                     for (_, journey) in json {
                         // saveJourney
                         saveJourneyWithNoData(journeyJson: journey, userId: userId)
-                            .onSuccess(callback: { (journey) in
-                                finishedJourneys += 1
-                                if (finishedJourneys + failedJourneys) == json.count {
-                                    let tuple = (finishedJourneys, failedJourneys)
-                                    complete(.success(tuple))
-                                }
-                            }).onFailure(callback: { (error) in
-                                failedJourneys += 1
-                                if (finishedJourneys + failedJourneys) == json.count {
-                                    let tuple = (finishedJourneys, failedJourneys)
-                                    complete(.success(tuple))
-                                }
-                            })
+                        .onSuccess(callback: { (journey) in
+                            finishedJourneys += 1
+                            if (finishedJourneys + failedJourneys) == json.count {
+                                let tuple = (finishedJourneys, failedJourneys)
+                                complete(.success(tuple))
+                            }
+                        }).onFailure(callback: { (error) in
+                            failedJourneys += 1
+                            if (finishedJourneys + failedJourneys) == json.count {
+                                let tuple = (finishedJourneys, failedJourneys)
+                                complete(.success(tuple))
+                            }
+                        })
                     }
                 }
             } else {
@@ -50,36 +50,39 @@ func getJourneysForUser(userId: String) -> Future<(finishedJourneys: Int, failed
         }).onFailure(callback: { (error) in
             complete(.failure(error))
         })
-//        getSessionManager().request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
-//            print("JOURNEY: ", response)
-//            var finishedJourneys = 0
-//            var failedJourneys = 0
-//            if response.response?.statusCode == 200 {
-//                if response.result.value != nil {
-//                    let rawJson = JSON(response.result.value!)
-//                    let json = rawJson["data"]
-//                    for (_, journey) in json {
-//                        // saveJourney
-//                        saveJourneyWithNoData(journeyJson: journey, userId: userId)
-//                        .onSuccess(callback: { (journey) in
-//                            finishedJourneys += 1
-//                            if (finishedJourneys + failedJourneys) == json.count {
-//                                let tuple = (finishedJourneys, failedJourneys)
-//                                complete(.success(tuple))
-//                            }
-//                        }).onFailure(callback: { (error) in
-//                            failedJourneys += 1
-//                            if (finishedJourneys + failedJourneys) == json.count {
-//                                let tuple = (finishedJourneys, failedJourneys)
-//                                complete(.success(tuple))
-//                            }
-//                        })
-//                    }
-//                }
-//            } else {
-//                complete(.failure(.getJourneysForUser))
-//            }
-//        }
+    }
+}
+
+func getJourneysWithoutSavingFor(userId: String, ownerProfilePhotoUrl: String, ownerProfilePhoto: Data?) -> Future<[Journey], HikebeatError> {
+    return Future { complete in
+        let urlJourney = IPAddress + "users/" + userId + "/journeys"
+        print(urlJourney)
+        getCall(url: urlJourney, headers: getHeader())
+        .onSuccess(callback: { (response) in
+            if response.response?.statusCode == 200 {
+                if response.result.value != nil {
+                    let rawJson = JSON(response.result.value!)
+                    let json = rawJson["data"]
+                    var journeys = [Journey]()
+                    for (_, journeyJson) in json {
+                        let journey = Journey()
+                        journey.fill(journeyJson["slug"].stringValue, userId: userId, journeyId: journeyJson["_id"].stringValue, headline: journeyJson["headline"].stringValue, journeyDescription: journeyJson["headline"].stringValue, active: false, type: journeyJson["type"].stringValue, seqNumber: String(journeyJson["seqNumber"].intValue), latestBeat: Date(timeIntervalSince1970: (journeyJson["latestBeat"].doubleValue/1000)), username: journeyJson["username"].stringValue)
+                        journey.ownerProfilePhotoUrl = ownerProfilePhotoUrl
+                        journey.ownerProfilePhoto = ownerProfilePhoto
+                        journey.numberOfBeats = journeyJson["messageCount"].intValue
+                        journey.numberOfFollowers = journeyJson["numberOfFollowers"].intValue
+                        journey.isFollowed = journeyJson["isFollowed"].boolValue
+                        journeys.append(journey)
+                    }
+                    complete(.success(journeys))
+                }
+            } else {
+                showCallErrors(json: JSON(response.result.value!))
+                complete(.failure(.getJourneysForUser))
+            }
+        }).onFailure(callback: { (error) in
+            complete(.failure(error))
+        })
     }
 }
 

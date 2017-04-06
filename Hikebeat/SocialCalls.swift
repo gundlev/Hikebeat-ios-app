@@ -105,7 +105,7 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
                         id: jsonUser["_id"].stringValue,
                         username: jsonUser["username"].stringValue,
                         numberOfJourneys: String(jsonUser["journeyIds"].arrayValue.count),
-                        numberOfBeats: jsonUser["_id"].stringValue,
+                        numberOfBeats: jsonUser["messageCount"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
                         profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
@@ -219,6 +219,40 @@ func followUnfowllowCall(url: String) -> Future<Bool, HikebeatError> {
                 let json = JSON(response.result.value!)
                 showCallErrors(json: json)
                 complete(.failure(.followUnfollow))
+            }
+        })
+    }
+}
+
+func getUserWith(userId: String) -> Future<User, HikebeatError> {
+    return Future { complete in
+        let url = "\(IPAddress)users/\(userId)"
+        getCall(url: url, headers: getHeader())
+        .onSuccess(callback: { (response) in
+            if response.response?.statusCode == 200 {
+                print("userResponse: ", response)
+                let jsonUser = JSON(response.result.value!)["data"]
+                let latestBeat = jsonUser["latestBeat"].doubleValue
+                var latestBeatDate: Date? = nil
+                if latestBeat != 0.0 {
+                    latestBeatDate = Date(timeIntervalSince1970: (latestBeat/1000))
+                }
+                
+                let user = User(
+                    id: jsonUser["_id"].stringValue,
+                    username: jsonUser["username"].stringValue,
+                    numberOfJourneys: String(jsonUser["journeyIds"].arrayValue.count),
+                    numberOfBeats: jsonUser["messageCount"].stringValue,
+                    followerCount: jsonUser["followerCount"].stringValue,
+                    followsCount: jsonUser["followsCount"].stringValue,
+                    profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
+                    latestBeat: latestBeatDate
+                )
+                complete(.success(user))
+            } else {
+                let json = JSON(response.result.value!)
+                showCallErrors(json: json)
+                complete(.failure(.getUser))
             }
         })
     }

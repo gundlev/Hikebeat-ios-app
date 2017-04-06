@@ -13,6 +13,7 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     var list: PaginatingList?
     var chosenJourney: Journey?
+    var chosenUser: User?
     var fromVC = ""
     
     @IBOutlet weak var tableView: UITableView!
@@ -179,6 +180,8 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
             switch list!.type{
             case .user:
                 print("tapped user")
+                self.chosenUser = list?.results[indexPath.row] as! User?
+                performSegue(withIdentifier: "showUser", sender: self)
             case .journey:
                 self.chosenJourney = list?.results[indexPath.row] as! Journey?
                 performSegue(withIdentifier: "showJourney", sender: self)
@@ -201,11 +204,15 @@ class PaginatingVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
-            case "showJourney":
+        case "showJourney":
             let vc = segue.destination as! JourneyContainerVC
             vc.journey = chosenJourney
             vc.fromVC = "showAll"
             vc.save = false
+        case "showUser":
+            let vc = segue.destination as! PublicProfileVC
+            vc.user = chosenUser
+            vc.fromVC = "pagination"
         default: print("default segue")
         }
     }

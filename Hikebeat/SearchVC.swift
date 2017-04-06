@@ -40,6 +40,7 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
     @IBAction func backToSearch(_ unwindSegue: UIStoryboardSegue) {
         
     }
+    
     override func viewDidLoad() {
         if firstLoad {
             
@@ -493,6 +494,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
                 default:
                     print("Unknown search type")
                 }
+            case "showUser":
+                let vc = segue.destination as! PublicProfileVC
+                vc.user = chosenUser
+                vc.fromVC = "search"
         default: print("what")
         }
     }

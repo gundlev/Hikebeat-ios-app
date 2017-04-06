@@ -25,12 +25,12 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1899088403655548</string>
+				<string>hikebeat</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>47</string>
+	<string>49</string>
 	<key>FacebookAppID</key>
 	<string>1899088403655548</string>
 	<key>FacebookDisplayName</key>
@@ -58,8 +58,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>location</string>
-		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>Loading</string>
@@ -81,5 +79,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_app_domain</key>
+	<string>hikebeat.app.link</string>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_fdwFl702cI4NVPOpQAyabfkdxEib0mDs</string>
+		<key>test</key>
+		<string>key_test_ihEBjY84mUYPPNPdGBk29gobwxdd0dxe</string>
+	</dict>
 </dict>
 </plist>

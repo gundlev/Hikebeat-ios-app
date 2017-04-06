@@ -416,11 +416,11 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         }.onFailure { (error) in
             print(error)
             let localRealm = try! Realm()
-            try! localRealm.write() {
+//            try! localRealm.write() {
                 let change = Change()
                 change.fill(.profileImage)
                 saveChange(change: change)
-            }
+//            }
         }
     }
     //

@@ -75,6 +75,17 @@ func sendChanges(_ changes: Results<Change>) -> Future<Bool, HikebeatError> {
                 }
             case .deleteJourney:
                 print("Deleting journey")
+                let pair = change.values[0]
+                deleteJourney(journeyId: pair.key!)
+                .onSuccess(callback: { (success) in
+                    if success {
+                        successOnChange()
+                        checkStatus()
+                    } else {
+                        numberOfFails += 1
+                        checkStatus()
+                    }
+                })
             case .deleteBeat:
                 print("Deleting beat")
             case .notifications:

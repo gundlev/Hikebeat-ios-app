@@ -116,6 +116,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             AppEventsLogger.log("Login email")
             self.performSegue(withIdentifier: "justLoggedIn", sender: self)
         }).onFailure(callback: { (error) in
+            hideActivity()
             // Drops should already be handled.
         })
         /* Sending POST to API to check if the user exists. Will return a json with the user.*/

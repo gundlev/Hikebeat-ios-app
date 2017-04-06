@@ -16,6 +16,7 @@ import MessageUI
 import BrightFutures
 import Result
 import CoreLocation
+import SwiftyDrop
 
 class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLocationManagerDelegate {
 
@@ -108,30 +109,31 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         print("up")
 //        rightTree.stopAnimating()
 //        stopSendAnimation()
-        if holding {
-            stopSendAnimation()
-            holding = false
-        }
-//        checkForCorrectInput()
+//        if holding {
+//            stopSendAnimation()
+//            holding = false
+//        }
+        self.beatPromise = Promise<String, NoError>()
+        checkForCorrectInput()
     }
     
     @IBAction func startHoldingToSend(_ sender: AnyObject) {
         print("down")
-        if !holding {
-            print("Not holding")
-            startSendAnimation()
-            holding = true
-            self.beatPromise = Promise<String, NoError>()
-        }
+//        if !holding {
+//            print("Not holding")
+//            startSendAnimation()
+//            holding = true
+//            self.beatPromise = Promise<String, NoError>()
+//        }
     }
     
     @IBAction func letGoOfHoldingOutside(_ sender: AnyObject) {
         print("up")
 //        rightTree.stopAnimating()
-        if holding {
-            stopSendAnimation()
-            holding = false
-        }
+//        if holding {
+//            stopSendAnimation()
+//            holding = false
+//        }
     }
     
     override func viewDidLoad() {
@@ -142,8 +144,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 //        self.activeJourneyButton.imageView?.image = UIImage(named: "SearchIconiOS")
         self.tableViewSelectJourney.translatesAutoresizingMaskIntoConstraints = true
         tableViewSelectJourney.separatorColor = greenColor
-        memoButtonCenterX = editMemoButton.center.x
-        imageButtonCenterX = editImageButton.center.x
+        
+        
         mediaAdded.isHidden = true
         // Scaling the view for the screensize.
         if (UIDevice.isIphone5){
@@ -243,6 +245,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             let center = self.tableViewSelectJourney.center
             self.tableViewSelectJourney.center = CGPoint(x: center.x, y:center.y-self.tableViewSelectJourney.frame.height)
             self.tableViewSelectJourney.isHidden = false
+            memoButtonCenterX = editMemoButton.center.x
+            imageButtonCenterX = editImageButton.center.x
             firstLoad = false
         }
         handleViewPresentation()
@@ -510,7 +514,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         editVideoText.isHidden = false
         editMemoText.isHidden = false
         mediaAdded.isHidden = true
-        setTreesBack()
+//        setTreesBack()
     }
     
     func disableMediaView(_ view :UIImageView) {
@@ -818,6 +822,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                 }
                 self.activeJourney?.beats.append(self.currentBeat!)
             }
+            Drop.down("The beat has been saved locally. Sync from settings when you have regained connection.", state: .success)
             self.clearAllForNewBeat(beatSend: true)
             //                    self.beatPromise.success(true)
         }

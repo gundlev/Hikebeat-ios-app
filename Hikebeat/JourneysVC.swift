@@ -119,18 +119,18 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let journey = self.journeys[indexPath.row]
                 self.journeys.remove(at: indexPath.row)
                 deleteJourney(journeyId: journey.journeyId)
-                    .onSuccess(callback: { (success) in
-                        if success {
-                            try! self.realm.write {
-                                self.realm.delete(journey)
-                                print("Journey deleted")
-                            }
-                        } else {
-                            //TODO: save deletion in changes.
-                            let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
-                            saveChange(change: change)
+                .onSuccess(callback: { (success) in
+                    if success {
+                        try! self.realm.write {
+                            self.realm.delete(journey)
+                            print("Journey deleted")
                         }
-                    })
+                    } else {
+                        //TODO: save deletion in changes.
+                        let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
+                        saveChange(change: change)
+                    }
+                })
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
             _ = alertView.addButton("No") {}

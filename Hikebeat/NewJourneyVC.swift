@@ -98,8 +98,8 @@ class NewJourneyVC: UIViewController, UITextFieldDelegate {
             Drop.down("Journey headline can not be empty.", state: .error)
             return
         }
-        showActivity()
-        if titleField.text?.characters.count > 1 {
+        if titleField.text?.characters.count > 0 {
+            showActivity()
             let journeyTitle = (titleField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))!
             createNewJourneyCall(headline: journeyTitle)
             .onSuccess(callback: { (success) in

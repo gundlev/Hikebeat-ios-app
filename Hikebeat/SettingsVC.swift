@@ -113,6 +113,10 @@ class SettingsVC: UIViewController {
     }
     
     @IBAction func notificationChange(_ sender: UISwitch) {
+        let token = userDefaults.string(forKey: "device_token")
+        if token == nil && sender.isOn {
+            registerForNotification()
+        }
         let change = createSimpleChange(type: .notifications, key: ChangeType.notifications.rawValue, value: nil, valueBool: sender.isOn)
         updateUser([change])
         .onSuccess { (success) in

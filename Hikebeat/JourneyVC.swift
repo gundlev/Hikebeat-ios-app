@@ -37,10 +37,14 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     var indexOfChosenPin: Int?
     var fromVC = ""
     
+    @IBAction func profileButtonTapped(_ sender: Any) {
+        self.goToProfile()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let width = UIScreen.main.bounds.width
-
+        
         // Do any additional setup after loading the view.
         
         let bgGradient = CAGradientLayer()
@@ -146,6 +150,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     }
     
     func setBeatsAndFollowersButtons(numberOfBeats: Int, numberOfFollowers: Int) {
+        print("Settings info with: ", numberOfBeats, " and ", numberOfFollowers)
         let width = UIScreen.main.bounds.width
 
         let followerButtonFrame = CGRect(x: 20, y: 12, width: width/6.5, height: 29)
@@ -194,8 +199,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
 //    }
     
     func showLatestBeat() {
-        self.indexOfChosenPin = pins.count - 1
-        performSegue(withIdentifier: "showBeat", sender: self)
+        if self.pins.count != 0 {
+            self.indexOfChosenPin = pins.count - 1
+            _ = performSegue(withIdentifier: "showBeat", sender: self)
+        }
     }
     
     func setProfileImage() {
@@ -213,15 +220,25 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         } else {
             if self.journey?.ownerProfilePhoto != nil {
                 self.profileImage.image = UIImage(data: (self.journey?.ownerProfilePhoto!)!)
+                let tabGesture = UITapGestureRecognizer(target: self, action: #selector(self.test))
+                self.profileImage.addGestureRecognizer(tabGesture)
             } else {
                 downloadImage(imageUrl: (self.journey?.ownerProfilePhotoUrl)!)
                 .onSuccess(callback: { (image) in
                     self.profileImage.image = image
+                    let tabGesture = UITapGestureRecognizer(target: self, action: #selector(self.test))
+                    self.profileImage.addGestureRecognizer(tabGesture)
                 }).onFailure(callback: { (error) in
                     self.profileImage.image = UIImage(named: "DefaultProfile")
+                    let tabGesture = UITapGestureRecognizer(target: self, action: #selector(self.test))
+                    self.profileImage.addGestureRecognizer(tabGesture)
                 })
             }
         }
+    }
+    
+    func test() {
+        print("WHAAAAt")
     }
     
     func setUsername() {
@@ -231,7 +248,18 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     func goToProfile() {
         print("go to profile now")
-        self.tabBarController?.selectedIndex = 3
+        switch fromVC {
+        case "showAll":
+            performSegue(withIdentifier: "showProfile", sender: self)
+            return
+        case "search":
+            performSegue(withIdentifier: "showProfile", sender: self)
+            return
+        case "publicProfile":
+            performSegue(withIdentifier: "backToPublicProfile", sender: self)
+            return
+        default: self.tabBarController?.selectedIndex = 3
+        }
     }
     
     func getProfileImagePath() -> String {
@@ -399,10 +427,13 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     @IBAction func goBack(_ sender: AnyObject) {
         switch fromVC {
         case "showAll":
-            self.performSegue(withIdentifier: "journeyToShowAll", sender: self)
+            performSegue(withIdentifier: "journeyToShowAll", sender: self)
             return
         case "search":
             performSegue(withIdentifier: "journeyToSearch", sender: self)
+            return
+        case "publicProfile":
+            performSegue(withIdentifier: "backToPublicProfile", sender: self)
             return
         default: print("nothing here")
         }
@@ -453,6 +484,11 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         } else if segue.identifier == "showFollowers" {
             let vc = segue.destination as! PaginatingVC
             vc.list = JourneyFollowersList(journeyId: (self.journey?.journeyId)!)
+            vc.fromVC = "journey"
+        } else if segue.identifier == "showProfile" {
+            let vc = segue.destination as! PublicProfileVC
+            print("showing user With ID: ", journey!.userId)
+            vc.userId = journey!.userId
             vc.fromVC = "journey"
         }
     }

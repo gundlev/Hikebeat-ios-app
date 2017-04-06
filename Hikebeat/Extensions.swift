@@ -177,10 +177,10 @@ public extension UIDevice {
         return modelName == "iPhone 6 Plus" || UIDevice.isSimulatorIPhone6Plus
     }
     static var isIphone6S: Bool {
-        return modelName == "iPhone 6S"
+        return modelName == "iPhone 6S" || modelName == "iPhone 7"
     }
     static var isIphone6SPlus: Bool {
-        return modelName == "iPhone 6S Plus"
+        return modelName == "iPhone 6S Plus" || modelName == "iPhone 7 Plus"
     }
     
     

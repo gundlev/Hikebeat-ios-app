@@ -28,6 +28,8 @@ func saveImageToDocs(fileName: String, image: UIImage) -> Future<Bool, NoError> 
 }
 
 func saveJourneyWithNoData(journeyJson:JSON, userId: String) -> Future<Journey, HikebeatError> {
+    // Saved journey and beats but does not download any media
+    
     print("JoruneyJson: ", journeyJson)
     return Future { complete in
         DispatchQueue.global().async {

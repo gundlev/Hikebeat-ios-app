@@ -50,6 +50,7 @@ func refreshToken() -> Future<String, HikebeatError> {
 
 func resetPassword(credential: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
+        guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         let url = "\(IPAddress)reset-password/email"
         let parameters = ["credential": credential]
         postCall(url: url, parameters: parameters, headers: LoginHeaders)
@@ -71,6 +72,7 @@ func resetPassword(credential: String) -> Future<Bool, HikebeatError> {
 
 func loginUsername(username: String, password: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
+        guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         let parameters = ["username": username, "password": password]
         let url = IPAddress + "auth"
         postCall(url: url, parameters: parameters, headers: LoginHeaders)
@@ -92,6 +94,7 @@ func loginUsername(username: String, password: String) -> Future<Bool, HikebeatE
 
 func signupUsername(username: String, password: String, email: String) -> Future<Bool, HikebeatError> {
     return Future { complete in
+        guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         let parameters = ["username": username, "password": password, "email": email]
         let url = IPAddress + "signup"
         postCall(url: url, parameters: parameters, headers: LoginHeaders)
@@ -198,6 +201,7 @@ func updateDeviceToken(token: String) {
     postCall(url: url, parameters: params, headers: getHeader())
     .onSuccess { (response) in
         print("Device Token Response: ", response)
+        userDefaults.set(true, forKey: "notifications")
     }.onFailure { (error) in
         print("Failed to update device token: ", error)
     }
