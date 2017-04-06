@@ -406,15 +406,21 @@ func getFollowersForJourney(queryString: String, journeyId: String) -> Future<(u
                         latestBeatDate = Date(timeIntervalSince1970: (latestBeat/1000))
                     }
                     
+                    let visitedCountries = jsonUser["visitedCountries"].dictionaryObject as! Dictionary<String, Int>
+                    let mostVisitedElement = visitedCountries.max { $0.1 < $1.1 }
+                    let mostVisitedCountry = mostVisitedElement != nil ? mostVisitedElement!.key : "none"
+                    
                     users.append(User(
                         id: jsonUser["_id"].stringValue,
                         username: jsonUser["username"].stringValue,
                         numberOfJourneys: String(jsonUser["journeyIds"].arrayValue.count),
-                        numberOfBeats: jsonUser["_id"].stringValue,
+                        numberOfBeats: jsonUser["messageCount"].stringValue,
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
                         profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
-                        latestBeat: latestBeatDate
+                        latestBeat: latestBeatDate,
+                        visitedCountries: visitedCountries,
+                        mostVisitedCountry: mostVisitedCountry
                     ))
                 }
             }

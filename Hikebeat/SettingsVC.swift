@@ -134,34 +134,36 @@ class SettingsVC: UIViewController {
     @IBAction func startSync(_ sender: AnyObject) {
         print("Syncbutton pressed")
         guard hasNetworkConnection(show: true) else { return }
-        if toUpload != nil {
-            // showModal
-            self.modalPromise = Promise<String, NoError>()
-            self.performSegue(withIdentifier: "showModal", sender: self)
+        guard toUpload != nil else { nothingToSync(); return }
+        
+        // showModal
+        self.modalPromise = Promise<String, NoError>()
+        self.performSegue(withIdentifier: "showModal", sender: self)
 //            showDots()
-            print("toUpload is not nil")
-            print("Modal: ", self.currentModal)
-            print("Bar: ", self.currentModal?.progressBar)
-            syncAll(self.currentModal?.progressBar, changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
-            .onSuccess(callback: { (Bool) in
-                let synced = self.checkSync()
-                print("In callback")
+        print("toUpload is not nil")
+        print("Modal: ", self.currentModal)
+        print("Bar: ", self.currentModal?.progressBar)
+        syncAll(self.currentModal?.progressBar, changes: self.toUpload!.changes, mediaBeats: self.toUpload!.mediaBeats, messageBeats: self.toUpload!.messageBeats)
+        .onSuccess(callback: { (Bool) in
+            let synced = self.checkSync()
+            print("In callback")
 //                self.hideDots()
-                self.modalPromise.success("settings")
-                
-                if synced {
-                    let t = String(Date().timeIntervalSince1970)
-                    let e = t.range(of: ".")
-                    let timestamp = t.substring(to: (e?.lowerBound)!)
-                    self.userDefaults.set(timestamp, forKey: "lastSync")
-                    self.lastSyncLabel.text = "Last synchronize: 0 days ago"
-                }
+            self.modalPromise.success("settings")
+            
+            if synced {
+                let t = String(Date().timeIntervalSince1970)
+                let e = t.range(of: ".")
+                let timestamp = t.substring(to: (e?.lowerBound)!)
+                self.userDefaults.set(timestamp, forKey: "lastSync")
+                self.lastSyncLabel.text = "Last synchronize: 0 days ago"
+            }
 
-            })
-        } else {
-            print("toUpload is nil")
-            Drop.down("There is no media or any messages to sync. Have an awesome day!", state: .success)
-        }
+        })
+    }
+    
+    func nothingToSync() {
+        print("Nothing to sync")
+        Drop.down("There is no media or any messages to sync. Have an awesome day!", state: .success)
     }
     
     let greenColor = UIColor(red:189/255.0, green:244/255.0, blue:0, alpha:1.00)
@@ -356,6 +358,7 @@ class SettingsVC: UIViewController {
             self.numbers.image = 0
             self.numbers.video = 0
             self.numbers.audio = 0
+            self.toUpload = nil
         }
         
         syncMessagesBadge.text = "\(self.numbers.message)"

@@ -384,37 +384,37 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
         }
     }
     
-    func startSendAnimation() {
-        print("Out")
-        let width = self.view.frame.width
-        UIView.animate(withDuration: 2, animations: {
-            self.leftTree.center = CGPoint(x: self.leftTree.center.x - width/5, y: self.leftTree.center.y)
-            self.rightTree.center = CGPoint(x: self.rightTree.center.x + width/5, y: self.rightTree.center.y)
-            self.middleHouse.center = CGPoint(x: self.middleHouse.center.x, y: self.leftTree.center.y - 5)
-        }) { (success) in
-            if success {
-                self.checkForCorrectInput()
-            } else {
-                self.leftTree.center = self.leftTreeCenter
-                self.rightTree.center = self.rightTreeCenter
-                self.middleHouse.center = self.middleHouseCenter
-            }
-        }
-    }
-    
-    func setTreesBack() {
-        self.leftTree.center = self.leftTreeCenter
-        self.rightTree.center = self.rightTreeCenter
-        self.middleHouse.center = self.middleHouseCenter
-    }
-    
-    func stopSendAnimation() {
-        print("In")
-        let width = self.view.frame.width
-        self.leftTree.layer.removeAllAnimations()
-        self.rightTree.layer.removeAllAnimations()
-        self.middleHouse.layer.removeAllAnimations()
-    }
+//    func startSendAnimation() {
+//        print("Out")
+//        let width = self.view.frame.width
+//        UIView.animate(withDuration: 2, animations: {
+//            self.leftTree.center = CGPoint(x: self.leftTree.center.x - width/5, y: self.leftTree.center.y)
+//            self.rightTree.center = CGPoint(x: self.rightTree.center.x + width/5, y: self.rightTree.center.y)
+//            self.middleHouse.center = CGPoint(x: self.middleHouse.center.x, y: self.leftTree.center.y - 5)
+//        }) { (success) in
+//            if success {
+//                self.checkForCorrectInput()
+//            } else {
+//                self.leftTree.center = self.leftTreeCenter
+//                self.rightTree.center = self.rightTreeCenter
+//                self.middleHouse.center = self.middleHouseCenter
+//            }
+//        }
+//    }
+//    
+//    func setTreesBack() {
+//        self.leftTree.center = self.leftTreeCenter
+//        self.rightTree.center = self.rightTreeCenter
+//        self.middleHouse.center = self.middleHouseCenter
+//    }
+//    
+//    func stopSendAnimation() {
+//        print("In")
+//        let width = self.view.frame.width
+//        self.leftTree.layer.removeAllAnimations()
+//        self.rightTree.layer.removeAllAnimations()
+//        self.middleHouse.layer.removeAllAnimations()
+//    }
 
 
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -625,7 +625,8 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
                         print("Journey: ", self.activeJourney != nil)
                         print("Lat: ", locationTuple!.latitude)
                         print("Lng: ", locationTuple!.longitude)
-                        self.setTreesBack()
+                        Drop.down("You can't send an empty beat.", state: .warning)
+//                        self.setTreesBack()
                     } else {
                         self.currentBeatDate = locationTuple?.date
                         var mediaData: String? = nil
@@ -671,7 +672,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
 
                 } else {
                     print("location tuple is nil")
-                    self.setTreesBack()
+//                    self.setTreesBack()
                 }
             }
         } else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {

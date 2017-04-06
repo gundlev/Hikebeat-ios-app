@@ -99,7 +99,12 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         profileImageView.layer.cornerRadius = profileImageView.bounds.width/2
         profileImageView.layer.masksToBounds = true
         
+        titleLabel.text = ""
+        usernameLabel.text = ""
+        usernameLabel.isHidden = true
+        
         if user != nil {
+            print("User not nil")
             setView()
         } else {
             imageSpinner.startAnimating()
@@ -116,6 +121,7 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func setView() {
+        print("setting views")
         setInfo()
         if user!.profilePhoto != nil {
             profileImageView.image = user!.profilePhoto
@@ -144,12 +150,22 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func setInfo() {
+        print("Setting info for user: ")
+        print("\(user!.followerCount) followers")
+        print("\(user!.followsCount) follows")
+        print("\(user!.visitedCountries.count) countries")
+        print("\(user!.mostVisitedCountry != "none" ? Locale(identifier: "en_US").localizedString(forRegionCode: user!.mostVisitedCountry)! : "none")")
+        print("\(user!.numberOfJourneys) journeys")
+        print("\(user!.numberOfBeats) beats")
+        print("\(user!.username)")
+        
         followersLabel.text = "\(user!.followerCount) followers"
         followingsLabel.text = "\(user!.followsCount) follows"
-        countriesLabel.text = "26 countries"
-        favoriteLabel.text = "World"
+        countriesLabel.text = "\(user!.visitedCountries.count) countries"
+        favoriteLabel.text = "\(user!.mostVisitedCountry != "none" ? Locale(identifier: "en_US").localizedString(forRegionCode: user!.mostVisitedCountry)! : "none")"
         journeysLabel.text = "\(user!.numberOfJourneys) journeys"
         beatsLabel.text = "\(user!.numberOfBeats) beats"
+        titleLabel.text = "\(user!.username)"
     }
     
 // TableView functions

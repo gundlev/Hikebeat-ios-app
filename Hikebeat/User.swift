@@ -18,6 +18,8 @@ class User: Any {
     var profilePhoto: UIImage?
     var profilePhotoUrl: String
     var latestBeat: Date?
+    var visitedCountries: Dictionary<String,Int>
+    var mostVisitedCountry: String
     
     init(id: String,
         username: String,
@@ -26,7 +28,9 @@ class User: Any {
         followerCount: String,
         followsCount: String,
         profilePhotoUrl: String,
-        latestBeat: Date?) {
+        latestBeat: Date?,
+        visitedCountries: Dictionary<String,Int>,
+        mostVisitedCountry: String) {
         self.id = id
         self.username = username
         self.numberOfBeats = numberOfBeats
@@ -35,5 +39,7 @@ class User: Any {
         self.followsCount = followsCount
         self.profilePhotoUrl = profilePhotoUrl
         self.latestBeat = latestBeat
+        self.visitedCountries = visitedCountries
+        self.mostVisitedCountry = mostVisitedCountry
     }
 }

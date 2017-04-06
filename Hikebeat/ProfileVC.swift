@@ -88,12 +88,19 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         chooseImage()
     }
     
+    @IBAction func followingTapped(_ sender: Any) {
+        performSegue(withIdentifier: "showFollow", sender: self)
+    }
+    
+    @IBAction func followersTapped(_ sender: Any) {
+        
+    }
+    
     @IBAction func seeFollowingJourneys(_ sender: AnyObject) {
         performSegue(withIdentifier: "showFollowing", sender: self)
     }
     
     @IBAction func largeButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "showFollow", sender: self)
     }
     
     @IBAction func editButtonTapped(_ sender: AnyObject) {

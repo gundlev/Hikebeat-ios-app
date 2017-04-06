@@ -19,6 +19,7 @@ class RecordAudioVC: UIViewController {
     @IBOutlet weak var recordCircle: UIImageView!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var explainText: UILabel!
     
     var recorder: AVAudioRecorder!
     var player:AVAudioPlayer!

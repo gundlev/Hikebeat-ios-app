@@ -64,6 +64,11 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
             if jsonUsers != nil {
                 for (_, jsonUser) in jsonUsers {
                     print("User: ", jsonUser)
+                    
+                    let visitedCountries = jsonUser["visitedCountries"].dictionaryObject as! Dictionary<String, Int>
+                    let mostVisitedElement = visitedCountries.max { $0.1 < $1.1 }
+                    let mostVisitedCountry = mostVisitedElement != nil ? mostVisitedElement!.key : "none"
+                    
                     users.append(User(
                         id: jsonUser["_id"].stringValue,
                         username: jsonUser["username"].stringValue,
@@ -72,7 +77,9 @@ func getFeaturedUsers(nextPage: String) -> Future<[User], NoError> {
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
                         profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
-                        latestBeat: Date(timeIntervalSince1970: (jsonUsers["latestBeat"].doubleValue/1000))
+                        latestBeat: Date(timeIntervalSince1970: (jsonUsers["latestBeat"].doubleValue/1000)),
+                        visitedCountries: visitedCountries,
+                        mostVisitedCountry: mostVisitedCountry
                     ))
                 }
             }
@@ -101,6 +108,10 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
                         latestBeatDate = Date(timeIntervalSince1970: (latestBeat/1000))
                     }
                     
+                    let visitedCountries = jsonUser["visitedCountries"].dictionaryObject as! Dictionary<String, Int>
+                    let mostVisitedElement = visitedCountries.max { $0.1 < $1.1 }
+                    let mostVisitedCountry = mostVisitedElement != nil ? mostVisitedElement!.key : "none"
+                    
                     users.append(User(
                         id: jsonUser["_id"].stringValue,
                         username: jsonUser["username"].stringValue,
@@ -109,7 +120,9 @@ func searchUsers(queryString: String) -> Future<(users:[User], nextPage: String?
                         followerCount: jsonUser["followerCount"].stringValue,
                         followsCount: jsonUser["followsCount"].stringValue,
                         profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
-                        latestBeat: latestBeatDate
+                        latestBeat: latestBeatDate,
+                        visitedCountries: visitedCountries,
+                        mostVisitedCountry: mostVisitedCountry
                     ))
                 }
             }
@@ -238,6 +251,10 @@ func getUserWith(userId: String) -> Future<User, HikebeatError> {
                     latestBeatDate = Date(timeIntervalSince1970: (latestBeat/1000))
                 }
                 
+                let visitedCountries = jsonUser["visitedCountries"].dictionaryObject as! Dictionary<String, Int>
+                let mostVisitedElement = visitedCountries.max { $0.1 < $1.1 }
+                let mostVisitedCountry = mostVisitedElement != nil ? mostVisitedElement!.key : "none"
+                
                 let user = User(
                     id: jsonUser["_id"].stringValue,
                     username: jsonUser["username"].stringValue,
@@ -246,7 +263,9 @@ func getUserWith(userId: String) -> Future<User, HikebeatError> {
                     followerCount: jsonUser["followerCount"].stringValue,
                     followsCount: jsonUser["followsCount"].stringValue,
                     profilePhotoUrl: jsonUser["profilePhoto"].stringValue,
-                    latestBeat: latestBeatDate
+                    latestBeat: latestBeatDate,
+                    visitedCountries: visitedCountries,
+                    mostVisitedCountry: mostVisitedCountry
                 )
                 complete(.success(user))
             } else {

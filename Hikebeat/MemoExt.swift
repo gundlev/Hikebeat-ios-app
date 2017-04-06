@@ -94,6 +94,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
         self.playButton.isHidden = true
         self.stopButton.isHidden = true
         self.deleteButton.isHidden = true
+        self.explainText.isHidden = false
     }
     
     func stopRecordingAudio() {
@@ -115,6 +116,7 @@ extension RecordAudioVC:  AVAudioRecorderDelegate, AVAudioPlayerDelegate {
             playButton.isHidden = false
             stopButton.isHidden = true
             recordButton.isEnabled = false
+            explainText.isHidden = true
         } catch let error as NSError {
             print("could not make session inactive")
             print(error.localizedDescription)

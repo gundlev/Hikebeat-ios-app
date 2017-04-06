@@ -90,6 +90,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                             beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
                             self.journey!.beats.append(beat)
                         }
+                        self.updateNumberOfbeats()
 //                        self.beatsButton.textLabel.text = self.journey.
                         print("john")
                         self.setUpPins()
@@ -109,7 +110,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             self.socialContainerView.addSubview(followButton)
             self.setBeatsAndFollowersButtons(numberOfBeats: (journey?.numberOfBeats)!, numberOfFollowers: (journey?.numberOfFollowers)!)
         } else {
-            setUpPins()
+//            setUpPins()
             
             let syncButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
@@ -162,7 +163,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                                             ratio: 0.5,
                                             onPress: {
                                                 print("follower button tapped")
-                                                self.performSegue(withIdentifier: "showFollowers", sender: self)
+                                                self.showFollowers()
                                             })
         
         let beatsButtonFrame = CGRect(x: (width/6.5) + 40, y: 12, width: width/6.5, height: 29)
@@ -181,6 +182,18 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         self.socialContainerView.addSubview(beatsButton)
     }
     
+    func showFollowers () {
+        guard hasNetworkConnection(show: true) else { return }
+        self.performSegue(withIdentifier: "showFollowers", sender: self)
+    }
+    
+    func updateNumberOfbeats() {
+        print("Updating beat number")
+        guard beatsButton != nil else { return }
+        guard journey != nil else { return }
+        beatsButton.textLabel.text = "\(self.journey!.beats.count)"
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         if fromVC == "journeys" {
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
@@ -190,6 +203,8 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 self.syncButton.setToNotInSync()
             }
         }
+        setUpPins()
+        updateNumberOfbeats()
     }
     
     
@@ -274,6 +289,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         print("Setup pins")
         var pinArr = [BeatPin]()
         print("There are saved beats")
+        self.journeyMap.removeAnnotations(self.journeyMap.annotations)
         for beat in (self.journey?.beats)! {
             var message = ""
             var subtitle = ""
