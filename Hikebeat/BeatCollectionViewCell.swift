@@ -39,6 +39,9 @@ class BeatCollectionViewCell: UICollectionViewCell {
         self.scrollView.isScrollEnabled = false
         spinner.hidesWhenStopped = true
         self.deleteBoxView.layer.cornerRadius = self.deleteBoxView.bounds.height/2
+//        self.deleteButton.imageView?.image = self.deleteButton.imageView?.image!.withRenderingMode(.alwaysTemplate)
+//        self.deleteButton.imageView?.tintColor = lightGreen
+        self.deleteBoxView.backgroundColor = darkGreen
     }
     
     func setImage() {

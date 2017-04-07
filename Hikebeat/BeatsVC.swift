@@ -106,6 +106,8 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
             let indexPath = self.beatsCollectionView.indexPath(for: cell)!
             self.beats.remove(at: indexPath.item)
             self.beatsCollectionView.deleteItems(at: [indexPath])
+            self.pageControl.numberOfPages = self.beatsCollectionView.numberOfItems(inSection: 0)
+            self.pageControl.updateCurrentPageDisplay()
             let realm = try! Realm()
             deleteBeat(messageId: beat.messageId!)
             .onSuccess(callback: { (success) in
