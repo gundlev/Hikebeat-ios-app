@@ -23,13 +23,22 @@ class BeatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var mediaType: UILabel!
     @IBOutlet weak var mediaLength: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var deleteBoxView: UIView!
+    @IBOutlet weak var deleteButton: UIButton!
     
     var beat: Beat!
     var save = true
+    var fromVC: BeatsVC!
+    
+    @IBAction func deleteBeat(_ sender: Any) {
+        print("Delete beat")
+        fromVC.deleteBeatCell(cell: self, beat: beat)
+    }
     
     override func awakeFromNib() {
         self.scrollView.isScrollEnabled = false
         spinner.hidesWhenStopped = true
+        self.deleteBoxView.layer.cornerRadius = self.deleteBoxView.bounds.height/2
     }
     
     func setImage() {

@@ -271,17 +271,32 @@ class ProfileVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerD
         self.nationalityLabel.text = Countries[row]
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        let rightImage = image.correctlyOrientedImage()
-        let imageData = UIImageJPEGRepresentation(rightImage, 0.5)
-
-        if picker.sourceType == .camera {
-            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+//        let rightImage = image.correctlyOrientedImage()
+//        let imageData = UIImageJPEGRepresentation(rightImage, 0.5)
+//
+//        if picker.sourceType == .camera {
+//            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+//        }
+//        
+//        _ = saveProfileImageToDocs(imageData!)
+//        
+//        self.dismiss(animated: true, completion: nil)
+//    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            
+            let rightImage = image.correctlyOrientedImage()
+            let imageData = UIImageJPEGRepresentation(rightImage, 0.5)
+            
+            if picker.sourceType == .camera {
+                UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+            }
+            
+            _ = saveProfileImageToDocs(imageData!)
         }
-        
-        _ = saveProfileImageToDocs(imageData!)
-        
-        self.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil);
     }
     
     func saveProfileImageToDocs(_ mediaData: Data) -> Bool {

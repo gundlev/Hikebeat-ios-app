@@ -129,6 +129,10 @@ class JourneysVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         //TODO: save deletion in changes.
                         let change = createSimpleChange(type: .deleteJourney, key: journey.journeyId, value: nil, valueBool: nil)
                         saveChange(change: change)
+                        try! self.realm.write {
+                            self.realm.delete(journey)
+                            print("Journey deleted")
+                        }
                     }
                 })
                 tableView.deleteRows(at: [indexPath], with: .fade)

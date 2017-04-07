@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import RealmSwift
+import SwiftyDrop
 
 class BeatsVC: UIViewController, AVAudioPlayerDelegate {
 
@@ -18,6 +19,7 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     
     @IBOutlet weak var pageCtrlLabel: UILabel!
     @IBOutlet weak var altPageControl: UIView!
+    @IBOutlet weak var deleteBeatButton: UIButton!
     
     var startingIndex: Int!
     var journey: Journey!
@@ -27,7 +29,6 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     var chosenImage: UIImage?
     var save = true
 
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -90,6 +91,44 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         return 1
     }
     
+    func deleteBeatCell(cell: BeatCollectionViewCell, beat: Beat) {
+        guard beat.messageId != nil else {
+            Drop.down("This beat was send as text message and can not be deleted at this time.", state: .error)
+            return
+        }
+        print("delete from collection")
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        _ = alertView.addButton("Yes") {
+            let indexPath = self.beatsCollectionView.indexPath(for: cell)!
+            self.beats.remove(at: indexPath.item)
+            self.beatsCollectionView.deleteItems(at: [indexPath])
+            let realm = try! Realm()
+            deleteBeat(messageId: beat.messageId!)
+            .onSuccess(callback: { (success) in
+                try! realm.write {
+                    realm.delete(beat)
+                    print("Beat deleted")
+                }
+            }).onFailure(callback: { (error) in
+                let change = createSimpleChange(type: .deleteBeat, key: beat.messageId!, value: nil, valueBool: nil)
+                saveChange(change: change)
+                try! realm.write {
+                    realm.delete(beat)
+                    print("Beat deleted")
+                }
+            })
+        }
+        _ = alertView.addButton("No") {}
+        _ = alertView.showNotice("Are you sure?", subTitle: "\nAre you sure you want to delete this beat permanently?")
+        
+
+        // TODO delete beat
+        
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeatCell", for: indexPath) as! BeatCollectionViewCell
@@ -111,6 +150,9 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.beatImage.layer.cornerRadius = 25
         cell.beatImage.layer.masksToBounds = true
 
+        cell.deleteBoxView.isHidden = !save
+        cell.fromVC = self
+        
         if beat.emotion != nil {
             if beat.emotion != "" {
                 let emotionName = beat.emotion!.lowercased()
@@ -177,6 +219,8 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         guard let mediaType = beat.mediaType else {
             cell.mediaType.text = " "
             cell.beatImage.isHidden = true
+            cell.beatImage.image = nil
+            cell.mediaType.text = ""
             cell.playButton.isHidden = true
             return cell
         }
@@ -191,14 +235,6 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
                 cell.setImage()
             case MediaType.video:
                 print("video")
-//                let frameCount = 16
-//                let delayTime  = Float(0.2)
-//                let loopCount  = 0    // 0 means loop forever
-//                let videoURL = getPathToFileFromName(beat.mediaData!)
-//                Regift.createGIFFromSource(videoURL!, frameCount: frameCount, delayTime: delayTime, loopCount: loopCount) { (result) in
-//                    print("Gif saved to \(result)")
-//                }
-
                 cell.beatImage.image = UIImage(named: "video-btn")
                 cell.playButton.tag = (indexPath as NSIndexPath).item
                 cell.mediaType.text = "Video"

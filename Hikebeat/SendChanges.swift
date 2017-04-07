@@ -88,6 +88,17 @@ func sendChanges(_ changes: Results<Change>) -> Future<Bool, HikebeatError> {
                 })
             case .deleteBeat:
                 print("Deleting beat")
+                let pair = change.values[0]
+                deleteBeat(messageId: pair.key!)
+                .onSuccess(callback: { (success) in
+                    if success {
+                        successOnChange()
+                        checkStatus()
+                    } else {
+                        numberOfFails += 1
+                        checkStatus()
+                    }
+                })
             case .notifications:
                 print("changing notification")
                 updateUser([change])

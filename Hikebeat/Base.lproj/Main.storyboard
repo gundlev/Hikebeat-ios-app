@@ -641,7 +641,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iU3-FC-Bdt">
-                                <rect key="frame" x="0.0" y="84" width="414" height="652"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="603"/>
                                 <subviews>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurryBG" translatesAutoresizingMaskIntoConstraints="NO" id="5Z0-bj-OAe">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="190"/>
@@ -650,7 +650,7 @@
                                         </constraints>
                                     </imageView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pg5-wr-AFv">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="662"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="613"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="separatorColor" red="0.69063067436218262" green="0.97938668727874756" blue="0.034069672226905823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -920,7 +920,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxU-Co-lkh">
-                                <rect key="frame" x="20" y="0.0" width="374" height="736"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="687"/>
                                 <connections>
                                     <segue destination="ER6-VT-u8l" kind="embed" identifier="instantiateContainer" id="pi2-k5-Xd8"/>
                                 </connections>
@@ -1231,10 +1231,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-Fy-3rY" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="82" width="414" height="654"/>
+                                <rect key="frame" x="0.0" y="82" width="414" height="605"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeBG" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-0V-XXL">
-                                        <rect key="frame" x="23" y="23" width="368" height="608"/>
+                                        <rect key="frame" x="23" y="23" width="368" height="559"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ComposeTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbM-IN-8hJ">
                                         <rect key="frame" x="174.66666666666666" y="26" width="66" height="66"/>
@@ -1421,10 +1421,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dcF-oM-r1p" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="82" width="414" height="654"/>
+                                <rect key="frame" x="0.0" y="82" width="414" height="605"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoActiveBG" translatesAutoresizingMaskIntoConstraints="NO" id="Soi-Tr-1wP">
-                                        <rect key="frame" x="25" y="25" width="364" height="604"/>
+                                        <rect key="frame" x="25" y="25" width="364" height="555"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Hikebeat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSQ-si-Rgb">
                                         <rect key="frame" x="95.666666666666686" y="283" width="223" height="21"/>
@@ -1491,7 +1491,7 @@
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4rj-VC-Voc">
-                                <rect key="frame" x="4" y="82" width="404" height="654"/>
+                                <rect key="frame" x="4" y="82" width="404" height="605"/>
                                 <color key="backgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.24313725489999999" green="0.60784313729999995" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -1664,7 +1664,7 @@
                         <viewControllerLayoutGuide type="bottom" id="rgE-8x-bKU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="m8g-a9-kD0">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="687"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoA-M5-6Ls">
@@ -2021,7 +2021,7 @@
                         <viewControllerLayoutGuide type="bottom" id="un1-mj-ApT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aN1-AS-9TY">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="687"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYt-uB-2I8">
@@ -2482,7 +2482,7 @@
                                         </constraints>
                                         <state key="normal" image="TrashIcon"/>
                                         <connections>
-                                            <action selector="clearButtonTapped:" destination="jTg-CM-etK" eventType="touchUpInside" id="TpL-5r-bz6"/>
+                                            <action selector="deleteBeat:" destination="XLv-Pj-6mX" eventType="touchUpInside" id="uEa-eA-ZG0"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2612,8 +2612,8 @@
                                                                                     <action selector="playBeatVideoOrAudio:" destination="XLv-Pj-6mX" eventType="touchUpInside" id="abq-3d-HEP"/>
                                                                                 </connections>
                                                                             </button>
-                                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0SG-Dc-CJq">
-                                                                                <rect key="frame" x="105" y="259" width="20" height="20"/>
+                                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0SG-Dc-CJq">
+                                                                                <rect key="frame" x="104" y="259" width="20" height="20"/>
                                                                             </activityIndicatorView>
                                                                         </subviews>
                                                                         <constraints>
@@ -2659,14 +2659,39 @@
                                                                 <color key="textColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984109401702881" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ozo-zX-XGq">
+                                                                <rect key="frame" x="256" y="22" width="35" height="35"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbt-Cb-zZ2">
+                                                                        <rect key="frame" x="8.6666666666666856" y="6.6666666666666661" width="18" height="22"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="22" id="WjR-3g-pa9"/>
+                                                                            <constraint firstAttribute="width" constant="18" id="dlE-9s-Qw7"/>
+                                                                        </constraints>
+                                                                        <state key="normal" image="TrashIcon"/>
+                                                                        <connections>
+                                                                            <action selector="deleteBeat:" destination="Pdd-qJ-giq" eventType="touchUpInside" id="Gg2-1a-aN1"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="1" green="0.16296030991916477" blue="0.24637098935031387" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="35" id="6VY-Sm-hwE"/>
+                                                                    <constraint firstItem="Nbt-Cb-zZ2" firstAttribute="centerY" secondItem="Ozo-zX-XGq" secondAttribute="centerY" id="IiV-GS-OQ5"/>
+                                                                    <constraint firstItem="Nbt-Cb-zZ2" firstAttribute="centerX" secondItem="Ozo-zX-XGq" secondAttribute="centerX" id="NBV-qL-1sp"/>
+                                                                    <constraint firstAttribute="height" constant="35" id="uVG-Le-yKb"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
                                                     </view>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="HHU-tH-hDs" firstAttribute="top" secondItem="ybq-Kq-TSU" secondAttribute="bottom" constant="-21" id="5Xh-1n-oTy"/>
+                                                        <constraint firstItem="Ozo-zX-XGq" firstAttribute="leading" secondItem="HHU-tH-hDs" secondAttribute="trailing" constant="-25" id="6X5-jj-TTd"/>
                                                         <constraint firstItem="RGl-Rh-Q1n" firstAttribute="top" secondItem="HHU-tH-hDs" secondAttribute="bottom" constant="10" id="PMY-e4-X5E"/>
                                                         <constraint firstItem="HHU-tH-hDs" firstAttribute="centerX" secondItem="Pdd-qJ-giq" secondAttribute="centerX" id="Pk9-Et-ebH"/>
                                                         <constraint firstItem="ybq-Kq-TSU" firstAttribute="centerX" secondItem="Pdd-qJ-giq" secondAttribute="centerX" id="WU0-gO-8KZ"/>
+                                                        <constraint firstItem="HHU-tH-hDs" firstAttribute="top" secondItem="Ozo-zX-XGq" secondAttribute="bottom" constant="-24" id="jCX-QL-wFA"/>
                                                         <constraint firstItem="RGl-Rh-Q1n" firstAttribute="centerX" secondItem="Pdd-qJ-giq" secondAttribute="centerX" id="qif-PI-g8b"/>
                                                         <constraint firstItem="HHU-tH-hDs" firstAttribute="centerY" secondItem="Pdd-qJ-giq" secondAttribute="centerY" id="ybx-0F-mGi"/>
                                                     </constraints>
@@ -2676,6 +2701,8 @@
                                                         <outlet property="beatMessage" destination="INt-Dc-Bfd" id="Qca-2d-CcG"/>
                                                         <outlet property="beatTime" destination="RGl-Rh-Q1n" id="cD0-Q1-BKc"/>
                                                         <outlet property="beatTitle" destination="eqz-BS-Eh6" id="XB6-Zv-Vop"/>
+                                                        <outlet property="deleteBoxView" destination="Ozo-zX-XGq" id="kRo-ow-Mt6"/>
+                                                        <outlet property="deleteButton" destination="Nbt-Cb-zZ2" id="rGg-Bf-OM8"/>
                                                         <outlet property="journeyTitle" destination="MMY-zu-C9m" id="CBH-w1-O3c"/>
                                                         <outlet property="mediaLength" destination="JkW-8z-Cix" id="1eP-H5-pkq"/>
                                                         <outlet property="mediaType" destination="CVN-V6-3TL" id="WoW-g9-VTY"/>
@@ -2729,6 +2756,7 @@
                     <connections>
                         <outlet property="altPageControl" destination="roS-nl-PvL" id="sBM-wJ-wsY"/>
                         <outlet property="beatsCollectionView" destination="il6-8V-iJa" id="3UM-zg-WFx"/>
+                        <outlet property="deleteBeatButton" destination="Tf5-1B-iNE" id="LXg-2B-XVT"/>
                         <outlet property="pageControl" destination="IP1-Ki-95A" id="9kE-Ee-l7f"/>
                         <outlet property="pageCtrlLabel" destination="bgk-h1-D1d" id="ZrH-pn-n1b"/>
                     </connections>
@@ -2736,7 +2764,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhY-dn-iVU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="le5-b6-Ri6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4214" y="-1165"/>
+            <point key="canvasLocation" x="4213.04347826087" y="-1165.7608695652175"/>
         </scene>
         <!--Edit EmotionVC-->
         <scene sceneID="sdX-Hq-OKK">
@@ -3125,10 +3153,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mw6-vZ-MpA">
-                                <rect key="frame" x="0.0" y="84" width="414" height="652"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jzE-AZ-CRb">
-                                        <rect key="frame" x="0.0" y="190" width="414" height="462"/>
+                                        <rect key="frame" x="0.0" y="190" width="414" height="413"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NameProfileIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zOy-vm-Hyv">
                                                 <rect key="frame" x="63" y="38" width="35" height="35"/>
@@ -3151,7 +3179,7 @@
                                                     <constraint firstAttribute="width" constant="35" id="G2n-G5-T3P"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4A54E137-4C47-4028-98EE-46E714090F73" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EF9BAD7A-39A4-4441-8C3E-AEF9B16506AF" translatesAutoresizingMaskIntoConstraints="NO" id="RgJ-PR-aeW">
                                                 <rect key="frame" x="63" y="268" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="M4o-FV-N6X"/>
@@ -3694,7 +3722,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-Xj-PFb" customClass="aCustomView" customModule="Hikebeat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="82" width="414" height="654"/>
+                                <rect key="frame" x="0.0" y="82" width="414" height="605"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0u7-cU-1u7">
                                         <rect key="frame" x="16" y="29" width="36" height="36"/>
@@ -5756,7 +5784,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ywo-0K-Xyv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="P6H-SX-wNq">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="687"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gmk-AZ-dfL">
@@ -5817,7 +5845,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Oe-LK-Obc">
-                                <rect key="frame" x="-4" y="82" width="382" height="654"/>
+                                <rect key="frame" x="-4" y="82" width="382" height="605"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ON4-ad-q2U">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="125"/>
@@ -6090,7 +6118,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="4A54E137-4C47-4028-98EE-46E714090F73" width="24" height="30">
+        <image name="ActivedIcon" width="32" height="32"/>
+        <image name="BackArrow" width="15" height="20"/>
+        <image name="BlurryBG" width="375" height="190"/>
+        <image name="CloseIcon" width="23" height="23"/>
+        <image name="ComposeBG" width="330" height="473"/>
+        <image name="ComposeMemo" width="24" height="37"/>
+        <image name="ComposePhoto" width="40" height="31"/>
+        <image name="ComposeTitle" width="37" height="35"/>
+        <image name="ComposeVideo" width="39" height="31"/>
+        <image name="DefaultProfile" width="106" height="106"/>
+        <image name="DimiInTheHouse" width="106" height="106"/>
+        <image name="EF9BAD7A-39A4-4441-8C3E-AEF9B16506AF" width="24" height="30">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -6189,17 +6228,6 @@ AMIA2QDbAN0UvxTEFM8U2BTrFO8U+hUDFQgVEBUTFRgVJxUrFTIVOhVHFUwVThVQFVUVXRVgFWUVbRVw
 FYIVhRWKAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAFYw
 </mutableData>
         </image>
-        <image name="ActivedIcon" width="32" height="32"/>
-        <image name="BackArrow" width="15" height="20"/>
-        <image name="BlurryBG" width="375" height="190"/>
-        <image name="CloseIcon" width="23" height="23"/>
-        <image name="ComposeBG" width="330" height="473"/>
-        <image name="ComposeMemo" width="24" height="37"/>
-        <image name="ComposePhoto" width="40" height="31"/>
-        <image name="ComposeTitle" width="37" height="35"/>
-        <image name="ComposeVideo" width="39" height="31"/>
-        <image name="DefaultProfile" width="106" height="106"/>
-        <image name="DimiInTheHouse" width="106" height="106"/>
         <image name="EditTitle" width="112" height="103"/>
         <image name="EmotionIcon" width="38" height="33"/>
         <image name="GPSIcon" width="27" height="31"/>

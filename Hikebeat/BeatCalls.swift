@@ -10,6 +10,7 @@ import Foundation
 import BrightFutures
 import SwiftyDrop
 import SwiftyJSON
+import Alamofire
 
 func sendTextBeat(beat: Beat) -> Future<JSON, HikebeatError> {
     return Future { complete in
@@ -34,5 +35,27 @@ func sendTextBeat(beat: Beat) -> Future<JSON, HikebeatError> {
         }).onFailure(callback: { (error) in
             complete(.failure(error))
         })
+    }
+}
+
+func deleteBeat(messageId: String) -> Future<Bool, HikebeatError> {
+    return Future { complete in
+        guard hasNetworkConnection(show: false) else { complete(.failure(.noNetworkConnection)); return }
+        let url = IPAddress + "messages/\(messageId)"
+        
+        getSessionManager().request(url, method: .delete, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+            print("Delete response: ", response)
+            
+            guard successWith(response: response) else {
+                complete(.failure(.deleteBeat))
+                return
+            }
+            
+            if response.response?.statusCode == 200 {
+                complete(.success(true))
+            } else {
+                complete(.failure(.deleteBeat))
+            }
+        }
     }
 }
