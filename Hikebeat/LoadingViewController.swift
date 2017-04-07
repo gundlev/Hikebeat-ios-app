@@ -125,5 +125,16 @@ class LoadingViewController: UIViewController {
 //        // Present the welcome screen
 //        self.present(welcome, animated: true, completion: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier != nil else { return }
+        switch segue.identifier! {
+        case "showMain":
+            let vc = segue.destination as! HikebeatTabBarVC
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.tabBarVC = vc
+        default: return
+        }
+    }
 }
 

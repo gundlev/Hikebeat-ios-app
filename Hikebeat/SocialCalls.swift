@@ -36,6 +36,7 @@ func getFeaturedJourneys(nextPage: String) -> Future<[Journey], NoError> {
                     journey.journeyId = jsonJourney["_id"].stringValue
                     journey.numberOfBeats = jsonJourney["messageCount"].intValue
                     journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
+                    journey.slug = jsonJourney["slug"].string
                     journeys.append(journey)
                 }
 

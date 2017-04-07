@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     //a fast hack for displaying which VC initated a segue transition Social vs Journeys
     var fastSegueHack = ""
+    var linkedUserId: String?
+    var linkedJourneyId: String?
+    var fromDeepLink: Bool = false
+    var tabBarVC: HikebeatTabBarVC?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 //        UIApplication.shared.applicationIconBadgeNumber = 0
@@ -52,11 +56,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
                 // params will be empty if no data found
                 // ... insert custom logic here ...
+                if let userId = params?["userId"] as? String, let journeyId = params?["journeyId"] as? String {
+                    print("Found params from deep link")
+                    self.linkedUserId = userId
+                    self.linkedJourneyId = journeyId
+                    self.fromDeepLink = true
+                    if self.tabBarVC != nil {
+                        self.tabBarVC?.checkForDeepLink()
+                    }
+                } else {
+                    print("Dit NOT find params")
+                }
+
                 print("params: %@", params?.description)
             }
         })
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func resetAfterDeepLink() {
+        self.linkedJourneyId = nil
+        self.linkedUserId = nil
+        self.fromDeepLink = false
     }
     
     func startLocationManager() -> Bool {
@@ -226,8 +248,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("fetch noti")
-        UIApplication.shared.applicationIconBadgeNumber += 1
+//        UIApplication.shared.applicationIconBadgeNumber += 1
         print(userInfo)
+        print("NOTI userId: ", userInfo["userId"] as! String)
+        print("NOTI journeyId: ", userInfo["journeyId"] as! String)
+        if let userId = userInfo["journeyId"] as? String, let journeyId = userInfo["journeyId"] as? String {
+            self.linkedUserId = userId
+            self.linkedJourneyId = journeyId
+            self.fromDeepLink = true
+            if self.tabBarVC != nil {
+                self.tabBarVC?.checkForDeepLink()
+            }
+        }
         print("_________________")
     }
     

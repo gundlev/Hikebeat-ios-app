@@ -126,6 +126,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         }
     }
     
+    func deepLinkContinue() {
+        _ = self.performSegue(withIdentifier: "showDeepJourney", sender: self)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        activityIndicator.startAnimating()
         showActivity()
@@ -478,6 +482,10 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
+            case "showDeepJourney":
+                let vc = segue.destination as! JourneyContainerVC
+                vc.save = false
+                vc.fromVC = "search"
             case "showJourney":
                 let vc = segue.destination as! JourneyContainerVC
                 vc.journey = chosenJourney

@@ -7,3 +7,4 @@ github "auth0/JWTDecode.swift"
 github "morizotter/SwiftyDrop" ~> 3.0
 github "facebook/Facebook-SDK-Swift"
 github "ninjaprox/NVActivityIndicatorView"
+github "BranchMetrics/iOS-Deferred-Deep-Linking-SDK"

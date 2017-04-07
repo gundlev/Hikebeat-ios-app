@@ -46,6 +46,21 @@ class HikebeatTabBarVC: UITabBarController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.checkForDeepLink()
+    }
+    
+    func checkForDeepLink() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        guard appDelegate.fromDeepLink else { print("TAB: Not a deep link"); return }
+        appDelegate.fromDeepLink = false
+        self.selectedIndex = 1
+        self.deselectCenterButton()
+        let navVC = self.viewControllers![1] as! UINavigationController
+        let searchVC = navVC.viewControllers[0] as! SearchVC
+        searchVC.deepLinkContinue()
+    }
+    
     func addCenterButton() {
         
         let selected = UIImage(named: "TabBarMainSelected")!

@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import RealmSwift
 import SwiftyDrop
+import Branch
 
 class JourneyVC: UIViewController, MKMapViewDelegate {
 
@@ -36,6 +37,10 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     var pins = [BeatPin]()
     var indexOfChosenPin: Int?
     var fromVC = ""
+    let width = UIScreen.main.bounds.width
+    
+    var linkedUserId: String?
+    var linkedJourneyId: String?
     
     @IBAction func profileButtonTapped(_ sender: Any) {
         self.goToProfile()
@@ -43,7 +48,6 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let width = UIScreen.main.bounds.width
         
         // Do any additional setup after loading the view.
         
@@ -71,47 +75,38 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         
         profileImage.layer.cornerRadius = profileImage.bounds.height/2
         profileImage.layer.masksToBounds = true
-        setUpPins()
+//        setUpPins()
         
         if fromVC != "journeys" {
-            if (journey?.beats.isEmpty)! {
-                getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
-                .onSuccess(callback: { (beatsJson) in
-                    let realm = try! Realm()
-                    try! realm.write {
-                        print("here")
-                        for (_, beatJson) in beatsJson {
-                            print("___________________________")
-                            print(beatJson)
-                            let beat = Beat()
-                            let mediaType = beatJson["media"]["type"].stringValue
-                            let mediaUrl = beatJson["media"]["path"].stringValue
-                            let mediaDataId = beatJson["media"]["_id"].stringValue
-                            beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
-                            self.journey!.beats.append(beat)
-                        }
-                        self.updateNumberOfbeats()
-//                        self.beatsButton.textLabel.text = self.journey.
-                        print("john")
-                        self.setUpPins()
-                    }
+            if self.journey != nil {
+                getAndSetBeatsForEmptyJourney()
+            } else {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                self.linkedUserId = appDelegate.linkedUserId
+                self.linkedJourneyId = appDelegate.linkedJourneyId
+                appDelegate.resetAfterDeepLink()
+                guard linkedUserId != nil && linkedJourneyId != nil else { return }
+                getJourneyWithId(userId: self.linkedUserId!, journeyId: self.linkedJourneyId!)
+                .onSuccess(callback: { (journey) in
+                    self.journey = journey
+                    self.titleLabel.text = journey.headline
+//                    print(6.1)
+                    self.setProfileImage()
+//                    print(6.2)
+                    self.setUsername()
+                    self.updateNumberOfbeats()
+                    self.setTapGestures()
+                    self.setUpPins()
+                    self.setBeatsAndFollowersButtons(numberOfBeats: journey.numberOfBeats, numberOfFollowers: journey.numberOfFollowers)
+                    self.addFollowButton()
                 }).onFailure(callback: { (error) in
-                    print("problem getting full journey, error: ", error)
+                    print("Failed with error ", error)
                 })
             }
-            
-            let followButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
-            followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: (journey?.isFollowed)!, journey: self.journey!, onPress: {
-                success in
-                if success {
-                    self.followersButton.textLabel.text = "\((self.journey?.numberOfFollowers)!)"
-                }
-            })
-            self.socialContainerView.addSubview(followButton)
-            self.setBeatsAndFollowersButtons(numberOfBeats: (journey?.numberOfBeats)!, numberOfFollowers: (journey?.numberOfFollowers)!)
         } else {
-//            setUpPins()
-            
+            setUpPins()
+            titleLabel.text = journey?.headline
+    
             let syncButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
             syncButton = LargeSyncButton(frame: syncButtonFrame, inSync: inSync, onPress: {
@@ -133,11 +128,15 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
             }).onFailure(callback: { (error) in
                 print("Error getting followers: ", error)
             })
+            self.setProfileImage()
+            self.setUsername()
+            self.setTapGestures()
         }
 
 //        titleButton.setTitle(journey?.headline, for: UIControlState())
-        titleLabel.text = journey?.headline
-        
+    }
+    
+    func setTapGestures() {
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(showLatestBeat))
         
@@ -145,9 +144,54 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         followersLabel.addGestureRecognizer(tap2)
         beatIcon.isUserInteractionEnabled = true
         followersLabel.isUserInteractionEnabled = true
-        
+    }
+    
+    func getAndSetBeatsForEmptyJourney() {
+        print(6)
+        titleLabel.text = journey?.headline
+        print(6.1)
         self.setProfileImage()
+        print(6.2)
         self.setUsername()
+        print(7)
+        if (journey?.beats.isEmpty)! {
+            getBeatsForJourney(userId: (journey?.userId)!, journeyId: (journey?.journeyId)!)
+            .onSuccess(callback: { (beatsJson) in
+                let realm = try! Realm()
+                try! realm.write {
+                    print("here")
+                    for (_, beatJson) in beatsJson {
+                        print("___________________________")
+                        print(beatJson)
+                        let beat = Beat()
+                        let mediaType = beatJson["media"]["type"].stringValue
+                        let mediaUrl = beatJson["media"]["path"].stringValue
+                        let mediaDataId = beatJson["media"]["_id"].stringValue
+                        beat.fill(beatJson["emotion"].stringValue, journeyId: (self.journey?.journeyId)!, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: self.journey!)
+                        self.journey!.beats.append(beat)
+                    }
+                    self.updateNumberOfbeats()
+                    self.setTapGestures()
+                    self.setUpPins()
+                }
+            }).onFailure(callback: { (error) in
+                print("problem getting full journey, error: ", error)
+            })
+        }
+        
+        self.addFollowButton()
+        self.setBeatsAndFollowersButtons(numberOfBeats: (journey?.numberOfBeats)!, numberOfFollowers: (journey?.numberOfFollowers)!)
+    }
+    
+    func addFollowButton() {
+        let followButtonFrame = CGRect(x: width/2 + 40, y: 12, width: (width/6.5)*2 + 20, height: 29)
+        followButton = LargeFollowButton(frame: followButtonFrame, isFollowing: (journey?.isFollowed)!, journey: self.journey!, onPress: {
+            success in
+            if success {
+                self.followersButton.textLabel.text = "\((self.journey?.numberOfFollowers)!)"
+            }
+        })
+        self.socialContainerView.addSubview(followButton)
     }
     
     func setBeatsAndFollowersButtons(numberOfBeats: Int, numberOfFollowers: Int) {
@@ -195,6 +239,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        guard journey != nil else { return }
         if fromVC == "journeys" {
             let inSync = journeyIsInSync(journeyId: journey!.journeyId)
             if inSync {
@@ -238,9 +283,12 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
                 let tabGesture = UITapGestureRecognizer(target: self, action: #selector(self.test))
                 self.profileImage.addGestureRecognizer(tabGesture)
             } else {
+                print(6.3)
                 downloadImage(imageUrl: (self.journey?.ownerProfilePhotoUrl)!)
                 .onSuccess(callback: { (image) in
+                    print(6.4)
                     self.profileImage.image = image
+                    print(6.5)
                     let tabGesture = UITapGestureRecognizer(target: self, action: #selector(self.test))
                     self.profileImage.addGestureRecognizer(tabGesture)
                 }).onFailure(callback: { (error) in
@@ -480,6 +528,38 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     @IBAction func shareButton(_ sender: AnyObject) {
         // Real implementation
+        guard journey != nil else { return }
+        let branchUniversalObject: BranchUniversalObject = BranchUniversalObject(canonicalIdentifier: "journey/12345")
+        branchUniversalObject.title = "\(journey!.headline!)"
+        branchUniversalObject.contentDescription = "Follow the journey on Hikebeat!"
+        branchUniversalObject.imageUrl = "https://hikebeat.io/assets/img/bigLogo.png"
+        branchUniversalObject.addMetadataKey("journeyId", value: "\(self.journey!.journeyId)")
+        branchUniversalObject.addMetadataKey("userId", value: "\(self.journey!.userId)")
+
+        
+        let linkProperties: BranchLinkProperties = BranchLinkProperties()
+        linkProperties.feature = "sharing"
+        linkProperties.channel = "App"
+        linkProperties.addControlParam("$desktop_url", withValue: "http://hikebeat.io/\(journey != nil ? "\(journey!.username!)/\(self.journey!.slug!)" : "")")
+        linkProperties.addControlParam("$ios_deepview", withValue: "default_template")
+//        linkProperties.addControlParam("$ios_url", withValue: "http://hikebeat.io/\(journey != nil ? "\(journey!.username!)/\(self.journey!.slug!)" : "")")
+        
+//        branchUniversalObject.getShortUrl(with: linkProperties) { (url, error) in
+//            if error == nil {
+//                print("got my Branch link to share: %@", url)
+//            }
+//        }
+
+        branchUniversalObject.showShareSheet(with: linkProperties,
+                                             andShareText: "Follow my journey here!",
+                                             from: self) { (activityType, completed) in
+                                                if (completed) {
+                                                    print(String(format: "Completed sharing to %@", activityType!))
+                                                } else {
+                                                    print("Link sharing cancelled")
+                                                }
+        }
+        
         let slug = journey?.slug
         let user = journey?.username
         let base = "https://hikebeat.io/"

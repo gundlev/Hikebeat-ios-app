@@ -169,26 +169,39 @@ func getNumberOfFollowersFor(journeyId: String) -> Future<Int, HikebeatError> {
     }
 }
 
-//func getJourneyWithId(userId: String, journeyId: String) -> Future<Journey, HikebeatError> {
-//    return Future { complete in
-//        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"
-//        print(urlJourney)
-//        getSessionManager().request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: Headers).responseJSON { response in
-//            if response.response?.statusCode == 200 {
-//                if response.result.value != nil {
-//                    let rawJson = JSON(response.result.value!)
-//                    let json = rawJson["data"]
-//                    saveJourneyWithNoData(journeyJson: json, userId: userId)
-//                    .onSuccess(callback: { (journey) in
-//                        complete(.success(journey))
-//                    }).onFailure(callback: { (error) in
-//                        complete(.failure(error))
-//                    })
-//                    
-//                }
-//            } else {
-//                complete(.failure(.getJourneyWithId))
-//            }
-//        }
-//    }
-//}
+func getJourneyWithId(userId: String, journeyId: String) -> Future<Journey, HikebeatError> {
+    return Future { complete in
+        let urlJourney = IPAddress + "users/\(userId)/journeys/\(journeyId)"
+        print(urlJourney)
+        getSessionManager().request(urlJourney, method: .get, encoding: JSONEncoding.default, headers: getHeader()).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                if response.result.value != nil {
+                    print("DEEP journey response: ", response)
+                    let rawJson = JSON(response.result.value!)
+                    let jsonJourney = rawJson["data"]
+                    let journey = Journey()
+                    journey.headline = jsonJourney["headline"].stringValue
+                    journey.journeyId = jsonJourney["_id"].stringValue
+                    journey.numberOfBeats = jsonJourney["messageCount"].intValue
+                    journey.ownerProfilePhotoUrl = jsonJourney["ownerProfilePhoto"].string
+                    journey.userId = jsonJourney["userId"].stringValue
+                    journey.slug = jsonJourney["slug"].stringValue
+                    journey.username = jsonJourney["username"].stringValue
+                    journey.isFollowed = jsonJourney["isFollowed"].boolValue
+                    journey.numberOfFollowers = jsonJourney["numberOfFollowers"].intValue
+                    for (_, beatJson) in jsonJourney["messages"] {
+                        let beat = Beat()
+                        let mediaType = beatJson["media"]["type"].stringValue
+                        let mediaUrl = beatJson["media"]["path"].stringValue
+                        let mediaDataId = beatJson["media"]["_id"].stringValue
+                        beat.fill(beatJson["emotion"].stringValue, journeyId: journey.journeyId, message: beatJson["text"].stringValue, latitude: beatJson["lat"].stringValue, longitude: beatJson["lng"].stringValue, altitude: beatJson["alt"].stringValue, timestamp: beatJson["timeCapture"].stringValue, mediaType: beatJson["media"]["type"].stringValue, mediaData: nil, mediaDataId: mediaDataId, mediaUrl: mediaUrl, messageId: beatJson["_id"].stringValue, mediaUploaded: true, messageUploaded: true, journey: journey)
+                        journey.beats.append(beat)
+                    }
+                    complete(.success(journey))
+                }
+            } else {
+                complete(.failure(.getJourneyWithId))
+            }
+        }
+    }
+}
