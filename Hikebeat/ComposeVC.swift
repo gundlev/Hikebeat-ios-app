@@ -250,6 +250,7 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
             firstLoad = false
         }
         handleViewPresentation()
+        tableViewSelectJourney.isHidden = false
     }
     
     
