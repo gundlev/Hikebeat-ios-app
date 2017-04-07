@@ -35,6 +35,35 @@ class SMSWalkthroughModalVC: HikebeatWalkthroughViewController {
         let step_five = stb.instantiateViewController(withIdentifier: "SMS_modal_step_5")
         let step_one_repeat = stb.instantiateViewController(withIdentifier: "SMS_modal_step_1")
         
+        let allSteps = [step_one, step_two, step_three, step_four, step_five, step_one_repeat]
+        
+        if (UIDevice.isIphone4 || UIDevice.isIpad){
+            allSteps.forEach {
+                
+                guard let containerView = $0.view else{
+                    return
+                }
+                
+                containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.65, y: 0.65)
+                containerView.transform = containerView.transform.translatedBy(x: 0.0, y: -110.0)
+                
+                let myLayer = CALayer()
+                if let imageView = containerView.subviews[0] as? UIImageView,
+                    let myImage = imageView.image?.cgImage{
+                    
+                    
+                    let magicNumber = UIScreen.main.bounds.height < 667 ? -20 : -110
+                    
+                    myLayer.frame = CGRect(x: -UIScreen.main.bounds.width/3.7, y: CGFloat(magicNumber), width: UIScreen.main.bounds.width*1.65, height: UIScreen.main.bounds.height*1.65)
+                    myLayer.contents = myImage
+                    
+                    containerView.subviews[0].clipsToBounds = false
+                    containerView.clipsToBounds = false
+                    containerView.subviews[0].layer.addSublayer(myLayer)
+                }
+            }
+        }
+        
         // Attach the pages to the master
         self.add(viewController: step_one)
         self.add(viewController: step_two)

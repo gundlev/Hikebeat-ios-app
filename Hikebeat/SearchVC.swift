@@ -116,6 +116,20 @@ class SearchVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UIT
 //            scrollView.addSubview(searchTableView)
 //            scrollView.addSubview(usersTableView)
             
+            
+            if (UIDevice.isIphone4 || UIDevice.isIpad){
+                let adjustViews = [placeholderNoConnection, placeholderInitial, placeholderNoResults]
+                
+                adjustViews.forEach {
+                    guard let containerView = $0 else {
+                        return
+                    }
+                    
+                    containerView.transform = CGAffineTransform.identity.scaledBy(x: 0.65, y: 0.65)
+                    containerView.transform = containerView.transform.translatedBy(x: 0.0, y: -110.0)
+                }
+            }
+            
             activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: height/2-25, width: width, height: 50))
             activityIndicator.hidesWhenStopped = true
             self.view.addSubview(activityIndicator)
