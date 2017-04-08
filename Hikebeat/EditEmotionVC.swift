@@ -22,6 +22,10 @@ class EditEmotionVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         saveButton.layer.cornerRadius = saveButton.bounds.height/2
         saveButton.layer.masksToBounds = true
         collectionView.isHidden = false
+        
+        if (UIDevice.isIphone4 || UIDevice.isIpad) {
+            collectionView.transform = CGAffineTransform.identity.scaledBy(x: 0.85, y: 0.85)
+        }
 //        self.view.addSubview(self.collectionView)
     }
     
