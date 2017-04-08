@@ -134,7 +134,7 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BeatCell", for: indexPath) as! BeatCollectionViewCell
-        
+        cell.clear()
         let beat = self.beats[(indexPath as NSIndexPath).item]
         print("Beat Emotion: ", beat.emotion)
         cell.beat = beat
@@ -155,16 +155,18 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.deleteBoxView.isHidden = !save
         cell.fromVC = self
         
-        if beat.emotion != nil {
-            if beat.emotion != "" {
-                let emotionName = beat.emotion!.lowercased()
-                cell.profilePicture.image = UIImage(named: emotionName+"_selected")
-            } else {
-                cell.profilePicture.image = UIImage(named: "missingMoodIcon")
-            }
-        } else {
-            cell.profilePicture.image = UIImage(named: "missingMoodIcon")
-        }
+//        if beat.emotion != nil {
+//            if beat.emotion != "" {
+//                let emotionName = beat.emotion!.lowercased()
+//                cell.profilePicture.image = UIImage(named: emotionName+"_selected")
+//            } else {
+//                cell.profilePicture.image = UIImage(named: "missingMoodIcon")
+//            }
+//        } else {
+//            cell.profilePicture.image = UIImage(named: "missingMoodIcon")
+//        }
+        
+        
 //        let dataPath = getImagePath("profile_image.jpg")
 //        let image = UIImage(contentsOfFile: dataPath)
 //        if image != nil {
@@ -198,8 +200,8 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         cell.scrollView.isScrollEnabled = false
         
         cell.journeyTitle.text = journey.headline
-//        cell.beatTitle.text = beat.title
-        cell.beatMessage.text = beat.message
+////        cell.beatTitle.text = beat.title
+//        cell.beatMessage.text = beat.message
         
         
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.bounds.height/2
@@ -207,52 +209,53 @@ extension BeatsVC : UICollectionViewDataSource, UICollectionViewDelegate{
         
         cell.scrollView.contentSize = CGSize(width: 230, height: 1000)
         
-        // setting date
-        let formatter = DateFormatter()
-        let date = Date(timeIntervalSince1970: TimeInterval(Int(beat.timestamp)!))
-        formatter.dateFormat = "d MMMM YYYY H:mm"
-        let timeString = formatter.string(from: date)
-        cell.beatTime.text = timeString
+//        // setting date
+//        let formatter = DateFormatter()
+//        let date = Date(timeIntervalSince1970: TimeInterval(Int(beat.timestamp)!))
+//        formatter.dateFormat = "d MMMM YYYY H:mm"
+//        let timeString = formatter.string(from: date)
+//        cell.beatTime.text = timeString
         
         
         // setting beat media
             print("Item :", (indexPath as NSIndexPath).item)
-        
-        guard let mediaType = beat.mediaType else {
-            cell.mediaType.text = " "
-            cell.beatImage.isHidden = true
-            cell.beatImage.image = nil
-            cell.mediaType.text = ""
-            cell.playButton.isHidden = true
-            return cell
-        }
-        
-        switch mediaType {
-            case MediaType.image:
-                print("image")
-                cell.playButton.tag = (indexPath as NSIndexPath).item
-                cell.beatImage.image = UIImage(named: "picture-btn")
-                cell.beatImage.contentMode = .scaleAspectFill
-                cell.mediaType.text = "Image"
-                cell.setImage()
-            case MediaType.video:
-                print("video")
-                cell.beatImage.image = UIImage(named: "video-btn")
-                cell.playButton.tag = (indexPath as NSIndexPath).item
-                cell.mediaType.text = "Video"
-                cell.setMedia(fileType: "mp4")
-            case MediaType.audio:
-                print("audio")
-                cell.beatImage.image = UIImage(named: "memo-btn-passive")
-                cell.playButton.tag = (indexPath as NSIndexPath).item
-                cell.mediaType.text = "Memo"
-                cell.setMedia(fileType: "m4a")
-            default:
-                print("default")
-                cell.mediaType.text = " "
-                cell.beatImage.isHidden = true
-                cell.playButton.isHidden = true
-        }
+        cell.playButton.tag = indexPath.item
+        cell.setForBeat(beat: beat)
+//        guard let mediaType = beat.mediaType else {
+//            cell.mediaType.text = " "
+//            cell.beatImage.isHidden = true
+//            cell.beatImage.image = nil
+//            cell.mediaType.text = ""
+//            cell.playButton.isHidden = true
+//            return cell
+//        }
+//        
+//        switch mediaType {
+//            case MediaType.image:
+//                print("image")
+//                cell.playButton.tag = (indexPath as NSIndexPath).item
+//                cell.beatImage.image = UIImage(named: "picture-btn")
+//                cell.beatImage.contentMode = .scaleAspectFill
+//                cell.mediaType.text = "Image"
+//                cell.setImage()
+//            case MediaType.video:
+//                print("video")
+//                cell.beatImage.image = UIImage(named: "video-btn")
+//                cell.playButton.tag = (indexPath as NSIndexPath).item
+//                cell.mediaType.text = "Video"
+//                cell.setMedia(fileType: "mp4")
+//            case MediaType.audio:
+//                print("audio")
+//                cell.beatImage.image = UIImage(named: "memo-btn-passive")
+//                cell.playButton.tag = (indexPath as NSIndexPath).item
+//                cell.mediaType.text = "Memo"
+//                cell.setMedia(fileType: "m4a")
+//            default:
+//                print("default")
+//                cell.mediaType.text = " "
+//                cell.beatImage.isHidden = true
+//                cell.playButton.isHidden = true
+//        }
         return cell
     }
     

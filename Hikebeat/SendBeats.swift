@@ -30,6 +30,7 @@ func sendBeats(_ messageBeats: Results<Beat>) -> Future<Bool, HikebeatError> {
 //                print("After2: \(messageBeats.count)")
 
                 count += 1
+                print("Done uploading beat")
                 if messageBeats.count == 0 {
                     print("Done uploading textbeats with no fails")
                     complete(.success(true))

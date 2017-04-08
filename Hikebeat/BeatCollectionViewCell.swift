@@ -44,6 +44,74 @@ class BeatCollectionViewCell: UICollectionViewCell {
         self.deleteBoxView.backgroundColor = darkGreen
     }
     
+    func clear() {
+        self.mediaType.text = " "
+        self.beatImage.isHidden = true
+        self.beatImage.image = nil
+        self.mediaType.text = ""
+        self.playButton.isHidden = true
+    }
+    
+    func setForBeat(beat: Beat) {
+
+        //        cell.beatTitle.text = beat.title
+        self.beatMessage.text = beat.message
+        
+        if beat.emotion != nil {
+            if beat.emotion != "" {
+                let emotionName = beat.emotion!.lowercased()
+                self.profilePicture.image = UIImage(named: emotionName+"_selected")
+            } else {
+                self.profilePicture.image = UIImage(named: "missingMoodIcon")
+            }
+        } else {
+            self.profilePicture.image = UIImage(named: "missingMoodIcon")
+        }
+        
+        // setting date
+        let formatter = DateFormatter()
+        let date = Date(timeIntervalSince1970: TimeInterval(Int(beat.timestamp)!))
+        formatter.dateFormat = "d MMMM YYYY H:mm"
+        let timeString = formatter.string(from: date)
+        self.beatTime.text = timeString
+        
+        guard let mediaType = beat.mediaType else {
+            self.mediaType.text = " "
+            self.beatImage.isHidden = true
+            self.beatImage.image = nil
+            self.mediaType.text = ""
+            self.playButton.isHidden = true
+            return
+        }
+        
+        switch mediaType {
+        case MediaType.image:
+            print("image")
+            self.beatImage.image = UIImage(named: "picture-btn")
+            self.beatImage.contentMode = .scaleAspectFill
+            self.mediaType.text = "Image"
+            self.setImage()
+        case MediaType.video:
+            print("video")
+            self.beatImage.image = UIImage(named: "video-btn")
+            self.mediaType.text = "Video"
+            self.setMedia(fileType: "mp4")
+        case MediaType.audio:
+            print("audio")
+            self.beatImage.image = UIImage(named: "memo-btn-passive")
+            self.mediaType.text = "Memo"
+            self.setMedia(fileType: "m4a")
+        default:
+            print("default")
+            self.mediaType.text = " "
+            self.beatImage.isHidden = true
+            self.beatImage.image = nil
+            self.mediaType.text = ""
+            self.playButton.isHidden = true
+        }
+
+    }
+    
     func setImage() {
         var filename = "/media/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).jpg"
         if !self.save {
