@@ -101,7 +101,7 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         titleLabel.text = ""
         usernameLabel.text = ""
-        usernameLabel.isHidden = true
+//        usernameLabel.isHidden = true
         
         if user != nil {
             print("User not nil")
@@ -165,7 +165,8 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         favoriteLabel.text = "\(user!.mostVisitedCountry != "none" ? Locale(identifier: "en_US").localizedString(forRegionCode: user!.mostVisitedCountry)! : "none")"
         journeysLabel.text = "\(user!.numberOfJourneys) journeys"
         beatsLabel.text = "\(user!.numberOfBeats) beats"
-        titleLabel.text = "\(user!.username)"
+        titleLabel.text = "@\(user!.username)"
+        usernameLabel.text = "\(user!.username)'s public profile"
     }
     
 // TableView functions

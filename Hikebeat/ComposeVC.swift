@@ -550,6 +550,9 @@ class ComposeVC: UIViewController, MFMessageComposeViewControllerDelegate, CLLoc
     }
     
     func mediaChosen(_ type: String) {
+        memoButtonCenterX = editMemoButton.center.x
+        imageButtonCenterX = editImageButton.center.x
+        
         switch type {
             case "video":
                 moveViewToCenter(editVideoButton)

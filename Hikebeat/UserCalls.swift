@@ -149,7 +149,7 @@ func loginWithFacebook(viewController: UIViewController) -> Future<Bool, Hikebea
         guard hasNetworkConnection(show: true) else {complete(.failure(.noNetworkConnection)); return}
         let loginManager = LoginManager()
         loginManager.logOut()
-        loginManager.logIn([ .publicProfile, .email, .userFriends ], viewController: viewController) { loginResult in
+        loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: viewController) { loginResult in
             switch loginResult {
             case .failed(let error):
                 print(error)
