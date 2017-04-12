@@ -124,6 +124,12 @@ class BeatCollectionViewCell: UICollectionViewCell {
             playButton.isHidden = false
             beatImage.image = UIImage(contentsOfFile: getImagePath(beat.mediaData!))
         } else {
+            guard !fileExist(path: filename) else {
+                beatImage.isHidden = false
+                playButton.isHidden = false
+                beatImage.image = UIImage(contentsOfFile: getImagePath(filename))
+                return
+            }
             // Media has to be downloaded first
             spinner.startAnimating()
             beatImage.isHidden = true
@@ -165,6 +171,13 @@ class BeatCollectionViewCell: UICollectionViewCell {
             if !self.save {
                 filename = "/temp/hikebeat_\(self.beat.journeyId)_\(self.beat.timestamp).\(fileType)"
             }
+            
+            guard !fileExist(path: filename) else {
+                beatImage.isHidden = false
+                playButton.isHidden = false
+                return
+            }
+            
             let downloadFuture = downloadAndStoreMedia(url: beat.mediaUrl!, fileName: filename)
             downloadFuture.onSuccess(callback: { (success) in
                 self.spinner.stopAnimating()

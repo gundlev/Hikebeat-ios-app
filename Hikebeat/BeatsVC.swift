@@ -43,8 +43,8 @@ class BeatsVC: UIViewController, AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("View did load beatsVC")
-        print(self.journey.beats)
-        self.beats = self.journey.beats.sorted()//  .sorted(byKeyPath: "timestamp")
+//        print(self.journey.beats)
+        self.beats = self.journey.beats.sorted().reversed()//  .sorted(byKeyPath: "timestamp")
         print("here not")
         // Do any additional setup after loading the view.
         self.pageControl.numberOfPages = beatsCollectionView.numberOfItems(inSection: 0)

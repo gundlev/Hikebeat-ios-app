@@ -124,13 +124,12 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         print("setting views")
         setInfo()
         if user!.profilePhoto != nil {
-            profileImageView.image = user!.profilePhoto
+            self.setImage(image: user!.profilePhoto!)
             imageSpinner.stopAnimating()
         } else {
             downloadImage(imageUrl: user!.profilePhotoUrl)
             .onSuccess { (image) in
-                self.user!.profilePhoto = image
-                self.profileImageView.image = self.user!.profilePhoto
+                self.setImage(image: image)
                 self.imageSpinner.stopAnimating()
             }.onFailure { (error) in
                 print("Error: ", error)
@@ -147,6 +146,21 @@ class PublicProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             }.onFailure { (error) in
                 self.spinner.stopAnimating()
         }
+    }
+    
+    func setImage(image: UIImage) {
+        self.user!.profilePhoto = image
+        self.profileImageView.image = self.user!.profilePhoto
+        print("setting tap recog")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showImage))
+        self.profileImageView.addGestureRecognizer(tap)
+    }
+    
+    func showImage() {
+        print("here")
+        let agrume = Agrume(image: self.user!.profilePhoto!, backgroundColor: .black)
+        agrume.hideStatusBar = true
+        agrume.showFrom(self)
     }
     
     func setInfo() {

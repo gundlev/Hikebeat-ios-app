@@ -260,7 +260,7 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
     
     func showLatestBeat() {
         if self.pins.count != 0 {
-            self.indexOfChosenPin = pins.count - 1
+            self.indexOfChosenPin = 0
             _ = performSegue(withIdentifier: "showBeat", sender: self)
         }
     }
@@ -365,7 +365,13 @@ class JourneyVC: UIViewController, MKMapViewDelegate {
         pinArr.sort()
         let lastElement = pinArr.last
         lastElement?.lastPin = true
-        self.journeyMap.showAnnotations(self.journeyMap.annotations, animated: true)
+        if lastElement != nil {
+            let s = MKCoordinateSpan(latitudeDelta: CLLocationDegrees(0.1), longitudeDelta: CLLocationDegrees(0.1))
+            let r = MKCoordinateRegion(center: lastElement!.coordinate, span: s)
+            self.journeyMap.setRegion(r, animated: true)
+        }
+//        self.journeyMap.showAnnotations(self.journeyMap.annotations, animated: true)
+
         self.createPolyline(self.journeyMap)
         
         if self.pins.count==0{
