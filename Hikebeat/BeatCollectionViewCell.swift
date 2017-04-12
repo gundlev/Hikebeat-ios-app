@@ -39,6 +39,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         self.scrollView.isScrollEnabled = false
         spinner.hidesWhenStopped = true
+        spinner.color = .white
         self.deleteBoxView.layer.cornerRadius = self.deleteBoxView.bounds.height/2
 //        self.deleteButton.imageView?.image = self.deleteButton.imageView?.image!.withRenderingMode(.alwaysTemplate)
 //        self.deleteButton.imageView?.tintColor = lightGreen
@@ -130,6 +131,11 @@ class BeatCollectionViewCell: UICollectionViewCell {
                 beatImage.isHidden = false
                 playButton.isHidden = false
                 beatImage.image = UIImage(contentsOfFile: getImagePath(filename))
+                let realm = try! Realm()
+                try! realm.write {
+                    self.beat.mediaData = filename
+                    print("HERE: ",self.beat.mediaData)
+                }
                 return
             }
             
@@ -177,8 +183,13 @@ class BeatCollectionViewCell: UICollectionViewCell {
             }
             
             guard !fileExist(path: filename) else {
+                spinner.stopAnimating()
                 beatImage.isHidden = false
                 playButton.isHidden = false
+                let realm = try! Realm()
+                try! realm.write {
+                    self.beat.mediaData = filename
+                }
                 return
             }
             self.currentFileName = filename
