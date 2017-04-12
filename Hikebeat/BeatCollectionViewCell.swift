@@ -29,6 +29,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
     var beat: Beat!
     var save = true
     var fromVC: BeatsVC!
+    var currentFileName: String!
     
     @IBAction func deleteBeat(_ sender: Any) {
         print("Delete beat")
@@ -124,23 +125,26 @@ class BeatCollectionViewCell: UICollectionViewCell {
             playButton.isHidden = false
             beatImage.image = UIImage(contentsOfFile: getImagePath(beat.mediaData!))
         } else {
+            
             guard !fileExist(path: filename) else {
                 beatImage.isHidden = false
                 playButton.isHidden = false
                 beatImage.image = UIImage(contentsOfFile: getImagePath(filename))
                 return
             }
+            
             // Media has to be downloaded first
             spinner.startAnimating()
             beatImage.isHidden = true
             playButton.isHidden = true
-
+            
+            self.currentFileName = filename
             downloadAndStoreImage(mediaUrl: beat.mediaUrl!, fileName: filename)
-            .onSuccess(callback: { (image) in
+            .onSuccess(callback: { (tuple) in
                 self.spinner.stopAnimating()
-                if image != nil {
+                if tuple.fileName == self.currentFileName {
                     let realm = try! Realm()
-                    self.beatImage.image = image
+                    self.beatImage.image = tuple.image
                     self.beatImage.isHidden = false
                     self.playButton.isHidden = false
                     try! realm.write {
@@ -148,7 +152,7 @@ class BeatCollectionViewCell: UICollectionViewCell {
                         print("HERE: ",self.beat.mediaData)
                     }
                 } else {
-                    print("problems getting the image for beat in setImage")
+                    print("A newer image belongs to this beat")
                 }
             }).onFailure(callback: { (error) in
                 print("problems getting the image for beat in setImage")
@@ -177,16 +181,20 @@ class BeatCollectionViewCell: UICollectionViewCell {
                 playButton.isHidden = false
                 return
             }
-            
+            self.currentFileName = filename
             let downloadFuture = downloadAndStoreMedia(url: beat.mediaUrl!, fileName: filename)
             downloadFuture.onSuccess(callback: { (success) in
                 self.spinner.stopAnimating()
                 if success {
-                    let realm = try! Realm()
-                    self.beatImage.isHidden = false
-                    self.playButton.isHidden = false
-                    try! realm.write {
-                        self.beat.mediaData = filename
+                    if self.currentFileName == filename {
+                        let realm = try! Realm()
+                        self.beatImage.isHidden = false
+                        self.playButton.isHidden = false
+                        try! realm.write {
+                            self.beat.mediaData = filename
+                        }
+                    } else {
+                        print("Newer media belongs to beat")
                     }
                 } else {
                     print("problems getting the image for beat in setMedia")

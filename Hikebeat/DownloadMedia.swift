@@ -23,7 +23,7 @@ func downloadMediaForJourney(_ journey: Journey) {
     }
 }
 
-func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage?, HikebeatError> {
+func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<(image: UIImage, fileName: String), HikebeatError> {
     return Future { complete in
         getImageCall(url: mediaUrl)
         .onSuccess(callback: { (response) in
@@ -31,7 +31,7 @@ func downloadAndStoreImage(mediaUrl: String, fileName: String) -> Future<UIImage
                 saveImageToDocs(fileName: fileName, image: image)
                     .onSuccess(callback: { (success) in
                         if success {
-                            complete(.success(image))
+                            complete(.success((image: image, fileName: fileName)))
                         } else {
                             complete(.failure(.imageSave))
                         }
